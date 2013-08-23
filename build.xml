@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="SpaceGame">
+
+	<!-- properties -->
+	<property name="r.js" value="tools/r.js" />
+	<property name="closure.jar" value="tools/compiler.jar" />
+	<property name="rhino.jar" value="tools/js.jar" />
+	<property name="build.js" value="tools/build.js" />
+
+	<target name="clean">
+		<delete dir="build" />
+	</target>
+
+	<target name="build">
+		<java classname="org.mozilla.javascript.tools.shell.Main">
+			<classpath>
+				<pathelement location="${rhino.jar}" />
+				<pathelement location="${closure.jar}" />
+			</classpath>
+			<arg value="${r.js}" />
+			<arg value="-o" />
+			<arg value="${build.js}" />
+		</java>
+	</target>
+</project>

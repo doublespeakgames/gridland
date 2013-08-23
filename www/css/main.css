@@ -1,0 +1,13 @@
+#test {
+	position: absolute;
+	left: 10px;
+	display:inline-block; 
+	padding:5px; 
+	height: 1em;
+	margin:auto;
+	border:1px solid black;
+}
+
+#test {
+	top: 40px;
+}
