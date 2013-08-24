@@ -1,5 +1,5 @@
-require(["jquery", "app/engine"], 
-		function($, Engine) {
+require(["jquery", "app/engine", "app/gameboard", "app/world"], 
+		function($, Engine, GameBoard, World) {
 	
 	// use requestAnimationFrame when available
 	var anim = (function(){
@@ -10,6 +10,10 @@ require(["jquery", "app/engine"],
 					window.setTimeout(callback, 1000 / 60);
 				};
 	})();
+	
+	// Initialize the board
+	$('body').append(GameBoard.init());
+	$(GameBoard.el.append(World.init()));
 	
 	// Run the game
 	(function gameloop(){

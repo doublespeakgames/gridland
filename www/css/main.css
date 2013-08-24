@@ -11,3 +11,21 @@
 #test {
 	top: 40px;
 }
+
+.gameBoard {
+	position: relative;
+	margin: 110px auto;
+	border: 1px solid black;
+}
+
+.gem {
+	width: 60px;
+	height: 60px;
+}
+
+.world {
+	position: absolute;
+	top: -100px;
+	width: 100%;
+	height: 100px;
+}
