@@ -5,11 +5,7 @@ require(["jquery", "app/engine", "app/gameboard", "app/world"],
 	GameBoard.init();
 	World.init();
 	
-	setTimeout(function() {
-		require(['app/world'], function(World) {
-			World.launchDude();
-		});
-	}, 5000);
+	World.launchDude();
 	
 	// Run the game
 //	(function gameloop(){

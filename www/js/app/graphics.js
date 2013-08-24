@@ -34,13 +34,28 @@ define(['jquery'], function($) {
 		
 		updateSprite: function(entity) {
 			var el = entity.el();
-			var spriteRow = entity.tempAnimation == null ? entity.animation : entity.tempAnimation;
+			var spriteRow = entity.tempAnimation == null ? entity.animationRow : entity.tempAnimation;
 			el.css('background-position', -(entity.frame * el.width()) + "px " + -(spriteRow * el.height()) + 'px');
 		},
 		
 		setPosition: function(entity, pos) {
 			var el = entity.el();
 			el.css('left', (pos - (el.width() / 2)) + "px");
+		},
+		
+		animateMove: function(entity, pos, callback) {
+			var el = entity.el();
+			var dist = Math.abs(entity.p() - pos);
+			el.stop().animate({
+				'left': pos - (el.width() / 2)
+			}, {
+				duration: dist * entity.speed, 
+				easing: 'linear', 
+				step: function(now, tween) {
+					entity.p(now);
+				},
+				complete: callback
+			});
 		}
 	};
 });

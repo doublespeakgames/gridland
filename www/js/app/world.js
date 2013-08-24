@@ -22,6 +22,7 @@ define(['jquery', 'app/graphics', 'app/entity/dude'], function($, Graphics, Dude
 			require(['app/world'], function(World) {
 				for(var i = 0, len = World.stuff.length; i < len; i++) {
 					var entity = World.stuff[i];
+					entity.think();
 					entity.animate();
 				}
 			});
@@ -34,6 +35,7 @@ define(['jquery', 'app/graphics', 'app/entity/dude'], function($, Graphics, Dude
 			dude.animationOnce(3);
 			Graphics.addToWorld(dude);
 			dude.p(this.el().width() / 2);
+			Graphics.setPosition(dude, dude.p());
 		}
 	};
 });
