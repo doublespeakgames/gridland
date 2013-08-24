@@ -18,9 +18,29 @@
 	border: 1px solid black;
 }
 
-.gem {
+.tileContainer {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.tile {
 	width: 60px;
 	height: 60px;
+	position: absolute;
+}
+
+.grain {
+	background-color: #FFE97F;
+}
+
+.wood {
+	background-color: #7C5840;
+}
+
+.stone {
+	background-color: #C4C4C4;
 }
 
 .world {
