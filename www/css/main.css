@@ -29,3 +29,11 @@
 	width: 100%;
 	height: 100px;
 }
+
+.dude {
+	background-image: url(../img/dude.png);
+	position: absolute;
+	bottom: 0px;
+	width: 16px;
+	height: 32px;
+}

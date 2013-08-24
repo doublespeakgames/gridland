@@ -1,4 +1,4 @@
-define(['jquery'], function($) {
+define(['jquery', 'app/graphics'], function($, Graphics) {
 	return {
 		options: {
 			rows: 8,
@@ -7,20 +7,14 @@ define(['jquery'], function($) {
 		init: function(opts) {
 			$.extend(this.options, opts);
 			this.gems = [];
-			this.el = this.createBoard();
-			return this.el;
+			Graphics.addToScreen(this);
 		},
 		
-		createBoard: function() {
-			// Generate the board element
-			var el = $('<div>').addClass('gameBoard');
-			// Determine the board dimensions based on the size of the gems
-			var testGem = $('<div>').addClass('gem').hide().appendTo('body');
-			el.width(testGem.width() * this.options.columns);
-			el.height(testGem.height() * this.options.rows);
-			testGem.remove();
-			
-			return el;
+		el: function() {
+			if(this._el == null) {
+				this._el = Graphics.createBoard(this.options.rows, this.options.columns);
+			}
+			return this._el;
 		}
 	};
 });
