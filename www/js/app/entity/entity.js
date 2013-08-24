@@ -12,7 +12,7 @@ define([ 'jquery', 'app/events', 'app/graphics' ], function($, Events, Graphics)
 		this.frame = 0;
 		this.animationRow = 0;
 		this.tempAnimation = null;
-		this.speed = 20;
+		this.speed = 40;
 		
 		/**
 		 * Gets the html element for this Entity, creating it if necessary
@@ -77,18 +77,20 @@ define([ 'jquery', 'app/events', 'app/graphics' ], function($, Events, Graphics)
 		};
 		
 		this.move = function(position) {
-			if(this.p() < position) {
-				// Moving right
-				this.animation(MOVE_ANIMS.right);
-			} else if(this.p() > position) {
-				// Moving left
-				this.animation(MOVE_ANIMS.left);
+			if(this.tempAnimation == null) {
+				if(this.p() < position) {
+					// Moving right
+					this.animation(MOVE_ANIMS.right);
+				} else if(this.p() > position) {
+					// Moving left
+					this.animation(MOVE_ANIMS.left);
+				}
+				var _entity = this;
+				Graphics.animateMove(this, position, function() {
+					// Stop the move animation
+					_entity.animation(MOVE_ANIMS.idle);
+				});
 			}
-			var _entity = this;
-			Graphics.animateMove(this, position, function() {
-				// Stop the move animation
-				_entity.animation(MOVE_ANIMS.idle);
-			});
 		};
 	};
 
