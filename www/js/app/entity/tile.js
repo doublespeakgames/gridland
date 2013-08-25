@@ -1,13 +1,13 @@
 define(['app/entity/entity'], function(Entity) {
 	
 	var tile = function(options) {
-		$.extend(this.options, {
+		this.options = $.extend({}, this.options, {
 			type: type.Grain
 		}, options);
 	};
 	tile.prototype = new Entity({
 		className: 'tile',
-		speed: 2
+		speed: 1
 	});
 	tile.constructor = tile;
 	

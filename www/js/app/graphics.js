@@ -66,7 +66,8 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 				top: finalTop
 			}, {
 				duration: dist * tile.options.speed,
-				easing: "easeOutBounce",
+				// easing: "easeOutBounce",
+				easing: "easeInQuad",
 				complete: callback
 			});
 		},

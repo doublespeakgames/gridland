@@ -7,7 +7,7 @@ define(['app/entity/entity', 'app/graphics'], function(Entity, Graphics) {
 	};
 	
 	var worldEntity = function(options) {
-		$.extend(this.options, {
+		this.options = $.extend({}, this.options, {
 			// Nuthin'
 		}, options);
 	};
