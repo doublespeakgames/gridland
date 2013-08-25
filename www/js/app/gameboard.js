@@ -30,13 +30,49 @@ define(['jquery', 'app/graphics', 'app/entity/tile'], function($, Graphics, Tile
 		
 		_doFill: function(num) {
 			require(['app/gameboard', 'app/entity/tile'], function(GameBoard, Tile) {
-				var r = Math.random();
-				var type = Tile.TYPE.Grain;
-				if(r < 0.33) {
-					type = Tile.TYPE.Wood;
-				} else if(r < 0.66) {
-					type = Tile.TYPE.Stone;
+				
+				var col = Math.floor(num / GameBoard.options.columns);
+				var row = 7 - Math.floor(num % GameBoard.options.rows);
+				
+				// Pieces to the left and the bottom could potetially be present
+				var pCounts= {
+					'grain': 2,
+					'wood': 2,
+					'stone': 2
+				};
+				if(col > 0) {
+					var sibling = GameBoard.tiles[col - 1][row];
+					pCounts[sibling.options.type.className]--;
 				}
+				if(row < GameBoard.options.rows - 1) {
+					var sibling = GameBoard.tiles[col][row + 1];
+					pCounts[sibling.options.type.className]--;
+				}
+				var total = 0;
+				for(tileClass in pCounts) {
+					total += pCounts[tileClass];
+				}
+				
+				var baseline = 0;
+				var r = Math.random();
+				var theClass;
+				for(tileClass in pCounts) {
+					theClass = tileClass;
+					var chance = pCounts[tileClass] / total;
+					// console.log(tileClass + ': ' + r + ' < ' + baseline + ' + ' + pCounts[tileClass]  + ' / ' + total  + ' (' + chance + ')');
+					if(r < baseline + chance) {
+						break;
+					}
+					baseline += chance;
+				}
+				var type;
+				for(t in Tile.TYPE) {
+					if(Tile.TYPE[t].className == theClass) {
+						type = Tile.TYPE[t];
+						break;
+					}
+				}
+				
 				GameBoard.addTile(new Tile({
 					type: type
 				}), Math.floor(num / GameBoard.options.columns));
