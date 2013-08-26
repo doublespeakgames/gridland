@@ -99,26 +99,70 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 		},
 
 		addTile : function(tile, column) {
-			var col = this.tiles[column];
-			var finalRow = -1;
-			while (finalRow < this.options.rows - 1 && col[finalRow + 1] == null) {
-				finalRow++;
-			}
-
-			// Don't drop the tile if the column is full
-			if (finalRow < 0) {
-				throw "Cannot add tiles to full columns, idiot!";
-			}
 			require(['app/engine'], function(Engine) {
 				Engine.bindTile(tile);
 			});
-			this.tiles[column][finalRow] = tile;
-			tile.row = finalRow;
+			tile.row = -1;
 			tile.column = column;
 			Graphics.setPositionInBoard(tile, -1, column);
 			Graphics.addToTileContainer(tile);
+			this.dropTile(tile);
+		},
+		
+		dropTile: function(tile) {
+			var col = this.tiles[tile.column];
+			var finalRow = tile.row;
+			while (finalRow < this.options.rows - 1 && col[finalRow + 1] == null) {
+				finalRow++;
+			}
+			// Don't drop the tile if the column is full
+			if (finalRow < 0) {
+				throw "Cannot drop tile in full columns, idiot!";
+			}
+			if(tile.row >= 0) {
+				this.tiles[tile.column][tile.row] = null;
+			}
+			this.tiles[tile.column][finalRow] = tile;
+			tile.row = finalRow;
 			Graphics.dropTile(tile, finalRow, function() {
 				// TODO: Lock input and don't check for matches while tiles are falling
+			});
+		},
+		
+		// removeTile: function(tile) {
+			// Graphics.removeTile(tile, function() {
+				// require(['app/gameboard'], function(GameBoard) {
+					// console.log('removed');
+					// GameBoard.tiles[tile.column][tile.row] = null;
+					// for(var r = tile.row - 1; r >= 0; r--) {
+						// if(GameBoard.tiles[tile.column][r] != null) {
+							// GameBoard.dropTile(GameBoard.tiles[tile.column][r]);
+						// }
+					// }
+				// });
+			// });
+		// },
+		
+		removeTiles: function(tiles) {
+			Graphics.removeTiles(tiles, function() {
+				require(['app/gameboard'], function(GameBoard) {
+					for(t in tiles) {
+						var tileToRemove = tiles[t];
+						if(GameBoard.tiles[tileToRemove.column][tileToRemove.row] != null) {
+							GameBoard.tiles[tileToRemove.column][tileToRemove.row] = null;
+						}
+					}
+					for(t in tiles) {
+						var space = tiles[t];
+						for(var r = space.row - 1; r >= 0; r--) {
+							console.log(tiles.length + ', ' + r);
+							console.log('dropping: ' + space.column + ', ' + r);
+							if(GameBoard.tiles[space.column][r] != null) {
+								GameBoard.dropTile(GameBoard.tiles[space.column][r]);
+							}
+						}
+					}
+				});
 			});
 		},
 		
@@ -132,9 +176,66 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 					tile1.column = tile2.column;
 					tile2.row = r1;
 					tile2.column = c1;
-					// TODO: Check for matches
+					
+					// Check for matches
+					GameBoard.checkMatches(tile1);
+					GameBoard.checkMatches(tile2);
 				});
 			});
+		},
+		
+		checkMatches: function(tile) {
+			var hMatches = [tile], vMatches = [tile];			
+			if(tile.column > 0) {
+				var testTile = this.tiles[tile.column - 1][tile.row];
+				while(testTile != null && testTile.options.type == tile.options.type) {
+					hMatches.push(testTile);
+					if(testTile.column == 0) break;
+					testTile = this.tiles[testTile.column - 1][testTile.row];
+				}
+			}
+			if(tile.column < this.options.columns - 1) {
+				var testTile = this.tiles[tile.column + 1][tile.row];
+				while(testTile != null && testTile.options.type == tile.options.type) {
+					hMatches.push(testTile);
+					if(testTile.column == this.options.columns - 1) break;
+					testTile = this.tiles[testTile.column + 1][testTile.row];
+				}
+			}
+			if(tile.row > 0) {
+				var testTile = this.tiles[tile.column][tile.row - 1];
+				while(testTile != null && testTile.options.type == tile.options.type) {
+					vMatches.push(testTile);
+					if(testTile.row == 0) break;
+					testTile = this.tiles[testTile.column][testTile.row - 1];
+				}
+			}
+			if(tile.row < this.options.rows - 1) {
+				var testTile = this.tiles[tile.column][tile.row + 1];
+				while(testTile != null && testTile.options.type == tile.options.type) {
+					vMatches.push(testTile);
+					if(testTile.row == this.options.rows - 1) break;
+					testTile = this.tiles[testTile.column][testTile.row + 1];
+				}
+			}
+			
+			// Remove any matches tiles
+			var matches = [];
+			if(hMatches.length >= 3) {
+				matches = matches.concat(hMatches);
+			}
+			if(vMatches.length >= 3) {
+				for(var t in vMatches) {
+					var tile = vMatches[t];
+					if($.inArray(tile, matches) == -1) {
+						matches.push(tile);
+					}
+				}
+			}
+			
+			if(matches.length > 0) {
+				this.removeTiles(matches);
+			}
 		}
 	};
 });

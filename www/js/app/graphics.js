@@ -103,6 +103,30 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			tile.el().removeClass('selected');
 		},
 		
+		removeTiles: function(tiles, callback) {
+			for(var t in tiles) {
+				var tile = tiles[t];
+				if(tile != null) {
+					tile.el().addClass('removing');
+				}
+			}
+			$.when($('.removing').animate({
+				opacity: 0
+			}, {
+				duration: 200,
+				easing: 'linear'
+			})).done(function() {
+				console.log('callback');
+				for(var t in tiles) {
+					var tile = tiles[t];
+					if(tile != null) {
+						tile.el().remove();
+					}
+				}
+				callback(tiles);
+			});
+		},
+		
 		animateMove: function(entity, pos, callback) {
 			var el = entity.el();
 			var dist = Math.abs(entity.p() - pos);
