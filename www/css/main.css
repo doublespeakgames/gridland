@@ -43,6 +43,10 @@
 	background-color: #C4C4C4;
 }
 
+.selected {
+	background-color: red;
+}
+
 .world {
 	position: absolute;
 	top: -101px;

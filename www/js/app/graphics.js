@@ -72,6 +72,37 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			});
 		},
 		
+		switchTiles: function(tile1, tile2, callback) {
+			var el1 = tile1.el(), el2 = tile2.el();
+			var width = el1.width();
+			$.when(
+				el1.animate({
+					left: tile2.column * width,
+					top: tile2.row * width
+				}, {
+					duration: width * tile1.options.speed,
+					easing: 'linear'
+				}),
+				el2.animate({
+					left: tile1.column * width,
+					top: tile1.row * width
+				}, {
+					duration: width * tile2.options.speed,
+					easing: 'linear'
+				})
+			).done(function() {
+				callback(tile1, tile2);
+			});
+		},
+		
+		selectTile: function(tile) {
+			tile.el().addClass('selected');
+		},
+		
+		deselectTile: function(tile) {
+			tile.el().removeClass('selected');
+		},
+		
 		animateMove: function(entity, pos, callback) {
 			var el = entity.el();
 			var dist = Math.abs(entity.p() - pos);

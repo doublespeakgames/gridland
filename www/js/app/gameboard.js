@@ -1,4 +1,4 @@
-define(['jquery', 'app/graphics', 'app/entity/tile'], function($, Graphics, Tile) {
+define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, Engine, Graphics, Tile) {
 	return {
 		options : {
 			rows : 8,
@@ -94,8 +94,6 @@ define(['jquery', 'app/graphics', 'app/entity/tile'], function($, Graphics, Tile
 							GameBoard._doFill(num + 1);
 						});
 					}, 20);
-				} else {
-					console.log('done');
 				}
 			});
 		},
@@ -111,11 +109,31 @@ define(['jquery', 'app/graphics', 'app/entity/tile'], function($, Graphics, Tile
 			if (finalRow < 0) {
 				throw "Cannot add tiles to full columns, idiot!";
 			}
+			require(['app/engine'], function(Engine) {
+				Engine.bindTile(tile);
+			});
 			this.tiles[column][finalRow] = tile;
+			tile.row = finalRow;
+			tile.column = column;
 			Graphics.setPositionInBoard(tile, -1, column);
 			Graphics.addToTileContainer(tile);
 			Graphics.dropTile(tile, finalRow, function() {
 				// TODO: Lock input and don't check for matches while tiles are falling
+			});
+		},
+		
+		switchTiles: function(tile1, tile2) {
+			Graphics.switchTiles(tile1, tile2, function(tile1, tile2) {
+				require(['app/gameboard'], function(GameBoard) {
+					var r1 = tile1.row, c1 = tile1.column;
+					GameBoard.tiles[tile1.column][tile1.row] = tile2;
+					GameBoard.tiles[tile2.column][tile2.row] = tile1;
+					tile1.row = tile2.row;
+					tile1.column = tile2.column;
+					tile2.row = r1;
+					tile2.column = c1;
+					// TODO: Check for matches
+				});
 			});
 		}
 	};

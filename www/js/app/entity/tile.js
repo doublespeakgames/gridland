@@ -15,6 +15,10 @@ define(['app/entity/entity'], function(Entity) {
 		return Entity.prototype.el.call(this).addClass(this.options.type.className);
 	};
 	
+	tile.prototype.isAdjacent = function(other) {
+		return Math.abs(this.row - other.row) + Math.abs(this.column - other.column) == 1;
+	};
+	
 	var type = tile.TYPE = {
 		Grain: {
 			className: 'grain'
