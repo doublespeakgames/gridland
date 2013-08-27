@@ -1,5 +1,8 @@
 define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, Engine, Graphics, Tile) {
 	return {
+		fallingTiles: 0,
+		checkQueue: [],
+		
 		options : {
 			rows : 8,
 			columns : 8
@@ -110,6 +113,9 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 		},
 		
 		dropTile: function(tile) {
+			if($.inArray(tile, this.checkQueue) == -1) {
+				this.checkQueue.push(tile);
+			}
 			var col = this.tiles[tile.column];
 			var finalRow = tile.row;
 			while (finalRow < this.options.rows - 1 && col[finalRow + 1] == null) {
@@ -124,8 +130,21 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 			}
 			this.tiles[tile.column][finalRow] = tile;
 			tile.row = finalRow;
+			this.fallingTiles++;
 			Graphics.dropTile(tile, finalRow, function() {
-				// TODO: Lock input and don't check for matches while tiles are falling
+				require(['app/graphics', 'app/gameboard'], function(Graphics, GameBoard) {
+					GameBoard.fallingTiles--;
+					if(GameBoard.fallingTiles == 0) {
+						// TODO: Lock input and don't check for matches while tiles are falling
+						var matches = [];
+						while(GameBoard.checkQueue.length > 0) {
+							matches = matches.concat(GameBoard.checkMatches(GameBoard.checkQueue.pop()));
+						}
+						if(matches.length > 0) {
+							GameBoard.removeTiles(matches);
+						}
+					}
+				});
 			});
 		},
 		
@@ -146,19 +165,20 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 		removeTiles: function(tiles) {
 			Graphics.removeTiles(tiles, function() {
 				require(['app/gameboard'], function(GameBoard) {
+					var colsToDrop = {};
 					for(t in tiles) {
 						var tileToRemove = tiles[t];
 						if(GameBoard.tiles[tileToRemove.column][tileToRemove.row] != null) {
 							GameBoard.tiles[tileToRemove.column][tileToRemove.row] = null;
+							if(colsToDrop[tileToRemove.column] == null) {
+								colsToDrop[tileToRemove.column] = true;
+							}
 						}
 					}
-					for(t in tiles) {
-						var space = tiles[t];
-						for(var r = space.row - 1; r >= 0; r--) {
-							console.log(tiles.length + ', ' + r);
-							console.log('dropping: ' + space.column + ', ' + r);
-							if(GameBoard.tiles[space.column][r] != null) {
-								GameBoard.dropTile(GameBoard.tiles[space.column][r]);
+					for(col in colsToDrop) {
+						for(var r = GameBoard.options.rows - 1; r >= 0; r--) {
+							if(GameBoard.tiles[col][r] != null) {
+								GameBoard.dropTile(GameBoard.tiles[col][r]);
 							}
 						}
 					}
@@ -178,8 +198,12 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 					tile2.column = c1;
 					
 					// Check for matches
-					GameBoard.checkMatches(tile1);
-					GameBoard.checkMatches(tile2);
+					var matches = GameBoard.checkMatches(tile1);
+					matches = matches.concat(GameBoard.checkMatches(tile2));
+					
+					if(matches.length > 0) {
+						GameBoard.removeTiles(matches);
+					}
 				});
 			});
 		},
@@ -233,9 +257,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 				}
 			}
 			
-			if(matches.length > 0) {
-				this.removeTiles(matches);
-			}
+			return matches;
 		}
 	};
 });

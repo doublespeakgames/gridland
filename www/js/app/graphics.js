@@ -116,7 +116,6 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 				duration: 200,
 				easing: 'linear'
 			})).done(function() {
-				console.log('callback');
 				for(var t in tiles) {
 					var tile = tiles[t];
 					if(tile != null) {
