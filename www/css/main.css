@@ -15,7 +15,8 @@
 .gameBoard {
 	position: relative;
 	margin: 110px auto;
-	border: 1px solid black;
+	border: 2px solid black;
+	padding: 2px;
 }
 
 .tileContainer {
@@ -31,27 +32,37 @@
 	position: absolute;
 }
 
-.grain {
+.tile div {
+	border-radius: 4px;
+	border: 2px solid black;
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	right: 2px;
+	bottom: 2px;
+}
+
+.grain div {
 	background-color: #FFE97F;
 }
 
-.wood {
+.wood div {
 	background-color: #7C5840;
 }
 
-.stone {
+.stone div {
 	background-color: #C4C4C4;
 }
 
-.clay {
+.clay div {
 	background-color: #C65645;
 }
 
-.gem {
+.gem div {
 	background-color: #C49EE2;
 }
 
-.blank {
+.blank div {
 	background-color: #000;
 }
 

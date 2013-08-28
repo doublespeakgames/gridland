@@ -9,12 +9,15 @@ define(['app/entity/entity'], function(Entity) {
 	};
 	tile.prototype = new Entity({
 		className: 'tile',
-		speed: 1
+		speed: 2
 	});
 	tile.constructor = tile;
 	
 	tile.prototype.el = function() {
-		return Entity.prototype.el.call(this).addClass(this.options.type.className);
+		if(this._el == null) {
+			this._el = Entity.prototype.el.call(this).addClass(this.options.type.className).append($('<div>'));
+		}
+		return this._el;
 	};
 	
 	tile.prototype.isAdjacent = function(other) {

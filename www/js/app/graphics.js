@@ -80,14 +80,14 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 					left: tile2.options.column * width,
 					top: tile2.options.row * width
 				}, {
-					duration: width * tile1.options.speed * 2,
+					duration: width * tile1.options.speed ,
 					easing: 'linear'
 				}),
 				el2.animate({
 					left: tile1.options.column * width,
 					top: tile1.options.row * width
 				}, {
-					duration: width * tile2.options.speed * 2,
+					duration: width * tile2.options.speed ,
 					easing: 'linear'
 				})
 			).done(function() {
