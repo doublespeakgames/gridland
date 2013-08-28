@@ -43,6 +43,18 @@
 	background-color: #C4C4C4;
 }
 
+.clay {
+	background-color: #C65645;
+}
+
+.gem {
+	background-color: #C49EE2;
+}
+
+.blank {
+	background-color: #000;
+}
+
 .selected {
 	background-color: red;
 }

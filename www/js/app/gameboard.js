@@ -22,6 +22,17 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 			}
 			return this._el;
 		},
+		
+		tileMap: function() {
+			return {
+				'grain' : 2,
+				'wood' : 2,
+				'stone' : 2,
+				'gem': 2,
+				'clay': 2,
+				'blank': 2
+			};
+		},
 
 		fill : function() {
 			setTimeout(function() {
@@ -40,11 +51,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 				// console.log('[' + row + ', ' + col + ']');
 
 				// Pieces to the left and the bottom could potetially be present
-				var pCounts = {
-					'grain' : 2,
-					'wood' : 2,
-					'stone' : 2
-				};
+				var pCounts = GameBoard.tileMap();
 				if (col > 0) {
 					var sibling = GameBoard.tiles[col - 1][row];
 					pCounts[sibling.options.type.className]--;
@@ -79,13 +86,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 					}
 					baseline += chance;
 				}
-				var type;
-				for (t in Tile.TYPE) {
-					if (Tile.TYPE[t].className == theClass) {
-						type = Tile.TYPE[t];
-						break;
-					}
-				}
+				var type = Tile.getType(theClass);
 
 				GameBoard.addTile(new Tile({
 					type : type,
@@ -165,6 +166,8 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 							colsToDrop[tileToRemove.options.column]++;
 						}
 					}
+					var pCounts = GameBoard.tileMap();
+					var nextCount = 0;
 					for(col in colsToDrop) {
 						for(var r = GameBoard.options.rows - 1; r >= 0; r--) {
 							if(GameBoard.tiles[col][r] != null) {
@@ -172,12 +175,31 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 							}
 						}
 						for(var i = 1, num = colsToDrop[col]; i <= num; i++) {
+							var probs = {};
+							for(var p in pCounts) {
+								probs[p] = pCounts[p] / nextCount;
+							}
 							var r = Math.random();
-							var type = Tile.TYPE.Stone;
-							if(r < 0.33) {
-								type = Tile.TYPE.Grain
-							} else if(r < 0.66) {
-								type = Tile.TYPE.Wood
+							var base = 0;
+							var typeClass;
+							for(var className in probs) {
+								typeClass = className;
+								var prob = probs[className];
+//								console.log(className + ": " + r + " < " + prob + " + " + base);
+								if(r < prob + base) {
+									break;
+								}
+								base += prob;
+							}
+							var type = Tile.getType(typeClass);
+							nextCount = 0;
+							for(var t in pCounts) {
+								if(t == type.className) {
+									pCounts[t]--;
+								} else {
+									pCounts[t] = 2;
+								}
+								nextCount += pCounts[t];
 							}
 							GameBoard.addTile(new Tile({
 								column: parseInt(col),
@@ -190,7 +212,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 			});
 		},
 		
-		switchTiles: function(tile1, tile2) {
+		switchTiles: function(tile1, tile2, skipMatch) {
 			Graphics.switchTiles(tile1, tile2, function(tile1, tile2) {
 				require(['app/gameboard'], function(GameBoard) {
 					var r1 = tile1.options.row, c1 = tile1.options.column;
@@ -201,12 +223,16 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 					tile2.options.row = r1;
 					tile2.options.column = c1;
 					
-					// Check for matches
-					var matches = GameBoard.checkMatches(tile1);
-					matches = matches.concat(GameBoard.checkMatches(tile2));
+					if(!skipMatch) {
+						// Check for matches
+						var matches = GameBoard.checkMatches(tile1);
+						matches = matches.concat(GameBoard.checkMatches(tile2));
 					
-					if(matches.length > 0) {
-						GameBoard.removeTiles(matches);
+						if(matches.length > 0) {
+							GameBoard.removeTiles(matches);
+						} else {
+							GameBoard.switchTiles(tile1, tile2, true);
+						}
 					}
 				});
 			});
