@@ -88,8 +88,10 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 				}
 
 				GameBoard.addTile(new Tile({
-					type : type
-				}), col);
+					type : type,
+					row: -1,
+					column: col
+				}));
 
 				if (num < GameBoard.options.columns * GameBoard.options.rows - 1) {
 					setTimeout(function() {
@@ -101,13 +103,14 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 			});
 		},
 
-		addTile : function(tile, column) {
+		addTile : function(tile) {
 			require(['app/engine'], function(Engine) {
 				Engine.bindTile(tile);
 			});
-			tile.row = -1;
-			tile.column = column;
-			Graphics.setPositionInBoard(tile, -1, column);
+			if(tile.options.row == null) {
+				tile.options.row = -1;
+			}
+			Graphics.setPositionInBoard(tile, tile.options.row, tile.options.column);
 			Graphics.addToTileContainer(tile);
 			this.dropTile(tile);
 		},
@@ -116,8 +119,8 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 			if($.inArray(tile, this.checkQueue) == -1) {
 				this.checkQueue.push(tile);
 			}
-			var col = this.tiles[tile.column];
-			var finalRow = tile.row;
+			var col = this.tiles[tile.options.column];
+			var finalRow = tile.options.row;
 			while (finalRow < this.options.rows - 1 && col[finalRow + 1] == null) {
 				finalRow++;
 			}
@@ -125,17 +128,16 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 			if (finalRow < 0) {
 				throw "Cannot drop tile in full columns, idiot!";
 			}
-			if(tile.row >= 0) {
-				this.tiles[tile.column][tile.row] = null;
+			if(tile.options.row >= 0) {
+				this.tiles[tile.options.column][tile.options.row] = null;
 			}
-			this.tiles[tile.column][finalRow] = tile;
-			tile.row = finalRow;
+			this.tiles[tile.options.column][finalRow] = tile;
+			tile.options.row = finalRow;
 			this.fallingTiles++;
 			Graphics.dropTile(tile, finalRow, function() {
 				require(['app/graphics', 'app/gameboard'], function(Graphics, GameBoard) {
 					GameBoard.fallingTiles--;
 					if(GameBoard.fallingTiles == 0) {
-						// TODO: Lock input and don't check for matches while tiles are falling
 						var matches = [];
 						while(GameBoard.checkQueue.length > 0) {
 							matches = matches.concat(GameBoard.checkMatches(GameBoard.checkQueue.pop()));
@@ -148,31 +150,19 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 			});
 		},
 		
-		// removeTile: function(tile) {
-			// Graphics.removeTile(tile, function() {
-				// require(['app/gameboard'], function(GameBoard) {
-					// console.log('removed');
-					// GameBoard.tiles[tile.column][tile.row] = null;
-					// for(var r = tile.row - 1; r >= 0; r--) {
-						// if(GameBoard.tiles[tile.column][r] != null) {
-							// GameBoard.dropTile(GameBoard.tiles[tile.column][r]);
-						// }
-					// }
-				// });
-			// });
-		// },
-		
 		removeTiles: function(tiles) {
 			Graphics.removeTiles(tiles, function() {
-				require(['app/gameboard'], function(GameBoard) {
+				require(['app/gameboard', 'app/entity/tile'], function(GameBoard, Tile) {
+					var newTiles = [];
 					var colsToDrop = {};
 					for(t in tiles) {
 						var tileToRemove = tiles[t];
-						if(GameBoard.tiles[tileToRemove.column][tileToRemove.row] != null) {
-							GameBoard.tiles[tileToRemove.column][tileToRemove.row] = null;
-							if(colsToDrop[tileToRemove.column] == null) {
-								colsToDrop[tileToRemove.column] = true;
+						if(GameBoard.tiles[tileToRemove.options.column][tileToRemove.options.row] != null) {
+							GameBoard.tiles[tileToRemove.options.column][tileToRemove.options.row] = null;
+							if(colsToDrop[tileToRemove.options.column] == null) {
+								colsToDrop[tileToRemove.options.column] = 0;
 							}
+							colsToDrop[tileToRemove.options.column]++;
 						}
 					}
 					for(col in colsToDrop) {
@@ -180,6 +170,20 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 							if(GameBoard.tiles[col][r] != null) {
 								GameBoard.dropTile(GameBoard.tiles[col][r]);
 							}
+						}
+						for(var i = 1, num = colsToDrop[col]; i <= num; i++) {
+							var r = Math.random();
+							var type = Tile.TYPE.Stone;
+							if(r < 0.33) {
+								type = Tile.TYPE.Grain
+							} else if(r < 0.66) {
+								type = Tile.TYPE.Wood
+							}
+							GameBoard.addTile(new Tile({
+								column: parseInt(col),
+								row: -i,
+								type: type
+							}));
 						}
 					}
 				});
@@ -189,13 +193,13 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 		switchTiles: function(tile1, tile2) {
 			Graphics.switchTiles(tile1, tile2, function(tile1, tile2) {
 				require(['app/gameboard'], function(GameBoard) {
-					var r1 = tile1.row, c1 = tile1.column;
-					GameBoard.tiles[tile1.column][tile1.row] = tile2;
-					GameBoard.tiles[tile2.column][tile2.row] = tile1;
-					tile1.row = tile2.row;
-					tile1.column = tile2.column;
-					tile2.row = r1;
-					tile2.column = c1;
+					var r1 = tile1.options.row, c1 = tile1.options.column;
+					GameBoard.tiles[tile1.options.column][tile1.options.row] = tile2;
+					GameBoard.tiles[tile2.options.column][tile2.options.row] = tile1;
+					tile1.options.row = tile2.options.row;
+					tile1.options.column = tile2.options.column;
+					tile2.options.row = r1;
+					tile2.options.column = c1;
 					
 					// Check for matches
 					var matches = GameBoard.checkMatches(tile1);
@@ -210,40 +214,40 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 		
 		checkMatches: function(tile) {
 			var hMatches = [tile], vMatches = [tile];			
-			if(tile.column > 0) {
-				var testTile = this.tiles[tile.column - 1][tile.row];
+			if(tile.options.column > 0) {
+				var testTile = this.tiles[tile.options.column - 1][tile.options.row];
 				while(testTile != null && testTile.options.type == tile.options.type) {
 					hMatches.push(testTile);
-					if(testTile.column == 0) break;
-					testTile = this.tiles[testTile.column - 1][testTile.row];
+					if(testTile.options.column == 0) break;
+					testTile = this.tiles[testTile.options.column - 1][testTile.options.row];
 				}
 			}
-			if(tile.column < this.options.columns - 1) {
-				var testTile = this.tiles[tile.column + 1][tile.row];
+			if(tile.options.column < this.options.columns - 1) {
+				var testTile = this.tiles[tile.options.column + 1][tile.options.row];
 				while(testTile != null && testTile.options.type == tile.options.type) {
 					hMatches.push(testTile);
-					if(testTile.column == this.options.columns - 1) break;
-					testTile = this.tiles[testTile.column + 1][testTile.row];
+					if(testTile.options.column == this.options.columns - 1) break;
+					testTile = this.tiles[testTile.options.column + 1][testTile.options.row];
 				}
 			}
-			if(tile.row > 0) {
-				var testTile = this.tiles[tile.column][tile.row - 1];
+			if(tile.options.row > 0) {
+				var testTile = this.tiles[tile.options.column][tile.options.row - 1];
 				while(testTile != null && testTile.options.type == tile.options.type) {
 					vMatches.push(testTile);
-					if(testTile.row == 0) break;
-					testTile = this.tiles[testTile.column][testTile.row - 1];
+					if(testTile.options.row == 0) break;
+					testTile = this.tiles[testTile.options.column][testTile.options.row - 1];
 				}
 			}
-			if(tile.row < this.options.rows - 1) {
-				var testTile = this.tiles[tile.column][tile.row + 1];
+			if(tile.options.row < this.options.rows - 1) {
+				var testTile = this.tiles[tile.options.column][tile.options.row + 1];
 				while(testTile != null && testTile.options.type == tile.options.type) {
 					vMatches.push(testTile);
-					if(testTile.row == this.options.rows - 1) break;
-					testTile = this.tiles[testTile.column][testTile.row + 1];
+					if(testTile.options.row == this.options.rows - 1) break;
+					testTile = this.tiles[testTile.options.column][testTile.options.row + 1];
 				}
 			}
-			
-			// Remove any matches tiles
+
+			// Only return matches that form rows/columns of three or more
 			var matches = [];
 			if(hMatches.length >= 3) {
 				matches = matches.concat(hMatches);

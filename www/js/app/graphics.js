@@ -77,15 +77,15 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			var width = el1.width();
 			$.when(
 				el1.animate({
-					left: tile2.column * width,
-					top: tile2.row * width
+					left: tile2.options.column * width,
+					top: tile2.options.row * width
 				}, {
 					duration: width * tile1.options.speed,
 					easing: 'linear'
 				}),
 				el2.animate({
-					left: tile1.column * width,
-					top: tile1.row * width
+					left: tile1.options.column * width,
+					top: tile1.options.row * width
 				}, {
 					duration: width * tile2.options.speed,
 					easing: 'linear'

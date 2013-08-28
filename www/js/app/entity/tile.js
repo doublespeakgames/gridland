@@ -2,7 +2,9 @@ define(['app/entity/entity'], function(Entity) {
 	
 	var tile = function(options) {
 		this.options = $.extend({}, this.options, {
-			type: type.Grain
+			type: type.Grain,
+			row: null,
+			column: null
 		}, options);
 	};
 	tile.prototype = new Entity({
@@ -16,7 +18,8 @@ define(['app/entity/entity'], function(Entity) {
 	};
 	
 	tile.prototype.isAdjacent = function(other) {
-		return Math.abs(this.row - other.row) + Math.abs(this.column - other.column) == 1;
+		return Math.abs(this.options.row - other.options.row) + 
+			Math.abs(this.options.column - other.options.column) == 1;
 	};
 	
 	var type = tile.TYPE = {

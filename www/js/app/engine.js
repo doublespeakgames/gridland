@@ -14,6 +14,7 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events'], function($, Gr
 		},
 		
 		startDrag: function(tile) {
+			if(GameBoard.fallingTiles > 0) return;
 			if(this.activeTile == null) {
 				// Select the tile
 				this.activeTile = tile;
@@ -31,16 +32,16 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events'], function($, Gr
 		
 		endDrag: function(tile) {
 			if(this.activeTile != null) {
-				var dx = tile.column - this.activeTile.column;
+				var dx = tile.options.column - this.activeTile.options.column;
 				dx = dx / Math.abs(dx) || 0;
-				var dy = tile.row - this.activeTile.row;
+				var dy = tile.options.row - this.activeTile.options.row;
 				dy = dy / Math.abs(dy) || 0;
 				if(Math.abs(dx) + Math.abs(dy) == 1) {
 					var active = this.activeTile;
 					this.activeTile = null;
 					Graphics.deselectTile(active);
 					try {
-						var sibling = GameBoard.tiles[active.column + dx][active.row + dy];
+						var sibling = GameBoard.tiles[active.options.column + dx][active.options.row + dy];
 						GameBoard.switchTiles(active, sibling);
 					} catch(e) {console.log('No drag for you!');}
 				}
