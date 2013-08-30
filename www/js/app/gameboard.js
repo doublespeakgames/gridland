@@ -288,6 +288,70 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 			}
 			
 			return matches;
+		},
+		
+		areMovesAvailable: function() {
+			// scan rows
+			for(var row = 0; row < this.options.rows; row++) {
+				for(var center = 1; i <this.options.columns - 1; center++) {
+					var frame = [
+						GameBoard.tiles[center - 1][row],
+						GameBoard.tiles[center][row],
+						GameBoard.tiles[center + 1][row]
+					];
+					
+					/* The three possible patterns are:
+					 * xox, xxo, oxx
+					 * No other patterns can result in a move
+					 */
+					if(frame[0].options.type == frame[1].options.type) {
+						// xxo
+						var type = frame[0].options.type;
+						if(row < this.options.rows - 1 && 
+								this.tiles[center + 1][row + 1].options.type == type) {
+							return true;	
+						}
+						if(row > 0 &&
+								this.tiles[center + 1][row - 1].options.type == type) {
+							return true;
+						}
+						if(center < this.options.columns - 2 &&
+								this.tiles[center + 2][row].options.type == type) {
+							return true;
+						}
+					}
+					if(frame[0].options.type == frame[2].options.type) {
+						// xox
+						var type = frame[0].options.type;
+						if(row < this.options.rows - 1 && 
+								this.tiles[center][row + 1].options.type == type) {
+							return true;	
+						}
+						if(row > 0 &&
+								this.tiles[center][row - 1].options.type == type) {
+							return true;
+						}
+					}
+					if(frame[1].options.type == frame[2].options.type) {
+						// oxx
+						var type = frame[1].options.type;
+						if(row < this.options.rows - 1 && 
+								this.tiles[center - 1][row + 1].options.type == type) {
+							return true;	
+						}
+						if(row > 0 &&
+								this.tiles[center - 1][row - 1].options.type == type) {
+							return true;
+						}
+						if(center > 0 &&
+								this.tiles[center - 2][row].options.type == type) {
+							return true;
+						}
+					}
+					
+				}
+			}
+			// scan columns
 		}
 	};
 });
