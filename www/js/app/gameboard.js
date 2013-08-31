@@ -145,6 +145,9 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 						}
 						if(matches.length > 0) {
 							GameBoard.removeTiles(matches);
+						} else if(!GameBoard.areMovesAvailable()) {
+							// TODO
+							console.log("NO MORE MOVES!");
 						}
 					}
 				});
@@ -286,72 +289,141 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 					}
 				}
 			}
-			
+
 			return matches;
 		},
 		
 		areMovesAvailable: function() {
 			// scan rows
 			for(var row = 0; row < this.options.rows; row++) {
-				for(var center = 1; i <this.options.columns - 1; center++) {
+				for(var center = 1; center < this.options.columns - 1; center++) {
 					var frame = [
-						GameBoard.tiles[center - 1][row],
-						GameBoard.tiles[center][row],
-						GameBoard.tiles[center + 1][row]
+						this.tiles[center - 1][row],
+						this.tiles[center][row],
+						this.tiles[center + 1][row]
 					];
 					
 					/* The three possible patterns are:
 					 * xox, xxo, oxx
 					 * No other patterns can result in a move
 					 */
-					if(frame[0].options.type == frame[1].options.type) {
+					if(frame[0] != null && frame[1] != null && frame[0].options.type == frame[1].options.type) {
 						// xxo
 						var type = frame[0].options.type;
-						if(row < this.options.rows - 1 && 
+						if(row < this.options.rows - 1 && this.tiles[center + 1][row + 1] != null &&
 								this.tiles[center + 1][row + 1].options.type == type) {
 							return true;	
 						}
-						if(row > 0 &&
+						if(row > 0 && this.tiles[center + 1][row - 1] && 
 								this.tiles[center + 1][row - 1].options.type == type) {
 							return true;
 						}
-						if(center < this.options.columns - 2 &&
+						if(center < this.options.columns - 2 && this.tiles[center + 2][row] != null &&
 								this.tiles[center + 2][row].options.type == type) {
 							return true;
 						}
 					}
-					if(frame[0].options.type == frame[2].options.type) {
+					if(frame[0] != null && frame[2] != null && frame[0].options.type == frame[2].options.type) {
 						// xox
 						var type = frame[0].options.type;
-						if(row < this.options.rows - 1 && 
+						if(row < this.options.rows - 1 && this.tiles[center][row + 1] != null &&
 								this.tiles[center][row + 1].options.type == type) {
 							return true;	
 						}
-						if(row > 0 &&
+						if(row > 0 && this.tiles[center][row - 1] != null &&
 								this.tiles[center][row - 1].options.type == type) {
 							return true;
 						}
 					}
-					if(frame[1].options.type == frame[2].options.type) {
+					if(frame[1] != null && frame[2] != null && frame[1].options.type == frame[2].options.type) {
 						// oxx
 						var type = frame[1].options.type;
-						if(row < this.options.rows - 1 && 
+						if(row < this.options.rows - 1 && this.tiles[center - 1][row + 1] != null && 
 								this.tiles[center - 1][row + 1].options.type == type) {
 							return true;	
 						}
-						if(row > 0 &&
+						if(row > 0 && this.tiles[center - 1][row - 1] != null && 
 								this.tiles[center - 1][row - 1].options.type == type) {
 							return true;
 						}
-						if(center > 0 &&
+						if(center > 1 && this.tiles[center - 2][row] != null && 
 								this.tiles[center - 2][row].options.type == type) {
 							return true;
 						}
 					}
-					
 				}
 			}
 			// scan columns
+			for(var column = 0; column < this.options.columns; column++) {
+				for(var center = 1; center < this.options.rows - 1; center++) {
+					var frame = [
+						this.tiles[column][center - 1],
+						this.tiles[column][center],
+						this.tiles[column][center + 1]
+					];
+					
+					/* The three possible patterns are:
+					 * x  x  o
+					 * o  x  x
+					 * x, o, x 
+					 * No other patterns can result in a move
+					 */
+					if(frame[0] != null && frame[1] != null && frame[0].options.type == frame[1].options.type) {
+						/*  x
+						 *  x
+						 *  o
+						 */ 
+						var type = frame[0].options.type;
+						if(column < this.options.column - 1 && this.tiles[column + 1][center + 1] != null && 
+								this.tiles[column + 1][center + 1].options.type == type) {
+							return true;	
+						}
+						if(column > 0 && this.tiles[column - 1][center + 1] != null && 
+								this.tiles[column - 1][center + 1].options.type == type) {
+							return true;
+						}
+						if(center < this.options.rows - 2 && this.tiles[column][center + 2] != null && 
+								this.tiles[column][center + 2].options.type == type) {
+							return true;
+						}
+					}
+					if(frame[0] != null && frame[2] != null && frame[0].options.type == frame[2].options.type) {
+						/*  x
+						 *  o
+						 *  x
+						 */
+						var type = frame[0].options.type;
+						if(column < this.options.columns - 1 && this.tiles[column + 1][center] != null && 
+								this.tiles[column + 1][center].options.type == type) {
+							return true;	
+						}
+						if(column > 0 && this.tiles[column - 1][center] != null && 
+								this.tiles[column - 1][center].options.type == type) {
+							return true;
+						}
+					}
+					if(frame[1] != null && frame[2] != null && frame[1].options.type == frame[2].options.type) {
+						/*  o
+						 *  x
+						 *  x
+						 */
+						var type = frame[1].options.type;
+						if(column < this.options.column - 1 && this.tiles[column + 1][center - 1] != null && 
+								this.tiles[column + 1][center - 1].options.type == type) {
+							return true;	
+						}
+						if(column > 0 && this.tiles[column - 1][center - 1] != null && 
+								this.tiles[column - 1][center - 1].options.type == type) {
+							return true;
+						}
+						if(center > 1 && this.tiles[column][center - 2] != null && 
+								this.tiles[column][center - 2].options.type == type) {
+							return true;
+						}
+					}
+				}
+			}
+			return false;
 		}
 	};
 });
