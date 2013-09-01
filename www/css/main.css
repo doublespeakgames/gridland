@@ -43,23 +43,28 @@
 }
 
 .grain div {
-	background-color: #FFE97F;
+	/*background-color: #FFE97F;*/
+	background: url(../img/wheattile.png) center no-repeat;
 }
 
 .wood div {
-	background-color: #7C5840;
+	/* background-color: #7C5840; */
+	background: url(../img/woodtile.png) center no-repeat;
 }
 
 .stone div {
-	background-color: #C4C4C4;
+	/* background-color: #C4C4C4; */
+	background: url(../img/stonetile.png) center no-repeat;
 }
 
 .clay div {
-	background-color: #C65645;
+	/*background-color: #C65645;*/
+	background: url(../img/clay.png) center no-repeat;
 }
 
 .gem div {
-	background-color: #C49EE2;
+	/* background-color: #C49EE2;*/
+	background: url(../img/gem.png) center no-repeat;
 }
 
 .blank div {

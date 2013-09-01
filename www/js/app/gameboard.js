@@ -27,10 +27,9 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 			return {
 				'grain' : 2,
 				'wood' : 2,
-				'stone' : 2,
+				'stone' : 2/*,
 				'gem': 2,
-				'clay': 2,
-				'blank': 2
+				'clay': 2*/
 			};
 		},
 
