@@ -139,6 +139,21 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 				},
 				complete: callback
 			});
+		},
+		
+		raiseBuilding: function(building, callback) {
+			var el = building.el();
+			el.css('bottom', -el.height());
+			this.setPosition(building, building.p());
+			this.addToWorld(building);
+			$.when(el.animate({
+				'bottom': 0
+			}, {
+				duration: 5000,
+				easing: 'linear'
+			})).done(function() {
+				callback(building);
+			});
 		}
 	};
 });

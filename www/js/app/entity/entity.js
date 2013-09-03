@@ -20,7 +20,7 @@ define([ 'jquery', 'app/events', 'app/graphics' ], function($, Events, Graphics)
 	
 	entity.prototype.el = function() {
 		if(this._el == null) {
-			this._el = $('<div>').addClass(this.options.className);
+			this._el = Graphics.newElement(this.options.className);
 		}
 		return this._el;
 	};

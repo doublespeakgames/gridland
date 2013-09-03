@@ -8,6 +8,16 @@ require(["jquery", "app/engine", "app/gameboard", "app/world", "app/entity/tile"
 	GameBoard.fill();
 	World.launchDude();
 	
+	// Dev stuff. Remove being release.
+	setTimeout(function() {
+		require(["app/entity/building", "app/world"], function(Building, World) {
+			var b = new Building({
+				type: Building.TYPE.Shack
+			});
+			b.p(30);
+			World.build(b);
+		});
+	}, 1000);
 	$('#test').click(function() { require(['app/gameboard'], function(G) {
 		console.log("Moves available? " + G.areMovesAvailable());
 	}); });

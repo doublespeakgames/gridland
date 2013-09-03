@@ -14,7 +14,7 @@ define(['app/entity/entity', 'app/graphics'], function(Entity, Graphics) {
 	worldEntity.prototype = new Entity();
 	worldEntity.constructor = worldEntity;
 	
-	worldEntity.prototype.move = function(position) {
+	worldEntity.prototype.move = function(position, callback) {
 		if(this.tempAnimation == null) {
 			if(this.p() < position) {
 				// Moving right
@@ -27,6 +27,9 @@ define(['app/entity/entity', 'app/graphics'], function(Entity, Graphics) {
 			Graphics.animateMove(this, position, function() {
 				// Stop the move animation
 				_entity.animation(MOVE_ANIMS.idle);
+				if(callback != null) {
+					callback(_entity);
+				}
 			});
 		}
 	};

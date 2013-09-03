@@ -1,4 +1,4 @@
-define(['app/entity/entity'], function(Entity) {
+define(['app/entity/entity', 'app/graphics'], function(Entity, Graphics) {
 	
 	var tile = function(options) {
 		this.options = $.extend({}, this.options, {
@@ -15,7 +15,7 @@ define(['app/entity/entity'], function(Entity) {
 	
 	tile.prototype.el = function() {
 		if(this._el == null) {
-			this._el = Entity.prototype.el.call(this).addClass(this.options.type.className).append($('<div>'));
+			this._el = Entity.prototype.el.call(this).addClass(this.options.type.className).append(Graphics.newElement());
 		}
 		return this._el;
 	};
