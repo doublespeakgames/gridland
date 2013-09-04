@@ -18,7 +18,7 @@ define(['app/entity/worldentity', 'app/resources', 'app/graphics'], function(Wor
 		return this._el;
 	};
 	
-	block.prototype.max = 15;
+	block.prototype.max = 30;
 	
 	block.prototype.spaceLeft = function() {
 		return this.max - this._quantity;
