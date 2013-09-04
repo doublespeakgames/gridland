@@ -1,4 +1,5 @@
-define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, Engine, Graphics, Tile) {
+define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resources'], 
+		function($, Engine, Graphics, Tile, Resources) {
 	return {
 		fallingTiles: 0,
 		checkQueue: [],
@@ -85,7 +86,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 					}
 					baseline += chance;
 				}
-				var type = Tile.getType(theClass);
+				var type = Resources.getType(theClass);
 
 				GameBoard.addTile(new Tile({
 					type : type,
@@ -155,11 +156,16 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 		
 		removeTiles: function(tiles) {
 			Graphics.removeTiles(tiles, function() {
-				require(['app/gameboard', 'app/entity/tile'], function(GameBoard, Tile) {
+				require(['app/gameboard', 'app/entity/tile', 'app/resources'], function(GameBoard, Tile, Resources) {
 					var newTiles = [];
 					var colsToDrop = {};
+					var resourcesGained = {};
+					
+					// Remove matched tiles
 					for(t in tiles) {
 						var tileToRemove = tiles[t];
+						var gained = resourcesGained[tileToRemove.options.type.className] || 0;
+						resourcesGained[tileToRemove.options.type.className] = gained + 1;
 						if(GameBoard.tiles[tileToRemove.options.column][tileToRemove.options.row] != null) {
 							GameBoard.tiles[tileToRemove.options.column][tileToRemove.options.row] = null;
 							if(colsToDrop[tileToRemove.options.column] == null) {
@@ -168,6 +174,13 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 							colsToDrop[tileToRemove.options.column]++;
 						}
 					}
+					
+					// Gain resources
+					for(typeName in resourcesGained) {
+						Resources.collectResource(Resources.getType(typeName), resourcesGained[typeName]);
+					}
+					
+					// Drop remaining tiles
 					var pCounts = GameBoard.tileMap();
 					var nextCount = 0;
 					for(col in colsToDrop) {
@@ -193,7 +206,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile'], function($, 
 								}
 								base += prob;
 							}
-							var type = Tile.getType(typeClass);
+							var type = Resources.getType(typeClass);
 							nextCount = 0;
 							for(var t in pCounts) {
 								if(t == type.className) {

@@ -1,4 +1,4 @@
-define(['jquery', 'app/graphics', 'app/entity/dude'], function($, Graphics, Dude) {
+define(['jquery', 'app/graphics', 'app/entity/dude', 'app/entity/building'], function($, Graphics, Dude, Building) {
 	return {
 		stuff: [],
 		
@@ -38,12 +38,27 @@ define(['jquery', 'app/graphics', 'app/entity/dude'], function($, Graphics, Dude
 			Graphics.setPosition(dude, dude.p());
 		},
 		
-		build: function(building) {
+		launchCity: function() {
+			var b = new Building({
+				type: Building.TYPE.Shack
+			});
+			b.p(30);
+			this.build(b, function() {
+				require(['app/resources'], function(R) {
+					R.init();
+				});
+			});
+		},
+		
+		build: function(building, callback) {
 			this.dude.move(building.dudeSpot(), function(dude) {
 				dude.animation(4);
 				require(["app/graphics"], function(Graphics) {
 					Graphics.raiseBuilding(building, function() {
 						dude.animation(0);
+						if(callback != null) {
+							callback();
+						}
 					});
 				});
 			});

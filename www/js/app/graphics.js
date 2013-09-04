@@ -33,6 +33,10 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			$('.gameBoard').append(entity.el());
 		},
 		
+		addResource: function(block) {
+			$('.resources').append(block.el());
+		},
+		
 		addToTileContainer: function(entity) {
 			$('.tileContainer').append(entity.el());
 		},
@@ -154,6 +158,10 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			})).done(function() {
 				callback(building);
 			});
+		},
+		
+		updateBlock: function(block) {
+			$('div', block.el()).width((block.quantity() / block.max * 100) + '%');
 		}
 	};
 });

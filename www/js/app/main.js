@@ -10,12 +10,8 @@ require(["jquery", "app/engine", "app/gameboard", "app/world", "app/entity/tile"
 	
 	// Dev stuff. Remove being release.
 	setTimeout(function() {
-		require(["app/entity/building", "app/world"], function(Building, World) {
-			var b = new Building({
-				type: Building.TYPE.Shack
-			});
-			b.p(30);
-			World.build(b);
+		require(["app/world"], function(World) {
+			World.launchCity();
 		});
 	}, 1000);
 	$('#test').click(function() { require(['app/gameboard'], function(G) {

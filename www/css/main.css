@@ -42,32 +42,32 @@
 	bottom: 2px;
 }
 
-.grain div {
+.tile.grain div {
 	/*background-color: #FFE97F;*/
 	background: url(../img/wheattile.png) center no-repeat;
 }
 
-.wood div {
+.tile.wood div {
 	/* background-color: #7C5840; */
 	background: url(../img/woodtile.png) center no-repeat;
 }
 
-.stone div {
+.tile.stone div {
 	/* background-color: #C4C4C4; */
 	background: url(../img/stonetile.png) center no-repeat;
 }
 
-.clay div {
+.tile.clay div {
 	/*background-color: #C65645;*/
 	background: url(../img/clay.png) center no-repeat;
 }
 
-.gem div {
+.tile.gem div {
 	/* background-color: #C49EE2;*/
 	background: url(../img/gem.png) center no-repeat;
 }
 
-.blank div {
+.tile.blank div {
 	background-color: #000;
 }
 
@@ -102,4 +102,48 @@
 
 .shack {
 	background-image: url(../img/shack.png);
+}
+
+.resources {
+	position: absolute;
+	font-size: 0px;
+	bottom: 5px;
+	left: 13px;
+	width: 30px;
+	height: 30px;
+	border: 1px solid black;
+	text-align: right;
+	transform: rotate(180deg);
+	-webkit-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+}
+
+.block {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border: 1px solid black;
+	transform: rotate(180deg);
+	-webkit-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+}
+
+.block div {
+	height: 100%;
+}
+
+.block.grain div {
+	background-color: #FFE97F;
+}
+
+.block.wood div {
+	background-color: #7C5840;
+}
+
+.block.stone div {
+	background-color: #C4C4C4;
+}
+
+.block.clay div {
+	background-color: #C65645;
 }
