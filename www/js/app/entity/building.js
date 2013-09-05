@@ -1,9 +1,11 @@
-define(['app/entity/worldentity'], function(WorldEntity) {
+define(['app/entity/worldentity', 'app/gamecontent'], function(WorldEntity, Content) {
 	
 	var building = function(options) {
 		this.options = $.extend({}, this.options, {
-			type: type.Shack
+			type: Content.BuildingType.Shack
 		}, options);
+		
+		this.p(this.options.type.position);
 	};
 	building.prototype = new WorldEntity({
 		className: 'building'
@@ -19,12 +21,6 @@ define(['app/entity/worldentity'], function(WorldEntity) {
 	
 	building.prototype.dudeSpot = function() {
 		return this.p() + this.el().width() / 2;
-	};
-	
-	var type = building.TYPE = {
-		Shack: {
-			className: 'shack'
-		}
 	};
 	
 	return building;

@@ -1,4 +1,4 @@
-define(['jquery', 'app/graphics'], function($, Graphics) {
+define(['jquery', 'app/graphics', 'app/gamecontent'], function($, Graphics, Content) {
 	return {
 		options : {},
 		init : function(opts) {
@@ -58,33 +58,12 @@ define(['jquery', 'app/graphics'], function($, Graphics) {
 		},
 		
 		getType: function(className) {
-			for(var c in this.Type) {
-				if(className == this.Type[c].className) {
-					return this.Type[c];
+			for(var c in Content.ResourceType) {
+				if(className == Content.ResourceType[c].className) {
+					return Content.ResourceType[c];
 				}
 			}
 			return null;
-		},
-		
-		Type: {
-			Grain: {
-				className: 'grain'
-			},
-			Wood: {
-				className: 'wood'
-			},
-			Stone: {
-				className: 'stone'
-			},
-			Clay: {
-				className: 'clay'
-			},
-			Gem: {
-				className: 'gem'
-			},
-			Blank: {
-				className: 'blank'
-			}
 		}
 	};
 });

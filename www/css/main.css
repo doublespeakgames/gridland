@@ -114,6 +114,7 @@
 	border: 1px solid black;
 	text-align: right;
 	transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
 	-webkit-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
 }
@@ -124,6 +125,7 @@
 	height: 8px;
 	border: 1px solid black;
 	transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
 	-webkit-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
 }

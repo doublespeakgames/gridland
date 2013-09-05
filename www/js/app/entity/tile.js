@@ -1,8 +1,8 @@
-define(['app/entity/entity', 'app/graphics', 'app/resources'], function(Entity, Graphics, Resources) {
+define(['app/entity/entity', 'app/graphics', 'app/gamecontent'], function(Entity, Graphics, Content) {
 	
 	var tile = function(options) {
 		this.options = $.extend({}, this.options, {
-			type: Resources.Type.Grain,
+			type: Content.ResourceType.Grain,
 			row: null,
 			column: null
 		}, options);

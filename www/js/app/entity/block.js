@@ -1,8 +1,8 @@
-define(['app/entity/worldentity', 'app/resources', 'app/graphics'], function(WorldEntity, Resources, Graphics) {
+define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics'], function(WorldEntity, Content, Graphics) {
 	
 	var block = function(options) {
 		this.options = $.extend({}, this.options, {
-			type: Resources.Type.Grain
+			type: Content.ResourceType.Grain
 		}, options);
 		this._quantity = 0;
 	};

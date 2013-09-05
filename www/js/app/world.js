@@ -1,4 +1,4 @@
-define(['jquery', 'app/graphics', 'app/entity/dude', 'app/entity/building'], function($, Graphics, Dude, Building) {
+define(['jquery', 'app/graphics', 'app/entity/dude', 'app/entity/building', 'app/gamecontent'], function($, Graphics, Dude, Building, Content) {
 	return {
 		stuff: [],
 		
@@ -40,9 +40,8 @@ define(['jquery', 'app/graphics', 'app/entity/dude', 'app/entity/building'], fun
 		
 		launchCity: function() {
 			var b = new Building({
-				type: Building.TYPE.Shack
+				type: Content.BuildingType.Shack
 			});
-			b.p(30);
 			this.build(b, function() {
 				require(['app/resources'], function(R) {
 					R.init();
