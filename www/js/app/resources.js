@@ -1,4 +1,4 @@
-define(['jquery', 'app/graphics', 'app/gamecontent'], function($, Graphics, Content) {
+define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function($, Graphics, Content) {
 	return {
 		options : {},
 		init : function(opts) {
@@ -7,8 +7,6 @@ define(['jquery', 'app/graphics', 'app/gamecontent'], function($, Graphics, Cont
 			this.el().css('opacity', 0).animate({'opacity': 1}, 200);
 			this.loaded = true;
 		},
-		
-		stores: [],
 
 		el : function() {
 			if (this._el == null) {
@@ -19,11 +17,11 @@ define(['jquery', 'app/graphics', 'app/gamecontent'], function($, Graphics, Cont
 		
 		collectResource: function(type, quantity) {
 			if(this.loaded) {
-				require(['app/entity/block', 'app/resources'], function(Block, Resources) {
+				require(['app/entity/block', 'app/resources', 'app/gamestate'], function(Block, Resources, GameState) {
 					// Find a block to fill 
 					var block = null;
-					for(var i = 0, len = Resources.stores.length; i < len; i++) {
-						var currentBlock = Resources.stores[i];
+					for(var i = 0, len = GameState.stores.length; i < len; i++) {
+						var currentBlock = GameState.stores[i];
 						if(currentBlock.options.type == type && currentBlock.spaceLeft() > 0) {
 							block = currentBlock;
 							break;
@@ -35,11 +33,11 @@ define(['jquery', 'app/graphics', 'app/gamecontent'], function($, Graphics, Cont
 							type: type
 						});
 						// If the stores are full, eject the oldest
-						if(Resources.stores.length >= Resources.max()) {
-							var oldBlock = Resources.stores.splice(0, 1)[0];
+						if(GameState.stores.length >= Resources.max()) {
+							var oldBlock = GameState.stores.splice(0, 1)[0];
 							oldBlock.el().remove();
 						}
-						Resources.stores.push(block);
+						GameState.stores.push(block);
 						Graphics.addResource(block);
 					}
 					// Add the resource

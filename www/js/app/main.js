@@ -1,7 +1,8 @@
-require(["jquery", "app/engine", "app/gameboard", "app/world", "app/entity/tile"], 
-		function($, Engine, GameBoard, World, Tile) {
+require(["jquery", "app/engine", "app/gameboard", "app/world", 'app/gamestate'], 
+		function($, Engine, GameBoard, World, GameState) {
 	
 	// Initialize the board
+	GameState.create();
 	Engine.init();
 	GameBoard.init();
 	World.init();
