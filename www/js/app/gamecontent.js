@@ -24,7 +24,9 @@ define({
 	BuildingType: {
 		Shack: {
 			className: 'shack',
-			position: 30
+			position: 30,
+			cost: {},
+			requiredLevel: 0
 		},
 		
 		Mine: {

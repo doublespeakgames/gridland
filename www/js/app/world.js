@@ -1,4 +1,5 @@
-define(['jquery', 'app/graphics', 'app/entity/dude', 'app/entity/building', 'app/gamecontent'], function($, Graphics, Dude, Building, Content) {
+define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app/gamestate'], 
+		function($, Graphics, Building, Content, GameState) {
 	return {
 		stuff: [],
 		
@@ -29,38 +30,61 @@ define(['jquery', 'app/graphics', 'app/entity/dude', 'app/entity/building', 'app
 		},
 		
 		launchDude: function() {
-			var dude = this.dude = new Dude();
-			this.stuff.push(dude);
-			dude.animation(0);
-			dude.animationOnce(3);
-			Graphics.addToWorld(dude);
-			dude.p(this.el().width() / 2);
-			Graphics.setPosition(dude, dude.p());
-		},
-		
-		launchCity: function() {
-			var b = new Building({
-				type: Content.BuildingType.Shack
-			});
-			this.build(b, function() {
-				require(['app/resources'], function(R) {
-					R.init();
-				});
+			require(['app/world', 'app/graphics', 'app/entity/dude', 'app/gamestate'], 
+					function(World, Graphics, Dude, GameState) {
+				var dude = this.dude = new Dude();
+				World.stuff.push(dude);
+				dude.animation(0);
+				dude.animationOnce(3);
+				Graphics.addToWorld(dude);
+				dude.p(World.el().width() / 2);
+				Graphics.setPosition(dude, dude.p());
+				GameState.level = 1;
 			});
 		},
 		
-		build: function(building, callback) {
-			this.dude.move(building.dudeSpot(), function(dude) {
-				dude.animation(4);
-				require(["app/graphics"], function(Graphics) {
-					Graphics.raiseBuilding(building, function() {
-						dude.animation(0);
-						if(callback != null) {
-							callback();
-						}
+		/**
+		 * Returns a function (with the dude as the only parameter) to give the dude something to do.
+		 * Checks for buildable buildings, moveable resources, etc...
+		 */
+		getActivity: function() {
+			// Look for buildable buildings first
+			for(var t in Content.BuildingType) {
+				var buildingType = Content.BuildingType[t];
+				var building = GameState.getBuilding(buildingType);
+				// Add it to the buildings list, if it should be available to build and it isn't.
+				if(building == null && GameState.level >= buildingType.requiredLevel) {
+					building = new Building({
+						type: buildingType
 					});
-				});
-			});
+					GameState.buildings.push(building);
+				}
+				
+				// If it's ready to build, build it.
+				if(building != null && building.readyToBuild()) {
+					return function(dude) {
+						dude.move(building.dudeSpot(), function(dude) {
+							dude.animation(4);
+							require(["app/graphics", "app/gamecontent", 'app/resources'], function(Graphics, Content, R) {
+								Graphics.raiseBuilding(building, function() {
+									building.built = true;
+									dude.animation(0);
+									// The Shack initializes the resource grid
+									if(building.options.type == Content.BuildingType.Shack) {
+										R.init();
+									}
+								});
+							});
+						});
+					}
+				}
+			}
+			
+			// Then look for moveable resources
+			// TODO
+			
+			// Then give up, and return null
+			return null;
 		}
 	};
 });

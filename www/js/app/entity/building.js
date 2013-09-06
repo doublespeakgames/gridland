@@ -5,6 +5,13 @@ define(['app/entity/worldentity', 'app/gamecontent'], function(WorldEntity, Cont
 			type: Content.BuildingType.Shack
 		}, options);
 		
+		this.requiredResources = {};
+		for(var i in this.options.type.cost) {
+			requiredResources[i] = this.options.type.cost[i];
+		}
+		
+		this.built = false;
+		
 		this.p(this.options.type.position);
 	};
 	building.prototype = new WorldEntity({
@@ -17,6 +24,18 @@ define(['app/entity/worldentity', 'app/gamecontent'], function(WorldEntity, Cont
 			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className);
 		}
 		return this._el;
+	};
+	
+	building.prototype.readyToBuild = function() {
+		if(this.built) {
+			return false;
+		}
+		for(var r in this.requiredResources) {
+			if(this.requiredResources[r] > 0) {
+				return false;
+			}
+		}
+		return true;
 	};
 	
 	building.prototype.dudeSpot = function() {

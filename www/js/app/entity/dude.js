@@ -1,4 +1,4 @@
-define(['app/entity/worldentity'], function(WorldEntity) {
+define(['app/entity/worldentity', 'app/world'], function(WorldEntity, World) {
 	var dude = function() {
 		this.doing = null;
 	};
@@ -8,10 +8,16 @@ define(['app/entity/worldentity'], function(WorldEntity) {
 	dude.constructor = dude;
 	
 	dude.prototype.think = function() {
-//		if(Math.random() < 0.1) {
-//			var pos = Math.floor(Math.random() * 480);
-//			this.move(pos);
-//		}
+		if(this.isIdle()) {
+			var activity = World.getActivity();
+			if(activity != null) {
+				activity(this);
+			}
+		}
+	};
+	
+	dude.prototype.isIdle = function() {
+		return this.tempAnimation == null && this.animationRow == 0;
 	};
 	
 	return dude;
