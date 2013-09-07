@@ -13,6 +13,10 @@ define({
 		// TODO
 	},
 	
+	removeBlock: function(block) {
+		this.stores.splice(this.stores.indexOf(block), 1);
+	},
+	
 	getBuilding: function(type) {
 		for(var i in this.buildings) {
 			var building = this.buildings[i];

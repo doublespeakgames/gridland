@@ -1,4 +1,4 @@
-define(['app/entity/worldentity', 'app/gamecontent'], function(WorldEntity, Content) {
+define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics'], function(WorldEntity, Content, Graphics) {
 	
 	var building = function(options) {
 		this.options = $.extend({}, this.options, {
@@ -7,7 +7,7 @@ define(['app/entity/worldentity', 'app/gamecontent'], function(WorldEntity, Cont
 		
 		this.requiredResources = {};
 		for(var i in this.options.type.cost) {
-			requiredResources[i] = this.options.type.cost[i];
+			this.requiredResources[i] = this.options.type.cost[i];
 		}
 		
 		this.built = false;
@@ -21,7 +21,9 @@ define(['app/entity/worldentity', 'app/gamecontent'], function(WorldEntity, Cont
 	
 	building.prototype.el = function() {
 		if(this._el == null) {
-			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className);
+			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className)
+				.append(Graphics.newElement("blockPile"));
+			Graphics.setPosition(this, this.p());
 		}
 		return this._el;
 	};

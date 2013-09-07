@@ -147,9 +147,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		raiseBuilding: function(building, callback) {
 			var el = building.el();
-			el.css('bottom', -el.height());
-			this.setPosition(building, building.p());
-			this.addToWorld(building);
+			$('.blockPile', el).empty();
 			$.when(el.animate({
 				'bottom': 0
 			}, {
@@ -158,6 +156,15 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			})).done(function() {
 				callback(building);
 			});
+		},
+		
+		pickUpBlock: function(block) {
+			block.el().appendTo('.heldBlock');
+		},
+		
+		dropBlock: function(block, destinationBuilding) {
+			block.el().appendTo($('.blockPile', destinationBuilding.el()));
+			block.el().css('top', '0px');
 		},
 		
 		updateBlock: function(block) {

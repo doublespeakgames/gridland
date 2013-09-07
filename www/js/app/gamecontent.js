@@ -26,12 +26,17 @@ define({
 			className: 'shack',
 			position: 30,
 			cost: {},
-			requiredLevel: 0
+			requiredLevel: 1
 		},
 		
 		Mine: {
-			className: 'shack', //TODO: Make a real sprite!
-			position: 90
+			className: 'mine', //TODO: Make a real sprite!
+			position: 90,
+			cost: {
+				"stone": 4,
+				"wood": 4
+			},
+			requiredLevel: 1
 		}
 	}
 });

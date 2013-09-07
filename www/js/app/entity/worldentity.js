@@ -38,5 +38,9 @@ define(['app/entity/entity', 'app/graphics'], function(Entity, Graphics) {
 		// Nothing
 	};
 	
+	worldEntity.prototype.isIdle = function() {
+		return this.tempAnimation == null && this.animationRow == MOVE_ANIMS.idle;
+	};
+	
 	return worldEntity;
 });

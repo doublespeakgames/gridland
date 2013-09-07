@@ -58,6 +58,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 						type: buildingType
 					});
 					GameState.buildings.push(building);
+					Graphics.addToWorld(building);
 				}
 				
 				// If it's ready to build, build it.
@@ -78,10 +79,42 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 						});
 					}
 				}
-			}
 			
-			// Then look for moveable resources
-			// TODO
+				// Then look for moveable resources
+				else if(building != null && !building.built) {
+					for(var b in GameState.stores) {
+						var block = GameState.stores[b];
+						if(block.spaceLeft() == 0) {
+							for(var resource in building.requiredResources) {
+								var required = building.requiredResources[resource];
+								if(required > 0 && resource == block.options.type.className) {
+									// We can move this block!
+									return function(dude) {
+										require(['app/gamestate', 'app/gamecontent'], 
+												function(GameState, Content) {
+											dude.move(GameState.getBuilding(Content.BuildingType.Shack).dudeSpot(), function(dude) {
+												require(['app/graphics'], function(Graphics) {
+													if(block.gone) return;
+													Graphics.pickUpBlock(block);
+													dude.carrying = block.el();
+													GameState.removeBlock(block);
+													dude.move(building.dudeSpot(), function(dude) {
+														require(['app/graphics'], function(Graphics) {
+															Graphics.dropBlock(block, building);
+															dude.carrying = null;
+															building.requiredResources[resource]--;
+														});
+													});
+												});
+											});
+										});
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 			
 			// Then give up, and return null
 			return null;

@@ -32,12 +32,17 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 						block = new Block({
 							type: type
 						});
-						// If the stores are full, eject the oldest
-						if(GameState.stores.length >= Resources.max()) {
-							var oldBlock = GameState.stores.splice(0, 1)[0];
-							oldBlock.el().remove();
-						}
 						GameState.stores.push(block);
+						console.log(Date.now() + ": " + GameState.stores.length);
+						// If the stores are full, eject the oldest
+						if(GameState.stores.length > Resources.max()) {
+							var oldBlocks = GameState.stores.splice(0, GameState.stores.length - Resources.max());
+							console.log(Date.now() + ": ejecting " + oldBlocks.length);
+							for(var i in oldBlocks) {
+								oldBlocks[i].gone = true;
+								oldBlocks[i].el().remove();
+							}
+						}
 						Graphics.addResource(block);
 					}
 					// Add the resource
