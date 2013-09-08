@@ -139,7 +139,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 				duration: dist * entity.options.speed, 
 				easing: 'linear', 
 				step: function(now, tween) {
-					entity.p(now);
+					entity.p(now + el.width() / 2);
 				},
 				complete: callback
 			});
