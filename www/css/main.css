@@ -114,8 +114,12 @@
 	background-image: url(../img/shack.png);
 }
 
+.bricklayer {
+	background-image: url(../img/bricklayer.png);
+}
+
 .mine {
-	background-image: url(../img/shack.png);
+	background-image: url(../img/mine.png);
 }
 
 .resources {
@@ -140,7 +144,6 @@
 	height: 60px;
     width: 40px;
     font-size: 0px;
-    text-align: right;
 	transform: rotate(180deg);
 	-moz-transform: rotate(180deg);
 	-webkit-transform: rotate(180deg);

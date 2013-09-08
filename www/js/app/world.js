@@ -43,6 +43,11 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 			});
 		},
 		
+		hasBuilding: function(type) {
+			var building = GameState.getBuilding(type);
+			return building != null && building.built;
+		},
+		
 		/**
 		 * Returns a function (with the dude as the only parameter) to give the dude something to do.
 		 * Checks for buildable buildings, moveable resources, etc...

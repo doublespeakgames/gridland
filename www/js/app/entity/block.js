@@ -18,7 +18,7 @@ define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics'], function(W
 		return this._el;
 	};
 	
-	block.prototype.max = 30;
+	block.prototype.max = 50;
 	
 	block.prototype.spaceLeft = function() {
 		return this.max - this._quantity;

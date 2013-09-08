@@ -29,12 +29,23 @@ define({
 			requiredLevel: 1
 		},
 		
-		Mine: {
-			className: 'mine', //TODO: Make a real sprite!
+		BrickLayer: {
+			className: 'bricklayer',
 			position: 90,
 			cost: {
-				"stone": 4,
-				"wood": 4
+				stone: 5,
+				wood: 5
+			},
+			requiredLevel: 1
+		},
+		
+		Mine: {
+			className: 'mine',
+			position: 150,
+			cost: {
+				stone: 4,
+				wood: 4,
+				clay: 4
 			},
 			requiredLevel: 1
 		}

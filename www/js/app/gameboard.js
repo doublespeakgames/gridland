@@ -1,5 +1,5 @@
-define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resources'], 
-		function($, Engine, Graphics, Tile, Resources) {
+define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resources', 'app/world', 'app/gamecontent'], 
+		function($, Engine, Graphics, Tile, Resources, World, Content) {
 	return {
 		fallingTiles: 0,
 		checkQueue: [],
@@ -25,13 +25,17 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 		},
 		
 		tileMap: function() {
-			return {
+			var map = {
 				'grain' : 2,
 				'wood' : 2,
-				'stone' : 2/*,
-				'gem': 2,
-				'clay': 2*/
+				'stone' : 2
 			};
+			
+			if(World.hasBuilding(Content.BuildingType.BrickLayer)) {
+				map.clay = 2;
+			}
+			
+			return map;
 		},
 
 		fill : function() {

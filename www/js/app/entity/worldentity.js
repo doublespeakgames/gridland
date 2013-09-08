@@ -22,6 +22,12 @@ define(['app/entity/entity', 'app/graphics'], function(Entity, Graphics) {
 			} else if(this.p() > position) {
 				// Moving left
 				this.animation(MOVE_ANIMS.left);
+			} else {
+				// No movement required
+				if(callback != null) {
+					callback(this);
+				}
+				return;
 			}
 			var _entity = this;
 			Graphics.animateMove(this, position, function() {
