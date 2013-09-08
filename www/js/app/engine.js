@@ -14,18 +14,19 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events'], function($, Gr
 		},
 		
 		startDrag: function(tile) {
-			if(GameBoard.fallingTiles > 0) return;
-			if(this.activeTile == null) {
-				// Select the tile
-				this.activeTile = tile;
-				Graphics.selectTile(tile);		
-			} else {
-				// Either initiate a switch, or deselect
-				var active = this.activeTile;
-				this.activeTile = null;
-				Graphics.deselectTile(active);
-				if(tile.isAdjacent(active)) {
-					GameBoard.switchTiles(active, tile);
+			if(GameBoard.canMove()) {
+				if(this.activeTile == null) {
+					// Select the tile
+					this.activeTile = tile;
+					Graphics.selectTile(tile);		
+				} else {
+					// Either initiate a switch, or deselect
+					var active = this.activeTile;
+					this.activeTile = null;
+					Graphics.deselectTile(active);
+					if(tile.isAdjacent(active)) {
+						GameBoard.switchTiles(active, tile);
+					}
 				}
 			}
 		},

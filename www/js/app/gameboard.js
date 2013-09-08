@@ -2,6 +2,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 		function($, Engine, Graphics, Tile, Resources, World, Content) {
 	return {
 		fallingTiles: 0,
+		removals: 0,
 		checkQueue: [],
 		
 		options : {
@@ -36,6 +37,10 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 			}
 			
 			return map;
+		},
+		
+		canMove: function() {
+			return this.fallingTiles == 0 && this.removals == 0;
 		},
 
 		fill : function() {
@@ -159,6 +164,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 		},
 		
 		removeTiles: function(tiles) {
+			this.removals++;
 			Graphics.removeTiles(tiles, function() {
 				require(['app/gameboard', 'app/entity/tile', 'app/resources'], function(GameBoard, Tile, Resources) {
 					var newTiles = [];
@@ -227,6 +233,8 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 							}));
 						}
 					}
+					GameBoard.removals--;
+					if(GameBoard.removals < 0) GameBoard.removals = 0;
 				});
 			});
 		},

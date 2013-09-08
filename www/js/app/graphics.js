@@ -147,7 +147,16 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		raiseBuilding: function(building, callback) {
 			var el = building.el();
-			$('.blockPile', el).empty();
+			$('.blockPile', el).animate({
+				'top': '100%'
+			}, {
+				duration: 5000,
+				easing: 'linear',
+				complete: function() {
+					$('.blockPile', el).empty();
+				}
+			});
+			
 			$.when(el.animate({
 				'bottom': 0
 			}, {

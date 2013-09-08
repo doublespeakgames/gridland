@@ -43,8 +43,8 @@ define({
 			className: 'mine',
 			position: 150,
 			cost: {
-				stone: 4,
-				wood: 4,
+				stone: 3,
+				wood: 3,
 				clay: 4
 			},
 			requiredLevel: 1
