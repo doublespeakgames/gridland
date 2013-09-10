@@ -26,7 +26,8 @@ define({
 			className: 'shack',
 			position: 30,
 			cost: {},
-			requiredLevel: 1
+			requiredLevel: 1,
+			animationFrames: 4
 		},
 		
 		BrickLayer: {

@@ -83,9 +83,11 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 					return function(dude) {
 						dude.move(building.dudeSpot(), function(dude) {
 							dude.animation(4);
-							require(["app/graphics", "app/gamecontent", 'app/resources'], function(Graphics, Content, R) {
+							require(["app/graphics", "app/gamecontent", 'app/resources', 'app/world'], 
+									function(Graphics, Content, R, World) {
 								Graphics.raiseBuilding(building, function() {
 									building.built = true;
+									World.stuff.push(building);
 									dude.animation(0);
 									// The Shack initializes the resource grid
 									if(building.options.type == Content.BuildingType.Shack) {

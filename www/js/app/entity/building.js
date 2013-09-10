@@ -2,9 +2,13 @@ define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics'], function(W
 	
 	var building = function(options) {
 		this.options = $.extend({}, this.options, {
-			type: Content.BuildingType.Shack
+			type: Content.BuildingType.Shack,
+			animationFrames: 1
 		}, options);
 		
+		if(this.options.type.animationFrames != null) {
+			this.options.animationFrames = this.options.type.animationFrames;
+		}
 		this.requiredResources = {};
 		for(var i in this.options.type.cost) {
 			this.requiredResources[i] = this.options.type.cost[i];

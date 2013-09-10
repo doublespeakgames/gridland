@@ -106,7 +106,7 @@
 	bottom: -80px;
 	width: 60px;
 	height: 80px;
-	background-position: bottom;
+	background-position: 0px bottom;
 	background-repeat: no-repeat;
 }
 
@@ -164,6 +164,8 @@
 
 .block div {
 	height: 100%;
+	transition: width 200ms;
+	-webkit-transition: width 200ms;
 }
 
 .block.grain div {
@@ -219,4 +221,6 @@
 	position: absolute;
 	height: 100%;
 	background-color: #BC4D4D;
+	transition: width 200ms;
+	-webkit-transition: width 200ms;
 }
