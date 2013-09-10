@@ -181,3 +181,42 @@
 .block.clay div {
 	background-color: #C65645;
 }
+
+.healthContainer {
+	position: absolute;
+	top: 0px;
+	left: -35px;
+	width: 35px;
+	height: 100%;
+}
+
+.heart.hiddenHeart {
+	opacity: 0;
+}
+
+.heart.empty {
+	opacity: 0.5;
+}
+
+.heart {
+	position: relative;
+	width: 30px;
+	height: 28px;
+	opacity: 1;
+	transition: opacity 500ms;
+	-webkit-transition: opacity 500ms;
+}
+
+.heart .mask {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: url(../img/heart.png) no-repeat;
+	z-index: 1;
+}
+
+.heart .bar {
+	position: absolute;
+	height: 100%;
+	background-color: #BC4D4D;
+}

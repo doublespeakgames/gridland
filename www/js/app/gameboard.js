@@ -166,7 +166,8 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 		removeTiles: function(tiles) {
 			this.removals++;
 			Graphics.removeTiles(tiles, function() {
-				require(['app/gameboard', 'app/entity/tile', 'app/resources'], function(GameBoard, Tile, Resources) {
+				require(['app/gameboard', 'app/entity/tile', 'app/resources', 'app/gamecontent'], 
+						function(GameBoard, Tile, Resources, Content) {
 					var newTiles = [];
 					var colsToDrop = {};
 					var resourcesGained = {};
@@ -187,7 +188,11 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					
 					// Gain resources
 					for(typeName in resourcesGained) {
-						Resources.collectResource(Resources.getType(typeName), resourcesGained[typeName]);
+						if(typeName == Content.ResourceType.Grain.className) {
+							World.healDude(resourcesGained[typeName]);
+						} else {
+							Resources.collectResource(Resources.getType(typeName), resourcesGained[typeName]);
+						}
 					}
 					
 					// Drop remaining tiles
@@ -251,6 +256,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					tile2.options.column = c1;
 					
 					if(!skipMatch) {
+						World.makeDudeHungry();
 						// Check for matches
 						var matches = GameBoard.checkMatches(tile1);
 						matches = matches.concat(GameBoard.checkMatches(tile2));

@@ -178,6 +178,35 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		updateBlock: function(block) {
 			$('div', block.el()).width((block.quantity() / block.max * 100) + '%');
+		},
+		
+		updateHealth: function(health, maxHealth) {
+			var healthContainer = $('.healthContainer');
+			if(healthContainer.length == 0) {
+				healthContainer = $('<div>').appendTo('.gameBoard').addClass('healthContainer');
+			}
+			for(var i = 0, n = Math.ceil(maxHealth / 5) - healthContainer.children().length; i < n; i++) {
+				$('<div>').addClass('heart').addClass('hiddenHeart').append($('<div>')
+						.addClass('mask')).append($('<div>').addClass('bar')).appendTo(healthContainer);
+			}
+			for(var i = Math.ceil(maxHealth / 5); i > 0; i--) {
+				var heart = healthContainer.children()[i - 1];
+				if(health >= 5) {
+					$(heart).removeClass('empty');
+					$('.bar', heart).css('width', '100%');
+					health -= 5;
+				} else if(health > 0) {
+					$(heart).removeClass('empty');
+					$('.bar', heart).css('width', (health / 5 * 100) + '%');
+					health = 0;
+				} else {
+					$(heart).addClass('empty');
+					$('.bar', heart).css('width', '0%');
+				}
+				setTimeout(function() {
+					$('.hiddenHeart').removeClass('hiddenHeart');
+				}, 1000);
+			}
 		}
 	};
 });

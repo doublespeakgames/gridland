@@ -32,7 +32,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 		launchDude: function() {
 			require(['app/world', 'app/graphics', 'app/entity/dude', 'app/gamestate'], 
 					function(World, Graphics, Dude, GameState) {
-				var dude = this.dude = new Dude();
+				var dude = World.dude = new Dude();
 				World.stuff.push(dude);
 				dude.animation(0);
 				dude.animationOnce(3);
@@ -41,6 +41,18 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 				Graphics.setPosition(dude, dude.p());
 				GameState.level = 1;
 			});
+		},
+		
+		makeDudeHungry: function() {
+			if(this.dude != null) {
+				this.dude.takeDamage(1);
+			}
+		},
+		
+		healDude: function(amount) {
+			if(this.dude != null) {
+				this.dude.heal(amount);
+			}
 		},
 		
 		hasBuilding: function(type) {
