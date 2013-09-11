@@ -3,8 +3,13 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 		options : {},
 		init : function(opts) {
 			$.extend(this.options, opts);
+			Graphics.hide(this);
 			Graphics.addToWorld(this);
-			this.el().css('opacity', 0).animate({'opacity': 1}, 200);
+			var _g = Graphics;
+			var _t = this;
+			setTimeout(function() {
+				_g.show(_t);
+			}, 10);
 			this.loaded = true;
 		},
 

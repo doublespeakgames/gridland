@@ -76,6 +76,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 					});
 					GameState.buildings.push(building);
 					Graphics.addToWorld(building);
+					Graphics.setPosition(building, building.p());
 				}
 				
 				// If it's ready to build, build it.

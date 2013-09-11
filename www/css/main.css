@@ -1,6 +1,22 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	transition: background-color 300ms linear;
+	-webkit-transition: background-color 300ms linear;
+}
+
+body.day {
+	background-color: white;
+}
+
+body.night {
+	background-color: black;
+}
+
 #test {
 	position: absolute;
 	left: 10px;
+	top: 40px;
 	display:inline-block; 
 	padding:5px; 
 	height: 1em;
@@ -8,14 +24,75 @@
 	border:1px solid black;
 }
 
-#test {
-	top: 40px;
+.hidden {
+	opacity: 0 !important;
+}
+
+.menuBar {
+	z-index: 100;
+	height: 50px;
+	width: 100%;
+	position: fixed;
+	bottom: 0px;
+	border-top: 2px solid;
+	background-color: white;
+	transition: all 300ms linear;
+	-webkit-transition: all 200px linear;
+}
+
+.night .menuBar {
+	background-color: black;
+}
+
+@media screen and (max-height: 700px) {
+	.menuBar, .night .menuBar {
+		border-top: 0px;
+		background-color: transparent;
+	}
+	
+	.night .menuBtn, .menuBtn {
+		border: 2px solid;
+	}
+}
+
+.menuBtn {
+	height: 40px;
+	width: 40px;
+	background: url(../img/menu.png) no-repeat;
+	border-radius: 4px;
+	position: absolute;
+	right: 5px;
+	top: 3px;
+	cursor: pointer;
+	transition: all 300ms linear;
+	-webkit-transition: all 300ms linear;
+}
+
+.menuBtn .nightSprite {
+	height: 40px;
+	width: 40px;
+	background: url(../img/menu.png) 0px -40px no-repeat;
+}
+
+.menuBar.open {
+	border-top: 2px solid;
+	height: 400px;
+	background-color: white;
+	box-shadow: 0 5px 5px 5px #666;
+}
+
+.open .menuBtn {
+	border: 0px;
+}
+
+.night .menuBar.open {
+	background-color: black;
 }
 
 .gameBoard {
 	position: relative;
-	margin: 110px auto;
-	border: 2px solid black;
+	margin: 110px auto 0px;
+	border: 2px solid;
 	padding: 2px;
 }
 
@@ -24,22 +101,40 @@
 	height: 100%;
 	overflow: hidden;
 	position: relative;
+	perspective: 600px;
+	-moz-perspective: 600px;
+	-webkit-perspective: 600px;
+	-ms-perspective: 600px;
 }
 
 .tile {
 	width: 60px;
 	height: 60px;
 	position: absolute;
+	transition: transform 300ms linear;
+	-webkit-transition: -webkit-transform 300ms linear;
 }
 
-.tile div {
+.night .tile {
+	transform: rotateY(180deg);
+	-webkit-transform: rotateY(180deg);
+}
+
+.tile > div {
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
 	border-radius: 4px;
-	border: 2px solid black;
+	border: 2px solid;
 	position: absolute;
 	top: 2px;
 	left: 2px;
 	right: 2px;
 	bottom: 2px;
+}
+
+.tile .nightSide {
+	transform: rotateY(180deg);
+	-webkit-transform: rotateY(180deg);
 }
 
 .tile.grain div {
@@ -77,7 +172,7 @@
 
 .world {
 	position: absolute;
-	top: -101px;
+	top: -102px;
 	width: 100%;
 	height: 100px;
 	overflow: hidden;
@@ -90,6 +185,15 @@
 	width: 16px;
 	height: 32px;
 	z-index: 10;
+}
+
+.dude .animationLayer.nightSprite {
+	background-image: url(../img/dude_night.png);
+}
+
+.animationLayer {
+	width: 100%;
+	height: 100%
 }
 
 .heldBlock {
@@ -135,6 +239,9 @@
 	-moz-transform: rotate(180deg);
 	-webkit-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
+	transition: opacity 300ms linear;
+	-wekbit-transition: opacity 300ms linear;
+	opacity: 1;
 }
 
 .blockPile {
@@ -148,6 +255,13 @@
 	-moz-transform: rotate(180deg);
 	-webkit-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
+	transition: opacity 300ms linear;
+	-wekbit-transition: opacity 300ms linear;
+	opacity: 1;
+}
+
+.night .blockPile, .night .resources {
+	opacity: 0;
 }
 
 .block {
@@ -164,8 +278,8 @@
 
 .block div {
 	height: 100%;
-	transition: width 200ms;
-	-webkit-transition: width 200ms;
+	transition: width 300ms;
+	-webkit-transition: width 300ms;
 }
 
 .block.grain div {
@@ -217,10 +331,48 @@
 	z-index: 1;
 }
 
+.heart .mask.nightSprite {
+	background-position: left -28px;
+}
+
 .heart .bar {
 	position: absolute;
 	height: 100%;
 	background-color: #BC4D4D;
-	transition: width 200ms;
-	-webkit-transition: width 200ms;
+	transition: width 300ms;
+	-webkit-transition: width 300ms;
+}
+
+.nightSprite, .daySprite {
+	transition: opacity 300ms linear;
+	-webkit-transition: opacity 300ms linear;
+}
+
+.night .nightSprite {
+	opacity: 1;
+}
+
+.day .nightSprite {
+	opacity: 0;
+}
+
+.day .daySprite {
+	opacity: 1;
+}
+
+.night .daySprite {
+	opacity: 0;
+}
+
+.litBorder {
+	transition: all 300ms linear;
+	-webkit-transition: all 300ms linear;
+}
+
+.night .litBorder {
+	border-color: #FFFFFF;
+}
+
+.day .litBorder {
+	border-color: #000000;
 }

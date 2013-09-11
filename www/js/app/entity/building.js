@@ -27,7 +27,6 @@ define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics'], function(W
 		if(this._el == null) {
 			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className)
 				.append(Graphics.newElement("blockPile"));
-			Graphics.setPosition(this, this.p());
 		}
 		return this._el;
 	};

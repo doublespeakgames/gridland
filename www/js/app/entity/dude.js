@@ -12,7 +12,9 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 	
 	dude.prototype.el = function() {
 		if(this._el == null) {
-			this._el = WorldEntity.prototype.el.call(this).append(Graphics.newElement("heldBlock"));
+			this._el = WorldEntity.prototype.el.call(this)
+			.append(Graphics.newElement("animationLayer nightSprite"))
+			.append(Graphics.newElement("heldBlock"));
 		}
 		return this._el;
 	};

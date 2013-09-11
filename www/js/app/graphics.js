@@ -7,7 +7,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		createBoard: function(rows, cols) {
 			// Generate the board element
-			var el = $('<div>').addClass('gameBoard');
+			var el = $('<div>').addClass('gameBoard').addClass('litBorder');
 			$('<div>').addClass('tileContainer').appendTo(el);
 			// Determine the board dimensions based on the size of the tiles
 			var testTile = $('<div>').addClass('tile').hide().appendTo('body');
@@ -33,6 +33,14 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			$('.gameBoard').append(entity.el());
 		},
 		
+		hide: function(entity) {
+			entity.el().addClass('hidden');
+		},
+		
+		show: function(entity) {
+			entity.el().removeClass('hidden');
+		},
+		
 		addResource: function(block) {
 			$('.resources').append(block.el());
 		},
@@ -45,6 +53,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			var el = entity.el();
 			var spriteRow = entity.tempAnimation == null ? entity.animationRow : entity.tempAnimation;
 			el.css('background-position', -(entity.frame * el.width()) + "px " + -(spriteRow * el.height()) + 'px');
+			$('.animationLayer', el).css('background-position', -(entity.frame * el.width()) + "px " + -(spriteRow * el.height()) + 'px');
 		},
 		
 		setPosition: function(entity, pos) {
@@ -187,7 +196,9 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			}
 			for(var i = 0, n = Math.ceil(maxHealth / 5) - healthContainer.children().length; i < n; i++) {
 				$('<div>').addClass('heart').addClass('hiddenHeart').append($('<div>')
-						.addClass('mask')).append($('<div>').addClass('bar')).appendTo(healthContainer);
+						.addClass('mask')).append($('<div>').addClass('mask')
+						.addClass('nightSprite')).append($('<div>')
+						.addClass('bar')).appendTo(healthContainer);
 			}
 			for(var i = Math.ceil(maxHealth / 5); i > 0; i--) {
 				var heart = healthContainer.children()[i - 1];

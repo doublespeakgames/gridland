@@ -120,8 +120,8 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 			if(tile.options.row == null) {
 				tile.options.row = -1;
 			}
-			Graphics.setPositionInBoard(tile, tile.options.row, tile.options.column);
 			Graphics.addToTileContainer(tile);
+			Graphics.setPositionInBoard(tile, tile.options.row, tile.options.column);
 			this.dropTile(tile);
 		},
 		

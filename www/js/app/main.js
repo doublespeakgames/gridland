@@ -12,4 +12,10 @@ require(["jquery", "app/engine", "app/gameboard", "app/world", 'app/gamestate'],
 	$('#test').click(function() { require(['app/gameboard'], function(G) {
 		console.log("Moves available? " + G.areMovesAvailable());
 	}); });
+	
+	$('.menuBtn').click(function() {
+		require(['jquery'], function($) {
+			$('.menuBar').toggleClass('open');
+		});
+	});
 });
