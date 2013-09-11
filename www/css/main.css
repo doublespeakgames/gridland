@@ -99,7 +99,6 @@ body.night {
 .tileContainer {
 	width: 100%;
 	height: 100%;
-	overflow: hidden;
 	position: relative;
 	perspective: 600px;
 	-moz-perspective: 600px;
@@ -111,6 +110,9 @@ body.night {
 	width: 60px;
 	height: 60px;
 	position: absolute;
+	transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
 	transition: transform 300ms linear;
 	-webkit-transition: -webkit-transform 300ms linear;
 }
@@ -137,33 +139,42 @@ body.night {
 	-webkit-transform: rotateY(180deg);
 }
 
-.tile.grain div {
+.tile.grain .daySide {
 	/*background-color: #FFE97F;*/
 	background: url(../img/wheattile.png) center no-repeat;
 }
+.tile.grain .nightSide {
+	background: url(../img/grave.png) center no-repeat;
+}
 
-.tile.wood div {
+.tile.wood .daySide {
 	/* background-color: #7C5840; */
 	background: url(../img/woodtile.png) center no-repeat;
 }
+.tile.wood .nightSide {
+	background: url(../img/buckler.png) center no-repeat;
+}
 
-.tile.stone div {
+.tile.stone .daySide {
 	/* background-color: #C4C4C4; */
 	background: url(../img/stonetile.png) center no-repeat;
 }
+.tile.stone .nightSide {
+	background: url(../img/sword.png) center no-repeat;
+}
 
-.tile.clay div {
+.tile.clay .daySide {
 	/*background-color: #C65645;*/
 	background: url(../img/clay.png) center no-repeat;
 }
+.tile.clay .nightSide {
+}
 
-.tile.gem div {
+.tile.gem .daySide {
 	/* background-color: #C49EE2;*/
 	background: url(../img/gem.png) center no-repeat;
 }
-
-.tile.blank div {
-	background-color: #000;
+.tile.gem .nightSide {
 }
 
 .selected {
@@ -172,10 +183,20 @@ body.night {
 
 .world {
 	position: absolute;
-	top: -102px;
+	top: -112px;
 	width: 100%;
-	height: 100px;
+	height: 110px;
 	overflow: hidden;
+	background-color: white;
+	transition: background-color 300ms linear;
+	-webkit-transition: background-color 300ms linear;
+	-ms-transition: background-color 300ms linear;
+	-o-transition: background-color 300ms linear;
+	-moz-transition: background-color 300ms linear;
+}
+
+.night .world {
+	background-color: black;
 }
 
 .dude {
