@@ -2,6 +2,7 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 		function(WorldEntity, World, Graphics, State) {
 	var dude = function() {
 		this.carrying = null;
+		this.action = null;
 		State.health = this.maxHealth();
 		Graphics.updateHealth(State.health, this.maxHealth());
 	};
@@ -20,10 +21,11 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 	};
 	
 	dude.prototype.think = function() {
-		if(this.isIdle()) {
+		if(this.isIdle() && this.action == null) {
 			var activity = World.getActivity();
 			if(activity != null) {
-				activity(this);
+				this.action = activity;
+				this.action.doAction(this);
 			}
 		}
 	};
@@ -58,7 +60,6 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 			} else {
 				this.carrying.css('top', '0px');
 			}
-			this.carrying.top
 		}
 	};
 	

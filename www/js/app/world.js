@@ -1,5 +1,5 @@
-define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app/gamestate'], 
-		function($, Graphics, Building, Content, GameState) {
+define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app/gamestate', 'app/action/actionfactory'], 
+		function($, Graphics, Building, Content, GameState, ActionFactory) {
 	return {
 		stuff: [],
 		
@@ -103,24 +103,9 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 				
 				// If it's ready to build, build it.
 				if(building != null && building.readyToBuild()) {
-					return function(dude) {
-						dude.move(building.dudeSpot(), function(dude) {
-							dude.animation(4);
-							require(["app/graphics", "app/gamecontent", 'app/resources', 'app/world'], 
-									function(Graphics, Content, R, World) {
-								Graphics.raiseBuilding(building, function() {
-									building.built = true;
-									World.stuff.push(building);
-									dude.animation(0);
-									// The Shack initializes the resource grid
-									if(building.options.type == Content.BuildingType.Shack) {
-										R.init();
-										World.launchCelestial();
-									}
-								});
-							});
-						});
-					}
+					return ActionFactory.getAction("RaiseBuilding", {
+						building: building
+					});
 				}
 			
 				// Then look for moveable resources
@@ -132,26 +117,10 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 								var required = building.requiredResources[resource];
 								if(required > 0 && resource == block.options.type.className) {
 									// We can move this block!
-									return function(dude) {
-										require(['app/gamestate', 'app/gamecontent'], 
-												function(GameState, Content) {
-											dude.move(GameState.getBuilding(Content.BuildingType.Shack).dudeSpot(), function(dude) {
-												require(['app/graphics'], function(Graphics) {
-													if(block.gone) return;
-													Graphics.pickUpBlock(block);
-													dude.carrying = block.el();
-													GameState.removeBlock(block);
-													dude.move(building.dudeSpot(), function(dude) {
-														require(['app/graphics'], function(Graphics) {
-															Graphics.dropBlock(block, building);
-															dude.carrying = null;
-															building.requiredResources[resource]--;
-														});
-													});
-												});
-											});
-										});
-									}
+									return ActionFactory.getAction("MoveBlock", {
+										block: block,
+										destination: building
+									});
 								}
 							}
 						}
