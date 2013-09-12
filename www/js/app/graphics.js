@@ -49,6 +49,42 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			$('.tileContainer').append(entity.el());
 		},
 		
+		moveCelestial: function(entity, pos) {
+			var el = entity.el();
+			var worldWidth = $('.world').width();
+			var height = (Math.abs(pos - worldWidth / 2) / (worldWidth / 2)) * 30;
+			el.css({
+				left: (pos - (el.width() / 2)) + 'px',
+				top: Math.floor(height) + 'px'
+			});
+		},
+		
+		phaseTransition: function(celestial) {
+			celestial.el().css('top', '100%');
+			$('body').toggleClass('night');
+			var _g = this;
+			setTimeout(function() {
+				if($('body').hasClass('night')) {
+					celestial.animation(1);
+				} else {
+					celestial.animation(0);
+				}
+				celestial.el().css('left', '0px');
+			}, 300);
+			setTimeout(function() {
+				_g.raiseCelestial(celestial);
+			}, 700);
+		},
+		
+		raiseCelestial: function(celestial) {
+			celestial.el().css({
+				top: '100%',
+				left: '0px'
+			});
+			celestial.p(15);
+			this.moveCelestial(celestial, celestial.p());
+		},
+		
 		updateSprite: function(entity) {
 			var el = entity.el();
 			var spriteRow = entity.tempAnimation == null ? entity.animationRow : entity.tempAnimation;

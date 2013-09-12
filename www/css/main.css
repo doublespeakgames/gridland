@@ -1,12 +1,12 @@
 body {
 	margin: 0px;
 	padding: 0px;
+	background-color: white;
 	transition: background-color 300ms linear;
 	-webkit-transition: background-color 300ms linear;
-}
-
-body.day {
-	background-color: white;
+	-moz-transition: background-color 300ms linear;
+	-ms-transition: background-color 300ms linear;
+	-o-transition: background-color 300ms linear;
 }
 
 body.night {
@@ -38,6 +38,9 @@ body.night {
 	background-color: white;
 	transition: all 300ms linear;
 	-webkit-transition: all 200px linear;
+	-moz-transition: all 200px linear;
+	-ms-transition: all 200px linear;
+	-o-transition: all 200px linear;
 }
 
 .night .menuBar {
@@ -66,6 +69,9 @@ body.night {
 	cursor: pointer;
 	transition: all 300ms linear;
 	-webkit-transition: all 300ms linear;
+	-moz-transition: all 300ms linear;
+	-ms-transition: all 300ms linear;
+	-o-transition: all 300ms linear;
 }
 
 .menuBtn .nightSprite {
@@ -104,27 +110,26 @@ body.night {
 	-moz-perspective: 600px;
 	-webkit-perspective: 600px;
 	-ms-perspective: 600px;
+	-o-perspective: 600px;
 }
 
 .tile {
 	width: 60px;
 	height: 60px;
 	position: absolute;
-	transform-style: preserve-3d;
-	-webkit-transform-style: preserve-3d;
-	-ms-transform-style: preserve-3d;
 	transition: transform 300ms linear;
 	-webkit-transition: -webkit-transform 300ms linear;
-}
-
-.night .tile {
-	transform: rotateY(180deg);
-	-webkit-transform: rotateY(180deg);
+	-moz-transition: -webkit-transform 300ms linear;
+	-ms-transition: -webkit-transform 300ms linear;
+	-o-transition: -webkit-transform 300ms linear;
 }
 
 .tile > div {
 	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
 	border-radius: 4px;
 	border: 2px solid;
 	position: absolute;
@@ -137,6 +142,25 @@ body.night {
 .tile .nightSide {
 	transform: rotateY(180deg);
 	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+	-ms-transform: rotateY(180deg);
+	-o-transform: rotateY(180deg);
+}
+
+.night .tile .daySide {
+	transform: rotateY(180deg);
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+	-ms-transform: rotateY(180deg);
+	-o-transform: rotateY(180deg);
+}
+
+.night .tile .nightSide {
+	transform: rotateY(0deg);
+	-webkit-transform: rotateY(0deg);
+	-moz-transform: rotateY(0deg);
+	-ms-transform: rotateY(0deg);
+	-o-transform: rotateY(0deg);
 }
 
 .tile.grain .daySide {
@@ -227,12 +251,22 @@ body.night {
 }
 
 .building {
+	z-index: 1;
 	position: absolute;
 	bottom: -80px;
 	width: 60px;
 	height: 80px;
 	background-position: 0px bottom;
 	background-repeat: no-repeat;
+	transition: opacity 300ms linear;
+	-webkit-transition: opacity 300ms linear;
+	-moz-transition: opacity 300ms linear;
+	-ms-transition: opacity 300ms linear;
+	-o-transition: opacity 300ms linear;
+}
+
+.night .building {
+	opacity: 0;
 }
 
 .shack {
@@ -248,6 +282,7 @@ body.night {
 }
 
 .resources {
+	z-index: 2;
 	position: absolute;
 	font-size: 0px;
 	bottom: 5px;
@@ -259,9 +294,13 @@ body.night {
 	transform: rotate(180deg);
 	-moz-transform: rotate(180deg);
 	-webkit-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
 	transition: opacity 300ms linear;
-	-wekbit-transition: opacity 300ms linear;
+	-webkit-transition: opacity 300ms linear;
+	-moz-transition: opacity 300ms linear;
+	-ms-transition: opacity 300ms linear;
+	-o-transition: opacity 300ms linear;
 	opacity: 1;
 }
 
@@ -276,8 +315,12 @@ body.night {
 	-moz-transform: rotate(180deg);
 	-webkit-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
 	transition: opacity 300ms linear;
-	-wekbit-transition: opacity 300ms linear;
+	-webkit-transition: opacity 300ms linear;
+	-moz-transition: opacity 300ms linear;
+	-ms-transition: opacity 300ms linear;
+	-o-transition: opacity 300ms linear;
 	opacity: 1;
 }
 
@@ -295,12 +338,16 @@ body.night {
 	-moz-transform: rotate(180deg);
 	-webkit-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
 }
 
 .block div {
 	height: 100%;
 	transition: width 300ms;
 	-webkit-transition: width 300ms;
+	-ms-transition: width 300ms;
+	-moz-transition: width 300ms;
+	-o-transition: width 300ms;
 }
 
 .block.grain div {
@@ -342,6 +389,9 @@ body.night {
 	opacity: 1;
 	transition: opacity 500ms;
 	-webkit-transition: opacity 500ms;
+	-moz-transition: opacity 500ms;
+	-ms-transition: opacity 500ms;
+	-o-transition: opacity 500ms;
 }
 
 .heart .mask {
@@ -362,22 +412,28 @@ body.night {
 	background-color: #BC4D4D;
 	transition: width 300ms;
 	-webkit-transition: width 300ms;
+	-ms-transition: width 300ms;
+	-moz-transition: width 300ms;
+	-o-transition: width 300ms;
 }
 
 .nightSprite, .daySprite {
 	transition: opacity 300ms linear;
 	-webkit-transition: opacity 300ms linear;
+	-moz-transition: opacity 300ms linear;
+	-ms-transition: opacity 300ms linear;
+	-o-transition: opacity 300ms linear;
+}
+
+.nightSprite {
+	opacity: 0;
 }
 
 .night .nightSprite {
 	opacity: 1;
 }
 
-.day .nightSprite {
-	opacity: 0;
-}
-
-.day .daySprite {
+.daySprite {
 	opacity: 1;
 }
 
@@ -388,12 +444,25 @@ body.night {
 .litBorder {
 	transition: all 300ms linear;
 	-webkit-transition: all 300ms linear;
+	-moz-transition: all 300ms linear;
+	-ms-transition: all 300ms linear;
+	-o-transition: all 300ms linear;
+	border-color: #000000;
 }
 
 .night .litBorder {
 	border-color: #FFFFFF;
 }
 
-.day .litBorder {
-	border-color: #000000;
+.celestial {
+	z-index: 0;
+	width: 30px;
+	height: 30px;
+	background: url(../img/sun.png) no-repeat;
+	position: absolute;
+	transition: top 300ms linear, left 300ms linear;
+	-webkit-transition: top 300ms linear, left 300ms linear;
+	-moz-transition: top 300ms linear, left 300ms linear;
+	-ms-transition: top 300ms linear, left 300ms linear;
+	-o-transition: top 300ms linear, left 300ms linear;
 }

@@ -256,6 +256,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					tile2.options.column = c1;
 					
 					if(!skipMatch) {
+						World.advanceTime();
 						World.makeDudeHungry();
 						// Check for matches
 						var matches = GameBoard.checkMatches(tile1);

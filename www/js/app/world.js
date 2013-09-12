@@ -43,6 +43,28 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 			});
 		},
 		
+		launchCelestial: function() {
+			require(['app/world', 'app/graphics', 'app/entity/celestial'], 
+					function(World, Graphics, Celestial) {
+				var celestial = World.celestial = new Celestial();
+				World.stuff.push(celestial);
+				celestial.animation(0);
+				Graphics.addToWorld(celestial);
+				Graphics.raiseCelestial(celestial);
+			});
+		},
+		
+		advanceTime: function() {
+			if(this.celestial != null) {
+				this.celestial.p(this.celestial.p() + 24);
+				if(this.celestial.p() > $('.world').width()) {
+					Graphics.phaseTransition(this.celestial);
+				} else {
+					Graphics.moveCelestial(this.celestial, this.celestial.p());
+				}
+			}
+		},
+		
 		makeDudeHungry: function() {
 			if(this.dude != null) {
 				this.dude.takeDamage(1);
@@ -93,6 +115,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 									// The Shack initializes the resource grid
 									if(building.options.type == Content.BuildingType.Shack) {
 										R.init();
+										World.launchCelestial();
 									}
 								});
 							});
