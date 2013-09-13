@@ -59,6 +59,9 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 				this.celestial.p(this.celestial.p() + 24);
 				if(this.celestial.p() > $('.world').width()) {
 					Graphics.phaseTransition(this.celestial);
+					if(this.dude.action != null) {
+						this.dude.action.terminateAction(this.dude);						
+					}
 				} else {
 					Graphics.moveCelestial(this.celestial, this.celestial.p());
 				}

@@ -1,4 +1,4 @@
-define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function($, Graphics, Content) {
+define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function($, Graphics, Content, GameState) {
 	return {
 		options : {},
 		init : function(opts) {
@@ -18,6 +18,12 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 				this._el = Graphics.newElement("resources");
 			}
 			return this._el;
+		},
+		
+		returnBlock: function(block) {
+			GameState.stores.push(block);
+			Graphics.addResource(block);
+			this.checkMaximum();
 		},
 		
 		collectResource: function(type, quantity) {
@@ -42,13 +48,7 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 							});
 							GameState.stores.push(block);
 							// If the stores are full, eject the oldest
-							if(GameState.stores.length > Resources.max()) {
-								var oldBlocks = GameState.stores.splice(0, GameState.stores.length - Resources.max());
-								for(var i in oldBlocks) {
-									oldBlocks[i].gone = true;
-									oldBlocks[i].el().remove();
-								}
-							}
+							Resources.checkMaximum();
 							Graphics.addResource(block);
 						}
 						// Add the resource
@@ -59,6 +59,16 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 							Resources.collectResource(type, remainder);
 						}
 					});
+				}
+			}
+		},
+		
+		checkMaximum: function() {
+			if(GameState.stores.length > this.max()) {
+				var oldBlocks = GameState.stores.splice(0, GameState.stores.length - this.max());
+				for(var i in oldBlocks) {
+					oldBlocks[i].gone = true;
+					oldBlocks[i].el().remove();
 				}
 			}
 		},

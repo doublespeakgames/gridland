@@ -30,5 +30,16 @@ define(['app/action/action'], function(Action) {
 		});
 	};
 	
+	MoveBlock.prototype.terminateAction = function(dude) {
+		var _action = this;
+		require(['app/graphics', 'app/resources'], function(Graphics, Resources) {
+			dude.animation(0);
+			Graphics.stop(dude);
+			Resources.returnBlock(_action.block);
+			dude.carrying = null;
+			dude.action = null;	
+		});
+	};
+	
 	return MoveBlock;
 });

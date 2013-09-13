@@ -26,6 +26,15 @@ define(['app/action/action'], function(Action) {
 			});
 		});
 	};
+
+	RaiseBuilding.prototype.terminateAction = function(dude) {
+		var _action = this;
+		require(['app/graphics'], function(Graphics) {
+			dude.animation(0);
+			dude.action = null;
+			Graphics.sinkBuilding(_action.building);			
+		});
+	};
 	
 	return RaiseBuilding; 
 });

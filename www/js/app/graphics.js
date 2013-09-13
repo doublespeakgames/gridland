@@ -61,9 +61,9 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		phaseTransition: function(celestial) {
 			celestial.el().css('top', '100%');
-			$('body').toggleClass('night');
 			var _g = this;
 			setTimeout(function() {
+				$('body').toggleClass('night');
 				if($('body').hasClass('night')) {
 					celestial.animation(1);
 				} else {
@@ -196,10 +196,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 				'top': '100%'
 			}, {
 				duration: 5000,
-				easing: 'linear',
-				complete: function() {
-					$('.blockPile', el).empty();
-				}
+				easing: 'linear'
 			});
 			
 			$.when(el.animate({
@@ -210,6 +207,12 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			})).done(function() {
 				callback(building);
 			});
+		},
+		
+		sinkBuilding: function(building) {
+			var el = building.el();
+			$('.blockpile', el).stop().css('top', '-60px');
+			el.stop().css('bottom', '-80px');
 		},
 		
 		pickUpBlock: function(block) {
@@ -254,6 +257,10 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 					$('.hiddenHeart').removeClass('hiddenHeart');
 				}, 1000);
 			}
+		},
+		
+		stop: function(entity) {
+			entity.el().stop();
 		}
 	};
 });
