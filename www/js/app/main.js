@@ -9,8 +9,12 @@ require(["jquery", "app/engine", "app/gameboard", "app/world", 'app/gamestate'],
 	GameBoard.fill();
 	World.launchDude();
 	
-	$('#test').click(function() { require(['app/gameboard'], function(G) {
-		console.log("Moves available? " + G.areMovesAvailable());
+//	$('#test').click(function() { require(['app/gameboard'], function(G) {
+//		console.log("Moves available? " + G.areMovesAvailable());
+//	}); });
+	
+	$('#test').click(function() { require(['app/world'], function(W) {
+		W.phaseTransition();
 	}); });
 	
 	$('.menuBtn').click(function() {

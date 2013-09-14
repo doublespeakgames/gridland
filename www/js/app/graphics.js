@@ -199,19 +199,20 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 				easing: 'linear'
 			});
 			
-			$.when(el.animate({
+			el.animate({
 				'bottom': 0
 			}, {
 				duration: 5000,
-				easing: 'linear'
-			})).done(function() {
-				callback(building);
+				easing: 'linear',
+				complete: function() {
+					callback(building);
+				}
 			});
 		},
 		
 		sinkBuilding: function(building) {
 			var el = building.el();
-			$('.blockpile', el).stop().css('top', '-60px');
+			$('.blockPile', el).stop().css('top', '-60px');
 			el.stop().css('bottom', '-80px');
 		},
 		
