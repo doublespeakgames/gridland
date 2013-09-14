@@ -1,5 +1,6 @@
-define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app/gamestate', 'app/action/actionfactory'], 
-		function($, Graphics, Building, Content, GameState, ActionFactory) {
+define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 
+        'app/gamestate', 'app/action/actionfactory', 'app/entity/monsterfactory'], 
+		function($, Graphics, Building, Content, GameState, ActionFactory, MonsterFactory) {
 	return {
 		stuff: [],
 		
@@ -97,7 +98,23 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 		 */
 		getActivity: function() {
 			if(this.isNight) {
-				// TODO
+				// Look for a monster to fight
+				var closest = null;
+				for(var i in this.stuff) {
+					var thing = this.stuff[i];
+					if(thing.hostile && (closest == null || 
+							(this.dude.distanceFrom(thing) < this.dude.distanceFrom(closest)))) {
+						closest = thing;
+					}
+				}
+				if(closest != null && this.dude.distanceFrom(closest) < 5) {
+					// TODO: Attack!
+				} else if(closest != null) {
+					// Move closer
+					return ActionFactory.getAction("MoveTo", {
+						target: closest
+					});
+				}
 			} else {
 				// Look for buildable buildings first
 				for(var t in Content.BuildingType) {
@@ -143,6 +160,22 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 'app
 			
 			// Then give up, and return null
 			return null;
+		},
+		
+		addDefense: function(num) {
+			// TODO
+			console.log("Buffing defense +" + num);
+		},
+		
+		addAttack: function(num) {
+			// TODO
+			console.log("Buffing attack +" + num);
+		},
+		
+		spawnMonster: function(monsterType, power, side) {
+			var monster = MonsterFactory.getMonster(monsterType, {power: power});
+			Graphics.addMonster(monster, side);
+			this.stuff.push(monster);
 		}
 	};
 });

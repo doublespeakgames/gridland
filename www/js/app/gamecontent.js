@@ -2,23 +2,32 @@ define({
 	
 	ResourceType: {
 		Grain: {
-			className: 'grain'
+			className: 'grain',
+			nightEffect: 'spawn:zombie'
 		},
 		Wood: {
-			className: 'wood'
+			className: 'wood',
+			nightEffect: 'shield:1'
 		},
 		Stone: {
-			className: 'stone'
+			className: 'stone',
+			nightEffect: 'sword:1'
 		},
 		Clay: {
 			className: 'clay'
 		},
 		Gem: {
 			className: 'gem'
-		},
-		Blank: {
-			className: 'blank'
-		}	
+		}
+	},
+	
+	getResourceType: function(className) {
+		for(var c in this.ResourceType) {
+			if(className == this.ResourceType[c].className) {
+				return this.ResourceType[c];
+			}
+		}
+		return null;
 	},
 	
 	BuildingType: {
@@ -50,5 +59,14 @@ define({
 			},
 			requiredLevel: 1
 		}
+	},
+	
+	getBuildingType: function(className) {
+		for(var c in this.BuildingType) {
+			if(className == this.BuildingType[c].className) {
+				return this.BuildingType[c];
+			}
+		}
+		return null;
 	}
 });

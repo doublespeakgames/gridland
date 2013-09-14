@@ -95,7 +95,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					}
 					baseline += chance;
 				}
-				var type = Resources.getType(theClass);
+				var type = Content.getResourceType(theClass);
 
 				GameBoard.addTile(new Tile({
 					type : type,
@@ -188,10 +188,28 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					
 					// Gain resources
 					for(typeName in resourcesGained) {
-						if(typeName == Content.ResourceType.Grain.className) {
-							World.healDude(resourcesGained[typeName]);
+						if(World.isNight) {
+							var type = Content.getResourceType(typeName);
+							if(type.nightEffect != null) {
+								var nightEffect = type.nightEffect.split(':');
+								switch(nightEffect[0]) {
+								case "spawn":
+									World.spawnMonster(nightEffect[1], resourcesGained[typeName], GameBoard.swapSide);
+									break;
+								case "shield":
+									World.addDefense(parseInt(nightEffect[1]) * resourcesGained[typeName]);
+									break;
+								case "sword":
+									World.addAttack(parseInt(nightEffect[1]) * resourcesGained[typeName]);
+									break;
+								}
+							}
 						} else {
-							Resources.collectResource(Resources.getType(typeName), resourcesGained[typeName]);
+							if(typeName == Content.ResourceType.Grain.className) {
+								World.healDude(resourcesGained[typeName]);
+							} else {
+								Resources.collectResource(Content.getResourceType(typeName), resourcesGained[typeName]);
+							}
 						}
 					}
 					
@@ -221,7 +239,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 								}
 								base += prob;
 							}
-							var type = Resources.getType(typeClass);
+							var type = Content.getResourceType(typeClass);
 							nextCount = 0;
 							for(var t in pCounts) {
 								if(t == type.className) {
@@ -256,8 +274,11 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					tile2.options.column = c1;
 					
 					if(!skipMatch) {
-						World.advanceTime();
-						World.makeDudeHungry();
+						if(!World.isNight) {
+							World.advanceTime();
+							World.makeDudeHungry();
+						}
+						GameBoard.swapSide = tile1.options.column < GameBoard.options.columns / 2 ? 'left' : 'right';
 						// Check for matches
 						var matches = GameBoard.checkMatches(tile1);
 						matches = matches.concat(GameBoard.checkMatches(tile2));

@@ -49,6 +49,12 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			$('.tileContainer').append(entity.el());
 		},
 		
+		addMonster: function(monster, side) {
+			var el = monster.el();
+			el.css('left', '100%').appendTo('.world');
+			monster.p(el.position().left + el.width() / 2);
+		},
+		
 		moveCelestial: function(entity, pos) {
 			var el = entity.el();
 			var worldWidth = $('.world').width();
@@ -175,7 +181,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			});
 		},
 		
-		animateMove: function(entity, pos, callback) {
+		animateMove: function(entity, pos, callback, stopShort) {
 			var el = entity.el();
 			var dist = Math.abs(entity.p() - pos);
 			el.stop().animate({
@@ -185,6 +191,12 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 				easing: 'linear', 
 				step: function(now, tween) {
 					entity.p(now + el.width() / 2);
+					if(stopShort != null && stopShort()) {
+						el.stop();
+						if(callback != null) {
+							callback();
+						}
+					}
 				},
 				complete: callback
 			});

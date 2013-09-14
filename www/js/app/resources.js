@@ -75,15 +75,6 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 		
 		max: function() {
 			return 9;
-		},
-		
-		getType: function(className) {
-			for(var c in Content.ResourceType) {
-				if(className == Content.ResourceType[c].className) {
-					return Content.ResourceType[c];
-				}
-			}
-			return null;
 		}
 	};
 });
