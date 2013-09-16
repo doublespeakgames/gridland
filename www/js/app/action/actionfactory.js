@@ -1,11 +1,12 @@
-define(['app/action/moveblock', 'app/action/raisebuilding', 'app/action/moveto'], 
-		function(MoveBlock, RaiseBuilding, MoveTo) {
+define(['app/action/moveblock', 'app/action/raisebuilding', 'app/action/moveto', 'app/action/attack'], 
+		function(MoveBlock, RaiseBuilding, MoveTo, Attack) {
 	
 	return {
 		_actions: {
 			"MoveBlock": MoveBlock,
 			"RaiseBuilding": RaiseBuilding,
-			"MoveTo": MoveTo
+			"MoveTo": MoveTo,
+			"Attack": Attack
 		},
 		
 		getAction: function(actionName, options) {

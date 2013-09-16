@@ -229,7 +229,7 @@ body.night {
 	background-image: url(../img/dude.png);
 	position: absolute;
 	bottom: 0px;
-	width: 16px;
+	width: 34px;
 	height: 32px;
 	z-index: 10;
 }
@@ -247,7 +247,7 @@ body.night {
 	position: absolute;
 	width: 10px;
     height: 10px;
-    right: -4px;
+    right: 5px;
     top: 6px;
     font-size: 0px;
 }

@@ -25,8 +25,8 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			require(['app/world'], function(World) {
 				for(var i = 0, len = World.stuff.length; i < len; i++) {
 					var entity = World.stuff[i];
-					entity.think();
 					entity.animate();
+					entity.think();
 				}
 			});
 		},
@@ -107,8 +107,10 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 						closest = thing;
 					}
 				}
-				if(closest != null && this.dude.distanceFrom(closest) < 5) {
-					// TODO: Attack!
+				if(closest != null && this.dude.distanceFrom(closest) <= 1) {
+					return ActionFactory.getAction("Attack", {
+						target: closest
+					});
 				} else if(closest != null) {
 					// Move closer
 					return ActionFactory.getAction("MoveTo", {

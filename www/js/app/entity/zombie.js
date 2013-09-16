@@ -15,7 +15,7 @@ define(['app/entity/worldentity', 'app/action/actionfactory'],
 	Zombie.constructor = Zombie;
 	
 	Zombie.prototype.think = function() {
-		if(this.action == null) {
+		if(this.isIdle() && this.action == null) {
 			var _this = this;
 			require(['app/world'], function(World) {
 				var action = null;

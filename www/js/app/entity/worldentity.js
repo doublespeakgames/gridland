@@ -66,7 +66,7 @@ define(['app/entity/entity', 'app/graphics'], function(Entity, Graphics) {
 				}
 			}, function() {
 				// TODO: Figure out the right distance
-				return _entity.distanceFrom(_target) <= 5;
+				return _entity.distanceFrom(_target) <= 1;
 			});
 		}
 	};

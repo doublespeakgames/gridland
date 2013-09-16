@@ -6,7 +6,11 @@ define(function() {
 	};
 	
 	Action.prototype.terminateAction = function(dude) {
-		throw "Abstract Action cannot be terminated!";
+		require(['app/graphics'], function(Graphics) {
+			dude.animation(0);
+			Graphics.stop(dude);
+			dude.action = null;	
+		});
 	};
 	
 	return Action;
