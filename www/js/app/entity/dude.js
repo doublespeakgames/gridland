@@ -6,6 +6,7 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 		State.health = this.maxHealth();
 		Graphics.updateHealth(State.health, this.maxHealth());
 		this.shield = 0;
+		this.sword = 0;
 	};
 	dude.prototype = new WorldEntity({
 		className: 'dude'
@@ -46,6 +47,10 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 		return 3;
 	};
 	
+	dude.prototype.maxSword = function() {
+		return 3;
+	};
+	
 	dude.prototype.heal = function(amount) {
 		State.health += amount;
 		State.health = State.health > this.maxHealth() ? this.maxHealth() : State.health;
@@ -53,7 +58,13 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 	};
 	
 	dude.prototype.getDamage = function() {
-		return 1;
+		var damage = 1;
+		if(this.sword > 0) {
+			damage += this.sword;
+			this.sword =  0;
+			Graphics.updateSword(this.sword, this.maxSword());
+		}
+		return damage;
 	};
 	
 	dude.prototype.takeDamage = function(damage) {

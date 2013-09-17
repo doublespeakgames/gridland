@@ -91,7 +91,9 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 				this.dude.action.terminateAction(this.dude);						
 			}
 			this.dude.shield = 0;
+			this.dude.sword = 0;
 			Graphics.updateShield(0, 0);
+			Graphics.updateSword(0, 0);
 		},
 		
 		makeDudeHungry: function() {
@@ -192,8 +194,11 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		},
 		
 		addAttack: function(num) {
-			// TODO
-			console.log("Buffing attack +" + num);
+			this.dude.sword += num;
+			if(this.dude.sword > this.dude.maxSword()) {
+				this.dude.sword = this.dude.maxSword();
+			}
+			Graphics.updateSword(this.dude.sword, this.dude.maxSword());
 		},
 		
 		spawnMonster: function(monsterType, power, side) {

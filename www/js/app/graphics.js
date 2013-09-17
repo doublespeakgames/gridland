@@ -245,10 +245,10 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			$('div', block.el()).width((block.quantity() / block.max * 100) + '%');
 		},
 		
-		getHealthContainer: function() {
-			var healthContainer = $('.healthContainer');
+		getStatusContainer: function() {
+			var healthContainer = $('.statusContainer');
 			if(healthContainer.length == 0) {
-				healthContainer =  $('<div>').appendTo('.gameBoard').addClass('healthContainer')
+				healthContainer =  $('<div>').appendTo('.gameBoard').addClass('statusContainer')
 					.append($('<div>').addClass('hearts'));;
 			}
 			return healthContainer;
@@ -257,15 +257,15 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		updateHealth: function(health, maxHealth) {
 			
 			var HEALTH_PER_HEART = 10;
-			var healthContainer = $('.hearts', this.getHealthContainer());
-			for(var i = 0, n = Math.ceil(maxHealth / HEALTH_PER_HEART) - healthContainer.children().length; i < n; i++) {
+			var statusContainer = $('.hearts', this.getStatusContainer());
+			for(var i = 0, n = Math.ceil(maxHealth / HEALTH_PER_HEART) - statusContainer.children().length; i < n; i++) {
 				$('<div>').addClass('heart').addClass('hidden').append($('<div>')
 						.addClass('mask')).append($('<div>').addClass('mask')
 						.addClass('nightSprite')).append($('<div>')
-						.addClass('bar')).appendTo(healthContainer);
+						.addClass('bar')).appendTo(statusContainer);
 			}
 			for(var i = Math.ceil(maxHealth / HEALTH_PER_HEART); i > 0; i--) {
-				var heart = healthContainer.children()[i - 1];
+				var heart = statusContainer.children()[i - 1];
 				if(health >= HEALTH_PER_HEART) {
 					$(heart).removeClass('empty');
 					$('.bar', heart).css('width', '100%');
@@ -285,7 +285,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		},
 		
 		updateShield: function(shield, maxShield) {
-			var container = this.getHealthContainer();
+			var container = this.getStatusContainer();
 			var el = $('.shield', container);
 			if(el.length == 0) {
 				el = $('<div>').addClass('shield').addClass('hidden')
@@ -296,6 +296,24 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 					el.removeClass('hidden');
 				}, 100);
 				$('div', el).width((shield / maxShield * 100) + "%");
+			} else {
+				$('div', el).width("0%");
+				el.addClass('hidden');
+			}
+		},
+		
+		updateSword: function(sword, maxSword) {
+			var container = this.getStatusContainer();
+			var el = $('.sword', container);
+			if(el.length == 0) {
+				el = $('<div>').addClass('sword').addClass('hidden')
+					.append($('<div>')).insertAfter('.hearts', container);
+			}
+			if(sword > 0) {
+				setTimeout(function() {
+					el.removeClass('hidden');
+				}, 100);
+				$('div', el).width((sword / maxSword * 100) + "%");
 			} else {
 				$('div', el).width("0%");
 				el.addClass('hidden');

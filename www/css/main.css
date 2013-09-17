@@ -368,7 +368,7 @@ body.night {
 	background-color: #C65645;
 }
 
-.healthContainer {
+.statusContainer {
 	position: absolute;
 	top: 0px;
 	left: -35px;
@@ -430,6 +430,29 @@ body.night {
 .shield > div {
 	height: 100%;
 	background: url(../img/buckler-icon.png) no-repeat;
+	transition: width 300ms;
+	-webkit-transition: width 300ms;
+	-ms-transition: width 300ms;
+	-moz-transition: width 300ms;
+	-o-transition: width 300ms;
+}
+
+.sword {
+	position: absolute;
+	top: -35px;
+	width: 30px;
+	height: 30px;
+	background: url(../img/swordr-icon.png) no-repeat 0px -30px;
+	transition: opacity 300ms;
+	-webkit-transition: opacity 300ms;
+	-ms-transition: opacity 300ms;
+	-moz-transition: opacity 300ms;
+	-o-transition: opacity 300ms;
+}
+
+.sword > div {
+	height: 100%;
+	background: url(../img/sword-icon.png) no-repeat;
 	transition: width 300ms;
 	-webkit-transition: width 300ms;
 	-ms-transition: width 300ms;
