@@ -376,10 +376,6 @@ body.night {
 	height: 100%;
 }
 
-.heart.hiddenHeart {
-	opacity: 0;
-}
-
 .heart.empty {
 	opacity: 0.5;
 }
@@ -412,6 +408,28 @@ body.night {
 	position: absolute;
 	height: 100%;
 	background-color: #BC4D4D;
+	transition: width 300ms;
+	-webkit-transition: width 300ms;
+	-ms-transition: width 300ms;
+	-moz-transition: width 300ms;
+	-o-transition: width 300ms;
+}
+
+.shield {
+	width: 30px;
+	height: 30px;
+	background: url(../img/buckler-icon.png) no-repeat 0px -30px;
+	margin-top: 5px;
+	transition: opacity 300ms;
+	-webkit-transition: opacity 300ms;
+	-ms-transition: opacity 300ms;
+	-moz-transition: opacity 300ms;
+	-o-transition: opacity 300ms;
+}
+
+.shield > div {
+	height: 100%;
+	background: url(../img/buckler-icon.png) no-repeat;
 	transition: width 300ms;
 	-webkit-transition: width 300ms;
 	-ms-transition: width 300ms;

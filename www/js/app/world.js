@@ -90,6 +90,8 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			if(this.dude.action != null) {
 				this.dude.action.terminateAction(this.dude);						
 			}
+			this.dude.shield = 0;
+			Graphics.updateShield(0, 0);
 		},
 		
 		makeDudeHungry: function() {
@@ -182,8 +184,11 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		},
 		
 		addDefense: function(num) {
-			// TODO
-			console.log("Buffing defense +" + num);
+			this.dude.shield += num;
+			if(this.dude.shield > this.dude.maxShield()) {
+				this.dude.shield = this.dude.maxShield();
+			}
+			Graphics.updateShield(this.dude.shield, this.dude.maxShield());
 		},
 		
 		addAttack: function(num) {

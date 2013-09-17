@@ -245,34 +245,60 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			$('div', block.el()).width((block.quantity() / block.max * 100) + '%');
 		},
 		
-		updateHealth: function(health, maxHealth) {
+		getHealthContainer: function() {
 			var healthContainer = $('.healthContainer');
 			if(healthContainer.length == 0) {
-				healthContainer = $('<div>').appendTo('.gameBoard').addClass('healthContainer');
+				healthContainer =  $('<div>').appendTo('.gameBoard').addClass('healthContainer')
+					.append($('<div>').addClass('hearts'));;
 			}
-			for(var i = 0, n = Math.ceil(maxHealth / 5) - healthContainer.children().length; i < n; i++) {
-				$('<div>').addClass('heart').addClass('hiddenHeart').append($('<div>')
+			return healthContainer;
+		},
+		
+		updateHealth: function(health, maxHealth) {
+			
+			var HEALTH_PER_HEART = 10;
+			var healthContainer = $('.hearts', this.getHealthContainer());
+			for(var i = 0, n = Math.ceil(maxHealth / HEALTH_PER_HEART) - healthContainer.children().length; i < n; i++) {
+				$('<div>').addClass('heart').addClass('hidden').append($('<div>')
 						.addClass('mask')).append($('<div>').addClass('mask')
 						.addClass('nightSprite')).append($('<div>')
 						.addClass('bar')).appendTo(healthContainer);
 			}
-			for(var i = Math.ceil(maxHealth / 5); i > 0; i--) {
+			for(var i = Math.ceil(maxHealth / HEALTH_PER_HEART); i > 0; i--) {
 				var heart = healthContainer.children()[i - 1];
-				if(health >= 5) {
+				if(health >= HEALTH_PER_HEART) {
 					$(heart).removeClass('empty');
 					$('.bar', heart).css('width', '100%');
-					health -= 5;
+					health -= HEALTH_PER_HEART;
 				} else if(health > 0) {
 					$(heart).removeClass('empty');
-					$('.bar', heart).css('width', (health / 5 * 100) + '%');
+					$('.bar', heart).css('width', (health / HEALTH_PER_HEART * 100) + '%');
 					health = 0;
 				} else {
 					$(heart).addClass('empty');
 					$('.bar', heart).css('width', '0%');
 				}
+			}
+			setTimeout(function() {
+				$('.heart.hidden').removeClass('hidden');
+			}, 100);
+		},
+		
+		updateShield: function(shield, maxShield) {
+			var container = this.getHealthContainer();
+			var el = $('.shield', container);
+			if(el.length == 0) {
+				el = $('<div>').addClass('shield').addClass('hidden')
+					.append($('<div>')).insertAfter('.hearts', container);
+			}
+			if(shield > 0) {
 				setTimeout(function() {
-					$('.hiddenHeart').removeClass('hiddenHeart');
-				}, 1000);
+					el.removeClass('hidden');
+				}, 100);
+				$('div', el).width((shield / maxShield * 100) + "%");
+			} else {
+				$('div', el).width("0%");
+				el.addClass('hidden');
 			}
 		},
 		

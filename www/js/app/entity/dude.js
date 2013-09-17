@@ -5,6 +5,7 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 		this.action = null;
 		State.health = this.maxHealth();
 		Graphics.updateHealth(State.health, this.maxHealth());
+		this.shield = 0;
 	};
 	dude.prototype = new WorldEntity({
 		className: 'dude'
@@ -38,7 +39,11 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 	};
 	
 	dude.prototype.maxHealth = function() {
-		return 15;
+		return 30;
+	};
+	
+	dude.prototype.maxShield = function() {
+		return 3;
 	};
 	
 	dude.prototype.heal = function(amount) {
@@ -52,6 +57,12 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 	};
 	
 	dude.prototype.takeDamage = function(damage) {
+		if(this.shield > 0) {
+			var blocked = damage > this.shield ? this.shield : damage;
+			this.shield -= blocked;
+			damage -= blocked;
+			Graphics.updateShield(this.shield, this.maxShield());
+		}
 		State.health -= damage;
 		State.health = State.health < 0 ? 0 : State.health;
 		// TODO: Handle death
