@@ -1,4 +1,4 @@
-define(function() {
+define(['app/graphics'], function(G) {
 	
 	var Action = function() {};
 	Action.prototype.doAction = function(dude) {
@@ -6,11 +6,13 @@ define(function() {
 	};
 	
 	Action.prototype.terminateAction = function(dude) {
-		require(['app/graphics'], function(Graphics) {
-			dude.animation(0);
-			Graphics.stop(dude);
-			dude.action = null;	
-		});
+		dude.animation(0);
+		G.stop(dude);
+		dude.action = null;	
+	};
+	
+	Action.prototype.doFrameAction = function(frame) {
+		// Nuthin'
 	};
 	
 	return Action;

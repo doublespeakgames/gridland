@@ -20,6 +20,13 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 		return this._el;
 	};
 	
+	dude.prototype.getAnimation = function(label) {
+		if(label == "right" && this.carrying != null) {
+			return 9;
+		}
+		return WorldEntity.prototype.getAnimation.call(this, label);
+	};
+	
 	dude.prototype.think = function() {
 		if(this.isIdle() && this.action == null) {
 			var activity = World.getActivity();
@@ -40,6 +47,10 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 		Graphics.updateHealth(State.health, this.maxHealth());
 	};
 	
+	dude.prototype.getDamage = function() {
+		return 1;
+	};
+	
 	dude.prototype.takeDamage = function(damage) {
 		State.health -= damage;
 		State.health = State.health < 0 ? 0 : State.health;
@@ -48,9 +59,6 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 	};
 	
 	dude.prototype.animate = function() {
-		if(this.carrying != null && this.animationRow == 1) {
-			this.animationRow = 5;
-		}
 		WorldEntity.prototype.animate.call(this);
 		if(this.carrying != null) {
 			if(this.frame == 1) {

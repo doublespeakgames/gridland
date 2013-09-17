@@ -23,11 +23,22 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		
 		makeStuffHappen: function() {
 			require(['app/world'], function(World) {
+				var newStuff = [];
 				for(var i = 0, len = World.stuff.length; i < len; i++) {
 					var entity = World.stuff[i];
 					entity.animate();
+					if(entity.action != null) {
+						entity.action.doFrameAction(entity.frame);
+					}
 					entity.think();
+					if(!entity.gone) {
+						newStuff.push(entity);
+					} else if(entity.hostile && World.isNight) {
+						World.advanceTime();
+					}
 				}
+				World.stuff.length = 0;
+				World.stuff = newStuff;
 			});
 		},
 		
@@ -37,7 +48,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 				var dude = World.dude = new Dude();
 				World.stuff.push(dude);
 				dude.animation(0);
-				dude.animationOnce(3);
+				dude.animationOnce(7);
 				Graphics.addToWorld(dude);
 				dude.p(World.el().width() / 2);
 				Graphics.setPosition(dude, dude.p());
@@ -68,6 +79,12 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		},
 		
 		phaseTransition: function() {
+			for(var i in this.stuff) {
+				var entity = this.stuff[i];
+				if(entity.hostile) {
+					entity.die();
+				}
+			}
 			Graphics.phaseTransition(this.celestial);
 			this.isNight = !this.isNight
 			if(this.dude.action != null) {
@@ -102,7 +119,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 				var closest = null;
 				for(var i in this.stuff) {
 					var thing = this.stuff[i];
-					if(thing.hostile && (closest == null || 
+					if(thing.hostile && thing.isAlive() && (closest == null || 
 							(this.dude.distanceFrom(thing) < this.dude.distanceFrom(closest)))) {
 						closest = thing;
 					}

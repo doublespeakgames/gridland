@@ -7,6 +7,7 @@ define(['app/entity/worldentity', 'app/action/actionfactory'],
 		}, options);
 		this.hostile = true;
 		this.action = null;
+		this.hp = this.maxHealth();
 	};
 	Zombie.prototype = new WorldEntity({
 		className: 'zombie',
@@ -15,7 +16,7 @@ define(['app/entity/worldentity', 'app/action/actionfactory'],
 	Zombie.constructor = Zombie;
 	
 	Zombie.prototype.think = function() {
-		if(this.isIdle() && this.action == null) {
+		if(this.isIdle() && this.isAlive() && this.action == null) {
 			var _this = this;
 			require(['app/world'], function(World) {
 				var action = null;
@@ -24,13 +25,23 @@ define(['app/entity/worldentity', 'app/action/actionfactory'],
 						target: World.dude
 					});
 				} else {
-					// TODO: Attack!
+					_this.action = ActionFactory.getAction("Attack", {
+						target: World.dude
+					});
 				}
 				if(_this.action != null) {
 					_this.action.doAction(_this);
 				}
 			});
 		}
+	};
+	
+	Zombie.prototype.maxHealth = function() {
+		return 2;
+	};
+	
+	Zombie.prototype.getDamage = function() {
+		return 1;
 	};
 	
 	return Zombie;

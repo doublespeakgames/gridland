@@ -9,7 +9,7 @@ define(['app/action/action'], function(Action) {
 	RaiseBuilding.prototype.doAction = function(dude) {
 		var _action = this;
 		dude.move(this.building.dudeSpot(), function(dude) {
-			dude.animation(4);
+			dude.animation(8);
 			require(["app/graphics", "app/gamecontent", 'app/resources', 'app/world'], 
 					function(Graphics, Content, R, World) {
 				Graphics.raiseBuilding(_action.building, function() {
