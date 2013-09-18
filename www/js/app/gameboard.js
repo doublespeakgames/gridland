@@ -11,6 +11,8 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 		},
 		init : function(opts) {
 			$.extend(this.options, opts);
+			this._el = null;
+			Graphics.clearBoard();
 			Graphics.addToScreen(this);
 			this.tiles = [];
 			for (var i = 0; i < this.options.columns; i++) {

@@ -3,6 +3,7 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 		options : {},
 		init : function(opts) {
 			$.extend(this.options, opts);
+			this._el = null;
 			Graphics.hide(this);
 			Graphics.addToWorld(this);
 			var _g = Graphics;

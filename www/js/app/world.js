@@ -9,9 +9,16 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		},
 		init: function(opts) {
 			$.extend(this.options, opts);
+			this._el = null;
+			this.dude = null;
+			this.celestial = null;
+			this.stuff.length = 0;
 			Graphics.addToBoard(this);
 			this.isNight = false;
-			setInterval(this.makeStuffHappen, 200);
+			if(this.gameLoop != null) {
+				clearInterval(this.gameLoop);
+			}
+			this.gameLoop = setInterval(this.makeStuffHappen, 200);
 		},
 		
 		el: function() {
@@ -35,6 +42,15 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 						newStuff.push(entity);
 					} else if(entity.hostile && World.isNight) {
 						World.advanceTime();
+					} else if(entity == World.dude) {
+						// Dude is dead. Long live the dude.
+						Graphics.fadeOut(function() {
+							setTimeout(function() {
+								require(['app/engine'], function(Engine) {
+									Engine.init();
+								});
+							}, 1000);
+						});
 					}
 				}
 				World.stuff.length = 0;

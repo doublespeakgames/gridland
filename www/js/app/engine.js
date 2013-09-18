@@ -1,4 +1,5 @@
-define(['jquery', 'app/graphics', 'app/gameboard', 'app/events'], function($, Graphics, GameBoard, Events) {
+define(['jquery', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate', 'app/world'], 
+		function($, Graphics, GameBoard, Events, GameState, World) {
 
 	return {
 		activeTile: null,
@@ -9,8 +10,30 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events'], function($, Gr
 			$.extend(this.options, opts);
 			
 			// Bind mouse events
-			$('document').mousemove(this.mouseMove);
-			$('document').mouseup(this.mouseUp);
+			$('document').off().mousemove(this.mouseMove);
+			$('document').off().mouseup(this.mouseUp);
+			
+//			$('#test').click(function() { require(['app/gameboard'], function(G) {
+//				console.log("Moves available? " + G.areMovesAvailable());
+//			}); });
+		
+			$('#test').off().click(function() { require(['app/world'], function(W) {
+				W.phaseTransition();
+			}); });
+			
+			$('.menuBtn').off().click(function() {
+				require(['jquery'], function($) {
+					$('.menuBar').toggleClass('open');
+				});
+			});
+			
+			// Start the game
+			GameState.create();
+			Graphics.init();
+			GameBoard.init();
+			World.init();
+			GameBoard.fill();
+			World.launchDude();
 		},
 		
 		startDrag: function(tile) {

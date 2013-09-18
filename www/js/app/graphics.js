@@ -3,6 +3,11 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		init: function() {
 			// Nuthin for now
+			$('body').removeClass('night');
+		},
+		
+		clearBoard: function() {
+			$('.gameBoard').remove();
 		},
 		
 		createBoard: function(rows, cols) {
@@ -322,6 +327,16 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		stop: function(entity) {
 			entity.el().stop();
+		},
+		
+		fadeOut: function(callback) {
+			$('.gameBoard').css('opacity', 1).animate({
+				opacity: 0
+			}, {
+				duration: 1000,
+				easing: "linear",
+				complete: callback
+			});
 		}
 	};
 });

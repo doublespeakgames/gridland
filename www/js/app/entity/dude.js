@@ -1,5 +1,5 @@
-define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'], 
-		function(WorldEntity, World, Graphics, State) {
+define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate', 'app/action/actionfactory'], 
+		function(WorldEntity, World, Graphics, State, ActionFactory) {
 	var dude = function() {
 		this.carrying = null;
 		this.action = null;
@@ -76,8 +76,11 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'],
 		}
 		State.health -= damage;
 		State.health = State.health < 0 ? 0 : State.health;
-		// TODO: Handle death
 		Graphics.updateHealth(State.health, this.maxHealth());
+		if(State.health <= 0) {
+			this.action = ActionFactory.getAction("Die");
+			this.action.doAction(this);
+		}
 	};
 	
 	dude.prototype.animate = function() {
