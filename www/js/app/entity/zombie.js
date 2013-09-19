@@ -8,6 +8,7 @@ define(['app/entity/worldentity', 'app/action/actionfactory'],
 		this.hostile = true;
 		this.action = null;
 		this.hp = this.maxHealth();
+		this.xp = 1;
 	};
 	Zombie.prototype = new WorldEntity({
 		className: 'zombie',

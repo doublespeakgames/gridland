@@ -3,6 +3,7 @@ define({
 		this.buildings = [];
 		this.stores = [];
 		this.level = 0;
+		this.xp = 0;
 	},
 	
 	load: function() {

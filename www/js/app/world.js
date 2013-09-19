@@ -41,6 +41,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 					if(!entity.gone) {
 						newStuff.push(entity);
 					} else if(entity.hostile && World.isNight) {
+						World.dude.gainXp(entity.xp);
 						World.advanceTime();
 					} else if(entity == World.dude) {
 						// Dude is dead. Long live the dude.

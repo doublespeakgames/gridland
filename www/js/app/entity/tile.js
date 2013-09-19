@@ -15,10 +15,12 @@ define(['app/entity/entity', 'app/graphics', 'app/gamecontent'], function(Entity
 	
 	tile.prototype.el = function() {
 		if(this._el == null) {
-			this._el = Entity.prototype.el.call(this)
+			var el = this._el = Entity.prototype.el.call(this)
 			.addClass(this.options.type.className)
 			.append(Graphics.newElement('litBorder daySide'))
 			.append(Graphics.newElement('litBorder nightSide'));
+			
+			el.data("tile", this);
 		}
 		return this._el;
 	};

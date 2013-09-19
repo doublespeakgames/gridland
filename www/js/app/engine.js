@@ -34,6 +34,18 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate'
 			World.init();
 			GameBoard.fill();
 			World.launchDude();
+			
+			var _engine = this;
+			GameBoard.el().on("mousedown", ".tile", function() {
+				var tile = $.data(this, "tile");
+				_engine.startDrag(tile); 
+				return false;
+			});
+			GameBoard.el().on("mouseup", ".tile", function() {
+				var tile = $.data(this, "tile");
+				_engine.endDrag(tile); 
+				return false;
+			});
 		},
 		
 		startDrag: function(tile) {
@@ -70,12 +82,6 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate'
 					} catch(e) {console.log('No drag for you!');}
 				}
 			}
-		},
-		
-		bindTile: function(tile) {
-			var _engine = this;
-			tile.el().mousedown(function() {_engine.startDrag(tile); return false;});
-			tile.el().mouseup(function() {_engine.endDrag(tile); return false;});
 		}
 	};
 });

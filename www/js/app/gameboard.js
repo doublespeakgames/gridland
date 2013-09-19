@@ -116,9 +116,6 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 		},
 
 		addTile : function(tile) {
-			require(['app/engine'], function(Engine) {
-				Engine.bindTile(tile);
-			});
 			if(tile.options.row == null) {
 				tile.options.row = -1;
 			}

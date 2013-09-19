@@ -345,11 +345,11 @@ body.night {
 
 .block div {
 	height: 100%;
-	transition: width 300ms;
-	-webkit-transition: width 300ms;
-	-ms-transition: width 300ms;
-	-moz-transition: width 300ms;
-	-o-transition: width 300ms;
+	transition: width 300ms linear;
+	-webkit-transition: width 300ms linear;
+	-ms-transition: width 300ms linear;
+	-moz-transition: width 300ms linear;
+	-o-transition: width 300ms linear;
 }
 
 .block.grain div {
@@ -385,11 +385,11 @@ body.night {
 	width: 30px;
 	height: 28px;
 	opacity: 1;
-	transition: opacity 500ms;
-	-webkit-transition: opacity 500ms;
-	-moz-transition: opacity 500ms;
-	-ms-transition: opacity 500ms;
-	-o-transition: opacity 500ms;
+	transition: opacity 500ms linear;
+	-webkit-transition: opacity 500ms linear;
+	-moz-transition: opacity 500ms linear;
+	-ms-transition: opacity 500ms linear;
+	-o-transition: opacity 500ms linear;
 }
 
 .heart .mask {
@@ -408,11 +408,11 @@ body.night {
 	position: absolute;
 	height: 100%;
 	background-color: #BC4D4D;
-	transition: width 300ms;
-	-webkit-transition: width 300ms;
-	-ms-transition: width 300ms;
-	-moz-transition: width 300ms;
-	-o-transition: width 300ms;
+	transition: width 300ms linear;
+	-webkit-transition: width 300ms linear;
+	-ms-transition: width 300ms linear;
+	-moz-transition: width 300ms linear;
+	-o-transition: width 300ms linear;
 }
 
 .shield {
@@ -420,21 +420,21 @@ body.night {
 	height: 30px;
 	background: url(../img/buckler-icon.png) no-repeat 0px -30px;
 	margin-top: 5px;
-	transition: opacity 300ms;
-	-webkit-transition: opacity 300ms;
-	-ms-transition: opacity 300ms;
-	-moz-transition: opacity 300ms;
-	-o-transition: opacity 300ms;
+	transition: opacity 300ms linear;
+	-webkit-transition: opacity 300ms linear;
+	-ms-transition: opacity 300ms linear;
+	-moz-transition: opacity 300ms linear;
+	-o-transition: opacity 300ms linear;
 }
 
 .shield > div {
 	height: 100%;
 	background: url(../img/buckler-icon.png) no-repeat;
-	transition: width 300ms;
-	-webkit-transition: width 300ms;
-	-ms-transition: width 300ms;
-	-moz-transition: width 300ms;
-	-o-transition: width 300ms;
+	transition: width 300ms linear;
+	-webkit-transition: width 300ms linear;
+	-ms-transition: width 300ms linear;
+	-moz-transition: width 300ms linear;
+	-o-transition: width 300ms linear;
 }
 
 .sword {
@@ -443,21 +443,59 @@ body.night {
 	width: 30px;
 	height: 30px;
 	background: url(../img/swordr-icon.png) no-repeat 0px -30px;
-	transition: opacity 300ms;
-	-webkit-transition: opacity 300ms;
-	-ms-transition: opacity 300ms;
-	-moz-transition: opacity 300ms;
-	-o-transition: opacity 300ms;
+	transition: opacity 300ms linear;
+	-webkit-transition: opacity 300ms linear;
+	-ms-transition: opacity 300ms linear;
+	-moz-transition: opacity 300ms linear;
+	-o-transition: opacity 300ms linear;
 }
 
 .sword > div {
 	height: 100%;
 	background: url(../img/sword-icon.png) no-repeat;
-	transition: width 300ms;
-	-webkit-transition: width 300ms;
-	-ms-transition: width 300ms;
-	-moz-transition: width 300ms;
-	-o-transition: width 300ms;
+	transition: width 300ms linear;
+	-webkit-transition: width 300ms linear;
+	-ms-transition: width 300ms linear;
+	-moz-transition: width 300ms linear;
+	-o-transition: width 300ms linear;
+}
+
+.xpBar {
+	height: 300px;
+	width: 8px;
+	position: absolute;
+	top: -2px;
+	right: -8px;
+	background: url(../img/expbar.png) repeat-y 0 0;
+	transition: opacity 300ms linear;
+	-webkit-transition: opacity 300ms linear;
+	-ms-transition: opacity 300ms linear;
+	-moz-transition: opacity 300ms linear;
+	-o-transition: opacity 300ms linear;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+}
+
+.xpBar .fill {
+	position: absolute;
+	z-index: -1;
+	width: 100%;
+	height: 0%;
+	background-color: #DBAA67;
+	bottom: 0px;
+	-webkit-transition: height 300ms linear;
+	-moz-transition: height 300ms linear;
+	-ms-transition: height 300ms linear;
+	-o-transition: height 300ms linear;
+}
+
+.xpBar .nightSprite {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: url(../img/expbar.png) repeat-y -8px 0;
 }
 
 .nightSprite, .daySprite {

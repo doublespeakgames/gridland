@@ -30,6 +30,10 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			$('.world').append(entity.el());
 		},
 		
+		worldWidth: function() {
+			return $('.world').width();
+		},
+		
 		addToScreen: function(entity) {
 			$('body').append(entity.el());
 		},
@@ -253,10 +257,23 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		getStatusContainer: function() {
 			var healthContainer = $('.statusContainer');
 			if(healthContainer.length == 0) {
-				healthContainer =  $('<div>').appendTo('.gameBoard').addClass('statusContainer')
-					.append($('<div>').addClass('hearts'));;
+				healthContainer =  $('<div>').addClass('statusContainer')
+					.append($('<div>').addClass('hearts')).appendTo('.gameBoard');
 			}
 			return healthContainer;
+		},
+		
+		updateExperience: function(xp, toLevel) {
+			var xpBar = $('.xpBar');
+			if(xpBar.length == 0) {
+				xpBar == $('<div>').addClass('xpBar').addClass('litBorder')
+					.addClass('hidden').append($('<div>').addClass('nightSprite'))
+					.append($('<div>').addClass('fill')).appendTo('.gameBoard');
+			}
+			xpBar.find('.fill').css('height', (xp / toLevel * 100) + "%");
+			setTimeout(function() {
+				$('.xpBar').removeClass('hidden');
+			}, 100);
 		},
 		
 		updateHealth: function(health, maxHealth) {

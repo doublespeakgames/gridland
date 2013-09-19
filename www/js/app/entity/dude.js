@@ -5,6 +5,7 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate', 
 		this.action = null;
 		State.health = this.maxHealth();
 		Graphics.updateHealth(State.health, this.maxHealth());
+		Graphics.updateExperience(State.xp, this.toLevel());
 		this.shield = 0;
 		this.sword = 0;
 	};
@@ -39,6 +40,20 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate', 
 		}
 	};
 	
+	dude.prototype.gainXp = function(xp) {
+		State.xp += xp;
+		if(State.xp >= this.toLevel()) {
+			State.xp -= this.toLevel();
+			State.level++;
+			//TODO: Level-up animation
+		}
+		Graphics.updateExperience(State.xp, this.toLevel());
+	};
+	
+	dude.prototype.toLevel = function() {
+		return 10 * State.level;
+	};
+	
 	dude.prototype.maxHealth = function() {
 		return 30;
 	};
@@ -68,18 +83,20 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate', 
 	};
 	
 	dude.prototype.takeDamage = function(damage) {
-		if(this.shield > 0) {
-			var blocked = damage > this.shield ? this.shield : damage;
-			this.shield -= blocked;
-			damage -= blocked;
-			Graphics.updateShield(this.shield, this.maxShield());
-		}
-		State.health -= damage;
-		State.health = State.health < 0 ? 0 : State.health;
-		Graphics.updateHealth(State.health, this.maxHealth());
-		if(State.health <= 0) {
-			this.action = ActionFactory.getAction("Die");
-			this.action.doAction(this);
+		if(State.health > 0) {
+			if(this.shield > 0) {
+				var blocked = damage > this.shield ? this.shield : damage;
+				this.shield -= blocked;
+				damage -= blocked;
+				Graphics.updateShield(this.shield, this.maxShield());
+			}
+			State.health -= damage;
+			State.health = State.health < 0 ? 0 : State.health;
+			Graphics.updateHealth(State.health, this.maxHealth());
+			if(State.health <= 0) {
+				this.action = ActionFactory.getAction("Die");
+				this.action.doAction(this);
+			}
 		}
 	};
 	
