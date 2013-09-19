@@ -111,6 +111,11 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			this.dude.sword = 0;
 			Graphics.updateShield(0, 0);
 			Graphics.updateSword(0, 0);
+			
+			if(!this.isNight) {
+				GameState.save();
+				Graphics.notifySave();
+			}
 		},
 		
 		makeDudeHungry: function() {

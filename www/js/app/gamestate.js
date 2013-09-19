@@ -7,11 +7,31 @@ define({
 	},
 	
 	load: function() {
-		// TODO
+		try {
+			var savedState = JSON.parse(localStorage.gameState);
+			if(savedState) {
+				this.buildings = savedState.buildings;
+				this.stores = savedState.stores;
+				this.level = savedState.level;
+				this.xp = savedState.xp;
+			}
+		} catch(e) {
+			this.create();
+		}
+		return this;
 	},
 	
 	save: function() {
-		// TODO
+		if(typeof Storage != 'undefined' && localStorage) {
+			var state = {
+				buildings: this.buildings,
+				stores: this.stores,
+				level: this.level,
+				xp: this.xp
+			};
+			localStorage.gameState = JSON.stringify(state);
+		}
+		return this;
 	},
 	
 	removeBlock: function(block) {

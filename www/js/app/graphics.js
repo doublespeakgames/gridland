@@ -354,6 +354,13 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 				easing: "linear",
 				complete: callback
 			});
+		},
+		
+		notifySave: function() {
+			$('.saveSpinner').addClass('active');
+			setTimeout(function(){
+				$('.saveSpinner').removeClass('active');
+			}, 1500);
 		}
 	};
 });

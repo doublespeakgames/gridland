@@ -30,6 +30,8 @@ body.night {
 	opacity: 0 !important;
 }
 
+/** Menu Bar **/
+
 .menuBar {
 	z-index: 100;
 	height: 50px;
@@ -97,6 +99,129 @@ body.night {
 	background-color: black;
 }
 
+/** Day/Night Stuff **/
+
+.nightSprite, .daySprite {
+	transition: opacity 300ms linear;
+	-webkit-transition: opacity 300ms linear;
+	-moz-transition: opacity 300ms linear;
+	-ms-transition: opacity 300ms linear;
+	-o-transition: opacity 300ms linear;
+}
+
+.nightSprite {
+	opacity: 0;
+}
+
+.night .nightSprite {
+	opacity: 1;
+}
+
+.daySprite {
+	opacity: 1;
+}
+
+.night .daySprite {
+	opacity: 0;
+}
+
+.litBorder {
+	transition: all 300ms linear;
+	-webkit-transition: all 300ms linear;
+	-moz-transition: all 300ms linear;
+	-ms-transition: all 300ms linear;
+	-o-transition: all 300ms linear;
+	border-color: #000000;
+}
+
+.night .litBorder {
+	border-color: #FFFFFF;
+}
+
+/** Save Spinner **/
+
+.saveSpinner {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	left: 5px;
+	top: 3px;
+	opacity: 0;
+	transition: opacity 200ms linear;
+	-webkit-transition: opacity 200ms linear;
+	-moz-transition: opacity 200ms linear;
+	-ms-transition: opacity 200ms linear;
+	-o-transition: opacity 200ms linear;
+}
+
+.saveSpinner.active {
+	opacity: 1;
+}
+
+.saveSpinner div {
+	position: absolute;
+	width: 6px;
+	height: 6px;
+	background-color: black;
+	transition: background-color 300ms linear;
+	-webkit-transition: background-color 300ms linear;
+	-moz-transition: background-color 300ms linear;
+	-ms-transition: background-color 300ms linear;
+	-o-transition: background-color 300ms linear;
+	animation: pulse 1s infinite;
+}
+
+.night .saveSpinner div {
+	background-color: white;
+} 
+
+.saveSpinner div:nth-child(1) {
+	top: 0px;
+	left: 17px;
+}
+.saveSpinner div:nth-child(2) {
+	top: 4px;
+	right: 4px;
+	animation-delay: -875ms;
+}
+.saveSpinner div:nth-child(3) {
+	top: 17px;
+	right: 0px;
+	animation-delay: -750ms;
+}
+.saveSpinner div:nth-child(4) {
+	bottom: 4px;
+	right: 4px;
+	animation-delay: -625ms;
+}
+.saveSpinner div:nth-child(5) {
+	top: 34px;
+	left: 17px;
+	animation-delay: -500ms;
+}
+.saveSpinner div:nth-child(6) {
+	bottom: 4px;
+	left: 4px;
+	animation-delay: -375ms;	
+}
+.saveSpinner div:nth-child(7) {
+	top: 17px;
+	left: 0px;
+	animation-delay: -250ms;	
+}
+.saveSpinner div:nth-child(8) {
+	top: 4px;
+	left: 4px;
+	animation-delay: -125ms;	
+}
+
+@keyframes pulse {
+	0% { opacity: 0 }
+	50% { opacity: 1 }
+	100% { opacity: 0 }
+}
+
+/** Game Board **/
 .gameBoard {
 	position: relative;
 	margin: 110px auto 0px;
@@ -206,6 +331,8 @@ body.night {
 .selected {
 	background-color: red;
 }
+
+/** World **/
 
 .world {
 	position: absolute;
@@ -368,6 +495,29 @@ body.night {
 	background-color: #C65645;
 }
 
+.celestial {
+	z-index: 0;
+	width: 30px;
+	height: 30px;
+	background: url(../img/sun.png) no-repeat;
+	position: absolute;
+	transition: top 300ms linear, left 300ms linear;
+	-webkit-transition: top 300ms linear, left 300ms linear;
+	-moz-transition: top 300ms linear, left 300ms linear;
+	-ms-transition: top 300ms linear, left 300ms linear;
+	-o-transition: top 300ms linear, left 300ms linear;
+}
+
+.zombie {
+	position: absolute;
+	bottom: 0px;
+	height: 32px;
+	width: 16px;
+	background: url(../img/zombie.png) no-repeat;
+}
+
+/** Status **/
+
 .statusContainer {
 	position: absolute;
 	top: 0px;
@@ -498,60 +648,3 @@ body.night {
 	background: url(../img/expbar.png) repeat-y -8px 0;
 }
 
-.nightSprite, .daySprite {
-	transition: opacity 300ms linear;
-	-webkit-transition: opacity 300ms linear;
-	-moz-transition: opacity 300ms linear;
-	-ms-transition: opacity 300ms linear;
-	-o-transition: opacity 300ms linear;
-}
-
-.nightSprite {
-	opacity: 0;
-}
-
-.night .nightSprite {
-	opacity: 1;
-}
-
-.daySprite {
-	opacity: 1;
-}
-
-.night .daySprite {
-	opacity: 0;
-}
-
-.litBorder {
-	transition: all 300ms linear;
-	-webkit-transition: all 300ms linear;
-	-moz-transition: all 300ms linear;
-	-ms-transition: all 300ms linear;
-	-o-transition: all 300ms linear;
-	border-color: #000000;
-}
-
-.night .litBorder {
-	border-color: #FFFFFF;
-}
-
-.celestial {
-	z-index: 0;
-	width: 30px;
-	height: 30px;
-	background: url(../img/sun.png) no-repeat;
-	position: absolute;
-	transition: top 300ms linear, left 300ms linear;
-	-webkit-transition: top 300ms linear, left 300ms linear;
-	-moz-transition: top 300ms linear, left 300ms linear;
-	-ms-transition: top 300ms linear, left 300ms linear;
-	-o-transition: top 300ms linear, left 300ms linear;
-}
-
-.zombie {
-	position: absolute;
-	bottom: 0px;
-	height: 32px;
-	width: 16px;
-	background: url(../img/zombie.png) no-repeat;
-}
