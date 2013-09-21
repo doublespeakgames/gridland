@@ -169,6 +169,10 @@ body.night {
 	-ms-transition: background-color 300ms linear;
 	-o-transition: background-color 300ms linear;
 	animation: pulse 1s infinite;
+	-webkit-animation: pulse 1s infinite;
+	-moz-animation: pulse 1s infinite;
+	-ms-animation: pulse 1s infinite;
+	-o-animation: pulse 1s infinite;
 }
 
 .night .saveSpinner div {
@@ -183,39 +187,91 @@ body.night {
 	top: 4px;
 	right: 4px;
 	animation-delay: -875ms;
+	-webkit-animation-delay: -875ms;
+	-moz-animation-delay: -875ms;
+	-ms-animation-delay: -875ms;
+	-o-animation-delay: -875ms;
 }
 .saveSpinner div:nth-child(3) {
 	top: 17px;
 	right: 0px;
 	animation-delay: -750ms;
+	-webkit-animation-delay: -750ms;
+	-moz-animation-delay: -750ms;
+	-ms-animation-delay: -750ms;
+	-o-animation-delay: -750ms;
 }
 .saveSpinner div:nth-child(4) {
 	bottom: 4px;
 	right: 4px;
 	animation-delay: -625ms;
+	-webkit-animation-delay: -625ms;
+	-moz-animation-delay: -625ms;
+	-ms-animation-delay: -625ms;
+	-o-animation-delay: -625ms;
 }
 .saveSpinner div:nth-child(5) {
 	top: 34px;
 	left: 17px;
 	animation-delay: -500ms;
+	-webkit-animation-delay: -500ms;
+	-moz-animation-delay: -500ms;
+	-ms-animation-delay: -500ms;
+	-o-animation-delay: -500ms;
 }
 .saveSpinner div:nth-child(6) {
 	bottom: 4px;
 	left: 4px;
-	animation-delay: -375ms;	
+	animation-delay: -375ms;
+	-webkit-animation-delay: -375ms;
+	-moz-animation-delay: -375ms;
+	-ms-animation-delay: -375ms;
+	-o-animation-delay: -375ms;
 }
 .saveSpinner div:nth-child(7) {
 	top: 17px;
 	left: 0px;
-	animation-delay: -250ms;	
+	animation-delay: -250ms;
+	-webkit-animation-delay: -250ms;
+	-moz-animation-delay: -250ms;
+	-ms-animation-delay: -250ms;
+	-o-animation-delay: -250ms;
 }
 .saveSpinner div:nth-child(8) {
 	top: 4px;
 	left: 4px;
-	animation-delay: -125ms;	
+	animation-delay: -125ms;
+	-webkit-animation-delay: -125ms;
+	-moz-animation-delay: -125ms;
+	-ms-animation-delay: -125ms;
+	-o-animation-delay: -125ms;
 }
 
 @keyframes pulse {
+	0% { opacity: 0 }
+	50% { opacity: 1 }
+	100% { opacity: 0 }
+}
+
+@-webkit-keyframes pulse {
+	0% { opacity: 0 }
+	50% { opacity: 1 }
+	100% { opacity: 0 }
+}
+
+@-moz-keyframes pulse {
+	0% { opacity: 0 }
+	50% { opacity: 1 }
+	100% { opacity: 0 }
+}
+
+@-ms-keyframes pulse {
+	0% { opacity: 0 }
+	50% { opacity: 1 }
+	100% { opacity: 0 }
+}
+
+@-o-keyframes pulse {
 	0% { opacity: 0 }
 	50% { opacity: 1 }
 	100% { opacity: 0 }

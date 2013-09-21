@@ -1,30 +1,37 @@
 define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics'], function(WorldEntity, Content, Graphics) {
 	
-	var block = function(options) {
+	var Block = function(options) {
 		this.options = $.extend({}, this.options, {
 			type: Content.ResourceType.Grain
 		}, options);
 		this._quantity = 0;
 	};
-	block.prototype = new WorldEntity({
+	Block.prototype = new WorldEntity({
 		className: 'block'
 	});
-	block.constructor = block;
+	Block.constructor = Block;
 	
-	block.prototype.el = function() {
+	Block.makeBlock = function(savedBlock) {
+		var block = new Block(savedBlock.options);
+		block._quantity = savedBlock._quantity;
+		
+		return block;
+	};
+	
+	Block.prototype.el = function() {
 		if(this._el == null) {
 			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className).append(Graphics.newElement());
 		}
 		return this._el;
 	};
 	
-	block.prototype.max = 50;
+	Block.prototype.max = 50;
 	
-	block.prototype.spaceLeft = function() {
+	Block.prototype.spaceLeft = function() {
 		return this.max - this._quantity;
 	};
 	
-	block.prototype.quantity = function(value) {
+	Block.prototype.quantity = function(value) {
 		if(value != null) {
 			this._quantity = value > this.max ? this.max : value;
 			Graphics.updateBlock(this);
@@ -32,5 +39,5 @@ define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics'], function(W
 		return this._quantity;
 	};
 	
-	return block;
+	return Block;
 });

@@ -1,6 +1,6 @@
-define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics'], function(WorldEntity, Content, Graphics) {
+define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent', 'app/graphics'], function(WorldEntity, Block, Content, Graphics) {
 	
-	var building = function(options) {
+	var Building = function(options) {
 		this.options = $.extend({}, this.options, {
 			type: Content.BuildingType.Shack,
 			animationFrames: 1
@@ -18,12 +18,20 @@ define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics'], function(W
 		
 		this.p(this.options.type.position);
 	};
-	building.prototype = new WorldEntity({
+	Building.prototype = new WorldEntity({
 		className: 'building'
 	});
-	building.constructor = building;
+	Building.constructor = Building;
 	
-	building.prototype.el = function() {
+	Building.makeBuilding = function(savedBuilding) {
+		var building = new Building(savedBuilding.options);
+		building.requiredResources = savedBuilding.requiredResources;
+		building.built = savedBuilding.buit;
+		
+		return building;
+	};
+	
+	Building.prototype.el = function() {
 		if(this._el == null) {
 			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className)
 				.append(Graphics.newElement("blockPile"));
@@ -31,7 +39,7 @@ define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics'], function(W
 		return this._el;
 	};
 	
-	building.prototype.readyToBuild = function() {
+	Building.prototype.readyToBuild = function() {
 		if(this.built) {
 			return false;
 		}
@@ -43,9 +51,9 @@ define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics'], function(W
 		return true;
 	};
 	
-	building.prototype.dudeSpot = function() {
+	Building.prototype.dudeSpot = function() {
 		return this.p() + this.el().width() / 2;
 	};
 	
-	return building;
+	return Building;
 });

@@ -28,7 +28,7 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate'
 			});
 			
 			// Start the game
-			GameState.create();
+			GameState.load();
 			Graphics.init();
 			GameBoard.init();
 			World.init();
