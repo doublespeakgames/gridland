@@ -97,7 +97,6 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 				Graphics.addToWorld(dude);
 				dude.p(World.el().width() / 2);
 				Graphics.setPosition(dude, dude.p());
-				GameState.level = 1;
 			});
 		},
 		

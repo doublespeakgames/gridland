@@ -68,8 +68,8 @@ body.night {
 	background: url(../img/menu.png) no-repeat;
 	border-radius: 4px;
 	position: absolute;
-	right: 5px;
-	bottom: 5px;
+	right: 3px;
+	top: 3px;
 	cursor: pointer;
 	transition: all 300ms linear;
 	-webkit-transition: all 300ms linear;
@@ -144,8 +144,8 @@ body.night {
 	width: 40px;
 	height: 40px;
 	position: absolute;
-	left: 5px;
-	bottom: 5px;
+	left: 3px;
+	top: 3px;
 	opacity: 0;
 	transition: opacity 200ms linear;
 	-webkit-transition: opacity 200ms linear;

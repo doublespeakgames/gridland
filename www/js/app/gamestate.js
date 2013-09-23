@@ -4,7 +4,7 @@ define(['app/entity/building', 'app/entity/block'], function(Building, Block) {
 		create: function() {
 			this.buildings = [];
 			this.stores = [];
-			this.level = 0;
+			this.level = 1;
 			this.xp = 0;
 		},
 		
