@@ -26,7 +26,7 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent', 'app/gr
 	Building.makeBuilding = function(savedBuilding) {
 		var building = new Building(savedBuilding.options);
 		building.requiredResources = savedBuilding.requiredResources;
-		building.built = savedBuilding.buit;
+		building.built = savedBuilding.built;
 		
 		return building;
 	};

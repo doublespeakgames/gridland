@@ -1,6 +1,7 @@
 define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 
-        'app/gamestate', 'app/action/actionfactory', 'app/entity/monsterfactory'], 
-		function($, Graphics, Building, Content, GameState, ActionFactory, MonsterFactory) {
+        'app/gamestate', 'app/action/actionfactory', 'app/entity/monsterfactory',
+        'app/entity/block'], 
+		function($, Graphics, Building, Content, GameState, ActionFactory, MonsterFactory, Block) {
 	return {
 		stuff: [],
 		
@@ -15,6 +16,33 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			this.stuff.length = 0;
 			Graphics.addToBoard(this);
 			this.isNight = false;
+			
+			for(var i in GameState.buildings) {
+				var building = GameState.buildings[i];
+				Graphics.addToWorld(building);
+				Graphics.setPosition(building, building.p());
+				if(building.built) {
+					building.el().css('bottom', '0px');
+					building.el().find('.blockPile').css('top', '100%');
+					var cb = Content.BuildingCallbacks[building.options.type.className];
+					if(cb) {
+						cb();
+					}
+				} else {
+					for(var r in building.options.type.cost) {
+						var cost = building.options.type.cost[r];
+						var required = building.requiredResources[r];
+						for(var n = 0, has = cost - required; n < has; n++) {
+							var block = new Block({
+								type: Content.getResourceType(r)
+							});
+							Graphics.dropBlock(block, building);
+							block.quantity(block.max);
+						}
+					}
+				}
+			}
+			
 			if(this.gameLoop != null) {
 				clearInterval(this.gameLoop);
 			}

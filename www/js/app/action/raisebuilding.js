@@ -1,4 +1,4 @@
-define(['app/action/action'], function(Action) {
+define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 	
 	var RaiseBuilding = function(options) {
 		this.building = options.building;
@@ -17,10 +17,9 @@ define(['app/action/action'], function(Action) {
 					World.stuff.push(_action.building);
 					dude.animation(0);
 					dude.action = null;
-					// The Shack initializes the resource grid
-					if(_action.building.options.type == Content.BuildingType.Shack) {
-						R.init();
-						World.launchCelestial();
+					var cb = Content.BuildingCallbacks[_action.building.options.type.className];
+					if(cb) {
+						cb();
 					}
 				});
 			});

@@ -266,13 +266,13 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		updateExperience: function(xp, toLevel) {
 			var xpBar = $('.xpBar');
 			if(xpBar.length == 0) {
-				xpBar == $('<div>').addClass('xpBar').addClass('litBorder')
+				xpBar = $('<div>').addClass('xpBar').addClass('litBorder')
 					.addClass('hidden').append($('<div>').addClass('nightSprite'))
-					.append($('<div>').addClass('fill')).appendTo('.gameBoard');
+					.append($('<div>').addClass('fill').addClass('hidden')).appendTo('.gameBoard');
 			}
 			xpBar.find('.fill').css('height', (xp / toLevel * 100) + "%");
 			setTimeout(function() {
-				$('.xpBar').removeClass('hidden');
+				$('.xpBar, .fill').removeClass('hidden');
 			}, 100);
 		},
 		

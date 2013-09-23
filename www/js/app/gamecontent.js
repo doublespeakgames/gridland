@@ -30,6 +30,15 @@ define({
 		return null;
 	},
 	
+	BuildingCallbacks: {
+		'shack': function() {
+			require(['app/resources', 'app/world'], function(R, W) {
+				R.init();
+				W.launchCelestial();
+			});
+		}
+	},
+	
 	BuildingType: {
 		Shack: {
 			className: 'shack',

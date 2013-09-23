@@ -49,7 +49,7 @@ define(['app/entity/building', 'app/entity/block'], function(Building, Block) {
 		getBuilding: function(type) {
 			for(var i in this.buildings) {
 				var building = this.buildings[i];
-				if(building.options.type == type) {
+				if(building.options.type.className == type.className) {
 					return building;
 				}
 			}

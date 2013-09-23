@@ -6,6 +6,13 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 			this._el = null;
 			Graphics.hide(this);
 			Graphics.addToWorld(this);
+			
+			for(var i in GameState.stores) {
+				var block = GameState.stores[i];
+				Graphics.addResource(block);
+				Graphics.updateBlock(block);
+			}
+			
 			var _g = Graphics;
 			var _t = this;
 			setTimeout(function() {
@@ -29,39 +36,39 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 		
 		collectResource: function(type, quantity) {
 			if(this.loaded) {
-				if(type == Content.ResourceType.Grain) {
-					// TODO: Heal the dude
-				} else {
-					require(['app/entity/block', 'app/resources', 'app/gamestate'], function(Block, Resources, GameState) {
-						// Find a block to fill 
-						var block = null;
-						for(var i = 0, len = GameState.stores.length; i < len; i++) {
-							var currentBlock = GameState.stores[i];
-							if(currentBlock.options.type == type && currentBlock.spaceLeft() > 0) {
-								block = currentBlock;
-								break;
-							}
+				require(['app/entity/block', 'app/resources', 'app/gamestate'], function(Block, Resources, GameState) {
+					// Find a block to fill 
+					var block = null;
+					for(var i = 0, len = GameState.stores.length; i < len; i++) {
+						var currentBlock = GameState.stores[i];
+						if(currentBlock.options.type.className == type.className && currentBlock.spaceLeft() > 0) {
+							block = currentBlock;
+							break;
 						}
-						if(block == null) {
-							// Create a new block
-							block = new Block({
-								type: type
-							});
-							GameState.stores.push(block);
-							// If the stores are full, eject the oldest
-							Resources.checkMaximum();
-							Graphics.addResource(block);
-						}
-						// Add the resource
-						var remainder = quantity - block.spaceLeft();
-						block.quantity(block.quantity() + quantity);
-						// If there's some left over, collect the remainder
-						if(remainder > 0) {
-							Resources.collectResource(type, remainder);
-						}
-					});
-				}
+					}
+					if(block == null) {
+						// Create a new block
+						block = new Block({
+							type: type
+						});
+						GameState.stores.push(block);
+						// If the stores are full, eject the oldest
+						Resources.checkMaximum();
+						Graphics.addResource(block);
+					}
+					// Add the resource
+					var remainder = quantity - block.spaceLeft();
+					block.quantity(block.quantity() + quantity);
+					// If there's some left over, collect the remainder
+					if(remainder > 0) {
+						Resources.collectResource(type, remainder);
+					}
+				});
 			}
+		},
+		
+		addBlock: function() {
+			
 		},
 		
 		checkMaximum: function() {
