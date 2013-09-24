@@ -39,8 +39,8 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate'
 			GameBoard.el().on("mousedown touchstart", ".tile", function(e) {
 				if(!_engine.dragging) {
 					// Handle wacky touch event objects
-					if(e.originalEvent.touches) {
-						e = e.originalEvent.touches[0];
+					if(e.originalEvent.changedTouches) {
+						e = e.originalEvent.changedTouches[0];
 					}
 					_engine.dragStart.x = e.clientX;
 					_engine.dragStart.y = e.clientY;
@@ -54,8 +54,8 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate'
 				if(_engine.dragging) {
 					_engine.dragging = false;
 					// Handle wacky touch event objects
-					if(e.originalEvent.touches) {
-						e = e.originalEvent.touches[0];
+					if(e.originalEvent.changedTouches) {
+						e = e.originalEvent.changedTouches[0];
 					}
 					_engine.endDrag({ 
 						x: e.clientX - _engine.dragStart.x,
