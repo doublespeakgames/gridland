@@ -297,9 +297,28 @@ body.night {
 }
 
 .tile {
+	top: -60px;
 	width: 60px;
 	height: 60px;
 	position: absolute;
+	transform: translate3d(0,0,0);
+	transition: all 200ms linear, left 0ms linear;
+	-webkit-transition: all 200ms linear, left 0ms linear;
+	-moz-transition: all 200ms linear, left 0ms linear;
+	-ms-transition: all 200ms linear, left 0ms linear;
+	-o-transition: all 200ms linear, left 0ms linear;
+	/*
+	transition: opacity 200ms linear, transform 300ms linear;
+	-webkit-transition: opacity 200ms linear, -webkit-transform 300ms linear;
+	-moz-transition: opacity 200ms linear, -webkit-transform 300ms linear;
+	-ms-transition: opacity 200ms linear, -webkit-transform 300ms linear;
+	-o-transition: opacity 200ms linear, -webkit-transform 300ms linear;
+	*/
+}
+
+.tileSpinner {
+	width: 100%;
+	height: 100%;
 	transition: transform 300ms linear;
 	-webkit-transition: -webkit-transform 300ms linear;
 	-moz-transition: -webkit-transform 300ms linear;
@@ -307,7 +326,7 @@ body.night {
 	-o-transition: -webkit-transform 300ms linear;
 }
 
-.tile > div {
+.tileSpinner > div {
 	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;

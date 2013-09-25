@@ -120,47 +120,42 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			var el = entity.el();
 			var top = row * el.height();
 			el.css({
+				transform: 'translate3d(0, ' + top + ', 0)',
 				left: el.width() * column,
-				top: el.height() * row
 			});
 		},
 		
 		dropTile: function(tile, toRow, callback) {
 			var el = tile.el();
-			var finalTop = toRow * el.height();
+			var finalTop = (toRow + 1) * el.height();
 			var dist = Math.abs(el.position().top - finalTop);
+			var p = el.css('left');
+			p = parseInt(p.substring(0, p.length - 2));
 			
-			el.animate({
-				top: finalTop
-			}, {
-				duration: dist * tile.options.speed,
-				// easing: "easeOutBounce",
-				easing: "easeInQuad",
-				complete: callback
-			});
+			el.css('transform', 'translate3d('+ ((tile.options.column * el.width()) - p) 
+					+ 'px,' + finalTop + 'px,0)');
+			if(callback) {
+				setTimeout(callback, 200);
+			}
 		},
 		
 		switchTiles: function(tile1, tile2, callback) {
 			var el1 = tile1.el(), el2 = tile2.el();
+			var p1 = el1.css('left'), p2 = el2.css('left');
+			p1 = parseInt(p1.substring(0, p1.length - 2));
+			p2 = parseInt(p2.substring(0, p2.length - 2));
 			var width = el1.width();
-			$.when(
-				el1.animate({
-					left: tile2.options.column * width,
-					top: tile2.options.row * width
-				}, {
-					duration: width * tile1.options.speed ,
-					easing: 'linear'
-				}),
-				el2.animate({
-					left: tile1.options.column * width,
-					top: tile1.options.row * width
-				}, {
-					duration: width * tile2.options.speed ,
-					easing: 'linear'
-				})
-			).done(function() {
-				callback(tile1, tile2);
-			});
+			
+			el1.css('transform', 'translate3d(' + ((tile2.options.column * width) - p1) + 'px,' 
+					+ ((tile2.options.row + 1) * width) + 'px,0)');
+			el2.css('transform', 'translate3d(' + ((tile1.options.column * width) - p2) + 'px,'
+					+ ((tile1.options.row + 1) * width) + 'px,0)');
+			
+			if(callback) {
+				setTimeout(function() {
+					callback(tile1, tile2);
+				}, 200);
+			}
 		},
 		
 		selectTile: function(tile) {
@@ -178,12 +173,8 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 					tile.el().addClass('removing');
 				}
 			}
-			$.when($('.removing').animate({
-				opacity: 0
-			}, {
-				duration: 200,
-				easing: 'linear'
-			})).done(function() {
+			$('.removing').addClass('hidden');
+			setTimeout(function() {
 				for(var t in tiles) {
 					var tile = tiles[t];
 					if(tile != null) {
@@ -191,7 +182,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 					}
 				}
 				callback(tiles);
-			});
+			}, 300);
 		},
 		
 		animateMove: function(entity, pos, callback, stopShort) {
