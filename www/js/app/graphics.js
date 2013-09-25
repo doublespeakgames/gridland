@@ -13,7 +13,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		createBoard: function(rows, cols) {
 			// Generate the board element
 			var el = $('<div>').addClass('gameBoard').addClass('litBorder');
-			$('<div>').addClass('tileContainer').appendTo(el);
+			$('<div>').addClass('tileContainer').attr('id', 'tileContainer').appendTo(el);
 			// Determine the board dimensions based on the size of the tiles
 			var testTile = $('<div>').addClass('tile').hide().appendTo('body');
 			el.width(testTile.width() * cols);
@@ -56,6 +56,14 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		addToTileContainer: function(entity) {
 			$('.tileContainer').append(entity.el());
+		},
+		
+		addTilesToContainer: function(entities) {
+			var elements = document.createDocumentFragment();
+			for(var e in entities) {
+				elements.appendChild(entities[e].el()[0]);
+			}
+			document.getElementById('tileContainer').appendChild(elements);
 		},
 		
 		addMonster: function(monster, side) {

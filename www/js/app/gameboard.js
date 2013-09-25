@@ -124,6 +124,15 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 			this.dropTile(tile);
 		},
 		
+		addTiles: function(tiles) {
+			Graphics.addTilesToContainer(tiles);
+			for(var t in tiles) {
+				var tile = tiles[t];
+				Graphics.setPositionInBoard(tile, tile.options.row, tile.options.column);
+				this.dropTile(tile);
+			}
+		},
+		
 		dropTile: function(tile) {
 			if($.inArray(tile, this.checkQueue) == -1) {
 				this.checkQueue.push(tile);
@@ -215,6 +224,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					// Drop remaining tiles
 					var pCounts = GameBoard.tileMap();
 					var nextCount = 0;
+					var newTiles = [];
 					for(col in colsToDrop) {
 						for(var r = GameBoard.options.rows - 1; r >= 0; r--) {
 							if(GameBoard.tiles[col][r] != null) {
@@ -248,13 +258,16 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 								}
 								nextCount += pCounts[t];
 							}
-							GameBoard.addTile(new Tile({
+							newTiles.push(new Tile({
 								column: parseInt(col),
 								row: -i,
 								type: type
 							}));
 						}
 					}
+					
+					GameBoard.addTiles(newTiles);
+					
 					GameBoard.removals--;
 					if(GameBoard.removals < 0) GameBoard.removals = 0;
 				});
