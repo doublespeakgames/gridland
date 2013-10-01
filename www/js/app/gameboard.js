@@ -61,7 +61,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 
 				// console.log('[' + row + ', ' + col + ']');
 
-				// Pieces to the left and the bottom could potetially be present
+				// Pieces to the left and the bottom could potentially be present
 				var pCounts = GameBoard.tileMap();
 				if (col > 0) {
 					var sibling = GameBoard.tiles[col - 1][row];
@@ -128,6 +128,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 			Graphics.addTilesToContainer(tiles);
 			for(var t in tiles) {
 				var tile = tiles[t];
+				tile.el().removeClass('hidden');
 				Graphics.setPositionInBoard(tile, tile.options.row, tile.options.column);
 				this.dropTile(tile);
 			}
@@ -152,23 +153,25 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 			this.tiles[tile.options.column][finalRow] = tile;
 			tile.options.row = finalRow;
 			this.fallingTiles++;
-			Graphics.dropTile(tile, finalRow, function() {
-				require(['app/graphics', 'app/gameboard'], function(Graphics, GameBoard) {
-					GameBoard.fallingTiles--;
-					if(GameBoard.fallingTiles == 0) {
-						var matches = [];
-						while(GameBoard.checkQueue.length > 0) {
-							matches = matches.concat(GameBoard.checkMatches(GameBoard.checkQueue.pop()));
+			setTimeout(function() {
+				Graphics.dropTile(tile, finalRow, function() {
+					require(['app/graphics', 'app/gameboard'], function(Graphics, GameBoard) {
+						GameBoard.fallingTiles--;
+						if(GameBoard.fallingTiles == 0) {
+							var matches = [];
+							while(GameBoard.checkQueue.length > 0) {
+								matches = matches.concat(GameBoard.checkMatches(GameBoard.checkQueue.pop()));
+							}
+							if(matches.length > 0) {
+								GameBoard.removeTiles(matches);
+							} else if(!GameBoard.areMovesAvailable()) {
+								// TODO
+								console.log("NO MORE MOVES!");
+							}
 						}
-						if(matches.length > 0) {
-							GameBoard.removeTiles(matches);
-						} else if(!GameBoard.areMovesAvailable()) {
-							// TODO
-							console.log("NO MORE MOVES!");
-						}
-					}
+					});
 				});
-			});
+			}, 10);
 		},
 		
 		removeTiles: function(tiles) {
@@ -179,7 +182,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					var newTiles = [];
 					var colsToDrop = {};
 					var resourcesGained = {};
-					
+
 					// Remove matched tiles
 					for(t in tiles) {
 						var tileToRemove = tiles[t];
@@ -192,6 +195,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 							}
 							colsToDrop[tileToRemove.options.column]++;
 						}
+						tileToRemove.options.row = -1;
 					}
 					
 					// Gain resources

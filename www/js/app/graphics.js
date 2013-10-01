@@ -16,8 +16,10 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			$('<div>').addClass('tileContainer').attr('id', 'tileContainer').appendTo(el);
 			// Determine the board dimensions based on the size of the tiles
 			var testTile = $('<div>').addClass('tile').hide().appendTo('body');
-			el.width(testTile.width() * cols);
-			el.height(testTile.height() * rows);
+			this.TILE_WIDTH = testTile.width();
+			this.TILE_HEIGHT = testTile.height();
+			el.width(this.TILE_WIDTH * cols);
+			el.height(this.TILE_HEIGHT * rows);
 			testTile.remove();
 			return el;
 		},
@@ -126,22 +128,23 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		setPositionInBoard: function(entity, row, column) {
 			var el = entity.el();
-			var top = row * el.height();
+			var top = row * this.TILE_HEIGHT;
+			entity._leftPos = this.TILE_WIDTH * column;
 			el.css({
-				transform: 'translate3d(0, ' + top + ', 0)',
-				left: el.width() * column,
+				transform: 'translate3d(0, ' + top + 'px, 0)',
+				left: entity._leftPos,
 			});
 		},
 		
 		dropTile: function(tile, toRow, callback) {
 			var el = tile.el();
-			var finalTop = (toRow + 1) * el.height();
-			var dist = Math.abs(el.position().top - finalTop);
-			var p = el.css('left');
-			p = parseInt(p.substring(0, p.length - 2));
+			var finalTop = (toRow + 1) * this.TILE_HEIGHT;
 			
-			el.css('transform', 'translate3d('+ ((tile.options.column * el.width()) - p) 
-					+ 'px,' + finalTop + 'px,0)');
+			var tString = 'translate3d('+ ((tile.options.column * this.TILE_WIDTH) - tile._leftPos) + 'px,' + finalTop + 'px,0);';
+			
+			el[0].setAttribute('style', 'left:' + tile._leftPos + 'px;transform:' + tString + '-webkit-transform:' + tString + 
+					'-moz-transform:' + tString + '-ms-transform:' + tString + '-o-transform:' + tString);
+			
 			if(callback) {
 				setTimeout(callback, 200);
 			}
@@ -149,15 +152,11 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		switchTiles: function(tile1, tile2, callback) {
 			var el1 = tile1.el(), el2 = tile2.el();
-			var p1 = el1.css('left'), p2 = el2.css('left');
-			p1 = parseInt(p1.substring(0, p1.length - 2));
-			p2 = parseInt(p2.substring(0, p2.length - 2));
-			var width = el1.width();
 			
-			el1.css('transform', 'translate3d(' + ((tile2.options.column * width) - p1) + 'px,' 
-					+ ((tile2.options.row + 1) * width) + 'px,0)');
-			el2.css('transform', 'translate3d(' + ((tile1.options.column * width) - p2) + 'px,'
-					+ ((tile1.options.row + 1) * width) + 'px,0)');
+			el1.css('transform', 'translate3d(' + ((tile2.options.column * this.TILE_WIDTH) - tile1._leftPos) + 'px,' 
+					+ ((tile2.options.row + 1) * this.TILE_WIDTH) + 'px,0)');
+			el2.css('transform', 'translate3d(' + ((tile1.options.column * this.TILE_WIDTH) - tile2._leftPos) + 'px,'
+					+ ((tile1.options.row + 1) * this.TILE_WIDTH) + 'px,0)');
 			
 			if(callback) {
 				setTimeout(function() {
@@ -178,10 +177,9 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			for(var t in tiles) {
 				var tile = tiles[t];
 				if(tile != null) {
-					tile.el().addClass('removing');
+					tile.el().addClass('hidden');
 				}
 			}
-			$('.removing').addClass('hidden');
 			setTimeout(function() {
 				for(var t in tiles) {
 					var tile = tiles[t];
