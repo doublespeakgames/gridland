@@ -195,12 +195,12 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			var el = entity.el();
 			var dist = Math.abs(entity.p() - pos);
 			el.stop().animate({
-				'left': pos - (el.width() / 2)
+				'left': pos - (entity.width() / 2)
 			}, {
 				duration: dist * entity.options.speed, 
 				easing: 'linear', 
 				step: function(now, tween) {
-					entity.p(now + el.width() / 2);
+					entity.p(now + entity.width() / 2);
 					if(stopShort != null && stopShort()) {
 						el.stop();
 						if(callback != null) {

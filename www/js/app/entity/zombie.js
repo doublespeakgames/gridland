@@ -21,7 +21,7 @@ define(['app/entity/worldentity', 'app/action/actionfactory'],
 			var _this = this;
 			require(['app/world'], function(World) {
 				var action = null;
-				if(_this.distanceFrom(World.dude) > 5) {
+				if(!_this.attackRange(World.dude)) {
 					_this.action = ActionFactory.getAction("MoveTo", {
 						target: World.dude
 					});

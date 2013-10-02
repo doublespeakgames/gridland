@@ -25,6 +25,13 @@ define([ 'jquery', 'app/events', 'app/graphics' ], function($, Events, Graphics)
 		return this._el;
 	};
 	
+	entity.prototype.width = function() {
+		if(this._width == null) {
+			this._width = this.el().width();
+		}
+		return this._width;
+	};
+	
 	/**
 	 * Gets or sets the velocity
 	 */

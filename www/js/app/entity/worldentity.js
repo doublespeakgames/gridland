@@ -83,8 +83,7 @@ define(['app/entity/entity', 'app/graphics', 'app/action/actionfactory'], functi
 					callback(_entity);
 				}
 			}, function() {
-				// TODO: Figure out the right distance
-				return _entity.distanceFrom(_target) <= 1;
+				return _entity.attackRange(_target);
 			});
 		}
 	};
@@ -97,8 +96,12 @@ define(['app/entity/entity', 'app/graphics', 'app/action/actionfactory'], functi
 		return this.tempAnimation == null && this.animationRow == MOVE_ANIMS.idle;
 	};
 	
+	worldEntity.prototype.attackRange = function(target) {
+		return Math.abs(this.p() - target.p()) <= (this.width() / 2) + (target.width() / 2);
+	};
+	
 	worldEntity.prototype.distanceFrom = function(target) {
-		return Math.abs(Math.abs(this.p() - target.p()) - this.el().width() / 2 - target.el().width() / 2);
+		return Math.abs(Math.abs(this.p() - target.p()) - this.width() / 2 - target.width() / 2);
 	};
 	
 	worldEntity.prototype.maxHealth = function() {

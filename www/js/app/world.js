@@ -177,7 +177,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 						closest = thing;
 					}
 				}
-				if(closest != null && this.dude.distanceFrom(closest) <= 1) {
+				if(closest != null && this.dude.attackRange(closest)) {
 					return ActionFactory.getAction("Attack", {
 						target: closest
 					});
