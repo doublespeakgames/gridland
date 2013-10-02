@@ -32,11 +32,19 @@ define(['app/entity/building', 'app/entity/block'], function(Building, Block) {
 		save: function() {
 			if(typeof Storage != 'undefined' && localStorage) {
 				var state = {
-					buildings: this.buildings,
-					stores: this.stores,
+					buildings: [],
+					stores: [],
 					level: this.level,
 					xp: this.xp
 				};
+				for(b in this.buildings) {
+					var building = this.buildings[b];
+					state.buildings.push(Building.makeBuilding(building));
+				}
+				for(s in this.stores) {
+					var store = this.stores[s];
+					state.stores.push(Block.makeBlock(store));
+				}
 				localStorage.gameState = JSON.stringify(state);
 			}
 			return this;

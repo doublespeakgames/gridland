@@ -307,26 +307,9 @@ body.night {
 	-moz-transition: all 200ms linear, left 0ms linear;
 	-ms-transition: all 200ms linear, left 0ms linear;
 	-o-transition: all 200ms linear, left 0ms linear;
-	/*
-	transition: opacity 200ms linear, transform 300ms linear;
-	-webkit-transition: opacity 200ms linear, -webkit-transform 300ms linear;
-	-moz-transition: opacity 200ms linear, -webkit-transform 300ms linear;
-	-ms-transition: opacity 200ms linear, -webkit-transform 300ms linear;
-	-o-transition: opacity 200ms linear, -webkit-transform 300ms linear;
-	*/
 }
 
-.tileSpinner {
-	width: 100%;
-	height: 100%;
-	transition: transform 300ms linear;
-	-webkit-transition: -webkit-transform 300ms linear;
-	-moz-transition: -webkit-transform 300ms linear;
-	-ms-transition: -webkit-transform 300ms linear;
-	-o-transition: -webkit-transform 300ms linear;
-}
-
-.tileSpinner > div {
+.tile > div {
 	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
@@ -667,7 +650,7 @@ body.night {
 	top: -35px;
 	width: 30px;
 	height: 30px;
-	background: url(../img/swordr-icon.png) no-repeat 0px -30px;
+	background: url(../img/sword-icon.png) no-repeat 0px -30px;
 	transition: opacity 300ms linear;
 	-webkit-transition: opacity 300ms linear;
 	-ms-transition: opacity 300ms linear;

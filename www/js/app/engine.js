@@ -21,7 +21,7 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate'
 				W.phaseTransition();
 			}); });
 			
-			$('.menuBtn').off().click(function() {
+			$('.menuBtn').off().on("click touchstart", function() {
 				require(['jquery'], function($) {
 					$('.menuBar').toggleClass('open');
 				});

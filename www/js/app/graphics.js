@@ -30,6 +30,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		addToWorld: function(entity) {
 			$('.world').append(entity.el());
+			this.updateSprite(entity);
 		},
 		
 		worldWidth: function() {
