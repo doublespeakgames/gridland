@@ -1,7 +1,7 @@
 define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resources', 'app/world', 'app/gamecontent'], 
 		function($, Engine, Graphics, Tile, Resources, World, Content) {
 	return {
-		fallingTiles: 0,
+		dropCount: 0,
 		removals: 0,
 		checkQueue: [],
 		
@@ -42,7 +42,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 		},
 		
 		canMove: function() {
-			return this.fallingTiles == 0 && this.removals == 0;
+			return this.dropCount == 0 && this.removals == 0;
 		},
 
 		fill : function() {
@@ -98,13 +98,13 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					baseline += chance;
 				}
 				var type = Content.getResourceType(theClass);
-
-				GameBoard.addTile(new Tile({
+				
+				GameBoard.dropTiles(GameBoard.addTiles([new Tile({
 					type : type,
 					row: -1,
 					column: col
-				}));
-
+				})]));
+				
 				if (num < GameBoard.options.columns * GameBoard.options.rows - 1) {
 					setTimeout(function() {
 						require(['app/gameboard'], function(GameBoard) {
@@ -114,15 +114,6 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 				}
 			});
 		},
-
-		addTile : function(tile) {
-			if(tile.options.row == null) {
-				tile.options.row = -1;
-			}
-			Graphics.addToTileContainer(tile);
-			Graphics.setPositionInBoard(tile, tile.options.row, tile.options.column);
-			this.dropTile(tile);
-		},
 		
 		addTiles: function(tiles) {
 			Graphics.addTilesToContainer(tiles);
@@ -130,48 +121,50 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 				var tile = tiles[t];
 				tile.el().removeClass('hidden');
 				Graphics.setPositionInBoard(tile, tile.options.row, tile.options.column);
-				this.dropTile(tile);
 			}
+			return tiles;
 		},
 		
-		dropTile: function(tile) {
-			if($.inArray(tile, this.checkQueue) == -1) {
-				this.checkQueue.push(tile);
+		dropTiles: function(tiles) {
+			this.dropCount++;
+			for(var t in tiles) {
+				var tile = tiles[t];
+				if($.inArray(tile, this.checkQueue) == -1) {
+					this.checkQueue.push(tile);
+				}
+				var col = this.tiles[tile.options.column];
+				var finalRow = tile.options.row;
+				while (finalRow < this.options.rows - 1 && col[finalRow + 1] == null) {
+					finalRow++;
+				}
+				// Don't drop the tile if the column is full
+				if (finalRow < 0) {
+					throw "Cannot drop tile in full columns, idiot!";
+				}
+				if(tile.options.row >= 0) {
+					this.tiles[tile.options.column][tile.options.row] = null;
+				}
+				this.tiles[tile.options.column][finalRow] = tile;
+				tile.options.row = finalRow;
 			}
-			var col = this.tiles[tile.options.column];
-			var finalRow = tile.options.row;
-			while (finalRow < this.options.rows - 1 && col[finalRow + 1] == null) {
-				finalRow++;
-			}
-			// Don't drop the tile if the column is full
-			if (finalRow < 0) {
-				throw "Cannot drop tile in full columns, idiot!";
-			}
-			if(tile.options.row >= 0) {
-				this.tiles[tile.options.column][tile.options.row] = null;
-			}
-			this.tiles[tile.options.column][finalRow] = tile;
-			tile.options.row = finalRow;
-			this.fallingTiles++;
-			setTimeout(function() {
-				Graphics.dropTile(tile, finalRow, function() {
-					require(['app/graphics', 'app/gameboard'], function(Graphics, GameBoard) {
-						GameBoard.fallingTiles--;
-						if(GameBoard.fallingTiles == 0) {
-							var matches = [];
-							while(GameBoard.checkQueue.length > 0) {
-								matches = matches.concat(GameBoard.checkMatches(GameBoard.checkQueue.pop()));
-							}
-							if(matches.length > 0) {
-								GameBoard.removeTiles(matches);
-							} else if(!GameBoard.areMovesAvailable()) {
-								// TODO
-								console.log("NO MORE MOVES!");
-							}
+			
+			Graphics.dropTiles(tiles, function() {
+				require(['app/graphics', 'app/gameboard'], function(Graphics, GameBoard) {
+					GameBoard.dropCount--;
+					if(GameBoard.dropCount == 0) {
+						var matches = [];
+						while(GameBoard.checkQueue.length > 0) {
+							matches = matches.concat(GameBoard.checkMatches(GameBoard.checkQueue.pop()));
 						}
-					});
+						if(matches.length > 0) {
+							GameBoard.removeTiles(matches);
+						} else if(!GameBoard.areMovesAvailable()) {
+							// TODO
+							console.log("NO MORE MOVES!");
+						}
+					}
 				});
-			}, 10);
+			});
 		},
 		
 		removeTiles: function(tiles) {
@@ -229,10 +222,11 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					var pCounts = GameBoard.tileMap();
 					var nextCount = 0;
 					var newTiles = [];
+					var dropList = [];
 					for(col in colsToDrop) {
 						for(var r = GameBoard.options.rows - 1; r >= 0; r--) {
 							if(GameBoard.tiles[col][r] != null) {
-								GameBoard.dropTile(GameBoard.tiles[col][r]);
+								dropList.push(GameBoard.tiles[col][r]);
 							}
 						}
 						for(var i = 1, num = colsToDrop[col]; i <= num; i++) {
@@ -270,7 +264,9 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 						}
 					}
 					
+					dropList = dropList.concat(newTiles);
 					GameBoard.addTiles(newTiles);
+					GameBoard.dropTiles(dropList);
 					
 					GameBoard.removals--;
 					if(GameBoard.removals < 0) GameBoard.removals = 0;

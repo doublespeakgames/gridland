@@ -137,17 +137,24 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			});
 		},
 		
-		dropTile: function(tile, toRow, callback) {
-			var el = tile.el();
-			var finalTop = (toRow + 1) * this.TILE_HEIGHT;
+		dropTiles: function(tiles, callback) {
 			
-			var tString = 'translate3d('+ ((tile.options.column * this.TILE_WIDTH) - tile._leftPos) + 'px,' + finalTop + 'px,0);';
-			
-			el[0].setAttribute('style', 'left:' + tile._leftPos + 'px;transform:' + tString + '-webkit-transform:' + tString + 
-					'-moz-transform:' + tString + '-ms-transform:' + tString + '-o-transform:' + tString);
+			// Force a redraw so our CSS animations don't skip
+			$('.tileContainer').css('left');
 			
 			if(callback) {
 				setTimeout(callback, 200);
+			}
+			
+			for(var t in tiles) {
+				var tile = tiles[t];
+				var el = tile.el();
+				
+				var finalTop = (tile.options.row + 1) * this.TILE_HEIGHT;
+				var tString = 'translate3d('+ ((tile.options.column * this.TILE_WIDTH) - tile._leftPos) + 'px,' + finalTop + 'px,0);';
+				
+				el[0].setAttribute('style', 'left:' + tile._leftPos + 'px;transform:' + tString + '-webkit-transform:' + tString + 
+						'-moz-transform:' + tString + '-ms-transform:' + tString + '-o-transform:' + tString);
 			}
 		},
 		
