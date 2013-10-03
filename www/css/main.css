@@ -348,43 +348,28 @@ body.night {
 	-o-transform: rotateY(0deg);
 }
 
-.tile.grain .daySide {
-	/*background-color: #FFE97F;*/
-	background: url(../img/wheattile.png) center no-repeat;
-}
-.tile.grain .nightSide {
-	background: url(../img/grave.png) center no-repeat;
+.tile .daySide {
+	background: url(../img/tiles_day.png) no-repeat;
 }
 
-.tile.wood .daySide {
-	/* background-color: #7C5840; */
-	background: url(../img/woodtile.png) center no-repeat;
-}
-.tile.wood .nightSide {
-	background: url(../img/buckler.png) center no-repeat;
+.tile .nightSide {
+	background: url(../img/tiles_night.png) no-repeat;
 }
 
-.tile.stone .daySide {
-	/* background-color: #C4C4C4; */
-	background: url(../img/stonetile.png) center no-repeat;
-}
-.tile.stone .nightSide {
-	background: url(../img/sword.png) center no-repeat;
+.tile.grain > div {
+	background-position: 0 0;
 }
 
-.tile.clay .daySide {
-	/*background-color: #C65645;*/
-	background: url(../img/clay.png) center no-repeat;
-}
-.tile.clay .nightSide {
-	background: url(../img/ratnest.png) center no-repeat;
+.tile.wood > div {
+	background-position: -104px 0;
 }
 
-.tile.gem .daySide {
-	/* background-color: #C49EE2;*/
-	background: url(../img/gem.png) center no-repeat;
+.tile.stone > div {
+	background-position: -52px 0;
 }
-.tile.gem .nightSide {
+
+.tile.clay > div {
+	background-position: 0 -52px;
 }
 
 .selected {
