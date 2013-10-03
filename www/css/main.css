@@ -377,6 +377,7 @@ body.night {
 	background: url(../img/clay.png) center no-repeat;
 }
 .tile.clay .nightSide {
+	background: url(../img/ratnest.png) center no-repeat;
 }
 
 .tile.gem .daySide {
