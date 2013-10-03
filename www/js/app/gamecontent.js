@@ -14,7 +14,8 @@ define({
 			nightEffect: 'sword:1'
 		},
 		Clay: {
-			className: 'clay'
+			className: 'clay',
+			nightEffect: 'spawn:rat'
 		},
 		Gem: {
 			className: 'gem'

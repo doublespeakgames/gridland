@@ -1,7 +1,9 @@
 define(['app/action/action'], function(Action) {
 	
 	var Attack = function(options) {
-		this.target = options.target;
+		if(options) {
+			this.target = options.target;
+		}
 	};
 	Attack.prototype = new Action();
 	Attack.constructor = Attack;

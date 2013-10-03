@@ -1,5 +1,6 @@
-define(['app/action/moveblock', 'app/action/raisebuilding', 'app/action/moveto', 'app/action/attack', 'app/action/die'], 
-		function(MoveBlock, RaiseBuilding, MoveTo, Attack, Die) {
+define(['app/action/moveblock', 'app/action/raisebuilding', 'app/action/moveto', 'app/action/attack', 'app/action/die',
+        'app/action/fastattack'], 
+		function(MoveBlock, RaiseBuilding, MoveTo, Attack, Die, FastAttack) {
 	
 	return {
 		_actions: {
@@ -7,6 +8,7 @@ define(['app/action/moveblock', 'app/action/raisebuilding', 'app/action/moveto',
 			"RaiseBuilding": RaiseBuilding,
 			"MoveTo": MoveTo,
 			"Attack": Attack,
+			"FastAttack": FastAttack,
 			"Die": Die
 		},
 		

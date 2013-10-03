@@ -574,6 +574,14 @@ body.night {
 	background: url(../img/zombie.png) no-repeat;
 }
 
+.rat {
+	position: absolute;
+	bottom: 0px;
+	height: 13px;
+	width: 40px;
+	background: url(../img/rat.png) no-repeat;
+}
+
 /** Status **/
 
 .statusContainer {
