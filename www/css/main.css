@@ -372,6 +372,10 @@ body.night {
 	background-position: 0 -52px;
 }
 
+.tile.cloth > div {
+	background-position: -52px -52px;
+}
+
 .selected {
 	background-color: red;
 }
@@ -448,6 +452,10 @@ body.night {
 
 .bricklayer {
 	background-image: url(../img/bricklayer.png);
+}
+
+.weaver {
+	background-image: url(../img/weaver.png);
 }
 
 .mine {
@@ -537,6 +545,10 @@ body.night {
 
 .block.clay div {
 	background-color: #C65645;
+}
+
+.block.cloth div {
+	background-color: #EEDFA6;
 }
 
 .celestial {

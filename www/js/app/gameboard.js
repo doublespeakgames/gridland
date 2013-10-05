@@ -38,6 +38,10 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 				map.clay = 2;
 			}
 			
+			if(World.hasBuilding(Content.BuildingType.Weaver)) {
+				map.cloth = 2;
+			}
+			
 			return map;
 		},
 		
@@ -286,10 +290,6 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					tile2.options.column = c1;
 					
 					if(!skipMatch) {
-						if(!World.isNight) {
-							World.advanceTime();
-							World.makeDudeHungry();
-						}
 						GameBoard.swapSide = tile1.options.column < GameBoard.options.columns / 2 ? 'left' : 'right';
 						// Check for matches
 						var matches = GameBoard.checkMatches(tile1);
@@ -299,6 +299,11 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 							GameBoard.removeTiles(matches);
 						} else {
 							GameBoard.switchTiles(tile1, tile2, true);
+						}
+						
+						if(!World.isNight) {
+							World.advanceTime();
+							World.makeDudeHungry();
 						}
 					}
 				});

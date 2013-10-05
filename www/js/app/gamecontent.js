@@ -17,6 +17,10 @@ define({
 			className: 'clay',
 			nightEffect: 'spawn:rat'
 		},
+		Cloth: {
+			className: 'cloth'
+			// nightEffect: 'spawn:archer' TODO
+		},
 		Gem: {
 			className: 'gem'
 		}
@@ -59,15 +63,27 @@ define({
 			requiredLevel: 1
 		},
 		
+		Weaver: {
+			className: 'weaver',
+			position: 150,
+			cost: { 
+				stone: 4,
+				wood: 4,
+				clay: 2
+			},
+			requiredLevel: 1
+		},
+		
 		Mine: {
 			className: 'mine',
-			position: 150,
+			position: 210,
 			cost: {
 				stone: 3,
 				wood: 3,
-				clay: 4
+				clay: 2,
+				cloth: 2
 			},
-			requiredLevel: 1
+			requiredLevel: 2
 		}
 	},
 	
