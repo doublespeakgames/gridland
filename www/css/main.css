@@ -580,6 +580,80 @@ body.night {
 	background: url(../img/rat.png) no-repeat;
 }
 
+.skeleton {
+	position: absolute;
+	bottom: 0px;
+	height: 32px;
+	width: 27px;
+	background: url(../img/skeleton.png) no-repeat;
+}
+
+.arrow {
+	position: absolute;
+	height: 1px;
+	width: 8px;
+	background-color: white;
+	bottom: 20px;
+	transition: all 100ms linear, left 100ms linear;
+	-webkit-transition: all 100ms linear, left 100ms linear;
+	-moz-transition: all 100ms linear, left 100ms linear;
+	-ms-transition: all 100ms linear, left 100ms linear;
+	-o-transition: all 100ms linear, left 100ms linear;
+}
+
+.arrow.left {
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+}
+
+.arrow.right {
+	transform: rotate(-45deg);
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+}
+
+.arrow.top {
+	transform: translate3d(0, -50px, 0) rotate(0deg);
+	-webkit-transform: translate3d(0, -50px, 0) rotate(0deg);
+	-moz-transform: translate3d(0, -50px, 0) rotate(0deg);
+	-ms-transform: translate3d(0, -50px, 0) rotate(0deg);
+	-o-transform: translate3d(0, -50px, 0) rotate(0deg);
+	transition-timing-function: ease-out, linear;
+	-webkit-transition-timing-function: ease-out, linear;
+	-moz-transition-timing-function: ease-out, linear;
+	-ms-transition-timing-function: ease-out, linear;
+	-o-transition-timing-function: ease-out, linear;
+}
+
+.arrow.bottom {
+	transition-timing-function: ease-in, linear;
+	-webkit-transition-timing-function: ease-in, linear;
+	-moz-transition-timing-function: ease-in, linear;
+	-ms-transition-timing-function: ease-in, linear;
+	-o-transition-timing-function: ease-in, linear;
+}
+
+.arrow.bottom.left {
+	transform: translate3d(0, 0px, 0) rotate(-45deg);
+	-webkit-transform: translate3d(0, 0px, 0) rotate(-45deg);
+	-moz-transform: translate3d(0, 0px, 0) rotate(-45deg);
+	-ms-transform: translate3d(0, 0px, 0) rotate(-45deg);
+	-o-transform: translate3d(0, 0px, 0) rotate(-45deg);
+}
+
+.arrow.bottom.right {
+	transform: translate3d(0, 0px, 0) rotate(45deg);
+	-webkit-transform: translate3d(0, 0px, 0) rotate(45deg);
+	-moz-transform: translate3d(0, 0px, 0) rotate(45deg);
+	-ms-transform: translate3d(0, 0px, 0) rotate(45deg);
+	-o-transform: translate3d(0, 0px, 0) rotate(45deg);
+}
+
 /** Status **/
 
 .statusContainer {

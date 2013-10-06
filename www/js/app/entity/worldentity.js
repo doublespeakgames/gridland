@@ -83,7 +83,7 @@ define(['app/entity/entity', 'app/graphics', 'app/action/actionfactory'], functi
 					callback(_entity);
 				}
 			}, function() {
-				return _entity.attackRange(_target);
+				return _entity.p() > 10 && _entity.p() < Graphics.worldWidth() - 10 && _entity.attackRange(_target);
 			});
 		}
 	};

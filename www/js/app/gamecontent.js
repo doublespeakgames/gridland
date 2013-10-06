@@ -18,8 +18,8 @@ define({
 			nightEffect: 'spawn:rat'
 		},
 		Cloth: {
-			className: 'cloth'
-			// nightEffect: 'spawn:archer' TODO
+			className: 'cloth',
+			nightEffect: 'spawn:skeleton'
 		},
 		Gem: {
 			className: 'gem'

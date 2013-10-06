@@ -366,6 +366,41 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			setTimeout(function(){
 				$('.saveSpinner').removeClass('active');
 			}, 1500);
+		},
+		
+		fireArrow: function(arrowClass, speed, start, end, callback) {
+			var dist = end - start;
+			var time = Math.abs(dist) * speed;
+			var arrow = $('<div>').addClass(arrowClass).addClass(dist > 0 ? 'right' : 'left');
+			arrow.attr('style', 'left:' + start + 'px;transition-duration:'  + (time/2) + 
+					'ms;-webkit-transition-duration:'  + (time/2) + 'ms;-moz-transition-duration:'  + (time/2) + 
+					'ms;-ms-transition-duration:'  + (time/2) + 'ms;-o-transition-duration:'  + (time/2) + 'ms;');
+			$('.world').append(arrow);
+			
+			arrow.css('left'); // Force a redraw before animation
+			
+			// Move arrow to top of arc
+			arrow.attr('style', 'left:' + (start + dist/2) + 'px;transition-duration:'  + (time/2) + 
+					'ms;-webkit-transition-duration:'  + (time/2) + 'ms;-moz-transition-duration:'  + (time/2) + 
+					'ms;-ms-transition-duration:'  + (time/2) + 'ms;-o-transition-duration:'  + (time/2) + 'ms;');
+			arrow.addClass('top');
+			
+			// Move arrow to end of arc
+			setTimeout(function() {
+				arrow.attr('style', 'left:' + (start + dist) + 'px;transition-duration:'  + (time/2) + 
+						'ms;-webkit-transition-duration:'  + (time/2) + 'ms;-moz-transition-duration:'  + (time/2) + 
+						'ms;-ms-transition-duration:'  + (time/2) + 'ms;-o-transition-duration:'  + (time/2) + 'ms;');
+				arrow.removeClass('top').addClass('bottom');
+				setTimeout(function() {
+					// Remove arrow
+					arrow.remove();
+					if(callback) {
+						callback(arrow);
+					}
+				}, time / 2);
+			}, time / 2);
+			
+			return arrow;
 		}
 	};
 });
