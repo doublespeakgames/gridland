@@ -283,6 +283,8 @@ body.night {
 	margin: 110px auto 0px;
 	border: 2px solid;
 	padding: 2px;
+	opacity: 1;
+	transition: all 300ms linear, opacity 1s linear;
 }
 
 .tileContainer {
@@ -780,5 +782,15 @@ body.night {
 	top: 0px;
 	left: 0px;
 	background: url(../img/expbar.png) repeat-y -8px 0;
+}
+
+.levelEffect {
+	position: absolute;
+	height: 0%;
+	width: 2px;
+	top: 0px;
+	background-color: white;
+	opacity: 1;
+	transition: all 500ms ease-out, height 200ms ease-out;
 }
 

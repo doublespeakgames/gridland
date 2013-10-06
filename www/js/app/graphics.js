@@ -89,6 +89,14 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			});
 		},
 		
+		setNight: function(night) {
+			if(night) {
+				$('body').addClass('night');
+			} else {
+				$('body').removeClass('night');
+			}
+		},
+		
 		phaseTransition: function(celestial) {
 			celestial.el().css('top', '100%');
 			var _g = this;
@@ -352,13 +360,10 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		},
 		
 		fadeOut: function(callback) {
-			$('.gameBoard').css('opacity', 1).animate({
-				opacity: 0
-			}, {
-				duration: 1000,
-				easing: "linear",
-				complete: callback
-			});
+			$('.gameBoard').addClass('hidden');
+			if(callback) {
+				setTimeout(callback, 1000);
+			}
 		},
 		
 		notifySave: function() {
@@ -401,6 +406,20 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			}, time / 2);
 			
 			return arrow;
+		},
+		
+		levelUp: function(dude) {
+			var p = dude.p();
+			var effect = $('<div>').addClass('levelEffect').css('left', (p - 1) + 'px').appendTo('.world');
+			effect.css('left'); // force redraw before animation
+			effect.css('height', '100%');
+			setTimeout(function() {
+				effect.css({
+					'width': '200px',
+					'left': (p - 100) + 'px',
+					'opacity': 0
+				});
+			}, 300);
 		}
 	};
 });

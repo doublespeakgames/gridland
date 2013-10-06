@@ -6,7 +6,8 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		stuff: [],
 		
 		options: {
-			// Nothing for now
+			dayMoves: 20,
+			nightMoves: 10
 		},
 		init: function(opts) {
 			$.extend(this.options, opts);
@@ -75,6 +76,11 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 						// Dude is dead. Long live the dude.
 						Graphics.fadeOut(function() {
 							setTimeout(function() {
+								require(['app/graphics'], function(G) {
+									Graphics.setNight(false);
+								}, 500);
+							});
+							setTimeout(function() {
 								require(['app/engine'], function(Engine) {
 									Engine.init();
 								});
@@ -113,8 +119,10 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		
 		advanceTime: function() {
 			if(this.celestial != null) {
-				this.celestial.p(this.celestial.p() + 24);
-				if(this.celestial.p() > $('.world').width()) {
+				var worldWidth = Graphics.worldWidth();
+				var distance = Math.floor(worldWidth / (this.isNight ? this.options.nightMoves : this.options.dayMoves));
+				this.celestial.p(this.celestial.p() + distance);
+				if(this.celestial.p() > worldWidth) {
 					this.phaseTransition();
 				} else {
 					Graphics.moveCelestial(this.celestial, this.celestial.p());
@@ -123,12 +131,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		},
 		
 		phaseTransition: function() {
-			for(var i in this.stuff) {
-				var entity = this.stuff[i];
-				if(entity.hostile) {
-					entity.die();
-				}
-			}
+			this.wipeMonsters();
 			Graphics.phaseTransition(this.celestial);
 			this.isNight = !this.isNight
 			if(this.dude.action != null) {
@@ -142,6 +145,15 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			if(!this.isNight) {
 				GameState.save();
 				Graphics.notifySave();
+			}
+		},
+		
+		wipeMonsters: function() {
+			for(var i in this.stuff) {
+				var entity = this.stuff[i];
+				if(entity.hostile) {
+					entity.die();
+				}
 			}
 		},
 		

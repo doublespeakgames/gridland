@@ -8,7 +8,6 @@ define(['app/action/attack'], function(Attack) {
 	
 	FastAttack.prototype.doFrameAction = function(frame) {
 		if(frame == 1 || frame == 3) {
-			console.log(this._entity.getDamage());
 			this.target.takeDamage(this._entity.getDamage());
 		}
 		if(frame == 3) {

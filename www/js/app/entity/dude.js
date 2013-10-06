@@ -45,17 +45,20 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate', 
 		if(State.xp >= this.toLevel()) {
 			State.xp -= this.toLevel();
 			State.level++;
-			//TODO: Level-up animation
+			Graphics.levelUp(this);
+			State.health = this.maxHealth();
+			Graphics.updateHealth(State.health, this.maxHealth());
+			World.wipeMonsters();
 		}
 		Graphics.updateExperience(State.xp, this.toLevel());
 	};
 	
 	dude.prototype.toLevel = function() {
-		return 10 * State.level;
+		return 30 * State.level;
 	};
 	
 	dude.prototype.maxHealth = function() {
-		return 30;
+		return 20 + 10 * State.level;
 	};
 	
 	dude.prototype.maxShield = function() {
