@@ -66,6 +66,9 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate', 
 	};
 	
 	dude.prototype.maxSword = function() {
+		if(State.hasBuilding("blacksmith")) {
+			return 9;
+		}
 		return 3;
 	};
 	

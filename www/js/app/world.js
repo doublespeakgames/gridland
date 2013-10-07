@@ -23,6 +23,9 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 				Graphics.addToWorld(building);
 				Graphics.setPosition(building, building.p());
 				if(building.built) {
+					if(building.options.type.tileMod) {
+						$('.gameBoard').addClass(building.options.type.tileMod + building.options.type.tileLevel);
+					}
 					building.el().css('bottom', '0px');
 					building.el().find('.blockPile').css('top', '100%');
 					var cb = Content.BuildingCallbacks[building.options.type.className];
@@ -225,7 +228,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 					else if(building != null && !building.built) {
 						for(var b in GameState.stores) {
 							var block = GameState.stores[b];
-							if(block.spaceLeft() == 0) {
+							if(!block.gone && block.spaceLeft() == 0) {
 								for(var resource in building.requiredResources) {
 									var required = building.requiredResources[resource];
 									if(required > 0 && resource == block.options.type.className) {

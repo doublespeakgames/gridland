@@ -54,6 +54,16 @@ define(['app/entity/building', 'app/entity/block'], function(Building, Block) {
 			this.stores.splice(this.stores.indexOf(block), 1);
 		},
 		
+		hasBuilding: function(type) {
+			for(var i in this.buildings) {
+				var building = this.buildings[i];
+				if(building.options.type.className == type.className && building.built) {
+					return true;
+				}
+			}
+			return false;
+		},
+		
 		getBuilding: function(type) {
 			for(var i in this.buildings) {
 				var building = this.buildings[i];

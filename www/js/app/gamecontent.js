@@ -3,26 +3,37 @@ define({
 	ResourceType: {
 		Grain: {
 			className: 'grain',
-			nightEffect: 'spawn:zombie'
+			nightEffect: {
+				'default': 'spawn:zombie'
+			}
 		},
 		Wood: {
 			className: 'wood',
-			nightEffect: 'shield:1'
+			nightEffect: {
+				'default': 'shield:1'				
+			}
 		},
 		Stone: {
 			className: 'stone',
-			nightEffect: 'sword:1'
+			nightEffect: {
+				'blacksmith': 'sword:2',
+				'default': 'sword:1'
+			},
+			multipliers: {
+				blacksmith: 4
+			}
 		},
 		Clay: {
 			className: 'clay',
-			nightEffect: 'spawn:rat'
+			nightEffect: {
+				'default': 'spawn:rat'
+			}
 		},
 		Cloth: {
 			className: 'cloth',
-			nightEffect: 'spawn:skeleton'
-		},
-		Gem: {
-			className: 'gem'
+			nightEffect: {
+				'default': 'spawn:skeleton'
+			}
 		}
 	},
 	
@@ -74,8 +85,8 @@ define({
 			requiredLevel: 1
 		},
 		
-		Mine: {
-			className: 'mine',
+		Blacksmith: {
+			className: 'blacksmith',
 			position: 210,
 			cost: {
 				stone: 3,
@@ -83,7 +94,9 @@ define({
 				clay: 2,
 				cloth: 2
 			},
-			requiredLevel: 2
+			requiredLevel: 2,
+			tileMod: 'stone',
+			tileLevel: 2
 		}
 	},
 	

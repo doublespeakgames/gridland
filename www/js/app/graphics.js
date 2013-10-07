@@ -243,6 +243,16 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 				duration: 5000,
 				easing: 'linear',
 				complete: function() {
+					if(building.options.type.tileMod) {
+						var tiles = $('.tile.' + building.options.type.tileMod);
+						tiles.addClass('hidden');
+						setTimeout(function() {
+							$('.gameBoard')
+								.removeClass(building.options.type.tileMod + (building.options.type.tileLevel - 1))
+								.addClass(building.options.type.tileMod + building.options.type.tileLevel);
+							tiles.removeClass('hidden');
+						}, 300);
+					}
 					callback(building);
 				}
 			});

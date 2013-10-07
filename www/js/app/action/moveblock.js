@@ -13,7 +13,10 @@ define(['app/action/action'], function(Action) {
 				function(GameState, Content) {
 			dude.move(GameState.getBuilding(Content.BuildingType.Shack).dudeSpot(), function(dude) {
 				require(['app/graphics'], function(Graphics) {
-					if(_action.block.gone) return;
+					if(_action.block.gone) {
+						dude.action = null;
+						return;
+					}
 					Graphics.pickUpBlock(_action.block);
 					dude.carrying = _action.block.el();
 					GameState.removeBlock(_action.block);

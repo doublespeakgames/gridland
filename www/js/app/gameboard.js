@@ -174,8 +174,8 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 		removeTiles: function(tiles) {
 			this.removals++;
 			Graphics.removeTiles(tiles, function() {
-				require(['app/gameboard', 'app/entity/tile', 'app/resources', 'app/gamecontent'], 
-						function(GameBoard, Tile, Resources, Content) {
+				require(['app/gameboard', 'app/entity/tile', 'app/resources', 'app/gamecontent', 'app/gamestate'], 
+						function(GameBoard, Tile, Resources, Content, State) {
 					var newTiles = [];
 					var colsToDrop = {};
 					var resourcesGained = {};
@@ -199,8 +199,15 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					for(typeName in resourcesGained) {
 						if(World.isNight) {
 							var type = Content.getResourceType(typeName);
-							if(type.nightEffect != null) {
-								var nightEffect = type.nightEffect.split(':');
+							var effect = null;
+							for(var b in type.nightEffect) {
+								if(b == "default" || State.hasBuilding(b)) {
+									effect = type.nightEffect[b];
+									break;
+								}
+							}
+							if(effect != null) {
+								var nightEffect = effect.split(':');
 								switch(nightEffect[0]) {
 								case "spawn":
 									World.spawnMonster(nightEffect[1], resourcesGained[typeName], GameBoard.swapSide);

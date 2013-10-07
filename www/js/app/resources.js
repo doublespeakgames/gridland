@@ -36,7 +36,8 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 		
 		collectResource: function(type, quantity) {
 			if(this.loaded) {
-				require(['app/entity/block', 'app/resources', 'app/gamestate'], function(Block, Resources, GameState) {
+				require(['app/entity/block', 'app/resources', 'app/gamestate', 'app/gamecontent'], 
+						function(Block, Resources, GameState, Content) {
 					// Find a block to fill 
 					var block = null;
 					for(var i = 0, len = GameState.stores.length; i < len; i++) {
@@ -56,6 +57,15 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 						Resources.checkMaximum();
 						Graphics.addResource(block);
 					}
+					// Apply building multipliers
+					if(type.multipliers) {
+						for(var b in type.multipliers) {
+							var bType = Content.getBuildingType(b);
+							if(GameState.hasBuilding(bType)) {
+								quantity *= type.multipliers[b];
+							}
+						}
+					}
 					// Add the resource
 					var remainder = quantity - block.spaceLeft();
 					block.quantity(block.quantity() + quantity);
@@ -65,10 +75,6 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 					}
 				});
 			}
-		},
-		
-		addBlock: function() {
-			
 		},
 		
 		checkMaximum: function() {
