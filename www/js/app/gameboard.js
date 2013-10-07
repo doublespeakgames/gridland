@@ -201,7 +201,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 							var type = Content.getResourceType(typeName);
 							var effect = null;
 							for(var b in type.nightEffect) {
-								if(b == "default" || State.hasBuilding(b)) {
+								if(b == "default" || State.hasBuilding(Content.getBuildingType(b))) {
 									effect = type.nightEffect[b];
 									break;
 								}

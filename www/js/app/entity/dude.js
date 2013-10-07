@@ -1,5 +1,6 @@
-define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate', 'app/action/actionfactory'], 
-		function(WorldEntity, World, Graphics, State, ActionFactory) {
+define(['app/entity/worldentity', 'app/world', 'app/graphics', 
+        'app/gamestate', 'app/action/actionfactory', 'app/gamecontent'], 
+		function(WorldEntity, World, Graphics, State, ActionFactory, Content) {
 	var dude = function() {
 		this.carrying = null;
 		this.action = null;
@@ -66,8 +67,8 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate', 
 	};
 	
 	dude.prototype.maxSword = function() {
-		if(State.hasBuilding("blacksmith")) {
-			return 9;
+		if(State.hasBuilding(Content.BuildingType.Blacksmith)) {
+			return 6;
 		}
 		return 3;
 	};
@@ -78,11 +79,13 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate', 
 		Graphics.updateHealth(State.health, this.maxHealth());
 	};
 	
-	dude.prototype.getDamage = function() {
+	dude.prototype.getDamage = function(damageToKill) {
 		var damage = 1;
+		damageToKill -= damage;
 		if(this.sword > 0) {
-			damage += this.sword;
-			this.sword =  0;
+			var add = this.sword > damageToKill ? damageToKill : this.sword;
+			damage += add;
+			this.sword -=  add;
 			Graphics.updateSword(this.sword, this.maxSword());
 		}
 		return damage;
