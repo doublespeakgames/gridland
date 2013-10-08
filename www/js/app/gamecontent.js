@@ -20,7 +20,7 @@ define({
 				'default': 'sword:1'
 			},
 			multipliers: {
-				blacksmith: 4
+				blacksmith: 2
 			}
 		},
 		Clay: {

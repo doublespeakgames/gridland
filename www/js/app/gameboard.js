@@ -1,5 +1,6 @@
-define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resources', 'app/world', 'app/gamecontent'], 
-		function($, Engine, Graphics, Tile, Resources, World, Content) {
+define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 
+        'app/resources', 'app/world', 'app/gamecontent', 'app/gamestate'], 
+		function($, Engine, Graphics, Tile, Resources, World, Content, State) {
 	return {
 		dropCount: 0,
 		removals: 0,
@@ -158,7 +159,13 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 					if(GameBoard.dropCount == 0) {
 						var matches = [];
 						while(GameBoard.checkQueue.length > 0) {
-							matches = matches.concat(GameBoard.checkMatches(GameBoard.checkQueue.pop()));
+							var curMatches = GameBoard.checkMatches(GameBoard.checkQueue.pop());
+							for(var m in curMatches) {
+								var match = curMatches[m];
+								if($.inArray(match, matches) == -1) {
+									matches.push(match);
+								}
+							}
 						}
 						if(matches.length > 0) {
 							GameBoard.removeTiles(matches);
@@ -172,62 +179,64 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 'app/resource
 		},
 		
 		removeTiles: function(tiles) {
+			
 			this.removals++;
+			var newTiles = [];
+			var colsToDrop = {};
+			var resourcesGained = {};
+
+			// Remove matched tiles
+			for(t in tiles) {
+				var tileToRemove = tiles[t];
+				var gained = resourcesGained[tileToRemove.options.type.className] || 0;
+				resourcesGained[tileToRemove.options.type.className] = gained + 1;
+				if(this.tiles[tileToRemove.options.column][tileToRemove.options.row] != null) {
+					this.tiles[tileToRemove.options.column][tileToRemove.options.row] = null;
+					if(colsToDrop[tileToRemove.options.column] == null) {
+						colsToDrop[tileToRemove.options.column] = 0;
+					}
+					colsToDrop[tileToRemove.options.column]++;
+				}
+				tileToRemove.options.row = -1;
+			}
+			
+			// Gain resources
+			for(typeName in resourcesGained) {
+				if(World.isNight) {
+					var type = Content.getResourceType(typeName);
+					var effect = null;
+					for(var b in type.nightEffect) {
+						if(b == "default" || State.hasBuilding(Content.getBuildingType(b))) {
+							effect = type.nightEffect[b];
+							break;
+						}
+					}
+					if(effect != null) {
+						var nightEffect = effect.split(':');
+						switch(nightEffect[0]) {
+						case "spawn":
+							World.spawnMonster(nightEffect[1], resourcesGained[typeName], this.swapSide);
+							break;
+						case "shield":
+							World.addDefense(parseInt(nightEffect[1]) * resourcesGained[typeName]);
+							break;
+						case "sword":
+							World.addAttack(parseInt(nightEffect[1]) * resourcesGained[typeName]);
+							break;
+						}
+					}
+				} else {
+					if(typeName == Content.ResourceType.Grain.className) {
+						World.healDude(resourcesGained[typeName]);
+					} else {
+						Resources.collectResource(Content.getResourceType(typeName), resourcesGained[typeName]);
+					}
+				}
+			}
+			
 			Graphics.removeTiles(tiles, function() {
 				require(['app/gameboard', 'app/entity/tile', 'app/resources', 'app/gamecontent', 'app/gamestate'], 
 						function(GameBoard, Tile, Resources, Content, State) {
-					var newTiles = [];
-					var colsToDrop = {};
-					var resourcesGained = {};
-
-					// Remove matched tiles
-					for(t in tiles) {
-						var tileToRemove = tiles[t];
-						var gained = resourcesGained[tileToRemove.options.type.className] || 0;
-						resourcesGained[tileToRemove.options.type.className] = gained + 1;
-						if(GameBoard.tiles[tileToRemove.options.column][tileToRemove.options.row] != null) {
-							GameBoard.tiles[tileToRemove.options.column][tileToRemove.options.row] = null;
-							if(colsToDrop[tileToRemove.options.column] == null) {
-								colsToDrop[tileToRemove.options.column] = 0;
-							}
-							colsToDrop[tileToRemove.options.column]++;
-						}
-						tileToRemove.options.row = -1;
-					}
-					
-					// Gain resources
-					for(typeName in resourcesGained) {
-						if(World.isNight) {
-							var type = Content.getResourceType(typeName);
-							var effect = null;
-							for(var b in type.nightEffect) {
-								if(b == "default" || State.hasBuilding(Content.getBuildingType(b))) {
-									effect = type.nightEffect[b];
-									break;
-								}
-							}
-							if(effect != null) {
-								var nightEffect = effect.split(':');
-								switch(nightEffect[0]) {
-								case "spawn":
-									World.spawnMonster(nightEffect[1], resourcesGained[typeName], GameBoard.swapSide);
-									break;
-								case "shield":
-									World.addDefense(parseInt(nightEffect[1]) * resourcesGained[typeName]);
-									break;
-								case "sword":
-									World.addAttack(parseInt(nightEffect[1]) * resourcesGained[typeName]);
-									break;
-								}
-							}
-						} else {
-							if(typeName == Content.ResourceType.Grain.className) {
-								World.healDude(resourcesGained[typeName]);
-							} else {
-								Resources.collectResource(Content.getResourceType(typeName), resourcesGained[typeName]);
-							}
-						}
-					}
 					
 					// Drop remaining tiles
 					var pCounts = GameBoard.tileMap();
