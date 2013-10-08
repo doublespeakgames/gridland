@@ -47,7 +47,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 		},
 		
 		canMove: function() {
-			return this.dropCount == 0 && this.removals == 0;
+			return this.dropCount == 0 && this.removals == 0 && !World.inTransition;
 		},
 
 		fill : function() {

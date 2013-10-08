@@ -97,7 +97,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			}
 		},
 		
-		phaseTransition: function(celestial) {
+		phaseTransition: function(celestial, callback) {
 			celestial.el().css('top', '100%');
 			var _g = this;
 			setTimeout(function() {
@@ -111,6 +111,9 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 			}, 300);
 			setTimeout(function() {
 				_g.raiseCelestial(celestial);
+				if(callback != null) {
+					callback();
+				}
 			}, 700);
 		},
 		

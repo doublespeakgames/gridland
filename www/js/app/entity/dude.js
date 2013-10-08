@@ -55,7 +55,7 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics',
 	};
 	
 	dude.prototype.toLevel = function() {
-		return 30 * State.level;
+		return 50 * State.level;
 	};
 	
 	dude.prototype.maxHealth = function() {
@@ -63,6 +63,9 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics',
 	};
 	
 	dude.prototype.maxShield = function() {
+		if(State.hasBuilding(Content.BuildingType.Sawmill)) {
+			return 6;
+		}
 		return 3;
 	};
 	

@@ -134,8 +134,12 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		},
 		
 		phaseTransition: function() {
+			this.inTransition = true;
 			this.wipeMonsters();
-			Graphics.phaseTransition(this.celestial);
+			var _w = this;
+			Graphics.phaseTransition(this.celestial, function() {
+				_w.inTransition = false;
+			});
 			this.isNight = !this.isNight
 			if(this.dude.action != null) {
 				this.dude.action.terminateAction(this.dude);						

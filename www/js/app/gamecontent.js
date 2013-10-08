@@ -10,7 +10,11 @@ define({
 		Wood: {
 			className: 'wood',
 			nightEffect: {
+				'sawmill': 'shield:2',
 				'default': 'shield:1'				
+			},
+			multipliers: {
+				sawmill: 2
 			}
 		},
 		Stone: {
@@ -89,13 +93,27 @@ define({
 			className: 'blacksmith',
 			position: 210,
 			cost: {
-				stone: 3,
-				wood: 3,
+				stone: 2,
+				wood: 2,
 				clay: 2,
 				cloth: 2
 			},
 			requiredLevel: 2,
 			tileMod: 'stone',
+			tileLevel: 2
+		},
+		
+		Sawmill: {
+			className: 'sawmill',
+			position: 270,
+			cost: {
+				stone: 2,
+				wood: 2,
+				clay: 2,
+				cloth: 2
+			},
+			requiredLevel: 2,
+			tileMod: 'wood',
 			tileLevel: 2
 		}
 	},

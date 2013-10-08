@@ -371,6 +371,10 @@ body.night {
 	background-position: -104px 0;
 }
 
+.wood2 .tile.wood > div {
+	background-position: 0px -104px;
+}
+
 .tile.stone > div {
 	background-position: -52px 0;
 }
@@ -471,6 +475,10 @@ body.night {
 
 .blacksmith {
 	background-image: url(../img/blacksmith.png);
+}
+
+.sawmill {
+	background-image: url(../img/sawmill.png);
 }
 
 .resources {
@@ -736,6 +744,14 @@ body.night {
 	-o-transition: width 300ms linear;
 }
 
+.wood2 .shield {
+	background-position: -30px -30px;
+}
+
+.wood2 .shield > div {
+	background-position: -30px 0;
+}
+
 .sword {
 	position: absolute;
 	top: -35px;
@@ -749,10 +765,6 @@ body.night {
 	-o-transition: opacity 300ms linear;
 }
 
-.stone2 .sword {
-	background-position: -30px -30px;
-}
-
 .sword > div {
 	height: 100%;
 	background: url(../img/sword-icon.png) no-repeat;
@@ -761,6 +773,10 @@ body.night {
 	-ms-transition: width 300ms linear;
 	-moz-transition: width 300ms linear;
 	-o-transition: width 300ms linear;
+}
+
+.stone2 .sword {
+	background-position: -30px -30px;
 }
 
 .stone2 .sword > div {
