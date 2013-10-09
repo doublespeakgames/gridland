@@ -760,6 +760,14 @@ body.night {
 	background-position: -30px 0;
 }
 
+.wood3 .shield {
+	background-position: -60px -30px;
+}
+
+.wood3 .shield > div {
+	background-position: -60px 0;
+}
+
 .sword {
 	position: absolute;
 	top: -35px;
@@ -789,7 +797,15 @@ body.night {
 
 .stone2 .sword > div {
 	background-position: -30px 0;
-} 
+}
+
+.stone3 .sword {
+	background-position: -60px -30px;
+}
+
+.stone3 .sword > div {
+	background-position: -60px 0;
+}
 
 .xpBar {
 	height: 300px;
