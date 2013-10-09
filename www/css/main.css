@@ -367,28 +367,36 @@ body.night {
 	background-position: 0 0;
 }
 
-.tile.wood > div {
-	background-position: -104px 0;
-}
-
-.wood2 .tile.wood > div {
-	background-position: 0px -104px;
-}
-
 .tile.stone > div {
 	background-position: -52px 0;
 }
 
 .stone2 .tile.stone > div {
+	background-position: -52px -52px;
+}
+
+.stone3 .tile.stone > div {
+	background-position: -52px -104px;
+}
+
+.tile.wood > div {
+	background-position: -104px 0;
+}
+
+.wood2 .tile.wood > div {
 	background-position: -104px -52px;
 }
 
+.wood3 .tile.wood > div {
+	background-position: -104px -104px;
+}
+
 .tile.clay > div {
-	background-position: 0 -52px;
+	background-position: -156px 0px;
 }
 
 .tile.cloth > div {
-	background-position: -52px -52px;
+	background-position: -208px 0px;
 }
 
 .selected {
