@@ -304,9 +304,13 @@ body.night {
 	height: 60px;
 	position: absolute;
 	transform: translate3d(0,0,0);
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
 	transition: all 200ms linear, left 0ms linear;
 	-webkit-transition: all 200ms linear, left 0ms linear;
-	-moz-transition: all 200ms linear, left 0ms linear;
+	-moz-transition: -moz-transform 200ms linear, opacity 200ms linear;
 	-ms-transition: all 200ms linear, left 0ms linear;
 	-o-transition: all 200ms linear, left 0ms linear;
 }

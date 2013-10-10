@@ -22,6 +22,8 @@ define(['app/entity/building', 'app/entity/block'], function(Building, Block) {
 					}
 					this.level = savedState.level;
 					this.xp = savedState.xp;
+				} else {
+					this.create();
 				}
 			} catch(e) {
 				this.create();
