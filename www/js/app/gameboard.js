@@ -202,8 +202,8 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 			
 			// Gain resources
 			for(typeName in resourcesGained) {
+				var type = Content.getResourceType(typeName);
 				if(World.isNight) {
-					var type = Content.getResourceType(typeName);
 					var effect = null;
 					for(var b in type.nightEffect) {
 						if(b == "default" || State.hasBuilding(Content.getBuildingType(b))) {
@@ -226,10 +226,20 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 						}
 					}
 				} else {
-					if(typeName == Content.ResourceType.Grain.className) {
+					if(type == Content.ResourceType.Grain) {
 						World.healDude(resourcesGained[typeName]);
 					} else {
-						Resources.collectResource(Content.getResourceType(typeName), resourcesGained[typeName]);
+						// Apply building multipliers
+						var quantity = resourcesGained[typeName];
+						if(type.multipliers) {
+							for(var b in type.multipliers) {
+								var bType = Content.getBuildingType(b);
+								if(State.hasBuilding(bType)) {
+									quantity *= type.multipliers[b];
+								}
+							}
+						}
+						Resources.collectResource(Content.getResourceType(typeName), quantity);
 					}
 				}
 			}

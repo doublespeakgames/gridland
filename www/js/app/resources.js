@@ -57,15 +57,6 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 						Resources.checkMaximum();
 						Graphics.addResource(block);
 					}
-					// Apply building multipliers
-					if(type.multipliers) {
-						for(var b in type.multipliers) {
-							var bType = Content.getBuildingType(b);
-							if(GameState.hasBuilding(bType)) {
-								quantity *= type.multipliers[b];
-							}
-						}
-					}
 					// Add the resource
 					var remainder = quantity - block.spaceLeft();
 					block.quantity(block.quantity() + quantity);
