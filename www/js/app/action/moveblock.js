@@ -18,7 +18,7 @@ define(['app/action/action'], function(Action) {
 						return;
 					}
 					Graphics.pickUpBlock(_action.block);
-					dude.carrying = _action.block.el();
+					dude.carrying = _action.block;
 					GameState.removeBlock(_action.block);
 					dude.move(_action.destination.dudeSpot(), function(dude) {
 						require(['app/graphics'], function(Graphics) {
@@ -38,8 +38,10 @@ define(['app/action/action'], function(Action) {
 		require(['app/graphics', 'app/resources'], function(Graphics, Resources) {
 			dude.animation(0);
 			Graphics.stop(dude);
-			Resources.returnBlock(_action.block);
-			dude.carrying = null;
+			if(dude.carrying != null) {
+				Resources.returnBlock(_action.block);
+				dude.carrying = null;
+			}
 			dude.action = null;	
 		});
 	};

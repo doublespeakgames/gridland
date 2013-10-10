@@ -116,11 +116,11 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics',
 		WorldEntity.prototype.animate.call(this);
 		if(this.carrying != null) {
 			if(this.frame == 1) {
-				this.carrying.css('top', '1px');
+				this.carrying.el().css('top', '1px');
 			} else if(this.frame == 3) {
-				this.carrying.css('top', '-1px');
+				this.carrying.el().css('top', '-1px');
 			} else {
-				this.carrying.css('top', '0px');
+				this.carrying.el().css('top', '0px');
 			}
 		}
 	};
