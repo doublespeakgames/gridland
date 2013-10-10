@@ -21,6 +21,10 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 					if(cb) {
 						cb();
 					}
+					// Remove replaced building, if necessary
+					if(_action.building.options.type.replaces != null) {
+						World.removeBuilding(Content.getBuildingType(_action.building.options.type.replaces));
+					}
 				});
 			});
 		});

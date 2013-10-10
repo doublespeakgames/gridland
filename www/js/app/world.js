@@ -22,7 +22,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 				var building = GameState.buildings[i];
 				Graphics.addToWorld(building);
 				Graphics.setPosition(building, building.p());
-				if(building.built) {
+				if(building.built && !building.obsolete) {
 					if(building.options.type.tileMod) {
 						$('.gameBoard').addClass(building.options.type.tileMod + building.options.type.tileLevel);
 					}
@@ -32,7 +32,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 					if(cb) {
 						cb();
 					}
-				} else {
+				} else if(!building.obsolete) {
 					for(var r in building.options.type.cost) {
 						var cost = building.options.type.cost[r];
 						var required = building.requiredResources[r];
@@ -212,7 +212,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 					var buildingType = Content.BuildingType[t];
 					var building = GameState.getBuilding(buildingType);
 					// Add it to the buildings list, if it should be available to build and it isn't.
-					if(building == null && GameState.level >= buildingType.requiredLevel) {
+					if(building == null && this.canBuild(buildingType)) {
 						building = new Building({
 							type: buildingType
 						});
@@ -251,6 +251,26 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			
 			// Then give up, and return null
 			return null;
+		},
+		
+		removeBuilding: function(type) {
+			var building = GameState.getBuilding(type);
+			building.obsolete = true;
+			this.stuff.splice(this.stuff.indexOf(building));
+			building.el().remove();
+		},
+		
+		canBuild: function(buildingType) {
+			if(GameState.level < buildingType.requiredLevel) {
+				return false;
+			}
+			if(buildingType.replaces != null) {
+				var replaceType = Content.getBuildingType(buildingType.replaces);
+				if(!GameState.hasBuilding(replaceType)) {
+					return false;
+				}
+			}
+			return true;
 		},
 		
 		addDefense: function(num) {

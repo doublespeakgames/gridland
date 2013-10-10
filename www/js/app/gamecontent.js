@@ -103,6 +103,21 @@ define({
 			tileLevel: 2
 		},
 		
+		Blacksmith2: {
+			className: 'blacksmith2',
+			position: 210,
+			cost: {
+				stone: 6,
+				clay: 1,
+				cloth: 1
+			},
+			requiredLevel: 2,
+			tileMod: 'stone',
+			tileLevel: 3,
+			replaces: 'blacksmith',
+			defaultAnimation: 1
+		},
+		
 		Sawmill: {
 			className: 'sawmill',
 			position: 270,
@@ -115,6 +130,21 @@ define({
 			requiredLevel: 2,
 			tileMod: 'wood',
 			tileLevel: 2
+		},
+		
+		Sawmill2: {
+			className: 'sawmill2',
+			position: 270,
+			cost: {
+				wood: 6,
+				clay: 1,
+				cloth: 1
+			},
+			requiredLevel: 2,
+			tileMod: 'wood',
+			tileLevel: 3,
+			replaces: 'sawmill',
+			defaultAnimation: 1
 		}
 	},
 	

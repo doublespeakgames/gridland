@@ -481,11 +481,13 @@ body.night {
 	background-image: url(../img/weaver.png);
 }
 
-.blacksmith {
+.blacksmith, 
+.blacksmith2 {
 	background-image: url(../img/blacksmith.png);
 }
 
-.sawmill {
+.sawmill,
+.sawmill2 {
 	background-image: url(../img/sawmill.png);
 }
 

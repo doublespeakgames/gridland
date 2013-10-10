@@ -3,7 +3,7 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent', 'app/gr
 	var Building = function(options) {
 		this.options = $.extend({}, this.options, {
 			type: Content.BuildingType.Shack,
-			animationFrames: 1
+			animationFrames: 1,
 		}, options);
 		
 		if(this.options.type.animationFrames != null) {
@@ -12,6 +12,10 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent', 'app/gr
 		this.requiredResources = {};
 		for(var i in this.options.type.cost) {
 			this.requiredResources[i] = this.options.type.cost[i];
+		}
+		
+		if(this.options.type.defaultAnimation != null) {
+			this.animation(this.options.type.defaultAnimation);
 		}
 		
 		this.built = false;
@@ -24,9 +28,12 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent', 'app/gr
 	Building.constructor = Building;
 	
 	Building.makeBuilding = function(savedBuilding) {
+		// Refresh the type, in case it has been modified
+		savedBuilding.options.type = Content.getBuildingType(savedBuilding.options.type.className);
 		var building = new Building(savedBuilding.options);
 		building.requiredResources = savedBuilding.requiredResources;
 		building.built = savedBuilding.built;
+		building.obsolete = savedBuilding.obsolete;
 		return building;
 	};
 	
