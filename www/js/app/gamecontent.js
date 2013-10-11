@@ -93,10 +93,9 @@ define({
 			className: 'blacksmith',
 			position: 210,
 			cost: {
-				stone: 2,
-				wood: 2,
-				clay: 2,
-				cloth: 2
+				stone: 3,
+				clay: 1,
+				cloth: 1
 			},
 			requiredLevel: 2,
 			tileMod: 'stone',
@@ -122,10 +121,9 @@ define({
 			className: 'sawmill',
 			position: 270,
 			cost: {
-				stone: 2,
-				wood: 2,
-				clay: 2,
-				cloth: 2
+				wood: 3,
+				clay: 1,
+				cloth: 1
 			},
 			requiredLevel: 2,
 			tileMod: 'wood',
