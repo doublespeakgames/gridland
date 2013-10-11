@@ -55,7 +55,7 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics',
 	};
 	
 	dude.prototype.toLevel = function() {
-		return 50 * State.level;
+		return 40 * State.level;
 	};
 	
 	dude.prototype.maxHealth = function() {

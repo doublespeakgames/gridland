@@ -182,6 +182,18 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			return building != null && building.built;
 		},
 		
+		findClosestMonster: function() {
+			var closest = null;
+			for(var i in this.stuff) {
+				var thing = this.stuff[i];
+				if(thing.hostile && thing.isAlive() && (closest == null || 
+						(this.dude.distanceFrom(thing) < this.dude.distanceFrom(closest)))) {
+					closest = thing;
+				}
+			}
+			return closest;
+		},
+		
 		/**
 		 * Returns a function (with the dude as the only parameter) to give the dude something to do.
 		 * Checks for buildable buildings, moveable resources, etc...
@@ -189,14 +201,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		getActivity: function() {
 			if(this.isNight) {
 				// Look for a monster to fight
-				var closest = null;
-				for(var i in this.stuff) {
-					var thing = this.stuff[i];
-					if(thing.hostile && thing.isAlive() && (closest == null || 
-							(this.dude.distanceFrom(thing) < this.dude.distanceFrom(closest)))) {
-						closest = thing;
-					}
-				}
+				var closest = this.findClosestMonster();
 				if(closest != null && this.dude.attackRange(closest)) {
 					return ActionFactory.getAction("Attack", {
 						target: closest
