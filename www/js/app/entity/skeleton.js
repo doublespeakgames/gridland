@@ -1,5 +1,5 @@
-define(['app/entity/worldentity', 'app/action/actionfactory'], 
-		function(WorldEntity, ActionFactory) {
+define(['app/entity/worldentity', 'app/action/actionfactory', 'app/graphics'], 
+		function(WorldEntity, ActionFactory, Graphics) {
 	
 	var Skeleton = function(options) {
 		this.options = $.extend({}, this.options, {
@@ -40,7 +40,8 @@ define(['app/entity/worldentity', 'app/action/actionfactory'],
 	
 	Skeleton.prototype.attackRange = function(target) {
 		// Skeletons are ranged
-		return Math.abs(this.p() - target.p()) <= 200;
+		return this.p() > 10 && this.p() < Graphics.worldWidth() - 10 && 
+			Math.abs(this.p() - target.p()) <= 200;
 	};
 	
 	Skeleton.prototype.maxHealth = function() {
