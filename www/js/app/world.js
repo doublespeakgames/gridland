@@ -7,7 +7,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		
 		options: {
 			dayMoves: 20,
-			nightMoves: 10
+			nightMoves: 15
 		},
 		init: function(opts) {
 			$.extend(this.options, opts);
@@ -77,6 +77,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 						World.advanceTime();
 					} else if(entity == World.dude) {
 						// Dude is dead. Long live the dude.
+						GameState.saveXp();
 						Graphics.fadeOut(function() {
 							setTimeout(function() {
 								require(['app/graphics'], function(G) {

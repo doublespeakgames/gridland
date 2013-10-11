@@ -52,6 +52,15 @@ define(['app/entity/building', 'app/entity/block'], function(Building, Block) {
 			return this;
 		},
 		
+		saveXp: function() {
+			if(typeof Storage != 'undefined' && localStorage && localStorage.gameState) {
+				var savedState = JSON.parse(localStorage.gameState);
+				savedState.xp = this.xp;
+				this.level = savedState.level;
+				localStorage.gameState = JSON.stringify(savedState);
+			}
+		},
+		
 		removeBlock: function(block) {
 			this.stores.splice(this.stores.indexOf(block), 1);
 		},
