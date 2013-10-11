@@ -141,7 +141,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			Graphics.phaseTransition(this.celestial, function() {
 				_w.inTransition = false;
 			});
-			this.isNight = !this.isNight
+			this.isNight = !this.isNight;
 			if(this.dude.action != null) {
 				this.dude.action.terminateAction(this.dude);						
 			}

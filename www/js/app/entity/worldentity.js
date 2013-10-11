@@ -106,7 +106,7 @@ define(['app/entity/entity', 'app/graphics', 'app/action/actionfactory'], functi
 	
 	worldEntity.prototype.maxHealth = function() {
 		return 0;
-	}
+	};
 	
 	worldEntity.prototype.getDamage = function() {
 		return 0;

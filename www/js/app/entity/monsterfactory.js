@@ -13,5 +13,5 @@ define(['app/entity/zombie', 'app/entity/rat', 'app/entity/skeleton'], function(
 			}
 			return null;
 		}
-	}
+	};
 });

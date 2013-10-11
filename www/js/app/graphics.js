@@ -71,7 +71,7 @@ define(['jquery', 'jquery-ui'], function($, UI) {
 		
 		addMonster: function(monster, side) {
 			var el = monster.el();
-			el.css('left', '100%')
+			el.css('left', '100%');
 			el.appendTo('.world');
 			if(side == 'left') {
 				el.css('left', -el.width() + 'px');

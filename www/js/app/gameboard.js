@@ -92,7 +92,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 
 				var baseline = 0;
 				var r = Math.random();
-				var theClass;
+				var theClass = "";
 				for (tileClass in pCounts) {
 					theClass = tileClass;
 					var chance = pCounts[tileClass] / total;
@@ -266,7 +266,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 							}
 							var r = Math.random();
 							var base = 0;
-							var typeClass;
+							var typeClass = "";
 							for(var className in probs) {
 								typeClass = className;
 								var prob = probs[className];
