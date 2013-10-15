@@ -473,7 +473,8 @@ body.night {
 	opacity: 0;
 }
 
-.shack {
+.shack,
+.house {
 	background-image: url(../img/shack.png);
 }
 
@@ -499,8 +500,8 @@ body.night {
 	z-index: 2;
 	position: absolute;
 	font-size: 0px;
-	bottom: 5px;
-	left: 13px;
+	bottom: 3px;
+	left: 14px;
 	width: 30px;
 	height: 30px;
 	border: 1px solid black;
@@ -510,13 +511,17 @@ body.night {
 	-webkit-transform: rotate(180deg);
 	-o-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
-	transition: opacity 300ms linear;
-	-webkit-transition: opacity 300ms linear;
-	-moz-transition: opacity 300ms linear;
-	-ms-transition: opacity 300ms linear;
-	-o-transition: opacity 300ms linear;
+	transition: opacity 300ms linear, height 200ms linear;
+	-webkit-transition: opacity 300ms linear, height 200ms linear;
+	-moz-transition: opacity 300ms linear, height 200ms linear;
+	-ms-transition: opacity 300ms linear, height 200ms linear;
+	-o-transition: opacity 300ms linear, height 200ms linear;
 	opacity: 1;
 }
+
+.grain2 .resources {
+	height: 40px;
+} 
 
 .blockPile {
 	position: relative;

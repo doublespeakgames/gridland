@@ -1,6 +1,8 @@
 define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function($, Graphics, Content, GameState) {
 	return {
-		options : {},
+		options : {
+			rows: 3
+		},
 		init : function(opts) {
 			$.extend(this.options, opts);
 			this._el = null;
@@ -78,8 +80,12 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 			}
 		},
 		
+		setRows: function(rows) {
+			this.options.rows = rows;
+		},
+		
 		max: function() {
-			return 9;
+			return 3 * this.options.rows;
 		}
 	};
 });

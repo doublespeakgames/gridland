@@ -56,6 +56,16 @@ define({
 				R.init();
 				W.launchCelestial();
 			});
+		},
+		
+		'house': function() {
+			require(['app/resources', 'app/world'], function(R, W) {
+				if(!R.loaded) {
+					R.init();
+					W.launchCelestial();
+				}
+				R.setRows(4);
+			});
 		}
 	},
 	
@@ -66,6 +76,18 @@ define({
 			cost: {},
 			requiredLevel: 1,
 			animationFrames: 4
+		},
+		
+		House: {
+			className: 'house',
+			position: 30,
+			cost: {},
+			requiredLevel: 3,
+			animationFrames: 4,
+			tileMod: 'grain',
+			tileLevel: 2,
+			replaces: 'shack',
+			defaultAnimation: 1
 		},
 		
 		BrickLayer: {
