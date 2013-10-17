@@ -371,6 +371,18 @@ body.night {
 	background-position: 0 0;
 }
 
+.grain2 .tile.grain > div {
+	background-position: 0 -52px;
+}
+
+.grain3 .tile.grain > div {
+	background-position: 0 -104px;
+}
+
+.grain4 .tile.grain > div {
+	background-position: 0 -156px;
+}
+
 .tile.stone > div {
 	background-position: -52px 0;
 }
@@ -474,7 +486,8 @@ body.night {
 }
 
 .shack,
-.house {
+.house,
+.fort {
 	background-image: url(../img/shack.png);
 }
 
@@ -511,17 +524,23 @@ body.night {
 	-webkit-transform: rotate(180deg);
 	-o-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
-	transition: opacity 300ms linear, height 200ms linear;
-	-webkit-transition: opacity 300ms linear, height 200ms linear;
-	-moz-transition: opacity 300ms linear, height 200ms linear;
-	-ms-transition: opacity 300ms linear, height 200ms linear;
-	-o-transition: opacity 300ms linear, height 200ms linear;
+	transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear;
+	-webkit-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear;
+	-moz-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear;
+	-ms-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear;
+	-o-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear;
 	opacity: 1;
 }
 
 .grain2 .resources {
 	height: 40px;
-} 
+}
+
+.grain3 .resources {
+	height: 40px;
+	width: 40px;
+	left: 9px;
+}
 
 .blockPile {
 	position: relative;

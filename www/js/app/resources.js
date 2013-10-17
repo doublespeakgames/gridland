@@ -1,7 +1,8 @@
 define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function($, Graphics, Content, GameState) {
 	return {
 		options : {
-			rows: 3
+			rows: 3,
+			cols: 3
 		},
 		init : function(opts) {
 			$.extend(this.options, opts);
@@ -80,12 +81,13 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 			}
 		},
 		
-		setRows: function(rows) {
+		setSize: function(rows, cols) {
 			this.options.rows = rows;
+			this.options.cols = cols;
 		},
 		
 		max: function() {
-			return 3 * this.options.rows;
+			return this.options.cols * this.options.rows;
 		}
 	};
 });

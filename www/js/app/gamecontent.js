@@ -5,6 +5,10 @@ define({
 			className: 'grain',
 			nightEffect: {
 				'default': 'spawn:zombie'
+			},
+			multipliers: {
+				house: 2,
+				fort: 3
 			}
 		},
 		Wood: {
@@ -64,7 +68,17 @@ define({
 					R.init();
 					W.launchCelestial();
 				}
-				R.setRows(4);
+				R.setSize(4, 3);
+			});
+		},
+		
+		'fort': function() {
+			require(['app/resources', 'app/world'], function(R, W) {
+				if(!R.loaded) {
+					R.init();
+					W.launchCelestial();
+				}
+				R.setSize(4, 4);
 			});
 		}
 	},
@@ -88,6 +102,18 @@ define({
 			tileLevel: 2,
 			replaces: 'shack',
 			defaultAnimation: 1
+		},
+		
+		Fort: {
+			className: 'fort',
+			position: 30,
+			cost: {},
+			requiredLevel: 6,
+			animationFrames: 4,
+			tileMod: 'grain',
+			tileLevel: 3,
+			replaces: 'house',
+			defaultAnimation: 2
 		},
 		
 		BrickLayer: {
