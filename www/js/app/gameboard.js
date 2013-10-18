@@ -203,7 +203,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 			// Gain resources
 			for(typeName in resourcesGained) {
 				var type = Content.getResourceType(typeName);
-				if(World.isNight) {
+				if(World.isNight && !World.inTransition) {
 					var effect = null;
 					for(var b in type.nightEffect) {
 						if(b == "default" || State.hasBuilding(Content.getBuildingType(b))) {

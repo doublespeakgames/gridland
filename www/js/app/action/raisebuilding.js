@@ -33,6 +33,7 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 	RaiseBuilding.prototype.terminateAction = function(dude) {
 		var _action = this;
 		require(['app/graphics'], function(Graphics) {
+			Graphics.stop(dude);
 			dude.animation(0);
 			dude.action = null;
 			Graphics.sinkBuilding(_action.building);			
