@@ -80,6 +80,16 @@ define({
 				}
 				R.setSize(4, 4);
 			});
+		},
+		
+		'castle': function() {
+			require(['app/resources', 'app/world'], function(R, W) {
+				if(!R.loaded) {
+					R.init();
+					W.launchCelestial();
+				}
+				R.setSize(5, 4);
+			});
 		}
 	},
 	
@@ -114,6 +124,18 @@ define({
 			tileLevel: 3,
 			replaces: 'house',
 			defaultAnimation: 2
+		},
+		
+		Castle: {
+			className: 'castle',
+			position: 30,
+			cost: {},
+			requiredLevel: 9,
+			animationFrames: 4,
+			tileMod: 'grain',
+			tileLevel: 4,
+			replaces: 'fort',
+			defaultAnimation: 3
 		},
 		
 		BrickLayer: {

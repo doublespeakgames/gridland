@@ -487,7 +487,8 @@ body.night {
 
 .shack,
 .house,
-.fort {
+.fort,
+.castle {
 	background-image: url(../img/shack.png);
 }
 
@@ -524,11 +525,11 @@ body.night {
 	-webkit-transform: rotate(180deg);
 	-o-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
-	transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear;
-	-webkit-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear;
-	-moz-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear;
-	-ms-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear;
-	-o-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear;
+	transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
+	-webkit-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
+	-moz-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
+	-ms-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
+	-o-transition: opacity 300ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
 	opacity: 1;
 }
 
@@ -540,6 +541,13 @@ body.night {
 	height: 40px;
 	width: 40px;
 	left: 9px;
+}
+
+.grain4 .resources {
+	height: 40px;
+	width: 50px;
+	left: 4px;
+	bottom: 1px;
 }
 
 .blockPile {

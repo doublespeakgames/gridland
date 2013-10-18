@@ -77,7 +77,6 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics',
 	};
 	
 	dude.prototype.heal = function(amount) {
-		console.log("healed for " + amount);
 		State.health += amount;
 		State.health = State.health > this.maxHealth() ? this.maxHealth() : State.health;
 		Graphics.updateHealth(State.health, this.maxHealth());
