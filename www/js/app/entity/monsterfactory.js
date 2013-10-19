@@ -1,9 +1,11 @@
-define(['app/entity/zombie', 'app/entity/rat', 'app/entity/skeleton'], function(Zombie, Rat, Skeleton) {
+define(['app/entity/zombie', 'app/entity/rat', 'app/entity/skeleton',
+        'app/entity/hauntedarmour'], function(Zombie, Rat, Skeleton, HauntedArmour) {
 	return {
 		_monsters: {
 			"zombie": Zombie,
 			"rat": Rat,
-			"skeleton": Skeleton
+			"skeleton": Skeleton,
+			"hauntedArmour": HauntedArmour
 		},
 		
 		getMonster: function(name, options) {
