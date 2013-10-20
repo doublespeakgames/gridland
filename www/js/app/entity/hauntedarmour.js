@@ -8,7 +8,7 @@ define(['app/entity/worldentity', 'app/action/actionfactory'],
 		this.hostile = true;
 		this.action = null;
 		this.hp = this.maxHealth();
-		this.xp = 1;
+		this.xp = 2;
 	};
 	HauntedArmour.prototype = new WorldEntity({
 		className: 'hauntedArmour',

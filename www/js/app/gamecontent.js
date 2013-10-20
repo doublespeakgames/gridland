@@ -15,6 +15,7 @@ define({
 		Wood: {
 			className: 'wood',
 			nightEffect: {
+				'sawmill2': 'shield:3',
 				'sawmill': 'shield:2',
 				'default': 'shield:1'				
 			},
@@ -25,6 +26,7 @@ define({
 		Stone: {
 			className: 'stone',
 			nightEffect: {
+				'blacksmith2': 'sword:3',
 				'blacksmith': 'sword:2',
 				'default': 'sword:1'
 			},
