@@ -97,11 +97,11 @@ define(['app/entity/entity', 'app/graphics', 'app/action/actionfactory'], functi
 	};
 	
 	worldEntity.prototype.attackRange = function(target) {
-		return Math.abs(this.p() - target.p()) <= (this.width() / 2) + (target.width() / 2);
+		return Math.abs(this.p() - target.p()) <= (this.getHitboxWidth() / 2) + (target.getHitboxWidth() / 2);
 	};
 	
 	worldEntity.prototype.distanceFrom = function(target) {
-		return Math.abs(Math.abs(this.p() - target.p()) - this.width() / 2 - target.width() / 2);
+		return Math.abs(Math.abs(this.p() - target.p()) - this.getHitboxWidth() / 2 - target.getHitboxWidth() / 2);
 	};
 	
 	worldEntity.prototype.maxHealth = function() {
@@ -131,6 +131,10 @@ define(['app/entity/entity', 'app/graphics', 'app/action/actionfactory'], functi
 
 	worldEntity.prototype.isAlive = function() {
 		return this.hp > 0;
+	};
+	
+	worldEntity.prototype.getHitboxWidth = function() {
+		return this.width();
 	};
 	
 	return worldEntity;

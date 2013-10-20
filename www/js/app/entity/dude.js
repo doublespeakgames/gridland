@@ -50,6 +50,9 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics',
 			State.health = this.maxHealth();
 			Graphics.updateHealth(State.health, this.maxHealth());
 			World.wipeMonsters();
+			if(this.action != null) {
+				this.action.terminateAction(this);
+			}
 		}
 		Graphics.updateExperience(State.xp, this.toLevel());
 	};
@@ -63,6 +66,9 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics',
 	};
 	
 	dude.prototype.maxShield = function() {
+		if(State.hasBuilding(Content.BuildingType.Sawmill2)) {
+			return 9;
+		}
 		if(State.hasBuilding(Content.BuildingType.Sawmill)) {
 			return 6;
 		}
@@ -70,6 +76,9 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics',
 	};
 	
 	dude.prototype.maxSword = function() {
+		if(State.hasBuilding(Content.BuildingType.Blacksmith2)) {
+			return 9;
+		}
 		if(State.hasBuilding(Content.BuildingType.Blacksmith)) {
 			return 6;
 		}

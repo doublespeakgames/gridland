@@ -253,19 +253,19 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 						}
 					}
 				} else {
-					if(type == Content.ResourceType.Grain) {
-						World.healDude(resourcesGained[typeName]);
-					} else {
-						// Apply building multipliers
-						var quantity = resourcesGained[typeName];
-						if(type.multipliers) {
-							for(var b in type.multipliers) {
-								var bType = Content.getBuildingType(b);
-								if(State.hasBuilding(bType)) {
-									quantity *= type.multipliers[b];
-								}
+					// Apply building multipliers
+					var quantity = resourcesGained[typeName];
+					if(type.multipliers) {
+						for(var b in type.multipliers) {
+							var bType = Content.getBuildingType(b);
+							if(State.hasBuilding(bType)) {
+								quantity *= type.multipliers[b];
 							}
 						}
+					}
+					if(type == Content.ResourceType.Grain) {
+						World.healDude(quantity);
+					} else {
 						Resources.collectResource(Content.getResourceType(typeName), quantity);
 					}
 				}

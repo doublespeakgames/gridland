@@ -4,12 +4,18 @@ define({
 		Grain: {
 			className: 'grain',
 			nightEffect: {
+				'house': 'spawn:hauntedArmour',
 				'default': 'spawn:zombie'
+			},
+			multipliers: {
+				house: 2,
+				fort: 3
 			}
 		},
 		Wood: {
 			className: 'wood',
 			nightEffect: {
+				'sawmill2': 'shield:3',
 				'sawmill': 'shield:2',
 				'default': 'shield:1'				
 			},
@@ -20,6 +26,7 @@ define({
 		Stone: {
 			className: 'stone',
 			nightEffect: {
+				'blacksmith2': 'sword:3',
 				'blacksmith': 'sword:2',
 				'default': 'sword:1'
 			},
@@ -36,6 +43,7 @@ define({
 		Cloth: {
 			className: 'cloth',
 			nightEffect: {
+				'weaver2': 'spawn:lizardman',
 				'default': 'spawn:skeleton'
 			}
 		}
@@ -64,7 +72,27 @@ define({
 					R.init();
 					W.launchCelestial();
 				}
-				R.setRows(4);
+				R.setSize(4, 3);
+			});
+		},
+		
+		'fort': function() {
+			require(['app/resources', 'app/world'], function(R, W) {
+				if(!R.loaded) {
+					R.init();
+					W.launchCelestial();
+				}
+				R.setSize(4, 4);
+			});
+		},
+		
+		'castle': function() {
+			require(['app/resources', 'app/world'], function(R, W) {
+				if(!R.loaded) {
+					R.init();
+					W.launchCelestial();
+				}
+				R.setSize(5, 4);
 			});
 		}
 	},
@@ -90,6 +118,30 @@ define({
 			defaultAnimation: 1
 		},
 		
+		Fort: {
+			className: 'fort',
+			position: 30,
+			cost: {},
+			requiredLevel: 6,
+			animationFrames: 4,
+			tileMod: 'grain',
+			tileLevel: 3,
+			replaces: 'house',
+			defaultAnimation: 2
+		},
+		
+		Castle: {
+			className: 'castle',
+			position: 30,
+			cost: {},
+			requiredLevel: 9,
+			animationFrames: 4,
+			tileMod: 'grain',
+			tileLevel: 4,
+			replaces: 'fort',
+			defaultAnimation: 3
+		},
+		
 		BrickLayer: {
 			className: 'bricklayer',
 			position: 90,
@@ -109,6 +161,22 @@ define({
 				clay: 2
 			},
 			requiredLevel: 1
+		},
+		
+		Weaver2: {
+			className: 'weaver2',
+			position: 150,
+			cost: {
+				wood: 1,
+				stone: 1,
+				clay: 1,
+				cloth: 5
+			},
+			requiredLevel: 3,
+			tileMod: 'cloth',
+			tileLevel: 2,
+			replaces: 'weaver',
+			defaultAnimation: 1
 		},
 		
 		Blacksmith: {
