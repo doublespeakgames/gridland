@@ -415,6 +415,10 @@ body.night {
 	background-position: -208px 0px;
 }
 
+.cloth2 .tile.cloth > div {
+	background-position: -208px -52px;
+}
+
 .selected {
 	background-color: red;
 }
@@ -496,7 +500,8 @@ body.night {
 	background-image: url(../img/bricklayer.png);
 }
 
-.weaver {
+.weaver,
+.weaver2 {
 	background-image: url(../img/weaver.png);
 }
 
@@ -659,6 +664,14 @@ body.night {
 	height: 32px;
 	width: 27px;
 	background: url(../img/skeleton.png) no-repeat;
+}
+
+.lizardman {
+	position: absolute;
+	bottom: 0px;
+	height: 35px;
+	width: 32px;
+	background: url(../img/lizardman.png) no-repeat;
 }
 
 .arrow {

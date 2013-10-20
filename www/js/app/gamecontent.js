@@ -43,6 +43,7 @@ define({
 		Cloth: {
 			className: 'cloth',
 			nightEffect: {
+				'weaver2': 'spawn:lizardman',
 				'default': 'spawn:skeleton'
 			}
 		}
@@ -160,6 +161,22 @@ define({
 				clay: 2
 			},
 			requiredLevel: 1
+		},
+		
+		Weaver2: {
+			className: 'weaver2',
+			position: 150,
+			cost: {
+				wood: 1,
+				stone: 1,
+				clay: 1,
+				cloth: 5
+			},
+			requiredLevel: 3,
+			tileMod: 'cloth',
+			tileLevel: 2,
+			replaces: 'weaver',
+			defaultAnimation: 1
 		},
 		
 		Blacksmith: {
