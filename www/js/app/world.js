@@ -65,6 +65,10 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 				var newStuff = [];
 				for(var i = 0, len = World.stuff.length; i < len; i++) {
 					var entity = World.stuff[i];
+					if(entity.hostile && !World.isNight) {
+						// Monsters cannot survive the daylight
+						entity.die();
+					} 
 					entity.animate();
 					if(entity.action != null) {
 						entity.action.doFrameAction(entity.frame);
