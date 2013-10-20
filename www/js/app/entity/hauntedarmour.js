@@ -37,7 +37,7 @@ define(['app/entity/worldentity', 'app/action/actionfactory'],
 	};
 	
 	HauntedArmour.prototype.maxHealth = function() {
-		return 10;
+		return 8;
 	};
 	
 	HauntedArmour.prototype.getDamage = function() {

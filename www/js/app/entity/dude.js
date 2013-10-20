@@ -50,6 +50,9 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics',
 			State.health = this.maxHealth();
 			Graphics.updateHealth(State.health, this.maxHealth());
 			World.wipeMonsters();
+			if(this.action != null) {
+				this.action.terminateAction();
+			}
 		}
 		Graphics.updateExperience(State.xp, this.toLevel());
 	};
