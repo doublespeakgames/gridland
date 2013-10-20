@@ -37,11 +37,11 @@ define(['app/entity/worldentity', 'app/action/actionfactory'],
 	};
 	
 	HauntedArmour.prototype.maxHealth = function() {
-		return 8;
+		return 6;
 	};
 	
 	HauntedArmour.prototype.getDamage = function() {
-		return 3;
+		return 2;
 	};
 	
 	HauntedArmour.prototype.getHitboxWidth = function() {
