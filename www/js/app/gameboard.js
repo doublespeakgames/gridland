@@ -168,17 +168,44 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 							}
 						}
 						if(matches.length > 0) {
-							GameBoard.removeTiles(matches);
+							GameBoard.handleMatches(matches);
 						} else if(!GameBoard.areMovesAvailable()) {
-							// TODO
-							console.log("NO MORE MOVES!");
+							GameBoard.noMoreMoves();
 						}
 					}
 				});
 			});
 		},
 		
-		removeTiles: function(tiles) {
+		noMoreMoves: function() {
+			// Refresh the board and incur penalties
+			GameBoard.refreshBoard();
+			if(World.isNight) {
+				// Take damage
+				World.dude.takeDamage(Math.floor(World.dude.hp / 2));
+			} else {
+				// Burn daylight
+				World.advanceTime(5);
+			}
+		},
+		
+		refreshBoard: function() {
+			var tiles = [];
+			for(var c in this.tiles) {
+				var col = this.tiles[c];
+				for(var r in col) {
+					var tile = col[r];
+					if(tile != null) {
+						tiles.push(tile);
+					}
+				}
+				col.length = 0;
+			}
+			
+			Graphics.removeTiles(tiles, this.fill);
+		},
+		
+		handleMatches: function(tiles) {
 			
 			this.removals++;
 			var newTiles = [];
@@ -322,7 +349,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 						matches = matches.concat(GameBoard.checkMatches(tile2));
 					
 						if(matches.length > 0) {
-							GameBoard.removeTiles(matches);
+							GameBoard.handleMatches(matches);
 						} else {
 							GameBoard.switchTiles(tile1, tile2, true);
 						}

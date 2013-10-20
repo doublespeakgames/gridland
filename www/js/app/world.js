@@ -121,10 +121,11 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			});
 		},
 		
-		advanceTime: function() {
+		advanceTime: function(steps) {
+			steps = steps == null ? 1 : steps;
 			if(this.celestial != null) {
 				var worldWidth = Graphics.worldWidth();
-				var distance = Math.floor(worldWidth / (this.isNight ? this.options.nightMoves : this.options.dayMoves));
+				var distance = Math.floor(worldWidth / (this.isNight ? this.options.nightMoves : this.options.dayMoves)) * steps;
 				this.celestial.p(this.celestial.p() + distance);
 				if(this.celestial.p() > worldWidth) {
 					this.phaseTransition();
