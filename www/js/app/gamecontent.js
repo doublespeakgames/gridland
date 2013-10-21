@@ -103,7 +103,8 @@ define({
 			position: 30,
 			cost: {},
 			requiredLevel: 1,
-			animationFrames: 4
+			animationFrames: 4,
+			priority: 1
 		},
 		
 		House: {
@@ -115,7 +116,8 @@ define({
 			tileMod: 'grain',
 			tileLevel: 2,
 			replaces: 'shack',
-			defaultAnimation: 1
+			defaultAnimation: 1,
+			priority: 1
 		},
 		
 		Fort: {
@@ -127,7 +129,8 @@ define({
 			tileMod: 'grain',
 			tileLevel: 3,
 			replaces: 'house',
-			defaultAnimation: 2
+			defaultAnimation: 2,
+			priority: 1
 		},
 		
 		Castle: {
@@ -139,7 +142,8 @@ define({
 			tileMod: 'grain',
 			tileLevel: 4,
 			replaces: 'fort',
-			defaultAnimation: 3
+			defaultAnimation: 3,
+			priority: 1
 		},
 		
 		BrickLayer: {
@@ -149,7 +153,8 @@ define({
 				stone: 5,
 				wood: 5
 			},
-			requiredLevel: 1
+			requiredLevel: 1,
+			priority: 1
 		},
 		
 		Weaver: {
@@ -160,7 +165,8 @@ define({
 				wood: 4,
 				clay: 2
 			},
-			requiredLevel: 1
+			requiredLevel: 1,
+			priority: 2
 		},
 		
 		Weaver2: {
@@ -176,7 +182,8 @@ define({
 			tileMod: 'cloth',
 			tileLevel: 2,
 			replaces: 'weaver',
-			defaultAnimation: 1
+			defaultAnimation: 1,
+			priority: 4
 		},
 		
 		Blacksmith: {
@@ -189,7 +196,8 @@ define({
 			},
 			requiredLevel: 2,
 			tileMod: 'stone',
-			tileLevel: 2
+			tileLevel: 2,
+			priority: 3
 		},
 		
 		Blacksmith2: {
@@ -204,7 +212,8 @@ define({
 			tileMod: 'stone',
 			tileLevel: 3,
 			replaces: 'blacksmith',
-			defaultAnimation: 1
+			defaultAnimation: 1,
+			priority: 4
 		},
 		
 		Sawmill: {
@@ -217,7 +226,8 @@ define({
 			},
 			requiredLevel: 2,
 			tileMod: 'wood',
-			tileLevel: 2
+			tileLevel: 2,
+			priority: 3
 		},
 		
 		Sawmill2: {
@@ -232,7 +242,8 @@ define({
 			tileMod: 'wood',
 			tileLevel: 3,
 			replaces: 'sawmill',
-			defaultAnimation: 1
+			defaultAnimation: 1,
+			priority: 4
 		}
 	},
 	

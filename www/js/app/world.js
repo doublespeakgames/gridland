@@ -219,6 +219,9 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 				}
 			} else {
 				// Look for buildable buildings first
+				var totalNeeded = null;
+				var moveAction = null;
+				var priority = null;
 				for(var t in Content.BuildingType) {
 					var buildingType = Content.BuildingType[t];
 					var building = GameState.getBuilding(buildingType);
@@ -246,18 +249,26 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 							if(!block.gone && block.spaceLeft() == 0) {
 								for(var resource in building.requiredResources) {
 									var required = building.requiredResources[resource];
-									if(required > 0 && resource == block.options.type.className) {
+									var cost = buildingType.cost[resource];
+									var highPriority = priority == null || buildingType.priority < priority || 
+											(buildingType.priority == priority && 
+													(totalNeeded == null || cost < totalNeeded));
+									if(required > 0 && resource == block.options.type.className && highPriority) {
 										// We can move this block!
-										return ActionFactory.getAction("MoveBlock", {
+										moveAction = ActionFactory.getAction("MoveBlock", {
 											block: block,
 											destination: building
 										});
+										priority = buildingType.priority;
+										totalNeeded = cost;
 									}
 								}
 							}
 						}
 					}
 				}
+				// If no urgent actions are returned, move the block that is the most required.
+				return moveAction;
 			}
 			
 			// Then give up, and return null
