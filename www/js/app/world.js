@@ -17,6 +17,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			this.stuff.length = 0;
 			Graphics.addToBoard(this);
 			this.isNight = false;
+			this.celestialPosition = 0;
 			
 			for(var i in GameState.buildings) {
 				var building = GameState.buildings[i];
@@ -67,7 +68,11 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 					var entity = World.stuff[i];
 					if(entity.hostile && !World.isNight) {
 						// Monsters cannot survive the daylight
-						entity.die();
+						if(entity.action != null) {
+							entity.action.terminateAction(entity);
+						}
+						entity.el().remove();
+						entity.gone = true;
 					} 
 					entity.animate();
 					if(entity.action != null) {
@@ -77,7 +82,9 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 					if(!entity.gone) {
 						newStuff.push(entity);
 					} else if(entity.hostile && World.isNight) {
-						World.dude.gainXp(entity.xp);
+						if(!entity.wiped) {
+							World.dude.gainXp(entity.xp);
+						}
 						World.advanceTime();
 					} else if(entity == World.dude) {
 						// Dude is dead. Long live the dude.
@@ -128,12 +135,13 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		advanceTime: function(steps) {
 			steps = steps == null ? 1 : steps;
 			if(this.celestial != null) {
-				var worldWidth = Graphics.worldWidth();
-				var distance = Math.floor(worldWidth / (this.isNight ? this.options.nightMoves : this.options.dayMoves)) * steps;
-				this.celestial.p(this.celestial.p() + distance);
-				if(this.celestial.p() > worldWidth) {
+				var numSteps = this.isNight ? this.options.nightMoves : this.options.dayMoves;
+				this.celestialPosition += steps;
+				if(this.celestialPosition >= numSteps) {
 					this.phaseTransition();
 				} else {
+					var worldWidth = Graphics.worldWidth();
+					this.celestial.p(Math.floor(worldWidth / numSteps) * this.celestialPosition);
 					Graphics.moveCelestial(this.celestial, this.celestial.p());
 				}
 			}
@@ -141,7 +149,6 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 		
 		phaseTransition: function() {
 			this.inTransition = true;
-			this.wipeMonsters();
 			var _w = this;
 			Graphics.phaseTransition(this.celestial, function() {
 				_w.inTransition = false;
@@ -150,6 +157,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			if(this.dude.action != null) {
 				this.dude.action.terminateAction(this.dude);						
 			}
+			this.celestialPosition = 0;
 			this.dude.shield = 0;
 			this.dude.sword = 0;
 			Graphics.updateShield(0, 0);
@@ -165,6 +173,7 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			for(var i in this.stuff) {
 				var entity = this.stuff[i];
 				if(entity.hostile) {
+					entity.wiped = true;
 					entity.die();
 				}
 			}

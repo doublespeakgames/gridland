@@ -10,8 +10,8 @@ define(['app/action/action'], function(Action) {
 	MoveBlock.prototype.doAction = function(dude) {
 		var _action = this;
 		require(['app/gamestate', 'app/gamecontent'], 
-				function(GameState, Content) {
-			dude.move(GameState.getBuilding(Content.BuildingType.Shack).dudeSpot(), function(dude) {
+				function(GameState, Content, World) {
+			dude.move(50, function(dude) {
 				require(['app/graphics'], function(Graphics) {
 					if(_action.block.gone) {
 						dude.action = null;

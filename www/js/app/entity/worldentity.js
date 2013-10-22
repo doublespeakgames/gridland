@@ -53,11 +53,11 @@ define(['app/entity/entity', 'app/graphics', 'app/action/actionfactory'], functi
 	worldEntity.prototype.moveTo = function(target, callback) {
 		if(this.tempAnimation == null) {
 			var position = target.p();
-			if(position < 0) {
-				position = 0;
+			if(position < 30) {
+				position = 30;
 			}
-			if(position > Graphics.worldWidth()) {
-				position = Graphics.worldWidth();
+			if(position > Graphics.worldWidth() - 30) {
+				position = Graphics.worldWidth() - 30;
 			}
 			if(this.p() < position) {
 				// Moving right

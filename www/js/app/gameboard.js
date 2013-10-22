@@ -16,6 +16,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 			Graphics.clearBoard();
 			Graphics.addToScreen(this);
 			this.tiles = [];
+			this.filling = false;
 			for (var i = 0; i < this.options.columns; i++) {
 				this.tiles.push([]);
 			}
@@ -51,6 +52,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 		},
 
 		fill : function() {
+			this.filling = true;
 			setTimeout(function() {
 				require(['app/gameboard'], function(GameBoard) {
 					GameBoard._doFill(0);
@@ -154,7 +156,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 			}
 			
 			Graphics.dropTiles(tiles, function() {
-				require(['app/graphics', 'app/gameboard'], function(Graphics, GameBoard) {
+				require(['app/graphics', 'app/gameboard', 'app/world'], function(Graphics, GameBoard, World) {
 					GameBoard.dropCount--;
 					if(GameBoard.dropCount == 0) {
 						var matches = [];
@@ -171,6 +173,11 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 							GameBoard.handleMatches(matches);
 						} else if(!GameBoard.areMovesAvailable()) {
 							GameBoard.noMoreMoves();
+						} else if(!World.isNight && !GameBoard.filling) {
+							World.advanceTime();
+							World.makeDudeHungry();
+						} else if(GameBoard.filling) {
+							GameBoard.filling = false;
 						}
 					}
 				});
@@ -333,7 +340,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 		
 		switchTiles: function(tile1, tile2, skipMatch) {
 			Graphics.switchTiles(tile1, tile2, function(tile1, tile2) {
-				require(['app/gameboard'], function(GameBoard) {
+				require(['app/gameboard', 'app/world'], function(GameBoard, World) {
 					var r1 = tile1.options.row, c1 = tile1.options.column;
 					GameBoard.tiles[tile1.options.column][tile1.options.row] = tile2;
 					GameBoard.tiles[tile2.options.column][tile2.options.row] = tile1;
@@ -352,11 +359,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 							GameBoard.handleMatches(matches);
 						} else {
 							GameBoard.switchTiles(tile1, tile2, true);
-						}
-						
-						if(!World.isNight) {
 							World.advanceTime();
-							World.makeDudeHungry();
 						}
 					}
 				});

@@ -24,7 +24,9 @@ define(['app/action/action'], function(Action) {
 				// Reset the dude's move action every step to make sure he's
 				// attacking the closest enemy all the time
 				var closest = W.findClosestMonster();
-				if(closest != _this.target) {
+				if(closest == null) {
+					_this.terminateAction(_this._entity);
+				} else if(closest != _this.target) {
 					_this.target = closest;
 					_this.doAction(_this._entity);
 				}
