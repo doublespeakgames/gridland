@@ -308,11 +308,11 @@ body.night {
 	-moz-transform: translate3d(0,0,0);
 	-ms-transform: translate3d(0,0,0);
 	-o-transform: translate3d(0,0,0);
-	transition: all 200ms linear, left 0ms linear;
-	-webkit-transition: all 200ms linear, left 0ms linear;
+	transition: transform 200ms linear, opacity 200ms linear;
+	-webkit-transition: -webkit-transform 200ms linear, opacity 200ms linear;;
 	-moz-transition: -moz-transform 200ms linear, opacity 200ms linear;
-	-ms-transition: all 200ms linear, left 0ms linear;
-	-o-transition: all 200ms linear, left 0ms linear;
+	-ms-transition: -ms-transform 200ms linear, opacity 200ms linear;
+	-o-transition: -o-transform 200ms linear, opacity 200ms linear;
 }
 
 .tile > div {
@@ -328,11 +328,11 @@ body.night {
 	left: 2px;
 	right: 2px;
 	bottom: 2px;
-	transition: all 300ms linear, background-position 1ms linear;
-	-webkit-transition: all 300ms linear, background-position 1ms linear;
-	-moz-transition: all 300ms linear, background-position 1ms linear;
-	-ms-transition: all 300ms linear, background-position 1ms linear;
-	-o-transition: all 300ms linear, background-position 1ms linear;
+	transition: transform 300ms linear, border-color 300ms linear;
+	-webkit-transition: -webkit-transform 300ms linear, border-color 300ms linear;
+	-moz-transition: -moz-transform 300ms linear, border-color 300ms linear;
+	-ms-transition: -ms-transform 300ms linear, border-color 300ms linear;
+	-o-transition: -o-transform 300ms linear, border-color 300ms linear;
 }
 
 .tile .nightSide {

@@ -34,6 +34,7 @@
 		<copy todir="${deploy.path}">
 			<fileset dir="${build.dir}">
 				<include name="**/*.*" />
+				<exclude name="**/thumbs.db" />
 			</fileset>
 		</copy>
 	</target>
