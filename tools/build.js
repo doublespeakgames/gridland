@@ -7,5 +7,12 @@
 		{
 			name: "app"
 		}
-	]
+	],
+	paths: {
+		'jquery': 'empty:',
+		'google-analytics': 'empty:'
+	},
+	optimize: 'uglify',
+	optimizeCss: 'standard',
+	removeCombined: true
 })

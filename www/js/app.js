@@ -1,12 +1,20 @@
 requirejs.config({
 	baseUrl: "js/lib",
 	shim: {
-		three: {
-			exports: "THREE"
+		"google-analytics": {
+			exports: "ga"
 		}
 	},
 	paths: {
-		app: "../app"
+		app: "../app",
+		"jquery": [
+			"http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min",
+			"jquery-2.0.3.min"
+		],
+		"google-analytics": [
+	        "http://www.google-analytics.com/analytics",
+	        "analytics"
+        ]
 	}
 });
 

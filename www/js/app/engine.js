@@ -1,5 +1,5 @@
-define(['jquery', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate', 'app/world'], 
-		function($, Graphics, GameBoard, Events, GameState, World) {
+define(['jquery', 'app/analytics', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate', 'app/world'], 
+		function($, Analytics, Graphics, GameBoard, Events, GameState, World) {
 
 	return {
 		DRAG_THRESHOLD: 30, // in pixels
@@ -10,8 +10,6 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate'
 		options: {},
 		init: function(opts) {
 			$.extend(this.options, opts);
-			
-
 			
 //			$('#test').click(function() { require(['app/gameboard'], function(G) {
 //				console.log("Moves available? " + G.areMovesAvailable());
@@ -28,6 +26,7 @@ define(['jquery', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate'
 			});
 			
 			// Start the game
+			Analytics.init();
 			GameState.load();
 			Graphics.init();
 			GameBoard.init();

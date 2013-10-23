@@ -1,4 +1,4 @@
-define(['app/entity/building', 'app/entity/block'], function(Building, Block) {
+define(['app/entity/building', 'app/entity/block', 'app/analytics'], function(Building, Block, Analytics) {
 	
 	return {
 		create: function() {
@@ -6,6 +6,7 @@ define(['app/entity/building', 'app/entity/block'], function(Building, Block) {
 			this.stores = [];
 			this.level = 1;
 			this.xp = 0;
+			Analytics.trackEvent('game', 'create');
 		},
 		
 		load: function() {

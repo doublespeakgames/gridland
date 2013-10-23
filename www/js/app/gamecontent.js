@@ -20,7 +20,8 @@ define({
 				'default': 'shield:1'				
 			},
 			multipliers: {
-				sawmill: 2
+				sawmill: 2,
+				sawmill2: 3
 			}
 		},
 		Stone: {
@@ -31,13 +32,17 @@ define({
 				'default': 'sword:1'
 			},
 			multipliers: {
-				blacksmith: 2
+				blacksmith: 2,
+				blacksmith2: 3
 			}
 		},
 		Clay: {
 			className: 'clay',
 			nightEffect: {
 				'default': 'spawn:rat'
+			},
+			multipliers: {
+				bricklayer2: 2
 			}
 		},
 		Cloth: {
@@ -155,6 +160,23 @@ define({
 			},
 			requiredLevel: 1,
 			priority: 1
+		},
+		
+		Bricklayer2: {
+			className: 'bricklayer2',
+			position: 90,
+			cost: {
+				stone: 1,
+				wood: 1,
+				cloth: 1,
+				clay: 5
+			},
+			requiredLevel: 3,
+			tileMod: 'clay',
+			tileLevel: 2,
+			replaces: 'bricklayer',
+			defaultAnimation: 1,
+			priority: 4
 		},
 		
 		Weaver: {

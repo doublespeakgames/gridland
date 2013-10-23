@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-ui'], function($, UI) {
+define(['jquery'], function($) {
 	return {
 		
 		init: function() {

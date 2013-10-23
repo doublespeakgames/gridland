@@ -1,7 +1,7 @@
-define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent', 
+define(['jquery', 'app/analytics', 'app/graphics', 'app/entity/building', 'app/gamecontent', 
         'app/gamestate', 'app/action/actionfactory', 'app/entity/monsterfactory',
         'app/entity/block'], 
-		function($, Graphics, Building, Content, GameState, ActionFactory, MonsterFactory, Block) {
+		function($, Analytics, Graphics, Building, Content, GameState, ActionFactory, MonsterFactory, Block) {
 	return {
 		stuff: [],
 		
@@ -166,6 +166,9 @@ define(['jquery', 'app/graphics', 'app/entity/building', 'app/gamecontent',
 			if(!this.isNight) {
 				GameState.save();
 				Graphics.notifySave();
+				Analytics.trackEvent('world', 'morning');
+			} else {
+				Analytics.trackEvent('world', 'nightfall');
 			}
 		},
 		

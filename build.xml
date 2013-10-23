@@ -26,6 +26,8 @@
 	</target>
 	
 	<target name="deploy" depends="build">
+		<delete dir="${deploy.path}" />
+		<mkdir dir="${deploy.path}" />
 		<copy todir="${deploy.path}">
 			<fileset dir="${build.dir}">
 				<include name="**/*.*" />
