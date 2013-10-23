@@ -9,6 +9,8 @@
 	<property name="build.dir" value="build" />
 	<property name="deploy.path" value="D:\Users\Michael!\Documents\Gridland" />
 
+	<target name="all" depends="build,deploy" />
+	
 	<target name="clean">
 		<delete dir="${build.dir}" />
 	</target>
@@ -25,9 +27,10 @@
 		</java>
 	</target>
 	
-	<target name="deploy" depends="build">
-		<delete dir="${deploy.path}" />
-		<mkdir dir="${deploy.path}" />
+	<target name="deploy">
+		<delete includeemptydirs="true">
+			<fileset dir="${deploy.path}" includes="**/*" />
+		</delete>
 		<copy todir="${deploy.path}">
 			<fileset dir="${build.dir}">
 				<include name="**/*.*" />
