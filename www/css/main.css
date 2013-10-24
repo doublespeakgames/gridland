@@ -663,6 +663,14 @@ body.night {
 	background: url(../img/rat.png) no-repeat;
 }
 
+.spider {
+	position: absolute;
+	bottom: 0px;
+	height: 38px;
+	width: 60px;
+	background: url(../img/spider.png) no-repeat;
+}
+
 .skeleton {
 	position: absolute;
 	bottom: 0px;

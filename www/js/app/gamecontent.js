@@ -39,6 +39,7 @@ define({
 		Clay: {
 			className: 'clay',
 			nightEffect: {
+				'bricklayer2': 'spawn:spider',
 				'default': 'spawn:rat'
 			},
 			multipliers: {
