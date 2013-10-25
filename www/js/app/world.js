@@ -1,7 +1,7 @@
-define(['jquery', 'app/analytics', 'app/graphics', 'app/entity/building', 'app/gamecontent', 
-        'app/gamestate', 'app/action/actionfactory', 'app/entity/monsterfactory',
+define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/entity/building', 
+		'app/gamecontent', 'app/gamestate', 'app/action/actionfactory', 'app/entity/monsterfactory',
         'app/entity/block'], 
-		function($, Analytics, Graphics, Building, Content, GameState, ActionFactory, MonsterFactory, Block) {
+		function($, EventManager, Analytics, Graphics, Building, Content, GameState, ActionFactory, MonsterFactory, Block) {
 	return {
 		stuff: [],
 		
@@ -18,6 +18,15 @@ define(['jquery', 'app/analytics', 'app/graphics', 'app/entity/building', 'app/g
 			Graphics.addToBoard(this);
 			this.isNight = false;
 			this.celestialPosition = 0;
+			
+			EventManager.bind('tilesCleared', this.handleTileClear);
+			EventManager.bind('noMoreMoves', this.handleNoMoreMoves);
+			EventManager.bind('tilesSwapped', this.handleTilesSwapped);
+			EventManager.bind('levelUp', function() {
+				require(['app/world'], function(World) {
+					World.wipeMonsters();
+				});
+			});
 			
 			for(var i in GameState.buildings) {
 				var building = GameState.buildings[i];
@@ -59,6 +68,75 @@ define(['jquery', 'app/analytics', 'app/graphics', 'app/entity/building', 'app/g
 				this._el = Graphics.newElement('world');
 			}
 			return this._el;
+		},
+		
+		handleTilesSwapped: function() {
+			require(['app/world'], function(World) {
+				if(!World.isNight) {
+					World.advanceTime();
+					World.makeDudeHungry();
+				}
+			});
+		},
+		
+		handleNoMoreMoves: function() {
+			require(['app/world'], function(World) {
+				if(World.isNight) {
+					// Take damage
+					World.dude.takeDamage(Math.floor(World.dude.hp / 2));
+				} else {
+					// Burn daylight
+					World.advanceTime(5);
+				}
+			});
+		},
+		
+		handleTileClear: function(resourcesGained) {
+			require(['app/gamecontent', 'app/world', 'app/gamestate', 'app/resources'], function(Content, World, State, Resources) {
+				// Gain resources
+				for(typeName in resourcesGained) {
+					var type = Content.getResourceType(typeName);
+					if(World.isNight && !World.inTransition) {
+						var effect = null;
+						for(var b in type.nightEffect) {
+							if(b == "default" || State.hasBuilding(Content.getBuildingType(b))) {
+								effect = type.nightEffect[b];
+								break;
+							}
+						}
+						if(effect != null) {
+							var nightEffect = effect.split(':');
+							switch(nightEffect[0]) {
+							case "spawn":
+								World.spawnMonster(nightEffect[1], resourcesGained[typeName], this.swapSide);
+								break;
+							case "shield":
+								World.addDefense(parseInt(nightEffect[1]) * resourcesGained[typeName]);
+								break;
+							case "sword":
+								World.addAttack(parseInt(nightEffect[1]) * resourcesGained[typeName]);
+								break;
+							}
+						}
+					} else {
+						// Apply building multipliers
+						var quantity = resourcesGained[typeName];
+						if(type.multipliers) {
+							for(var b in type.multipliers) {
+								var bType = Content.getBuildingType(b);
+								if(State.hasBuilding(bType)) {
+									quantity *= type.multipliers[b];
+								}
+							}
+						}
+						if(type == Content.ResourceType.Grain) {
+							World.healDude(quantity);
+						} else {
+							Resources.collectResource(Content.getResourceType(typeName), quantity);
+						}
+					}
+				}
+			});
 		},
 		
 		makeStuffHappen: function() {
@@ -192,11 +270,6 @@ define(['jquery', 'app/analytics', 'app/graphics', 'app/entity/building', 'app/g
 			if(this.dude != null) {
 				this.dude.heal(amount);
 			}
-		},
-		
-		hasBuilding: function(type) {
-			var building = GameState.getBuilding(type);
-			return building != null && building.built;
 		},
 		
 		findClosestMonster: function() {

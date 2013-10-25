@@ -1,4 +1,4 @@
-define([ 'jquery', 'app/events', 'app/graphics' ], function($, Events, Graphics) {
+define([ 'jquery', 'app/graphics' ], function($, Graphics) {
 	
 	var entity = function(options) {
 		

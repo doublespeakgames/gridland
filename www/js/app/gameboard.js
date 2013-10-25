@@ -1,6 +1,6 @@
-define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile', 
-        'app/resources', 'app/world', 'app/gamecontent', 'app/gamestate'], 
-		function($, Engine, Graphics, Tile, Resources, World, Content, State) {
+define(['jquery', 'app/engine', 'app/graphics', 'app/eventmanager', 'app/entity/tile', 
+        'app/resources', 'app/gamecontent', 'app/gamestate'], 
+		function($, Engine, Graphics, EventManager, Tile, Resources, Content, State) {
 	return {
 		dropCount: 0,
 		removals: 0,
@@ -36,21 +36,17 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 				'stone' : 2
 			};
 			
-			if(World.hasBuilding(Content.BuildingType.BrickLayer)) {
+			if(State.hasBuilding(Content.BuildingType.BrickLayer)) {
 				map.clay = 2;
 			}
 			
-			if(World.hasBuilding(Content.BuildingType.Weaver)) {
+			if(State.hasBuilding(Content.BuildingType.Weaver)) {
 				map.cloth = 2;
 			}
 			
 			return map;
 		},
 		
-		canMove: function() {
-			return this.dropCount == 0 && this.removals == 0 && !World.inTransition;
-		},
-
 		fill : function() {
 			this.filling = true;
 			setTimeout(function() {
@@ -156,7 +152,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 			}
 			
 			Graphics.dropTiles(tiles, function() {
-				require(['app/graphics', 'app/gameboard', 'app/world'], function(Graphics, GameBoard, World) {
+				require(['app/graphics', 'app/gameboard', 'app/eventmanager'], function(Graphics, GameBoard, EventManager) {
 					GameBoard.dropCount--;
 					if(GameBoard.dropCount == 0) {
 						var matches = [];
@@ -173,9 +169,8 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 							GameBoard.handleMatches(matches);
 						} else if(!GameBoard.areMovesAvailable()) {
 							GameBoard.noMoreMoves();
-						} else if(!World.isNight && !GameBoard.filling) {
-							World.advanceTime();
-							World.makeDudeHungry();
+						} else if(!GameBoard.filling) {
+							EventManager.trigger('tilesSwapped');
 						} else if(GameBoard.filling) {
 							GameBoard.filling = false;
 						}
@@ -187,13 +182,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 		noMoreMoves: function() {
 			// Refresh the board and incur penalties
 			GameBoard.refreshBoard();
-			if(World.isNight) {
-				// Take damage
-				World.dude.takeDamage(Math.floor(World.dude.hp / 2));
-			} else {
-				// Burn daylight
-				World.advanceTime(5);
-			}
+			EventManager.trigger('noMoreMoves');
 		},
 		
 		refreshBoard: function() {
@@ -234,49 +223,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 				tileToRemove.options.row = -1;
 			}
 			
-			// Gain resources
-			for(typeName in resourcesGained) {
-				var type = Content.getResourceType(typeName);
-				if(World.isNight && !World.inTransition) {
-					var effect = null;
-					for(var b in type.nightEffect) {
-						if(b == "default" || State.hasBuilding(Content.getBuildingType(b))) {
-							effect = type.nightEffect[b];
-							break;
-						}
-					}
-					if(effect != null) {
-						var nightEffect = effect.split(':');
-						switch(nightEffect[0]) {
-						case "spawn":
-							World.spawnMonster(nightEffect[1], resourcesGained[typeName], this.swapSide);
-							break;
-						case "shield":
-							World.addDefense(parseInt(nightEffect[1]) * resourcesGained[typeName]);
-							break;
-						case "sword":
-							World.addAttack(parseInt(nightEffect[1]) * resourcesGained[typeName]);
-							break;
-						}
-					}
-				} else {
-					// Apply building multipliers
-					var quantity = resourcesGained[typeName];
-					if(type.multipliers) {
-						for(var b in type.multipliers) {
-							var bType = Content.getBuildingType(b);
-							if(State.hasBuilding(bType)) {
-								quantity *= type.multipliers[b];
-							}
-						}
-					}
-					if(type == Content.ResourceType.Grain) {
-						World.healDude(quantity);
-					} else {
-						Resources.collectResource(Content.getResourceType(typeName), quantity);
-					}
-				}
-			}
+			EventManager.trigger('tilesCleared', [resourcesGained]);
 			
 			Graphics.removeTiles(tiles, function() {
 				require(['app/gameboard', 'app/entity/tile', 'app/resources', 'app/gamecontent', 'app/gamestate'], 
@@ -340,7 +287,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 		
 		switchTiles: function(tile1, tile2, skipMatch) {
 			Graphics.switchTiles(tile1, tile2, function(tile1, tile2) {
-				require(['app/gameboard', 'app/world'], function(GameBoard, World) {
+				require(['app/gameboard', 'app/eventmanager'], function(GameBoard, EventManager) {
 					var r1 = tile1.options.row, c1 = tile1.options.column;
 					GameBoard.tiles[tile1.options.column][tile1.options.row] = tile2;
 					GameBoard.tiles[tile2.options.column][tile2.options.row] = tile1;
@@ -359,7 +306,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/entity/tile',
 							GameBoard.handleMatches(matches);
 						} else {
 							GameBoard.switchTiles(tile1, tile2, true);
-							World.advanceTime();
+							EventManager.trigger('tilesSwapped');
 						}
 					}
 				});

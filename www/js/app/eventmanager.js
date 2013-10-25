@@ -1,40 +1,30 @@
 define(['app/util'], function(Util) {
 	
+	var listeners = {};
+	
 	return {
 		/**
-		 * Gets a list of listeners for a particular object
-		 * Returns an object with keys representing event names,
-		 * and values as arrays of bound callbacks
+		 * Gets a list of listeners for a particular event
+		 * Returns an array of listener callbacks,
 		 */
-		getListeners: function(o) {
-			if(typeof o._listeners == 'undefined') {
-				o._listeners = {};
+		getListeners: function(eventName) {
+			var list = listeners[eventName];
+			if(list == null) {
+				list = listeners[eventName] = [];
 			}
-			return o._listeners;
+			
+			return list;
 		},
 		
 		/**
-		 * Gets a list of callback objects for a particular object and event
-		 * Returns an array of objects. Each object has 'callback' and 'binder'
-		 * attributes
-		 */
-		getListenersForEvent: function(o, e) {
-			if(typeof this.getListeners(o)[e] == 'undefined') {
-				this.getListeners(o)[e] = [];
-			}
-			return this.getListeners(o)[e];
-		},
-		
-		/**
-		 * Binds a listener to an event on an object
-		 * bindee: The object to which to bind the event
+		 * Binds a listener to an event
 		 * eventName: The name of the event
 		 * callback: The function to call
 		 * binder: The object that bound the call. Optional.		 
 		 */
-		bind: function(bindee, eventName, callback, binder) {
+		bind: function(eventName, callback, binder) {
 			var binderId = binder != null ? Util.getId(binder) : null;
-			this.getListenersForEvent(bindee, eventName).push({
+			this.getListeners(eventName).push({
 				callback: callback,
 				binderId: binderId
 			});
@@ -47,8 +37,8 @@ define(['app/util'], function(Util) {
 		 * binder: The object that bound the call (optional)
 		 * callback: The exact function to callback function to remove (optional)
 		 */
-		unbind: function(bindee, eventName, binder, callback) {
-			var listeners = this.getListenersForEvent(bindee, eventName);
+		unbind: function(eventName, binder, callback) {
+			var listeners = this.getListeners(eventName);
 			if(binder != null || callback != null) {
 				// Clear only the listener that fits the parameters
 				for(var i = 0, len = listeners.length; i < len; i++) {
@@ -66,15 +56,14 @@ define(['app/util'], function(Util) {
 		},
 		
 		/**
-		 * Triggers an event on an object
-		 * o: The object to which the event applies
+		 * Triggers an event
 		 * event: The event name
 		 * params: An array of parameters to pass to the callback
 		 */
-		trigger: function(o, event, params) {
-			var list = this.getListenersForEvent(o, event);
+		trigger: function(event, params) {
+			var list = this.getListeners(event);
 			for(var i = 0, len = list.length; i < len; i++) {
-				list[i].callback.apply(o, params);
+				list[i].callback.apply(window, params);
 			}
 		}
 	};

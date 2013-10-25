@@ -1,5 +1,5 @@
-define(['jquery', 'app/analytics', 'app/graphics', 'app/gameboard', 'app/events', 'app/gamestate', 'app/world'], 
-		function($, Analytics, Graphics, GameBoard, Events, GameState, World) {
+define(['jquery', 'app/analytics', 'app/graphics', 'app/gameboard', 'app/gamestate', 'app/world'], 
+		function($, Analytics, Graphics, GameBoard, GameState, World) {
 
 	return {
 		DRAG_THRESHOLD: 30, // in pixels
@@ -69,8 +69,12 @@ define(['jquery', 'app/analytics', 'app/graphics', 'app/gameboard', 'app/events'
 			$('#debug').text(text);
 		},
 		
+		canMove: function() {
+			return GameBoard.dropCount == 0 && GameBoard.removals == 0 && !World.inTransition;
+		},
+		
 		startDrag: function(tile) {
-			if(GameBoard.canMove()) {
+			if(this.canMove()) {
 				if(this.activeTile == null) {
 					// Select the tile
 					this.activeTile = tile;

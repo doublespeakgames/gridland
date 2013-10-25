@@ -1,6 +1,6 @@
-define(['app/entity/worldentity', 'app/world', 'app/graphics', 
+define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics', 
         'app/gamestate', 'app/action/actionfactory', 'app/gamecontent'], 
-		function(WorldEntity, World, Graphics, State, ActionFactory, Content) {
+		function(EventManager, WorldEntity, World, Graphics, State, ActionFactory, Content) {
 	var dude = function() {
 		this.carrying = null;
 		this.action = null;
@@ -49,7 +49,7 @@ define(['app/entity/worldentity', 'app/world', 'app/graphics',
 			Graphics.levelUp(this);
 			State.health = this.maxHealth();
 			Graphics.updateHealth(State.health, this.maxHealth());
-			World.wipeMonsters();
+			EventManager.trigger('levelUp');
 			if(this.action != null) {
 				this.action.terminateAction(this);
 			}
