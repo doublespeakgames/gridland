@@ -18,8 +18,8 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 	dude.prototype.el = function() {
 		if(this._el == null) {
 			this._el = WorldEntity.prototype.el.call(this)
-			.append(Graphics.newElement("animationLayer nightSprite"))
-			.append(Graphics.newElement("heldBlock"));
+				.append(Graphics.newElement("animationLayer nightSprite"))
+				.append(Graphics.newElement("heldBlock"));
 		}
 		return this._el;
 	};

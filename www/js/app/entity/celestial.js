@@ -1,5 +1,5 @@
-define(['app/entity/worldentity', 'app/world', 'app/graphics', 'app/gamestate'], 
-		function(WorldEntity, World, Graphics, State) {
+define(['app/entity/worldentity'], 
+		function(WorldEntity) {
 	
 	var celestial = function() { };
 	celestial.prototype = new WorldEntity({
