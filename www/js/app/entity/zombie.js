@@ -1,17 +1,15 @@
-define(['app/entity/worldentity', 'app/action/actionfactory'], 
-		function(WorldEntity, ActionFactory) {
+define(['app/entity/monster', 'app/action/actionfactory'], 
+		function(Monster, ActionFactory) {
 	
 	var Zombie = function(options) {
 		this.options = $.extend({}, this.options, {
 			power: 3
 		}, options);
-		this.hostile = true;
-		this.action = null;
 		this.hp = this.maxHealth();
 		this.xp = 1;
 	};
-	Zombie.prototype = new WorldEntity({
-		className: 'zombie',
+	Zombie.prototype = new Monster({
+		monsterClass: 'zombie',
 		speed: 80
 	});
 	Zombie.constructor = Zombie;

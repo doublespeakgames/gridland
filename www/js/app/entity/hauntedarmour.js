@@ -1,17 +1,15 @@
-define(['app/entity/worldentity', 'app/action/actionfactory'], 
-		function(WorldEntity, ActionFactory) {
+define(['app/entity/monster', 'app/action/actionfactory'], 
+		function(Monster, ActionFactory) {
 	
 	var HauntedArmour = function(options) {
 		this.options = $.extend({}, this.options, {
 			power: 3
 		}, options);
-		this.hostile = true;
-		this.action = null;
 		this.hp = this.maxHealth();
 		this.xp = 2;
 	};
-	HauntedArmour.prototype = new WorldEntity({
-		className: 'hauntedArmour',
+	HauntedArmour.prototype = new Monster({
+		monsterClass: 'hauntedArmour',
 		speed: 80
 	});
 	HauntedArmour.constructor = HauntedArmour;

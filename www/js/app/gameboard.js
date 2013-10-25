@@ -223,7 +223,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/eventmanager', 'app/entity/
 				tileToRemove.options.row = -1;
 			}
 			
-			EventManager.trigger('tilesCleared', [resourcesGained]);
+			EventManager.trigger('tilesCleared', [resourcesGained, this.swapSide]);
 			
 			Graphics.removeTiles(tiles, function() {
 				require(['app/gameboard', 'app/entity/tile', 'app/resources', 'app/gamecontent', 'app/gamestate'], 

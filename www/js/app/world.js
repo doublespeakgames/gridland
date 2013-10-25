@@ -91,7 +91,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 			});
 		},
 		
-		handleTileClear: function(resourcesGained) {
+		handleTileClear: function(resourcesGained, side) {
 			require(['app/gamecontent', 'app/world', 'app/gamestate', 'app/resources'], function(Content, World, State, Resources) {
 				// Gain resources
 				for(typeName in resourcesGained) {
@@ -108,7 +108,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 							var nightEffect = effect.split(':');
 							switch(nightEffect[0]) {
 							case "spawn":
-								World.spawnMonster(nightEffect[1], resourcesGained[typeName], this.swapSide);
+								World.spawnMonster(nightEffect[1], resourcesGained[typeName], side);
 								break;
 							case "shield":
 								World.addDefense(parseInt(nightEffect[1]) * resourcesGained[typeName]);

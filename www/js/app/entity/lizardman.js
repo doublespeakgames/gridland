@@ -1,17 +1,15 @@
-define(['app/entity/worldentity', 'app/action/actionfactory', 'app/graphics'], 
-		function(WorldEntity, ActionFactory, Graphics) {
+define(['app/entity/monster', 'app/action/actionfactory', 'app/graphics'], 
+		function(Monster, ActionFactory, Graphics) {
 	
 	var Lizardman = function(options) {
 		this.options = $.extend({}, this.options, {
 			power: 3
 		}, options);
-		this.hostile = true;
-		this.action = null;
 		this.hp = this.maxHealth();
 		this.xp = 4;
 	};
-	Lizardman.prototype = new WorldEntity({
-		className: 'lizardman',
+	Lizardman.prototype = new Monster({
+		monsterClass: 'lizardman',
 		arrowClass: 'arrow',
 		speed: 50,
 		arrowSpeed: 7

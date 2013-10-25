@@ -639,49 +639,42 @@ body.night {
 	-o-transition: top 300ms linear, left 300ms linear;
 }
 
-.zombie {
+.monster {
 	position: absolute;
 	bottom: 0px;
+}
+
+.zombie {
 	height: 32px;
 	width: 16px;
 	background: url(../img/zombie.png) no-repeat;
 }
 
 .hauntedArmour {
-	position: absolute;
-	bottom: 0px;
 	height: 49px;
 	width: 70px;
 	background: url(../img/h_armour.png) no-repeat;
 }
 
 .rat {
-	position: absolute;
-	bottom: 0px;
 	height: 13px;
 	width: 40px;
 	background: url(../img/rat.png) no-repeat;
 }
 
 .spider {
-	position: absolute;
-	bottom: 0px;
 	height: 38px;
 	width: 60px;
 	background: url(../img/spider.png) no-repeat;
 }
 
 .skeleton {
-	position: absolute;
-	bottom: 0px;
 	height: 32px;
 	width: 27px;
 	background: url(../img/skeleton.png) no-repeat;
 }
 
 .lizardman {
-	position: absolute;
-	bottom: 0px;
 	height: 35px;
 	width: 32px;
 	background: url(../img/lizardman.png) no-repeat;

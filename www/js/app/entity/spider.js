@@ -1,5 +1,5 @@
-define(['app/entity/worldentity', 'app/action/actionfactory'], 
-		function(WorldEntity, ActionFactory) {
+define(['app/entity/monster', 'app/action/actionfactory'], 
+		function(Monster, ActionFactory) {
 	
 	var Spider = function(options) {
 		this.options = $.extend({}, this.options, {
@@ -10,8 +10,8 @@ define(['app/entity/worldentity', 'app/action/actionfactory'],
 		this.hp = this.maxHealth();
 		this.xp = 3;
 	};
-	Spider.prototype = new WorldEntity({
-		className: 'spider',
+	Spider.prototype = new Monster({
+		monsterClass: 'spider',
 		speed: 20
 	});
 	Spider.constructor = Spider;
