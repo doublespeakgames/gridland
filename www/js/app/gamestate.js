@@ -57,7 +57,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics'], function(Bu
 			if(typeof Storage != 'undefined' && localStorage && localStorage.gameState) {
 				var savedState = JSON.parse(localStorage.gameState);
 				savedState.xp = this.xp;
-				this.level = savedState.level;
+				savedState.level = this.level;
 				localStorage.gameState = JSON.stringify(savedState);
 			}
 		},

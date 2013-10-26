@@ -15,7 +15,7 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent', 'app/gr
 		}
 		
 		if(this.options.type.defaultAnimation != null) {
-			this.animation(this.options.type.defaultAnimation);
+			this.animationRow = this.options.type.defaultAnimation;
 		}
 		
 		this.built = false;
