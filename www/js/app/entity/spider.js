@@ -7,7 +7,7 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 		}, options);
 		this.hostile = true;
 		this.action = null;
-		this.hp = this.maxHealth();
+		this.hp(this.maxHealth());
 		this.xp = 3;
 	};
 	Spider.prototype = new Monster({

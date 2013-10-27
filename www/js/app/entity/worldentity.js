@@ -1,4 +1,5 @@
-define(['app/entity/entity', 'app/graphics', 'app/action/actionfactory'], function(Entity, Graphics, ActionFactory) {
+define(['app/entity/entity', 'app/graphics', 'app/eventmanager', 'app/action/actionfactory'], 
+	function(Entity, Graphics, EventManager, ActionFactory) {
 	
 	var MOVE_ANIMS = {
 		idle: 0,
@@ -12,11 +13,19 @@ define(['app/entity/entity', 'app/graphics', 'app/action/actionfactory'], functi
 		this.options = $.extend({}, this.options, {
 			// Nuthin'
 		}, options);
-		this.hp = this.maxHealth();
+		this.hp(this.maxHealth());
 		this.gone = false;
 	};
 	worldEntity.prototype = new Entity();
 	worldEntity.constructor = worldEntity;
+	
+	worldEntity.prototype.hp = function(value) {
+		if(value != null) {
+			this._hp = value;
+			EventManager.trigger('healthChanged', [this]);
+		}
+		return this._hp;
+	};
 	
 	worldEntity.prototype.getAnimation = function(label) {
 		return MOVE_ANIMS[label];
@@ -114,8 +123,8 @@ define(['app/entity/entity', 'app/graphics', 'app/action/actionfactory'], functi
 	
 	worldEntity.prototype.takeDamage = function(damage) {
 		if(this.isAlive()) {
-			this.hp -= damage;
-			if(this.hp <= 0) {
+			this.hp(this.hp() - damage);
+			if(this.hp() <= 0) {
 				this.die();
 			}
 		}
@@ -130,7 +139,7 @@ define(['app/entity/entity', 'app/graphics', 'app/action/actionfactory'], functi
 	};
 
 	worldEntity.prototype.isAlive = function() {
-		return this.hp > 0;
+		return this.hp() > 0;
 	};
 	
 	worldEntity.prototype.getHitboxWidth = function() {

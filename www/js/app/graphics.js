@@ -1,9 +1,10 @@
-define(['jquery'], function($) {
+define(['jquery', 'app/eventmanager'], function($, EventManager) {
 	return {
 		
 		init: function() {
-			// Nuthin for now
 			$('body').removeClass('night');
+			
+			EventManager.bind('healthChanged', this.updateHealthBar);
 		},
 		
 		clearBoard: function() {
@@ -433,6 +434,14 @@ define(['jquery'], function($) {
 					'opacity': 0
 				});
 			}, 300);
+		},
+		
+		updateHealthBar: function(entity) {
+			var bar = entity.el().find('.healthBar div');
+			if(bar.length > 0) {
+				var healthPercent = Math.floor(entity.hp() / entity.maxHealth() * 100);
+				bar.css('width', healthPercent + '%');
+			}
 		}
 	};
 });

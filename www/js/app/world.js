@@ -83,7 +83,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 			require(['app/world'], function(World) {
 				if(World.isNight) {
 					// Take damage
-					World.dude.takeDamage(Math.floor(World.dude.hp / 2));
+					World.dude.takeDamage(Math.floor(World.dude.hp() / 2));
 				} else {
 					// Burn daylight
 					World.advanceTime(5);

@@ -5,7 +5,7 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 		this.options = $.extend({}, this.options, {
 			power: 3
 		}, options);
-		this.hp = this.maxHealth();
+		this.hp(this.maxHealth());
 		this.xp = 1;
 	};
 	Zombie.prototype = new Monster({

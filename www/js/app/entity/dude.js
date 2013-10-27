@@ -2,6 +2,7 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
         'app/gamestate', 'app/action/actionfactory', 'app/gamecontent'], 
 		function(EventManager, WorldEntity, World, Graphics, State, ActionFactory, Content) {
 	var dude = function() {
+		this._el = null;
 		this.carrying = null;
 		this.action = null;
 		State.health = this.maxHealth();
