@@ -2,12 +2,14 @@ define(["google-analytics"], function(ga) {
 	return {
 		
 		init: function() {
-			try {
-				ga('create', 'UA-41314886-2', 'doublespeakgames.com');
-				ga('send', 'pageview');
-				this.initialized = true;
-			} catch(e) {
-				console.log("Failed to initialize Google Analytics: " + e.message);
+			if(!this.initialized) {
+				try {
+					ga('create', 'UA-41314886-2', 'doublespeakgames.com');
+					ga('send', 'pageview');
+					this.initialized = true;
+				} catch(e) {
+					console.log("Failed to initialize Google Analytics: " + e.message);
+				}
 			}
 		},
 		

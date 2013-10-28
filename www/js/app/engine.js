@@ -1,5 +1,5 @@
-define(['jquery', 'app/analytics', 'app/graphics', 'app/gameboard', 'app/gamestate', 'app/world'], 
-		function($, Analytics, Graphics, GameBoard, GameState, World) {
+define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/gameboard', 'app/gamestate', 'app/world'], 
+		function($, EventManager, Analytics, Graphics, GameBoard, GameState, World) {
 
 	return {
 		DRAG_THRESHOLD: 30, // in pixels
@@ -26,6 +26,7 @@ define(['jquery', 'app/analytics', 'app/graphics', 'app/gameboard', 'app/gamesta
 			});
 			
 			// Start the game
+			EventManager.init();
 			Analytics.init();
 			GameState.load();
 			Graphics.init();

@@ -14,6 +14,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/eventmanager', 'app/entity/
 			$.extend(this.options, opts);
 			this._el = null;
 			Graphics.clearBoard();
+			Resources.loaded = false;
 			Graphics.addToScreen(this);
 			this.tiles = [];
 			this.filling = false;

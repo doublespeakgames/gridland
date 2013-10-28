@@ -3,6 +3,11 @@ define(['app/util'], function(Util) {
 	var listeners = {};
 	
 	return {
+		
+		init: function() {
+			listeners = {};
+		},
+		
 		/**
 		 * Gets a list of listeners for a particular event
 		 * Returns an array of listener callbacks,
