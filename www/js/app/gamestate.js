@@ -6,6 +6,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics'], function(Bu
 			this.stores = [];
 			this.level = 1;
 			this.xp = 0;
+			this.dayNumber = 1;
 			Analytics.trackEvent('game', 'create');
 		},
 		
@@ -23,6 +24,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics'], function(Bu
 					}
 					this.level = savedState.level;
 					this.xp = savedState.xp;
+					this.dayNumber = savedState.dayNumber || 1;
 				} else {
 					this.create();
 				}
@@ -38,7 +40,8 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics'], function(Bu
 					buildings: [],
 					stores: [],
 					level: this.level,
-					xp: this.xp
+					xp: this.xp,
+					dayNumber: this.dayNumber
 				};
 				for(b in this.buildings) {
 					var building = this.buildings[b];

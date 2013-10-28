@@ -159,10 +159,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 					entity.think();
 					if(!entity.gone) {
 						newStuff.push(entity);
-					} else if(entity.hostile && World.isNight) {
-						if(!entity.wiped) {
-							World.dude.gainXp(entity.xp);
-						}
+					} else if(entity.hostile && World.isNight && !entity.wiped) {
+						World.dude.gainXp(entity.xp);
 						World.advanceTime();
 					} else if(entity == World.dude) {
 						// Dude is dead. Long live the dude.
@@ -200,13 +198,14 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 		},
 		
 		launchCelestial: function() {
-			require(['app/world', 'app/graphics', 'app/entity/celestial'], 
-					function(World, Graphics, Celestial) {
+			require(['app/world', 'app/graphics', 'app/entity/celestial', 'app/eventmanager', 'app/gamestate'], 
+					function(World, Graphics, Celestial, EventManager, GameState) {
 				var celestial = World.celestial = new Celestial();
 				World.stuff.push(celestial);
 				celestial.animation(0);
 				Graphics.addToWorld(celestial);
 				Graphics.raiseCelestial(celestial);
+				EventManager.trigger('dayBreak', [GameState.dayNumber]);
 			});
 		},
 		
@@ -242,9 +241,11 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 			Graphics.updateSword(0, 0);
 			
 			if(!this.isNight) {
+				GameState.dayNumber++;
 				GameState.save();
 				Graphics.notifySave();
 				Analytics.trackEvent('world', 'morning');
+				EventManager.trigger('dayBreak', [GameState.dayNumber]);
 			} else {
 				Analytics.trackEvent('world', 'nightfall');
 			}

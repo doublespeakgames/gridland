@@ -1,10 +1,13 @@
-define(['jquery', 'app/eventmanager'], function($, EventManager) {
+define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager, TextStore) {
 	return {
 		
 		init: function() {
 			$('body').removeClass('night');
 			
+			this.textStore = new TextStore();
+			
 			EventManager.bind('healthChanged', this.updateHealthBar);
+			EventManager.bind('dayBreak', this.handleDayBreak);
 		},
 		
 		clearBoard: function() {
@@ -442,6 +445,19 @@ define(['jquery', 'app/eventmanager'], function($, EventManager) {
 				var healthPercent = Math.floor(entity.hp() / entity.maxHealth() * 100);
 				bar.css('width', healthPercent + '%');
 			}
+		},
+		
+		handleDayBreak: function(dayNumber) {
+			require(['app/graphics'], function(Graphics) {
+				var txt = Graphics.textStore.get('DAY');
+				var notifier = $('<div>').addClass('dayNotifier').text(txt + " " + dayNumber).appendTo('.world');
+				setTimeout(function() {
+					notifier.addClass('hidden');
+				}, 3000);
+				setTimeout(function() {
+					notifier.remove();
+				}, 3500);
+			});
 		}
 	};
 });

@@ -101,6 +101,20 @@ body.night {
 
 /** Day/Night Stuff **/
 
+.dayNotifier {
+	width: 100%;
+	text-align: center;
+	position: absolute;
+	top: 10px;
+	font-size: 2em;
+	color: black;
+	transition: opacity 500ms linear;
+	-webkit-transition: opacity 500ms linear;
+	-moz-transition: opacity 500ms linear;
+	-ms-transition: opacity 500ms linear;
+	-o-transition: opacity 500ms linear;
+}
+
 .nightSprite, .daySprite {
 	transition: opacity 300ms linear;
 	-webkit-transition: opacity 300ms linear;
