@@ -224,6 +224,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 				easing: 'linear', 
 				step: function(now, tween) {
 					entity.p(now + entity.width() / 2);
+					var healthBar = el.find('.healthBar');
+					if(healthBar.length > 0) {
+						// Force a redraw on the healthbar, because iOS sucks.
+						healthBar[0].style.display = 'none';
+						healthBar[0].offsetHeight;
+						healthBar[0].style.display = 'block';
+					}
 					if(stopShort != null && stopShort()) {
 						el.stop();
 						if(callback != null) {
