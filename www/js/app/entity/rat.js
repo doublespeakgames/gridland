@@ -35,7 +35,7 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 	};
 	
 	Rat.prototype.maxHealth = function() {
-		return 1;
+		return 2;
 	};
 	
 	Rat.prototype.getDamage = function() {

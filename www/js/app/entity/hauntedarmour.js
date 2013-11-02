@@ -39,7 +39,7 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 	};
 	
 	HauntedArmour.prototype.getDamage = function() {
-		return 2;
+		return 1;
 	};
 	
 	HauntedArmour.prototype.getHitboxWidth = function() {

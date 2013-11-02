@@ -43,7 +43,7 @@ define(['app/entity/monster', 'app/action/actionfactory', 'app/graphics'],
 	};
 	
 	Skeleton.prototype.maxHealth = function() {
-		return 2;
+		return 1;
 	};
 	
 	Skeleton.prototype.getDamage = function() {
