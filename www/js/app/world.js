@@ -369,7 +369,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 		},
 		
 		canBuild: function(buildingType) {
-			if(GameState.level < buildingType.requiredLevel) {
+			if(buildingType.requiredLevel != null && 
+					GameState.level < buildingType.requiredLevel) {
 				return false;
 			}
 			if(buildingType.replaces != null) {

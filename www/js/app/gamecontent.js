@@ -43,7 +43,8 @@ define({
 				'default': 'spawn:rat'
 			},
 			multipliers: {
-				bricklayer2: 2
+				bricklayer: 2,
+				bricklayer2: 3
 			}
 		},
 		Cloth: {
@@ -51,6 +52,10 @@ define({
 			nightEffect: {
 				'weaver2': 'spawn:lizardman',
 				'default': 'spawn:skeleton'
+			},
+			mulitpliers: {
+				weaver: 2,
+				weaver2: 3
 			}
 		}
 	},
@@ -172,7 +177,7 @@ define({
 				cloth: 1,
 				clay: 5
 			},
-			requiredLevel: 3,
+			requiredLevel: 1,
 			tileMod: 'clay',
 			tileLevel: 2,
 			replaces: 'bricklayer',
@@ -201,7 +206,7 @@ define({
 				clay: 1,
 				cloth: 5
 			},
-			requiredLevel: 3,
+			requiredLevel: 1,
 			tileMod: 'cloth',
 			tileLevel: 2,
 			replaces: 'weaver',
@@ -213,11 +218,11 @@ define({
 			className: 'blacksmith',
 			position: 210,
 			cost: {
-				stone: 3,
-				clay: 1,
-				cloth: 1
+				stone: 2,
+				clay: 2,
+				cloth: 2
 			},
-			requiredLevel: 2,
+			requiredLevel: 1,
 			tileMod: 'stone',
 			tileLevel: 2,
 			priority: 3
@@ -227,11 +232,11 @@ define({
 			className: 'blacksmith2',
 			position: 210,
 			cost: {
-				stone: 6,
-				clay: 1,
-				cloth: 1
+				stone: 4,
+				clay: 2,
+				cloth: 2
 			},
-			requiredLevel: 2,
+			requiredLevel: 1,
 			tileMod: 'stone',
 			tileLevel: 3,
 			replaces: 'blacksmith',
@@ -243,11 +248,11 @@ define({
 			className: 'sawmill',
 			position: 270,
 			cost: {
-				wood: 3,
-				clay: 1,
-				cloth: 1
+				wood: 2,
+				clay: 2,
+				cloth: 2
 			},
-			requiredLevel: 2,
+			requiredLevel: 1,
 			tileMod: 'wood',
 			tileLevel: 2,
 			priority: 3
@@ -257,11 +262,11 @@ define({
 			className: 'sawmill2',
 			position: 270,
 			cost: {
-				wood: 6,
-				clay: 1,
-				cloth: 1
+				wood: 4,
+				clay: 2,
+				cloth: 2
 			},
-			requiredLevel: 2,
+			requiredLevel: 1,
 			tileMod: 'wood',
 			tileLevel: 3,
 			replaces: 'sawmill',

@@ -224,13 +224,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 				easing: 'linear', 
 				step: function(now, tween) {
 					entity.p(now + entity.width() / 2);
-					var healthBar = el.find('.healthBar');
-					if(healthBar.length > 0) {
-						// Force a redraw on the healthbar, because iOS sucks.
-						healthBar[0].style.display = 'none';
-						healthBar[0].offsetHeight;
-						healthBar[0].style.display = 'block';
-					}
 					if(stopShort != null && stopShort()) {
 						el.stop();
 						if(callback != null) {
@@ -399,26 +392,20 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 		
 		fireArrow: function(arrowClass, speed, start, end, callback) {
 			var dist = end - start;
-			var time = Math.abs(dist) * speed;
+			var ARROW_TIME = 700;
 			var arrow = $('<div>').addClass(arrowClass).addClass(dist > 0 ? 'right' : 'left');
-			arrow.attr('style', 'left:' + start + 'px;transition-duration:'  + (time/2) + 
-					'ms;-webkit-transition-duration:'  + (time/2) + 'ms;-moz-transition-duration:'  + (time/2) + 
-					'ms;-ms-transition-duration:'  + (time/2) + 'ms;-o-transition-duration:'  + (time/2) + 'ms;');
+			arrow.attr('style', 'left:' + start + 'px;');
 			$('.world').append(arrow);
 			
 			arrow.css('left'); // Force a redraw before animation
 			
 			// Move arrow to top of arc
-			arrow.attr('style', 'left:' + (start + dist/2) + 'px;transition-duration:'  + (time/2) + 
-					'ms;-webkit-transition-duration:'  + (time/2) + 'ms;-moz-transition-duration:'  + (time/2) + 
-					'ms;-ms-transition-duration:'  + (time/2) + 'ms;-o-transition-duration:'  + (time/2) + 'ms;');
+			arrow.attr('style', 'left:' + (start + dist/2) + 'px;');
 			arrow.addClass('top');
 			
 			// Move arrow to end of arc
 			setTimeout(function() {
-				arrow.attr('style', 'left:' + (start + dist) + 'px;transition-duration:'  + (time/2) + 
-						'ms;-webkit-transition-duration:'  + (time/2) + 'ms;-moz-transition-duration:'  + (time/2) + 
-						'ms;-ms-transition-duration:'  + (time/2) + 'ms;-o-transition-duration:'  + (time/2) + 'ms;');
+				arrow.attr('style', 'left:' + (start + dist) + 'px;');
 				arrow.removeClass('top').addClass('bottom');
 				setTimeout(function() {
 					// Remove arrow
@@ -426,8 +413,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 					if(callback) {
 						callback(arrow);
 					}
-				}, time / 2);
-			}, time / 2);
+				}, ARROW_TIME / 2);
+			}, ARROW_TIME / 2);
 			
 			return arrow;
 		},
