@@ -30,9 +30,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 			
 			for(var i in GameState.buildings) {
 				var building = GameState.buildings[i];
-				Graphics.addToWorld(building);
-				Graphics.setPosition(building, building.p());
 				if(building.built && !building.obsolete) {
+					Graphics.addToWorld(building);
+					Graphics.setPosition(building, building.p());
 					if(building.options.type.tileMod) {
 						$('.gameBoard').addClass(building.options.type.tileMod + building.options.type.tileLevel);
 					}
@@ -42,7 +42,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 					if(cb) {
 						cb();
 					}
-				} else if(!building.obsolete) {
+				} else if(!building.obsolete && this.canBuild(building.options.type)) {
+					Graphics.addToWorld(building);
+					Graphics.setPosition(building, building.p());
 					for(var r in building.options.type.cost) {
 						var cost = building.options.type.cost[r];
 						var required = building.requiredResources[r];
@@ -124,7 +126,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 						if(type.multipliers) {
 							for(var b in type.multipliers) {
 								var bType = Content.getBuildingType(b);
-								if(State.hasBuilding(bType)) {
+								if(State.hasBuilding(bType, true)) {
 									quantity *= type.multipliers[b];
 								}
 							}

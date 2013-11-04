@@ -409,6 +409,18 @@ body.night {
 	background-position: -52px -104px;
 }
 
+.stone4 .tile.stone > div {
+	background-position: -52px -156px;
+}
+
+.stone5 .tile.stone > div {
+	background-position: -52px -208px;
+}
+
+.stone6 .tile.stone > div {
+	background-position: -52px -260px;
+}
+
 .tile.wood > div {
 	background-position: -104px 0;
 }
@@ -525,7 +537,10 @@ body.night {
 }
 
 .blacksmith, 
-.blacksmith2 {
+.blacksmith2,
+.blacksmith3,
+.blacksmith4,
+.blacksmith5 {
 	background-image: url(../img/blacksmith.png);
 }
 
@@ -613,11 +628,11 @@ body.night {
 
 .block div {
 	height: 100%;
-	transition: width 300ms linear;
-	-webkit-transition: width 300ms linear;
-	-ms-transition: width 300ms linear;
-	-moz-transition: width 300ms linear;
-	-o-transition: width 300ms linear;
+	transition: width 300ms linear, background-color 200ms linear;
+	-webkit-transition: width 300ms linear, background-color 200ms linear;
+	-ms-transition: width 300ms linear, background-color 200ms linear;
+	-moz-transition: width 300ms linear, background-color 200ms linear;
+	-o-transition: width 300ms linear, background-color 200ms linear;
 }
 
 .block.grain div {
@@ -630,6 +645,12 @@ body.night {
 
 .block.stone div {
 	background-color: #C4C4C4;
+}
+
+.stone4 .block.stone div,
+.stone5 .block.stone div,
+.stone6 .block.stone div {
+	background-color: #135468;
 }
 
 .block.clay div {
@@ -925,6 +946,30 @@ body.night {
 
 .stone3 .sword > div {
 	background-position: -60px 0;
+}
+
+.stone4 .sword {
+	background-position: -90px -30px;
+}
+
+.stone4 .sword > div {
+	background-position: -90px 0;
+}
+
+.stone5 .sword {
+	background-position: -120px -30px;
+}
+
+.stone5 .sword > div {
+	background-position: -120px 0;
+}
+
+.stone6 .sword {
+	background-position: -150px -30px;
+}
+
+.stone6 .sword > div {
+	background-position: -150px 0;
 }
 
 .xpBar {

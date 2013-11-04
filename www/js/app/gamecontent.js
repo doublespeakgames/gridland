@@ -27,13 +27,19 @@ define({
 		Stone: {
 			className: 'stone',
 			nightEffect: {
+				'blacksmith5': 'sword:6',
+				'blacksmith4': 'sword:5',
+				'blacksmith3': 'sword:4',
 				'blacksmith2': 'sword:3',
 				'blacksmith': 'sword:2',
 				'default': 'sword:1'
 			},
 			multipliers: {
 				blacksmith: 2,
-				blacksmith2: 3
+				blacksmith2: 3,
+				blacksmith3: 4,
+				blacksmith4: 5,
+				blacksmith5: 6
 			}
 		},
 		Clay: {
@@ -242,6 +248,54 @@ define({
 			replaces: 'blacksmith',
 			defaultAnimation: 1,
 			priority: 4
+		},
+		
+		Blacksmith3: {
+			className: 'blacksmith3',
+			position: 210,
+			cost: {
+				stone: 6,
+				clay: 3,
+				cloth: 3
+			},
+			requiredLevel: 1,
+			tileMod: 'stone',
+			tileLevel: 4,
+			replaces: 'blacksmith2',
+			defaultAnimation: 2,
+			priority: 5
+		},
+		
+		Blacksmith4: {
+			className: 'blacksmith4',
+			position: 210,
+			cost: {
+				stone: 8,
+				clay: 4,
+				cloth: 4
+			},
+			requiredLevel: 1,
+			tileMod: 'stone',
+			tileLevel: 5,
+			replaces: 'blacksmith3',
+			defaultAnimation: 3,
+			priority: 6
+		},
+		
+		Blacksmith5: {
+			className: 'blacksmith5',
+			position: 210,
+			cost: {
+				stone: 10,
+				clay: 5,
+				cloth: 5
+			},
+			requiredLevel: 1,
+			tileMod: 'stone',
+			tileLevel: 6,
+			replaces: 'blacksmith4',
+			defaultAnimation: 4,
+			priority: 7
 		},
 		
 		Sawmill: {

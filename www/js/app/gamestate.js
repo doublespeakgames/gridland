@@ -69,10 +69,11 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics'], function(Bu
 			this.stores.splice(this.stores.indexOf(block), 1);
 		},
 		
-		hasBuilding: function(type) {
+		hasBuilding: function(type, ignoreObsolete) {
 			for(var i in this.buildings) {
 				var building = this.buildings[i];
-				if(building.options.type.className == type.className && building.built) {
+				if(building.options.type.className == type.className && building.built && 
+						(!ignoreObsolete || !building.obsolete)) {
 					return true;
 				}
 			}
