@@ -974,10 +974,10 @@ body.night {
 
 .xpBar {
 	height: 300px;
-	width: 8px;
+	width: 16px;
 	position: absolute;
 	top: -2px;
-	right: -8px;
+	right: -16px;
 	background: url(../img/expbar.png) repeat-y 0 0;
 	border-top: 1px solid;
 	border-bottom: 1px solid;
@@ -1003,7 +1003,7 @@ body.night {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	background: url(../img/expbar.png) repeat-y -8px 0;
+	background: url(../img/expbar.png) repeat-y -16px 0;
 }
 
 .levelEffect {
