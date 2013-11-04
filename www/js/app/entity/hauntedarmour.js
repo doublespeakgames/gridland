@@ -35,7 +35,7 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 	};
 	
 	HauntedArmour.prototype.maxHealth = function() {
-		return 6;
+		return 9;
 	};
 	
 	HauntedArmour.prototype.getDamage = function() {

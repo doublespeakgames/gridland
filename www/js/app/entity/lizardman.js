@@ -43,11 +43,11 @@ define(['app/entity/monster', 'app/action/actionfactory', 'app/graphics'],
 	};
 	
 	Lizardman.prototype.maxHealth = function() {
-		return 4;
+		return 2;
 	};
 	
 	Lizardman.prototype.getDamage = function() {
-		return 4;
+		return 6;
 	};
 	
 	return Lizardman;

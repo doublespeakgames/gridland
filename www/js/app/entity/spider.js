@@ -37,7 +37,7 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 	};
 	
 	Spider.prototype.maxHealth = function() {
-		return 2;
+		return 3;
 	};
 	
 	Spider.prototype.getDamage = function() {

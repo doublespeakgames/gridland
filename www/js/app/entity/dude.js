@@ -77,6 +77,15 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 	};
 	
 	dude.prototype.maxSword = function() {
+		if(State.hasBuilding(Content.BuildingType.Blacksmith5)) {
+			return 18;
+		}
+		if(State.hasBuilding(Content.BuildingType.Blacksmith4)) {
+			return 15;
+		}
+		if(State.hasBuilding(Content.BuildingType.Blacksmith3)) {
+			return 12;
+		}
 		if(State.hasBuilding(Content.BuildingType.Blacksmith2)) {
 			return 9;
 		}
