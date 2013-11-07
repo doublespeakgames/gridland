@@ -67,6 +67,15 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 	};
 	
 	dude.prototype.maxShield = function() {
+		if(State.hasBuilding(Content.BuildingType.Sawmill5)) {
+			return 18;
+		}
+		if(State.hasBuilding(Content.BuildingType.Sawmill4)) {
+			return 15;
+		}
+		if(State.hasBuilding(Content.BuildingType.Sawmill3)) {
+			return 12;
+		}
 		if(State.hasBuilding(Content.BuildingType.Sawmill2)) {
 			return 9;
 		}

@@ -433,6 +433,18 @@ body.night {
 	background-position: -104px -104px;
 }
 
+.wood4 .tile.wood > div {
+	background-position: -104px -156px;
+}
+
+.wood5 .tile.wood > div {
+	background-position: -104px -208px;
+}
+
+.wood6 .tile.wood > div {
+	background-position: -104px -260px;
+}
+
 .tile.clay > div {
 	background-position: -156px 0px;
 }
@@ -545,7 +557,10 @@ body.night {
 }
 
 .sawmill,
-.sawmill2 {
+.sawmill2,
+.sawmill3,
+.sawmill4,
+.sawmill5 {
 	background-image: url(../img/sawmill.png);
 }
 
@@ -641,6 +656,12 @@ body.night {
 
 .block.wood div {
 	background-color: #7C5840;
+}
+
+.wood4 .block.wood div,
+.wood5 .block.wood div,
+.wood6 .block.wood div {
+	background-color: #876C5B;
 }
 
 .block.stone div {
@@ -908,6 +929,32 @@ body.night {
 .wood3 .shield > div {
 	background-position: -60px 0;
 }
+
+.wood4 .shield {
+	background-position: -90px -30px;
+}
+
+.wood4 .shield > div {
+	background-position: -90px 0;
+}
+
+.wood5 .shield {
+	background-position: -120px -30px;
+}
+
+.wood5 .shield > div {
+	background-position: -120px 0;
+}
+
+.wood6 .shield {
+	background-position: -150px -30px;
+}
+
+.wood6 .shield > div {
+	background-position: -150px 0;
+}
+
+
 
 .sword {
 	position: absolute;

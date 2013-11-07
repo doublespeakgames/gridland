@@ -15,13 +15,19 @@ define({
 		Wood: {
 			className: 'wood',
 			nightEffect: {
+				'sawmill5': 'shield:6',
+				'sawmill4': 'shield:5',
+				'sawmill3': 'shield:4',
 				'sawmill2': 'shield:3',
 				'sawmill': 'shield:2',
 				'default': 'shield:1'				
 			},
 			multipliers: {
 				sawmill: 2,
-				sawmill2: 3
+				sawmill2: 2,
+				sawmill3: 3,
+				sawmill4: 3,
+				sawmill5: 3
 			}
 		},
 		Stone: {
@@ -36,10 +42,10 @@ define({
 			},
 			multipliers: {
 				blacksmith: 2,
-				blacksmith2: 3,
-				blacksmith3: 4,
-				blacksmith4: 5,
-				blacksmith5: 6
+				blacksmith2: 2,
+				blacksmith3: 3,
+				blacksmith4: 3,
+				blacksmith5: 3
 			}
 		},
 		Clay: {
@@ -326,7 +332,55 @@ define({
 			replaces: 'sawmill',
 			defaultAnimation: 1,
 			priority: 4
-		}
+		},
+		
+		Sawmill3: {
+			className: 'sawmill3',
+			position: 270,
+			cost: {
+				wood: 6,
+				clay: 3,
+				cloth: 3
+			},
+			requiredLevel: 1,
+			tileMod: 'wood',
+			tileLevel: 4,
+			replaces: 'sawmill2',
+			defaultAnimation: 2,
+			priority: 5
+		},
+		
+		Sawmill4: {
+			className: 'sawmill4',
+			position: 270,
+			cost: {
+				wood: 8,
+				clay: 4,
+				cloth: 4
+			},
+			requiredLevel: 1,
+			tileMod: 'wood',
+			tileLevel: 5,
+			replaces: 'sawmill3',
+			defaultAnimation: 3,
+			priority: 6
+		},
+		
+		Sawmill5: {
+			className: 'sawmill5',
+			position: 270,
+			cost: {
+				wood: 10,
+				clay: 5,
+				cloth: 5
+			},
+			requiredLevel: 1,
+			tileMod: 'wood',
+			tileLevel: 6,
+			replaces: 'sawmill4',
+			defaultAnimation: 4,
+			priority: 7
+		},
 	},
 	
 	getBuildingType: function(className) {
