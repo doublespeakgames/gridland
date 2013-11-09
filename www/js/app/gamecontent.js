@@ -51,23 +51,27 @@ define({
 		Clay: {
 			className: 'clay',
 			nightEffect: {
+				'bricklayer3': 'spawn:spider', // TODO
 				'bricklayer2': 'spawn:spider',
 				'default': 'spawn:rat'
 			},
 			multipliers: {
 				bricklayer: 2,
-				bricklayer2: 3
+				bricklayer2: 3,
+				bricklayer3: 4
 			}
 		},
 		Cloth: {
 			className: 'cloth',
 			nightEffect: {
+				'weaver3': 'spawn:lizardman', // TODO
 				'weaver2': 'spawn:lizardman',
 				'default': 'spawn:skeleton'
 			},
 			mulitpliers: {
 				weaver: 2,
-				weaver2: 3
+				weaver2: 3,
+				weaver3: 4
 			}
 		}
 	},
@@ -197,6 +201,23 @@ define({
 			priority: 4
 		},
 		
+		Bricklayer3: {
+			className: 'bricklayer3',
+			position: 90,
+			cost: {
+				stone: 2,
+				wood: 2,
+				cloth: 2,
+				clay: 8
+			},
+			requiredLevel: 1,
+			tileMod: 'clay',
+			tileLevel: 3,
+			replaces: 'bricklayer2',
+			defaultAnimation: 2,
+			priority: 6
+		},
+		
 		Weaver: {
 			className: 'weaver',
 			position: 150,
@@ -224,6 +245,23 @@ define({
 			replaces: 'weaver',
 			defaultAnimation: 1,
 			priority: 4
+		},
+		
+		Weaver3: {
+			className: 'weaver3',
+			position: 150,
+			cost: {
+				wood: 2,
+				stone: 2,
+				clay: 2,
+				cloth: 8
+			},
+			requiredLevel: 1,
+			tileMod: 'cloth',
+			tileLevel: 3,
+			replaces: 'weaver2',
+			defaultAnimation: 2,
+			priority: 6
 		},
 		
 		Blacksmith: {

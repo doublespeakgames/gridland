@@ -453,12 +453,20 @@ body.night {
 	background-position: -156px -52px;
 }
 
+.clay3 .tile.clay > div {
+	background-position: -156px -104px;
+}
+
 .tile.cloth > div {
 	background-position: -208px 0px;
 }
 
 .cloth2 .tile.cloth > div {
 	background-position: -208px -52px;
+}
+
+.cloth3 .tile.cloth > div {
+	background-position: -208px -104px;
 }
 
 .selected {
@@ -539,12 +547,14 @@ body.night {
 }
 
 .bricklayer,
-.bricklayer2 {
+.bricklayer2,
+.bricklayer3 {
 	background-image: url(../img/bricklayer.png);
 }
 
 .weaver,
-.weaver2 {
+.weaver2,
+.weaver3 {
 	background-image: url(../img/weaver.png);
 }
 
@@ -680,6 +690,10 @@ body.night {
 
 .block.cloth div {
 	background-color: #EEDFA6;
+}
+
+.cloth3 .block.cloth div {
+	background-color: #853AFF;
 }
 
 .celestial {
