@@ -1,6 +1,7 @@
 define(['app/entity/zombie', 'app/entity/rat', 'app/entity/skeleton',
-        'app/entity/hauntedarmour', 'app/entity/lizardman', 'app/entity/spider'], 
-        function(Zombie, Rat, Skeleton, HauntedArmour, Lizardman, Spider) {
+        'app/entity/hauntedarmour', 'app/entity/lizardman', 'app/entity/spider',
+        'app/entity/earthelemental'], 
+        function(Zombie, Rat, Skeleton, HauntedArmour, Lizardman, Spider, EarthElemental) {
 	return {
 		_monsters: {
 			"zombie": Zombie,
@@ -8,7 +9,8 @@ define(['app/entity/zombie', 'app/entity/rat', 'app/entity/skeleton',
 			"skeleton": Skeleton,
 			"hauntedArmour": HauntedArmour,
 			"lizardman": Lizardman,
-			"spider": Spider
+			"spider": Spider,
+			"earthElemental": EarthElemental
 		},
 		
 		getMonster: function(name, options) {

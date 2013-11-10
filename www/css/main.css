@@ -751,6 +751,16 @@ body.night {
 	margin-left: 20px;
 }
 
+.earthElemental {
+	height: 74px;
+	width: 58px;
+	background: url(../img/earth_elemental.png) no-repeat;
+}
+
+.earthElemental .healthBar {
+	margin-left: 14px;
+}
+
 .rat {
 	height: 13px;
 	width: 40px;
