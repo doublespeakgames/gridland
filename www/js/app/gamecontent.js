@@ -65,7 +65,7 @@ define({
 		Cloth: {
 			className: 'cloth',
 			nightEffect: {
-				'weaver3': 'spawn:lizardman', // TODO
+				'weaver3': 'spawn:fireElemental',
 				'weaver2': 'spawn:lizardman',
 				'default': 'spawn:skeleton'
 			},

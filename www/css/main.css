@@ -801,6 +801,16 @@ body.night {
 	margin-left: 1px;
 }
 
+.fireElemental {
+	height: 41px;
+	width: 30px;
+	background: url(../img/fire_elemental.png) no-repeat;
+}
+
+.fireElemental .healthBar {
+	margin-left: 0px;
+}
+
 .arrow {
 	position: absolute;
 	height: 1px;
