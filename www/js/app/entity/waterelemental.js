@@ -1,7 +1,7 @@
 define(['app/entity/monster', 'app/action/actionfactory'], 
 		function(Monster, ActionFactory) {
 	
-	var Spider = function(options) {
+	var WaterElemental = function(options) {
 		this.options = $.extend({}, this.options, {
 			power: 3
 		}, options);
@@ -10,13 +10,13 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 		this.hp(this.maxHealth());
 		this.xp = 3;
 	};
-	Spider.prototype = new Monster({
-		monsterClass: 'spider',
-		speed: 20
+	WaterElemental.prototype = new Monster({
+		monsterClass: 'waterElemental',
+		speed: 15
 	});
-	Spider.constructor = Spider;
+	WaterElemental.constructor = WaterElemental;
 	
-	Spider.prototype.think = function() {
+	WaterElemental.prototype.think = function() {
 		if(this.isIdle() && this.isAlive() && this.action == null) {
 			var _this = this;
 			require(['app/world'], function(World) {
@@ -36,13 +36,13 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 		}
 	};
 	
-	Spider.prototype.maxHealth = function() {
+	WaterElemental.prototype.maxHealth = function() {
+		return 4;
+	};
+	
+	WaterElemental.prototype.getDamage = function() {
 		return 3;
 	};
 	
-	Spider.prototype.getDamage = function() {
-		return 2;
-	};
-	
-	return Spider;
+	return WaterElemental;
 });

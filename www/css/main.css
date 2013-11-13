@@ -781,6 +781,16 @@ body.night {
 	margin-left: 15px;	
 }
 
+.waterElemental {
+	height: 39px;
+	width: 53px;
+	background: url(../img/water_elemental.png) no-repeat;
+}
+
+.waterElemental .healthBar {
+	margin-left: 20px;
+}
+
 .skeleton {
 	height: 32px;
 	width: 27px;
