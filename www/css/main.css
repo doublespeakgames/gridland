@@ -305,11 +305,23 @@ body.night {
 	width: 100%;
 	height: 100%;
 	position: absolute;
+	left: 0px;
+	top: 0px;
+	background-color: white;
 	perspective: 600px;
 	-moz-perspective: 600px;
 	-webkit-perspective: 600px;
 	-ms-perspective: 600px;
 	-o-perspective: 600px;
+	transition: background-color 300ms linear;
+	-webkit-transition: background-color 300ms linear;
+	-moz-transition: background-color 300ms linear;
+	-ms-transition: background-color 300ms linear;
+	-o-transition: background-color 300ms linear;
+}
+
+.night .tileContainer {
+	background-color: black;
 }
 
 .tile {
@@ -1117,3 +1129,20 @@ body.night {
 	transition: all 500ms ease-out, height 200ms ease-out;
 }
 
+/** Loot **/
+.inventory {
+	background-color: #FFFFFF;
+    border-style: solid;
+    border-width: 0 2px 2px;
+    bottom: -2px;
+    height: 50px;
+    position: absolute;
+    right: -2px;
+    width: 242px;
+    z-index: 0;
+}
+
+.night .inventory {
+	background-color: #000;
+	bottom: -52px;
+}

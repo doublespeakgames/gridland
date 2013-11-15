@@ -1,6 +1,6 @@
 define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager, TextStore) {
 	return {
-		
+		BOARD_PAD: 2,
 		init: function() {
 			$('body').removeClass('night');
 			
@@ -144,8 +144,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 		
 		setPositionInBoard: function(entity, row, column) {
 			var el = entity.el();
-			var top = row * this.TILE_HEIGHT;
-			entity._leftPos = this.TILE_WIDTH * column;
+			var top = row * this.TILE_HEIGHT + this.BOARD_PAD;
+			entity._leftPos = this.TILE_WIDTH * column + this.BOARD_PAD;
 			el.css({
 				transform: 'translate3d(0, ' + top + 'px, 0)',
 				left: entity._leftPos,
@@ -165,8 +165,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 				var tile = tiles[t];
 				var el = tile.el();
 				
-				var finalTop = (tile.options.row + 1) * this.TILE_HEIGHT;
-				var tString = 'translate3d('+ ((tile.options.column * this.TILE_WIDTH) - tile._leftPos) + 'px,' + finalTop + 'px,0);';
+				var finalTop = (tile.options.row + 1) * this.TILE_HEIGHT + this.BOARD_PAD;
+				var tString = 'translate3d('+ ((tile.options.column * this.TILE_WIDTH) + this.BOARD_PAD - tile._leftPos) + 'px,' + finalTop + 'px,0);';
 				
 				el[0].setAttribute('style', 'left:' + tile._leftPos + 'px;transform:' + tString + '-webkit-transform:' + tString + 
 						'-moz-transform:' + tString + '-ms-transform:' + tString + '-o-transform:' + tString);
