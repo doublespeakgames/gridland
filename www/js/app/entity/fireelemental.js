@@ -10,7 +10,7 @@ define(['app/entity/monster', 'app/action/actionfactory', 'app/graphics'],
 	};
 	FireElemental.prototype = new Monster({
 		monsterClass: 'fireElemental',
-		arrowClass: 'arrow',
+		arrowClass: 'arrow fireball',
 		speed: 50,
 		arrowSpeed: 7
 	});
@@ -47,7 +47,7 @@ define(['app/entity/monster', 'app/action/actionfactory', 'app/graphics'],
 	};
 	
 	FireElemental.prototype.getDamage = function() {
-		return 12;
+		return 9;
 	};
 	
 	return FireElemental;
