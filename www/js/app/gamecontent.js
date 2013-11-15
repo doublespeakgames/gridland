@@ -52,7 +52,7 @@ define({
 		Clay: {
 			className: 'clay',
 			nightEffect: {
-				'bricklayer3': 'spawn:spider', // TODO
+				'bricklayer3': 'spawn:waterElemental',
 				'bricklayer2': 'spawn:spider',
 				'default': 'spawn:rat'
 			},
