@@ -176,10 +176,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 		switchTiles: function(tile1, tile2, callback) {
 			var el1 = tile1.el(), el2 = tile2.el();
 			
-			el1.css('transform', 'translate3d(' + ((tile2.options.column * this.TILE_WIDTH) - tile1._leftPos) + 'px,' 
-					+ ((tile2.options.row + 1) * this.TILE_WIDTH) + 'px,0)');
-			el2.css('transform', 'translate3d(' + ((tile1.options.column * this.TILE_WIDTH) - tile2._leftPos) + 'px,'
-					+ ((tile1.options.row + 1) * this.TILE_WIDTH) + 'px,0)');
+			el1.css('transform', 'translate3d(' + ((tile2.options.column * this.TILE_WIDTH + this.BOARD_PAD) - tile1._leftPos) + 'px,' 
+					+ ((tile2.options.row + 1) * this.TILE_WIDTH + this.BOARD_PAD) + 'px,0)');
+			el2.css('transform', 'translate3d(' + ((tile1.options.column * this.TILE_WIDTH + this.BOARD_PAD) - tile2._leftPos) + 'px,'
+					+ ((tile1.options.row + 1) * this.TILE_WIDTH + this.BOARD_PAD) + 'px,0)');
 			
 			if(callback) {
 				setTimeout(function() {
