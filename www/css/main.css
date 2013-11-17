@@ -728,6 +728,11 @@ body.night {
 	margin-top: -15px;
 	height: 3px;
 	border: 1px solid white;
+	transition: opacity 200ms linear;
+	-webkit-transition: opacity 200ms linear;
+	-moz-transition: opacity 200ms linear;
+	-ms-transition: opacity 200ms linear;
+	-o-transition: opacity 200ms linear;
 }
 
 .healthBar > div {
@@ -1155,4 +1160,8 @@ body.night {
 	width: 25px;
 	height: 18px;
 	background-color: yellow;
+}
+
+.treasureChest.looted {
+	background-color: red;
 }

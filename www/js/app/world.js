@@ -153,20 +153,20 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				var newStuff = [];
 				for(var i = 0, len = World.stuff.length; i < len; i++) {
 					var entity = World.stuff[i];
-					if(entity.hostile && !World.isNight) {
-						// Monsters cannot survive the daylight
+					if((entity.hostile || entity.lootable) && !World.isNight) {
+						// Monsters and chests cannot survive the daylight
 						if(entity.action != null) {
 							entity.action.terminateAction(entity);
 						}
 						entity.el().remove();
 						entity.gone = true;
 					} 
-					entity.animate();
-					if(entity.action != null) {
+					if(entity.action != null && !entity.gone) {
 						entity.action.doFrameAction(entity.frame);
 					}
-					entity.think();
 					if(!entity.gone) {
+						entity.animate();
+						entity.think();
 						newStuff.push(entity);
 					} else if(entity.hostile && World.isNight && !entity.wiped) {
 						EventManager.trigger('monsterKilled', [entity]);
@@ -284,11 +284,23 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		},
 		
 		findClosestMonster: function() {
+			return this.findClosest(function(thing) {
+				return thing.hostile && thing.isAlive();
+			});
+		},
+		
+		findClosestLoot: function() {
+			return this.findClosest(function(thing) {
+				return thing.lootable && !thing.looted;
+			});
+		},
+		
+		findClosest: function(filter) {
 			var closest = null;
 			for(var i in this.stuff) {
 				var thing = this.stuff[i];
-				if(thing.hostile && thing.isAlive() && (closest == null || 
-						(this.dude.distanceFrom(thing) < this.dude.distanceFrom(closest)))) {
+				if((filter == null || filter(thing) == true) && (closest == null || 
+						this.dude.distanceFrom(thing) < this.dude.distanceFrom(closest))) {
 					closest = thing;
 				}
 			}
@@ -310,6 +322,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				} else if(closest != null) {
 					// Move closer
 					return ActionFactory.getAction("MoveTo", {
+						target: closest
+					});
+				}
+				// No monsters? Pick up loot!
+				closest = this.findClosestLoot();
+				if(closest != null) {
+					return ActionFactory.getAction("GetLoot", {
 						target: closest
 					});
 				}

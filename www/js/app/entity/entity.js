@@ -55,7 +55,10 @@ define([ 'jquery', 'app/graphics/graphics' ], function($, Graphics) {
 		Graphics.updateSprite(this);
 	};
 	
-	entity.prototype.animation = function(row) {
+	entity.prototype.animation = function(row, stopTempAnimations) {
+		if(stopTempAnimations) {
+			this.tempAnimation = null;
+		}
 		this.animationRow = row;
 		this.frame = 0;
 		Graphics.updateSprite(this);

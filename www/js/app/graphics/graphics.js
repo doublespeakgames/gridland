@@ -7,9 +7,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 			
 			this.textStore = new TextStore();
 			
+			EventManager.bind('monsterKilled', this.monsterKilled);
 			EventManager.bind('newEntity', this.addToWorld);
 			EventManager.bind('healthChanged', this.updateHealthBar);
 			EventManager.bind('dayBreak', this.handleDayBreak);
+			EventManager.bind('pickupLoot', this.openChest);
 			
 			require(['app/graphics/loot'], function(LootGraphics) {
 				LootGraphics.init();
@@ -461,12 +463,21 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 				var txt = Graphics.textStore.get('DAY');
 				var notifier = $('<div>').addClass('dayNotifier').text(txt + " " + dayNumber).appendTo('.world');
 				setTimeout(function() {
+					$('.monster, .treasureChest').remove();
 					notifier.addClass('hidden');
 				}, 3000);
 				setTimeout(function() {
 					notifier.remove();
 				}, 3500);
 			});
+		},
+		
+		monsterKilled: function(monster) {
+			monster.el().find('.healthBar').addClass('hidden');
+		},
+		
+		openChest: function(chest) {
+			chest.el().addClass('looted');
 		}
 	};
 });
