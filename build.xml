@@ -35,7 +35,12 @@
 			<fileset dir="${build.dir}">
 				<include name="**/*.*" />
 				<exclude name="**/thumbs.db" />
+				<exclude name="img/src/*.*" />
 			</fileset>
 		</copy>
+		<replaceregexp 	file="${deploy.path}/index.html" 
+						match="&lt;div [^>]*nodeploy>[^&lt;]*&lt;/div>" 
+						replace="" byline="true" 
+		/>
 	</target>
 </project>
