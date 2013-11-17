@@ -1,5 +1,5 @@
-define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/gameboard', 'app/gamestate', 'app/world'], 
-		function($, EventManager, Analytics, Graphics, GameBoard, GameState, World) {
+define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot'], 
+		function($, EventManager, Analytics, Graphics, GameBoard, GameState, World, Loot) {
 
 	return {
 		DRAG_THRESHOLD: 30, // in pixels
@@ -32,6 +32,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/game
 			Graphics.init();
 			GameBoard.init();
 			World.init();
+			Loot.init();
 			GameBoard.fill();
 			World.launchDude();
 			

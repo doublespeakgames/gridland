@@ -1,22 +1,20 @@
-define(['app/entity/monster', 'app/action/actionfactory'], 
+define(['app/entity/monster/monster', 'app/action/actionfactory'], 
 		function(Monster, ActionFactory) {
 	
-	var Spider = function(options) {
+	var Zombie = function(options) {
 		this.options = $.extend({}, this.options, {
 			power: 3
 		}, options);
-		this.hostile = true;
-		this.action = null;
 		this.hp(this.maxHealth());
-		this.xp = 3;
+		this.xp = 1;
 	};
-	Spider.prototype = new Monster({
-		monsterClass: 'spider',
-		speed: 20
+	Zombie.prototype = new Monster({
+		monsterClass: 'zombie',
+		speed: 80
 	});
-	Spider.constructor = Spider;
+	Zombie.constructor = Zombie;
 	
-	Spider.prototype.think = function() {
+	Zombie.prototype.think = function() {
 		if(this.isIdle() && this.isAlive() && this.action == null) {
 			var _this = this;
 			require(['app/world'], function(World) {
@@ -25,7 +23,7 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 						target: World.dude
 					});
 				} else {
-					_this.action = ActionFactory.getAction("FastAttack", {
+					_this.action = ActionFactory.getAction("Attack", {
 						target: World.dude
 					});
 				}
@@ -36,13 +34,13 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 		}
 	};
 	
-	Spider.prototype.maxHealth = function() {
+	Zombie.prototype.maxHealth = function() {
 		return 3;
 	};
 	
-	Spider.prototype.getDamage = function() {
-		return 2;
+	Zombie.prototype.getDamage = function() {
+		return 1;
 	};
 	
-	return Spider;
+	return Zombie;
 });

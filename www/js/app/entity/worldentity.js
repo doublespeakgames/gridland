@@ -1,4 +1,4 @@
-define(['app/entity/entity', 'app/graphics', 'app/eventmanager', 'app/action/actionfactory'], 
+define(['app/entity/entity', 'app/graphics/graphics', 'app/eventmanager', 'app/action/actionfactory'], 
 	function(Entity, Graphics, EventManager, ActionFactory) {
 	
 	var MOVE_ANIMS = {

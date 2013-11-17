@@ -1,5 +1,5 @@
-define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/entity/building', 
-		'app/gamecontent', 'app/gamestate', 'app/action/actionfactory', 'app/entity/monsterfactory',
+define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 'app/entity/building', 
+		'app/gamecontent', 'app/gamestate', 'app/action/actionfactory', 'app/entity/monster/monsterfactory',
         'app/entity/block'], 
 		function($, EventManager, Analytics, Graphics, Building, Content, GameState, ActionFactory, MonsterFactory, Block) {
 	return {
@@ -19,6 +19,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 			this.isNight = false;
 			this.celestialPosition = 0;
 			
+			EventManager.bind('newEntity', this.handleNewEntity);
 			EventManager.bind('tilesCleared', this.handleTileClear);
 			EventManager.bind('noMoreMoves', this.handleNoMoreMoves);
 			EventManager.bind('tilesSwapped', this.handleTilesSwapped);
@@ -67,9 +68,15 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 		
 		el: function() {
 			if(this._el == null) {
-				this._el = Graphics.newElement('world');
+				this._el = Graphics.make('world');
 			}
 			return this._el;
+		},
+		
+		handleNewEntity: function(entity) {
+			require(['app/world'], function(World) {
+				World.stuff.push(entity);
+			});
 		},
 		
 		handleTilesSwapped: function() {
@@ -162,6 +169,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 					if(!entity.gone) {
 						newStuff.push(entity);
 					} else if(entity.hostile && World.isNight && !entity.wiped) {
+						EventManager.trigger('monsterKilled', [entity]);
 						World.dude.gainXp(entity.xp);
 						World.advanceTime();
 					} else if(entity == World.dude) {
@@ -169,7 +177,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 						GameState.saveXp();
 						Graphics.fadeOut(function() {
 							setTimeout(function() {
-								require(['app/graphics'], function(G) {
+								require(['app/graphics/graphics'], function(G) {
 									Graphics.setNight(false);
 								}, 500);
 							});
@@ -187,7 +195,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 		},
 		
 		launchDude: function() {
-			require(['app/world', 'app/graphics', 'app/entity/dude', 'app/gamestate'], 
+			require(['app/world', 'app/graphics/graphics', 'app/entity/dude', 'app/gamestate'], 
 					function(World, Graphics, Dude, GameState) {
 				var dude = World.dude = new Dude();
 				World.stuff.push(dude);
@@ -200,7 +208,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 		},
 		
 		launchCelestial: function() {
-			require(['app/world', 'app/graphics', 'app/entity/celestial', 'app/eventmanager', 'app/gamestate'], 
+			require(['app/world', 'app/graphics/graphics', 'app/entity/celestial', 'app/eventmanager', 'app/gamestate'], 
 					function(World, Graphics, Celestial, EventManager, GameState) {
 				var celestial = World.celestial = new Celestial();
 				World.stuff.push(celestial);
@@ -400,8 +408,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics', 'app/enti
 			Graphics.updateSword(this.dude.sword, this.dude.maxSword());
 		},
 		
-		spawnMonster: function(monsterType, power, side) {
-			var monster = MonsterFactory.getMonster(monsterType, {power: power});
+		spawnMonster: function(monsterType, tiles, side) {
+			var monster = MonsterFactory.getMonster(monsterType, {tiles: tiles});
 			Graphics.addMonster(monster, side);
 			this.stuff.push(monster);
 		}

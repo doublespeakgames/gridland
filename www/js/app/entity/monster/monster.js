@@ -1,4 +1,4 @@
-define(['app/entity/worldentity', 'app/graphics'], 
+define(['app/entity/worldentity', 'app/graphics/graphics'], 
 		function(WorldEntity, Graphics) {
 	
 	var Monster = function(options) {
@@ -14,7 +14,7 @@ define(['app/entity/worldentity', 'app/graphics'],
 		if(this._el == null) {
 			this._el = WorldEntity.prototype.el.call(this)
 				.addClass(this.options.monsterClass)
-				.append(Graphics.newElement('healthBar').append(Graphics.newElement()));
+				.append(Graphics.make('healthBar').append(Graphics.make()));
 		}
 		return this._el;
 	};

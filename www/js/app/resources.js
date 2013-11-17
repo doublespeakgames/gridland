@@ -1,4 +1,4 @@
-define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function($, Graphics, Content, GameState) {
+define(['jquery', 'app/graphics/graphics', 'app/gamecontent', 'app/gamestate'], function($, Graphics, Content, GameState) {
 	return {
 		options : {
 			rows: 3,
@@ -26,7 +26,7 @@ define(['jquery', 'app/graphics', 'app/gamecontent', 'app/gamestate'], function(
 
 		el : function() {
 			if (this._el == null) {
-				this._el = Graphics.newElement("resources");
+				this._el = Graphics.make("resources");
 			}
 			return this._el;
 		},

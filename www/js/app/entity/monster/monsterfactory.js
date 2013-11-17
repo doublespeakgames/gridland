@@ -1,6 +1,6 @@
-define(['app/entity/zombie', 'app/entity/rat', 'app/entity/skeleton',
-        'app/entity/hauntedarmour', 'app/entity/lizardman', 'app/entity/spider',
-        'app/entity/earthelemental', 'app/entity/fireelemental', 'app/entity/waterelemental'], 
+define(['app/entity/monster/zombie', 'app/entity/monster/rat', 'app/entity/monster/skeleton',
+        'app/entity/monster/hauntedarmour', 'app/entity/monster/lizardman', 'app/entity/monster/spider',
+        'app/entity/monster/earthelemental', 'app/entity/monster/fireelemental', 'app/entity/monster/waterelemental'], 
         function(Zombie, Rat, Skeleton, HauntedArmour, Lizardman, Spider, 
         		EarthElemental, FireElemental, WaterElemental) {
 	return {

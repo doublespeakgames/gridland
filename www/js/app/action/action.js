@@ -1,4 +1,4 @@
-define(['app/graphics'], function(G) {
+define(['app/graphics/graphics'], function(G) {
 	
 	var Action = function() {};
 	Action.prototype.doAction = function(dude) {

@@ -10,7 +10,7 @@ define(['app/action/action'], function(Action) {
 		var _action = this;
 		this._entity = entity;
 		entity.moveTo(_action.target, function(entity) {
-			require(['app/graphics'], function(Graphics) {
+			require(['app/graphics/graphics'], function(Graphics) {
 				entity.animation(0);
 				entity.action = null;
 			});

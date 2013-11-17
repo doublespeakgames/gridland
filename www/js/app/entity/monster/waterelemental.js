@@ -1,4 +1,4 @@
-define(['app/entity/monster', 'app/action/actionfactory'], 
+define(['app/entity/monster/monster', 'app/action/actionfactory'], 
 		function(Monster, ActionFactory) {
 	
 	var WaterElemental = function(options) {

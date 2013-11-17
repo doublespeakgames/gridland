@@ -1,4 +1,4 @@
-define(['app/entity/entity', 'app/graphics', 'app/gamecontent'], function(Entity, Graphics, Content) {
+define(['app/entity/entity', 'app/graphics/graphics', 'app/gamecontent'], function(Entity, Graphics, Content) {
 	
 	var tile = function(options) {
 		this.options = $.extend({}, this.options, {
@@ -17,8 +17,8 @@ define(['app/entity/entity', 'app/graphics', 'app/gamecontent'], function(Entity
 		if(this._el == null) {
 			var el = this._el = Entity.prototype.el.call(this)
 				.addClass(this.options.type.className)
-				.append(Graphics.newElement('litBorder daySide'))
-				.append(Graphics.newElement('litBorder nightSide'));
+				.append(Graphics.make('litBorder daySide'))
+				.append(Graphics.make('litBorder nightSide'));
 			el.data("tile", this);
 		}
 		return this._el;

@@ -1,4 +1,4 @@
-define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics', 
+define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics/graphics', 
         'app/gamestate', 'app/action/actionfactory', 'app/gamecontent'], 
 		function(EventManager, WorldEntity, World, Graphics, State, ActionFactory, Content) {
 	var dude = function() {
@@ -19,8 +19,8 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 	dude.prototype.el = function() {
 		if(this._el == null) {
 			this._el = WorldEntity.prototype.el.call(this)
-				.append(Graphics.newElement("animationLayer nightSprite"))
-				.append(Graphics.newElement("heldBlock"));
+				.append(Graphics.make("animationLayer nightSprite"))
+				.append(Graphics.make("heldBlock"));
 		}
 		return this._el;
 	};

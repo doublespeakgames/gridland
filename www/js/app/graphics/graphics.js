@@ -1,4 +1,5 @@
-define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager, TextStore) {
+define(['jquery', 'app/eventmanager', 'app/textStore'], 
+		function($, EventManager, TextStore) {
 	return {
 		BOARD_PAD: 2,
 		init: function() {
@@ -6,8 +7,17 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 			
 			this.textStore = new TextStore();
 			
+			EventManager.bind('newEntity', this.addToWorld);
 			EventManager.bind('healthChanged', this.updateHealthBar);
 			EventManager.bind('dayBreak', this.handleDayBreak);
+			
+			require(['app/graphics/loot'], function(LootGraphics) {
+				LootGraphics.init();
+			});
+		},
+		
+		get: function(selector) {
+			return $(selector);
 		},
 		
 		clearBoard: function() {
@@ -28,13 +38,17 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 			return el;
 		},
 		
-		newElement: function(className) {
+		make: function(className) {
 			return $('<div>').addClass(className);
 		},
 		
 		addToWorld: function(entity) {
+			var g = require('app/graphics/graphics');
+			if(entity.p) {
+				g.setPosition(entity, entity.p());
+			}
 			$('.world').append(entity.el());
-			this.updateSprite(entity);
+			g.updateSprite(entity);
 		},
 		
 		worldWidth: function() {
@@ -46,7 +60,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 		},
 		
 		addToBoard: function(entity) {
-			$('.gameBoard').append(entity.el());
+			$('.gameBoard').append(entity.el ? entity.el() : entity);
 		},
 		
 		hide: function(entity) {
@@ -151,13 +165,12 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 				left: entity._leftPos,
 			});
 			
+			// Force a redraw so our CSS animations don't skip
+			// TODO: Do this in a lighter way. It's slowing down mobile pretty bad.
 			el.css('left');
 		},
 		
 		dropTiles: function(tiles, callback) {
-			
-			// Force a redraw so our CSS animations don't skip
-//			$('.tileContainer').css('left');
 			
 			if(callback) {
 				setTimeout(callback, 200);
@@ -444,7 +457,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 		},
 		
 		handleDayBreak: function(dayNumber) {
-			require(['app/graphics'], function(Graphics) {
+			require(['app/graphics/graphics'], function(Graphics) {
 				var txt = Graphics.textStore.get('DAY');
 				var notifier = $('<div>').addClass('dayNotifier').text(txt + " " + dayNumber).appendTo('.world');
 				setTimeout(function() {

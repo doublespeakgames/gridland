@@ -12,7 +12,7 @@ define(['app/action/action'], function(Action) {
 		require(['app/gamestate', 'app/gamecontent'], 
 				function(GameState, Content, World) {
 			dude.move(50, function(dude) {
-				require(['app/graphics'], function(Graphics) {
+				require(['app/graphics/graphics'], function(Graphics) {
 					if(_action.block.gone) {
 						dude.action = null;
 						return;
@@ -21,7 +21,7 @@ define(['app/action/action'], function(Action) {
 					dude.carrying = _action.block;
 					GameState.removeBlock(_action.block);
 					dude.move(_action.destination.dudeSpot(), function(dude) {
-						require(['app/graphics'], function(Graphics) {
+						require(['app/graphics/graphics'], function(Graphics) {
 							Graphics.dropBlock(_action.block, _action.destination);
 							dude.carrying = null;
 							_action.destination.requiredResources[_action.block.options.type.className]--;
@@ -35,7 +35,7 @@ define(['app/action/action'], function(Action) {
 	
 	MoveBlock.prototype.terminateAction = function(dude) {
 		var _action = this;
-		require(['app/graphics', 'app/resources'], function(Graphics, Resources) {
+		require(['app/graphics/graphics', 'app/resources'], function(Graphics, Resources) {
 			dude.animation(0);
 			Graphics.stop(dude);
 			if(dude.carrying != null) {

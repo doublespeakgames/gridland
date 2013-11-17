@@ -1,4 +1,4 @@
-define(['jquery', 'app/engine', 'app/graphics', 'app/eventmanager', 'app/entity/tile', 
+define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'app/entity/tile', 
         'app/resources', 'app/gamecontent', 'app/gamestate'], 
 		function($, Engine, Graphics, EventManager, Tile, Resources, Content, State) {
 	return {
@@ -153,7 +153,7 @@ define(['jquery', 'app/engine', 'app/graphics', 'app/eventmanager', 'app/entity/
 			}
 			
 			Graphics.dropTiles(tiles, function() {
-				require(['app/graphics', 'app/gameboard', 'app/eventmanager'], function(Graphics, GameBoard, EventManager) {
+				require(['app/graphics/graphics', 'app/gameboard', 'app/eventmanager'], function(Graphics, GameBoard, EventManager) {
 					GameBoard.dropCount--;
 					if(GameBoard.dropCount == 0) {
 						var matches = [];

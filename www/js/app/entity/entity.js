@@ -1,4 +1,4 @@
-define([ 'jquery', 'app/graphics' ], function($, Graphics) {
+define([ 'jquery', 'app/graphics/graphics' ], function($, Graphics) {
 	
 	var entity = function(options) {
 		
@@ -11,16 +11,14 @@ define([ 'jquery', 'app/graphics' ], function($, Graphics) {
 		this.frame = 0;
 		this.animationRow = 0;
 		this.tempAnimation = null;
-		
-		/**
-		 * Gets the html element for this Entity, creating it if necessary
-		 */
-		
 	};
 	
+	/**
+	 * Gets the html element for this Entity, creating it if necessary
+	 */
 	entity.prototype.el = function() {
 		if(this._el == null) {
-			this._el = Graphics.newElement(this.options.className);
+			this._el = Graphics.make(this.options.className);
 		}
 		return this._el;
 	};
@@ -30,16 +28,6 @@ define([ 'jquery', 'app/graphics' ], function($, Graphics) {
 			this._width = this.el().width();
 		}
 		return this._width;
-	};
-	
-	/**
-	 * Gets or sets the velocity
-	 */
-	entity.prototype.v = function(param) {
-		if (param != null) {
-			this._velocity = param;
-		}
-		return this._velocity;
 	};
 
 	/**

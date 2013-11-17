@@ -1,20 +1,20 @@
-define(['app/entity/monster', 'app/action/actionfactory'], 
+define(['app/entity/monster/monster', 'app/action/actionfactory'], 
 		function(Monster, ActionFactory) {
 	
-	var Rat = function(options) {
+	var HauntedArmour = function(options) {
 		this.options = $.extend({}, this.options, {
 			power: 3
 		}, options);
 		this.hp(this.maxHealth());
 		this.xp = 2;
 	};
-	Rat.prototype = new Monster({
-		monsterClass: 'rat',
-		speed: 20
+	HauntedArmour.prototype = new Monster({
+		monsterClass: 'hauntedArmour',
+		speed: 80
 	});
-	Rat.constructor = Rat;
+	HauntedArmour.constructor = HauntedArmour;
 	
-	Rat.prototype.think = function() {
+	HauntedArmour.prototype.think = function() {
 		if(this.isIdle() && this.isAlive() && this.action == null) {
 			var _this = this;
 			require(['app/world'], function(World) {
@@ -23,7 +23,7 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 						target: World.dude
 					});
 				} else {
-					_this.action = ActionFactory.getAction("FastAttack", {
+					_this.action = ActionFactory.getAction("Attack", {
 						target: World.dude
 					});
 				}
@@ -34,13 +34,17 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 		}
 	};
 	
-	Rat.prototype.maxHealth = function() {
-		return 2;
+	HauntedArmour.prototype.maxHealth = function() {
+		return 9;
 	};
 	
-	Rat.prototype.getDamage = function() {
+	HauntedArmour.prototype.getDamage = function() {
 		return 1;
 	};
 	
-	return Rat;
+	HauntedArmour.prototype.getHitboxWidth = function() {
+		return 20;
+	};
+	
+	return HauntedArmour;
 });

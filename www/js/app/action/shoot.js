@@ -1,4 +1,4 @@
-define(['app/action/action', 'app/graphics'], function(Action, Graphics) {
+define(['app/action/action', 'app/graphics/graphics'], function(Action, Graphics) {
 	
 	var Shoot = function(options) {
 		if(options) {

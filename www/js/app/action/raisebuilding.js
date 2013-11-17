@@ -10,7 +10,7 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 		var _action = this;
 		dude.move(this.building.dudeSpot(), function(dude) {
 			dude.animation(8);
-			require(["app/graphics", "app/gamecontent", 'app/resources', 'app/world'], 
+			require(["app/graphics/graphics", "app/gamecontent", 'app/resources', 'app/world'], 
 					function(Graphics, Content, R, World) {
 				Graphics.raiseBuilding(_action.building, function() {
 					_action.building.built = true;
@@ -32,7 +32,7 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 
 	RaiseBuilding.prototype.terminateAction = function(dude) {
 		var _action = this;
-		require(['app/graphics'], function(Graphics) {
+		require(['app/graphics/graphics'], function(Graphics) {
 			Graphics.stop(dude);
 			dude.animation(0);
 			dude.action = null;

@@ -1,22 +1,22 @@
-define(['app/entity/monster', 'app/action/actionfactory', 'app/graphics'], 
+define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/graphics'], 
 		function(Monster, ActionFactory, Graphics) {
 	
-	var FireElemental = function(options) {
+	var Lizardman = function(options) {
 		this.options = $.extend({}, this.options, {
 			power: 3
 		}, options);
 		this.hp(this.maxHealth());
-		this.xp = 3;
+		this.xp = 4;
 	};
-	FireElemental.prototype = new Monster({
-		monsterClass: 'fireElemental',
-		arrowClass: 'arrow fireball',
+	Lizardman.prototype = new Monster({
+		monsterClass: 'lizardman',
+		arrowClass: 'arrow',
 		speed: 50,
 		arrowSpeed: 7
 	});
-	FireElemental.constructor = FireElemental;
+	Lizardman.constructor = Lizardman;
 	
-	FireElemental.prototype.think = function() {
+	Lizardman.prototype.think = function() {
 		if(this.isIdle() && this.isAlive() && this.action == null) {
 			var _this = this;
 			require(['app/world'], function(World) {
@@ -36,19 +36,19 @@ define(['app/entity/monster', 'app/action/actionfactory', 'app/graphics'],
 		}
 	};
 	
-	FireElemental.prototype.attackRange = function(target) {
-		// Fire Elementals are ranged
+	Lizardman.prototype.attackRange = function(target) {
+		// Lizardmen are ranged
 		return this.p() > 10 && this.p() < Graphics.worldWidth() - 10 && 
 			Math.abs(this.p() - target.p()) <= 200;
 	};
 	
-	FireElemental.prototype.maxHealth = function() {
+	Lizardman.prototype.maxHealth = function() {
 		return 2;
 	};
 	
-	FireElemental.prototype.getDamage = function() {
-		return 9;
+	Lizardman.prototype.getDamage = function() {
+		return 6;
 	};
 	
-	return FireElemental;
+	return Lizardman;
 });

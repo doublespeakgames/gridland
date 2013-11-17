@@ -1,20 +1,20 @@
-define(['app/entity/monster', 'app/action/actionfactory'], 
+define(['app/entity/monster/monster', 'app/action/actionfactory'], 
 		function(Monster, ActionFactory) {
 	
-	var Zombie = function(options) {
+	var Rat = function(options) {
 		this.options = $.extend({}, this.options, {
 			power: 3
 		}, options);
 		this.hp(this.maxHealth());
-		this.xp = 1;
+		this.xp = 2;
 	};
-	Zombie.prototype = new Monster({
-		monsterClass: 'zombie',
-		speed: 80
+	Rat.prototype = new Monster({
+		monsterClass: 'rat',
+		speed: 20
 	});
-	Zombie.constructor = Zombie;
+	Rat.constructor = Rat;
 	
-	Zombie.prototype.think = function() {
+	Rat.prototype.think = function() {
 		if(this.isIdle() && this.isAlive() && this.action == null) {
 			var _this = this;
 			require(['app/world'], function(World) {
@@ -23,7 +23,7 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 						target: World.dude
 					});
 				} else {
-					_this.action = ActionFactory.getAction("Attack", {
+					_this.action = ActionFactory.getAction("FastAttack", {
 						target: World.dude
 					});
 				}
@@ -34,13 +34,13 @@ define(['app/entity/monster', 'app/action/actionfactory'],
 		}
 	};
 	
-	Zombie.prototype.maxHealth = function() {
-		return 3;
+	Rat.prototype.maxHealth = function() {
+		return 2;
 	};
 	
-	Zombie.prototype.getDamage = function() {
+	Rat.prototype.getDamage = function() {
 		return 1;
 	};
 	
-	return Zombie;
+	return Rat;
 });

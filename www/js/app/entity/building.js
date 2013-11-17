@@ -1,4 +1,4 @@
-define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent', 'app/graphics'], function(WorldEntity, Block, Content, Graphics) {
+define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent', 'app/graphics/graphics'], function(WorldEntity, Block, Content, Graphics) {
 	
 	var Building = function(options) {
 		this.options = $.extend({}, this.options, {
@@ -40,7 +40,7 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent', 'app/gr
 	Building.prototype.el = function() {
 		if(this._el == null) {
 			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className)
-				.append(Graphics.newElement("blockPile"));
+				.append(Graphics.make("blockPile"));
 		}
 		return this._el;
 	};
