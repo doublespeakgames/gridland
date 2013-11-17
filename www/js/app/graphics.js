@@ -150,12 +150,14 @@ define(['jquery', 'app/eventmanager', 'app/textStore'], function($, EventManager
 				transform: 'translate3d(0, ' + top + 'px, 0)',
 				left: entity._leftPos,
 			});
+			
+			el.css('left');
 		},
 		
 		dropTiles: function(tiles, callback) {
 			
 			// Force a redraw so our CSS animations don't skip
-			$('.tileContainer').css('left');
+//			$('.tileContainer').css('left');
 			
 			if(callback) {
 				setTimeout(callback, 200);
