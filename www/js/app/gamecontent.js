@@ -77,15 +77,6 @@ define({
 		}
 	},
 	
-	getResourceType: function(className) {
-		for(var c in this.ResourceType) {
-			if(className == this.ResourceType[c].className) {
-				return this.ResourceType[c];
-			}
-		}
-		return null;
-	},
-	
 	BuildingCallbacks: {
 		'shack': function() {
 			require(['app/resources', 'app/world'], function(R, W) {
@@ -420,6 +411,26 @@ define({
 			defaultAnimation: 4,
 			priority: 7
 		},
+	},
+	
+	LootType: {
+		healthPotion: {
+			// TODO: stuff!
+			onUse: function() {
+				require(['app/eventmanager', 'app/gamestate'], function(E, State) {
+					E.trigger('healDude', [Math.floor(State.maxHealth() / 2)]);
+				});
+			}
+		}
+	},
+	
+	getResourceType: function(className) {
+		for(var c in this.ResourceType) {
+			if(className == this.ResourceType[c].className) {
+				return this.ResourceType[c];
+			}
+		}
+		return null;
 	},
 	
 	getBuildingType: function(className) {

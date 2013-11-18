@@ -326,6 +326,7 @@ body.night {
 }
 
 .tile {
+	cursor: pointer;
 	top: -60px;
 	width: 60px;
 	height: 60px;
@@ -509,6 +510,7 @@ body.night {
 
 .dude {
 	background-image: url(../img/dude.png);
+	background-repeat: no-repeat;
 	position: absolute;
 	bottom: 0px;
 	width: 34px;
@@ -1145,8 +1147,8 @@ body.night {
     height: 50px;
     position: absolute;
     right: -2px;
-    width: 242px;
     z-index: 0;
+    padding-right: 2px;
 }
 
 .night .inventory {
@@ -1154,14 +1156,119 @@ body.night {
 	bottom: -52px;
 }
 
+.inventory.hidden {
+	opacity: 1 !important;
+	bottom: -2px;
+}
+
 .treasureChest {
 	position: absolute;
 	bottom: 0px;
-	width: 25px;
-	height: 18px;
+	width: 24px;
+	height: 25px;
+	background-image: url(../img/treasureChest.png);
+}
+
+.itemButton {
+	position: relative;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	border: 2px solid white;
+	border-radius: 22px;
+	float: right;
+	margin: 0 8px;
+	opacity: 0;
+	transition: opacity 200ms linear;
+	-webkit-transition: opacity 200ms linear;
+	-moz-transition: opacity 200ms linear;
+	-ms-transition: opacity 200ms linear;
+	-o-transition: opacity 200ms linear;
+}
+
+.night .itemButton {
+	opacity: 1;
+}
+
+.itemButton div {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	border: 2px solid white;
+	border-radius: 6px;
+	background-color: black;
+	transition: background-color 200ms linear;
+	-webkit-transition: background-color 200ms linear;
+	-moz-transition: background-color 200ms linear;
+	-ms-transition: background-color 200ms linear;
+	-o-transition: background-color 200ms linear;
+}
+
+.itemButton div:nth-child(2) {
+	bottom: 0px;
+	left: 0px;	
+}
+
+.itemButton.charge_1 div:nth-child(2),
+.itemButton.charge_2 div:nth-child(2),
+.itemButton.charge_3 div:nth-child(2) {
+	background-color: white;
+}
+
+.itemButton div:nth-child(3) {
+	bottom: -5px;
+	left: 14px;
+}
+
+.itemButton.charge_2 div:nth-child(3),
+.itemButton.charge_3 div:nth-child(3) {
+	background-color: white;
+}
+
+.itemButton div:nth-child(4) {
+	bottom: 0px;
+	right: 0px;
+}
+
+.itemButton.charge_3 div:nth-child(4) {
+	background-color: white;
+}
+
+.itemButton div:nth-child(1),
+.loot {
+	position: absolute;
+	width: 28px;
+	height: 28px;
+	background-image: url(../img/items.png);
+}
+
+.itemButton div:nth-child(1) {
+	border: none;
+	bottom: 7px;
+	left: 6px;
+}
+
+.loot.healthPotion
+.itemButton.healthPotion {
+	background-position: 0 0;
+}
+
+.loot {
+	bottom: 35px;
+}
+
+.loot.healthPotion {
+	background-position: 0 0;
+}
+
+.loot.manaPotion {
+	background-color: blue;
+}
+
+.loot.goldenSword {
 	background-color: yellow;
 }
 
-.treasureChest.looted {
-	background-color: red;
+.loot.goldenShield {
+	background-color: orange;
 }

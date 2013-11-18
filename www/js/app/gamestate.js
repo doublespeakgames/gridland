@@ -1,4 +1,5 @@
-define(['app/entity/building', 'app/entity/block', 'app/analytics'], function(Building, Block, Analytics) {
+define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecontent'], 
+		function(Building, Block, Analytics, Content) {
 	
 	return {
 		create: function() {
@@ -7,6 +8,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics'], function(Bu
 			this.level = 1;
 			this.xp = 0;
 			this.dayNumber = 1;
+			this.items = {};
 			Analytics.trackEvent('game', 'create');
 		},
 		
@@ -22,6 +24,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics'], function(Bu
 					for (var i in savedState.stores) {
 						this.stores.push(Block.makeBlock(savedState.stores[i]));
 					}
+					this.items = savedState.items || {};
 					this.level = savedState.level;
 					this.xp = savedState.xp;
 					this.dayNumber = savedState.dayNumber || 1;
@@ -41,7 +44,8 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics'], function(Bu
 					stores: [],
 					level: this.level,
 					xp: this.xp,
-					dayNumber: this.dayNumber
+					dayNumber: this.dayNumber,
+					items: this.items
 				};
 				for(b in this.buildings) {
 					var building = this.buildings[b];
@@ -88,6 +92,48 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics'], function(Bu
 				}
 			}
 			return null;
+		},
+		
+		maxHealth: function() {
+			return 20 + 10 * this.level;
+		},
+		
+		maxShield: function() {
+			if(this.hasBuilding(Content.BuildingType.Sawmill5)) {
+				return 18;
+			}
+			if(this.hasBuilding(Content.BuildingType.Sawmill4)) {
+				return 15;
+			}
+			if(this.hasBuilding(Content.BuildingType.Sawmill3)) {
+				return 12;
+			}
+			if(this.hasBuilding(Content.BuildingType.Sawmill2)) {
+				return 9;
+			}
+			if(this.hasBuilding(Content.BuildingType.Sawmill)) {
+				return 6;
+			}
+			return 3;
+		},
+		
+		maxSword: function() {
+			if(this.hasBuilding(Content.BuildingType.Blacksmith5)) {
+				return 18;
+			}
+			if(this.hasBuilding(Content.BuildingType.Blacksmith4)) {
+				return 15;
+			}
+			if(this.hasBuilding(Content.BuildingType.Blacksmith3)) {
+				return 12;
+			}
+			if(this.hasBuilding(Content.BuildingType.Blacksmith2)) {
+				return 9;
+			}
+			if(this.hasBuilding(Content.BuildingType.Blacksmith)) {
+				return 6;
+			}
+			return 3;
 		}
 	};
 });

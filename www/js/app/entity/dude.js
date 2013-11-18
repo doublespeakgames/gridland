@@ -5,8 +5,8 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 		this._el = null;
 		this.carrying = null;
 		this.action = null;
-		State.health = this.maxHealth();
-		Graphics.updateHealth(State.health, this.maxHealth());
+		State.health = State.maxHealth();
+		Graphics.updateHealth(State.health, State.maxHealth());
 		Graphics.updateExperience(State.xp, this.toLevel());
 		this.shield = 0;
 		this.sword = 0;
@@ -62,52 +62,10 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 		return 40 * State.level;
 	};
 	
-	dude.prototype.maxHealth = function() {
-		return 20 + 10 * State.level;
-	};
-	
-	dude.prototype.maxShield = function() {
-		if(State.hasBuilding(Content.BuildingType.Sawmill5)) {
-			return 18;
-		}
-		if(State.hasBuilding(Content.BuildingType.Sawmill4)) {
-			return 15;
-		}
-		if(State.hasBuilding(Content.BuildingType.Sawmill3)) {
-			return 12;
-		}
-		if(State.hasBuilding(Content.BuildingType.Sawmill2)) {
-			return 9;
-		}
-		if(State.hasBuilding(Content.BuildingType.Sawmill)) {
-			return 6;
-		}
-		return 3;
-	};
-	
-	dude.prototype.maxSword = function() {
-		if(State.hasBuilding(Content.BuildingType.Blacksmith5)) {
-			return 18;
-		}
-		if(State.hasBuilding(Content.BuildingType.Blacksmith4)) {
-			return 15;
-		}
-		if(State.hasBuilding(Content.BuildingType.Blacksmith3)) {
-			return 12;
-		}
-		if(State.hasBuilding(Content.BuildingType.Blacksmith2)) {
-			return 9;
-		}
-		if(State.hasBuilding(Content.BuildingType.Blacksmith)) {
-			return 6;
-		}
-		return 3;
-	};
-	
 	dude.prototype.heal = function(amount) {
 		State.health += amount;
-		State.health = State.health > this.maxHealth() ? this.maxHealth() : State.health;
-		Graphics.updateHealth(State.health, this.maxHealth());
+		State.health = State.health > State.maxHealth() ? State.maxHealth() : State.health;
+		Graphics.updateHealth(State.health, State.maxHealth());
 	};
 	
 	dude.prototype.getDamage = function(damageToKill) {
@@ -117,7 +75,7 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 			var add = this.sword > damageToKill ? damageToKill : this.sword;
 			damage += add;
 			this.sword -=  add;
-			Graphics.updateSword(this.sword, this.maxSword());
+			Graphics.updateSword(this.sword, State.maxSword());
 		}
 		return damage;
 	};
@@ -128,11 +86,11 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 				var blocked = damage > this.shield ? this.shield : damage;
 				this.shield -= blocked;
 				damage -= blocked;
-				Graphics.updateShield(this.shield, this.maxShield());
+				Graphics.updateShield(this.shield, State.maxShield());
 			}
 			State.health -= damage;
 			State.health = State.health < 0 ? 0 : State.health;
-			Graphics.updateHealth(State.health, this.maxHealth());
+			Graphics.updateHealth(State.health, State.maxHealth());
 			if(State.health <= 0) {
 				this.action = ActionFactory.getAction("Die");
 				this.action.doAction(this);

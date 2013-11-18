@@ -5,7 +5,7 @@ define(['app/entity/worldEntity'], function(WorldEntity) {
 		this.lootable = true;
 	};
 	TreasureChest.prototype = new WorldEntity({
-		className: 'treasureChest',
+		className: 'treasureChest nightSprite',
 		animationFrames: 0
 	});
 	TreasureChest.constructor = TreasureChest;

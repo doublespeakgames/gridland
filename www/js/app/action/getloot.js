@@ -11,7 +11,7 @@ define(['app/action/action', 'app/eventmanager'], function(Action, EventManager)
 		this._entity = entity;
 		entity.move(_action.target.p(), function(entity) {
 			require(['app/graphics/graphics'], function(Graphics) {
-				entity.animation(0);
+				entity.animationOnce(10);
 				_action.getting = true;
 			});
 		});
@@ -19,13 +19,20 @@ define(['app/action/action', 'app/eventmanager'], function(Action, EventManager)
 	
 	GetLoot.prototype.doFrameAction = function(frame) {
 		if(this.getting && frame == 3) {
-			var _this = this;
-			require(['app/world'], function(W) {
-				EventManager.trigger('pickupLoot', [_this.target]);
-				_this.target.looted = true;
-				_this._entity.action = null;
-			});
+			EventManager.trigger('pickupLoot', [this.target]);
+			this.target.gone = true;
+			this._entity.action = null;
+			this._entity.paused = true;
+			var _e = this._entity;
+			setTimeout(function() {
+				_e.paused = false;
+			}, 2000);
 		}
+	};
+	
+	GetLoot.prototype.terminateAction = function(entity) {
+		Action.prototype.terminateAction.call(this, entity);
+		entity.paused = false;
 	};
 	
 	return GetLoot;

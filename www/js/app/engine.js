@@ -1,5 +1,6 @@
-define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot'], 
-		function($, EventManager, Analytics, Graphics, GameBoard, GameState, World, Loot) {
+define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
+        'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot'], 
+		function($, EventManager, Analytics, Graphics, Content, GameBoard, GameState, World, Loot) {
 
 	return {
 		DRAG_THRESHOLD: 30, // in pixels
@@ -64,6 +65,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					});
 				}
 				return false;
+			});
+			GameBoard.el().on("mousedown touchstart", ".itemButton", function(e) {
+				// Handle wacky touch event objects
+				if(e.originalEvent.changedTouches) {
+					e = e.originalEvent.changedTouches[0];
+				}
+				Loot.useItem($(e.currentTarget).data('lootName'));
 			});
 		},
 		

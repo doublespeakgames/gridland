@@ -19,6 +19,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			this.isNight = false;
 			this.celestialPosition = 0;
 			
+			EventManager.bind('healDude', this.healDude);
 			EventManager.bind('newEntity', this.handleNewEntity);
 			EventManager.bind('tilesCleared', this.handleTileClear);
 			EventManager.bind('noMoreMoves', this.handleNoMoreMoves);
@@ -139,7 +140,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 							}
 						}
 						if(type == Content.ResourceType.Grain) {
-							World.healDude(quantity);
+							EventManager.trigger("healDude", [quantity]);
 						} else {
 							Resources.collectResource(Content.getResourceType(typeName), quantity);
 						}
@@ -165,8 +166,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 						entity.action.doFrameAction(entity.frame);
 					}
 					if(!entity.gone) {
-						entity.animate();
-						entity.think();
+						if(!entity.paused) {
+							entity.animate();
+							entity.think();
+						}
 						newStuff.push(entity);
 					} else if(entity.hostile && World.isNight && !entity.wiped) {
 						EventManager.trigger('monsterKilled', [entity]);
@@ -278,8 +281,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		},
 		
 		healDude: function(amount) {
-			if(this.dude != null) {
-				this.dude.heal(amount);
+			var w = require('app/world');
+			if(w.dude != null) {
+				w.dude.heal(amount);
 			}
 		},
 		
@@ -291,7 +295,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		
 		findClosestLoot: function() {
 			return this.findClosest(function(thing) {
-				return thing.lootable && !thing.looted;
+				return thing.lootable && !thing.gone;
 			});
 		},
 		

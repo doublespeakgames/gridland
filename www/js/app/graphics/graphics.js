@@ -11,15 +11,23 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 			EventManager.bind('newEntity', this.addToWorld);
 			EventManager.bind('healthChanged', this.updateHealthBar);
 			EventManager.bind('dayBreak', this.handleDayBreak);
-			EventManager.bind('pickupLoot', this.openChest);
 			
 			require(['app/graphics/loot'], function(LootGraphics) {
 				LootGraphics.init();
 			});
 		},
 		
-		get: function(selector) {
-			return $(selector);
+		get: function(selector, context) {
+			var ret = context ? context.find(selector) : $(selector);
+			if(ret.length > 0) {
+				return ret;
+			}
+			return null;
+		},
+		
+		remove: function(thing) {
+			var el = thing.el ? thing.el() : thing;
+			thing.remove();
 		},
 		
 		clearBoard: function() {
@@ -45,12 +53,16 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 		},
 		
 		addToWorld: function(entity) {
-			var g = require('app/graphics/graphics');
-			if(entity.p) {
-				g.setPosition(entity, entity.p());
+			if(entity.el == null) {
+				$('.world').append(entity);
+			} else {
+				var g = require('app/graphics/graphics');
+				if(entity.p) {
+					g.setPosition(entity, entity.p());
+				}
+				$('.world').append(entity.el());
+				g.updateSprite(entity);
 			}
-			$('.world').append(entity.el());
-			g.updateSprite(entity);
 		},
 		
 		worldWidth: function() {
@@ -154,7 +166,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 		},
 		
 		setPosition: function(entity, pos) {
-			var el = entity.el();
+			var el = entity.el ? entity.el() : entity;
 			el.css('left', (pos - (el.width() / 2)) + "px");
 		},
 		
@@ -474,10 +486,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 		
 		monsterKilled: function(monster) {
 			monster.el().find('.healthBar').addClass('hidden');
-		},
-		
-		openChest: function(chest) {
-			chest.el().addClass('looted');
 		}
 	};
 });

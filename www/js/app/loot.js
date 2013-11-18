@@ -1,4 +1,5 @@
-define(['app/eventmanager', 'app/entity/loot/treasurechest'], function(E, TreasureChest) {
+define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'app/gamecontent'], 
+		function(E, TreasureChest, GameState, Content) {
 	
 	function rollForLoot(Monster) {
 		// %30 chance for normal monster, %10 for every tile after that.
@@ -12,9 +13,32 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest'], function(E, Treasu
 		}
 	}
 	
+	function getLoot(entity) {
+		// TODO: Give out stuff randomly
+		var loot = "healthPotion";
+		
+		E.trigger("lootGained", [loot, entity]);
+		var num = GameState.items[loot] || 0;
+		num++;
+		num = num < 3 ? num : 3;
+		GameState.items[loot] = num;
+		E.trigger("updateLoot", [loot, num]);
+	}
+	
 	return {
 		init: function() {
 			E.bind("monsterKilled", rollForLoot, this);
+			E.bind("pickupLoot", getLoot, this);
+		},
+		
+		useItem: function(lootName) {
+			var num = GameState.items[lootName];
+			if(num > 0) {
+				num--;
+				GameState.items[lootName] = num;
+				E.trigger('updateLoot', [lootName, num]);
+				Content.LootType[lootName].onUse();
+			}
 		}
 	};
 });
