@@ -6,8 +6,8 @@ define(['app/graphics/graphics', 'app/eventmanager', 'app/gamestate'], function(
 	
 	function drawLoot(loot, entity) {
 		var lootIcon = G.make('loot ' + loot);
-		G.setPosition(lootIcon, entity.p());
 		G.addToWorld(lootIcon);
+		G.setPosition(lootIcon, entity.p());
 		setTimeout(function() {
 			G.remove(lootIcon);
 		}, 2000);

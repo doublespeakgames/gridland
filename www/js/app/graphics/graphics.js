@@ -57,10 +57,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 				$('.world').append(entity);
 			} else {
 				var g = require('app/graphics/graphics');
+				$('.world').append(entity.el());
 				if(entity.p) {
 					g.setPosition(entity, entity.p());
 				}
-				$('.world').append(entity.el());
 				g.updateSprite(entity);
 			}
 		},
