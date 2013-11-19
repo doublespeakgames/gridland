@@ -52,8 +52,8 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 			State.xp -= this.toLevel();
 			State.level++;
 			Graphics.levelUp(this);
-			State.health = this.maxHealth();
-			Graphics.updateHealth(State.health, this.maxHealth());
+			State.health = State.maxHealth();
+			Graphics.updateHealth(State.health, State.maxHealth());
 			EventManager.trigger('levelUp');
 			if(this.action != null) {
 				this.action.terminateAction(this);
@@ -95,10 +95,6 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 			State.health -= damage;
 			State.health = State.health < 0 ? 0 : State.health;
 			Graphics.updateHealth(State.health, State.maxHealth());
-			if(State.health <= 0) {
-				this.action = ActionFactory.getAction("Die");
-				this.action.doAction(this);
-			}
 		}
 	};
 	

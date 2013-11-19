@@ -70,6 +70,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				clearInterval(this.gameLoop);
 			}
 			this.gameLoop = setInterval(this.makeStuffHappen, 200);
+			this.inTransition = false;
 		},
 		
 		el: function() {
@@ -182,6 +183,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 						World.advanceTime();
 					} else if(entity == World.dude) {
 						// Dude is dead. Long live the dude.
+						this.inTransition = true;
 						GameState.saveXp();
 						Graphics.fadeOut(function() {
 							setTimeout(function() {
@@ -323,6 +325,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		 * Checks for buildable buildings, moveable resources, etc...
 		 */
 		getActivity: function() {
+			if(GameState.health <= 0) {
+				return ActionFactory.getAction("Die");
+			}
 			if(this.isNight) {
 				// Look for a monster to fight
 				var closest = this.findClosestMonster();
