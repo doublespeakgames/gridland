@@ -43,7 +43,11 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 	};
 	
 	dude.prototype.gainXp = function(xp) {
+		xp = xp || 0;
 		State.xp += xp;
+		if(isNaN(State.xp)){
+			State.xp = 0;
+		}
 		if(State.xp >= this.toLevel()) {
 			State.xp -= this.toLevel();
 			State.level++;
