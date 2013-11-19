@@ -40,6 +40,8 @@ define(['app/graphics/graphics', 'app/eventmanager', 'app/gamestate'], function(
 	
 	return {
 		init: function() {
+			_el = null;
+			
 			E.bind('pickupLoot', openChest);
 			E.bind('lootGained', drawLoot);
 			E.bind('updateLoot', updateLootButton);

@@ -11,10 +11,6 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		options: {},
 		init: function(opts) {
 			$.extend(this.options, opts);
-			
-//			$('#test').click(function() { require(['app/gameboard'], function(G) {
-//				console.log("Moves available? " + G.areMovesAvailable());
-//			}); });
 		
 			$('#test').off().click(function() { require(['app/world'], function(W) {
 				W.phaseTransition();

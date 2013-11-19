@@ -2,10 +2,10 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 		function(E, TreasureChest, GameState, Content) {
 	
 	function rollForLoot(Monster) {
-		// %30 chance for normal monster, %10 for every tile after that.
-		var chance = Monster.options.tiles * 0.1;
-		console.log("drop chance " + chance);
-		if(Math.random() < chance) {
+		// %15 chance for normal monster, %5 for every tile after that.
+		var chance = Monster.options.tiles * 0.05;
+		var roll = Math.random();
+		if(roll < chance) {
 			// Drop loot!
 			var treasure = new TreasureChest();
 			treasure.p(Monster.p());
