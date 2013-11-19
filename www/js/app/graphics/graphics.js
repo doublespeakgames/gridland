@@ -166,6 +166,15 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 		},
 		
 		setPosition: function(entity, pos) {
+			// Don't spawn chests off-screen
+			if(entity.lootable && pos <= 20) {
+				pos = 20;
+				entity.p(pos);
+			}
+			if(entity.lootable && pos >= this.worldWidth() - 20) {
+				pos = this.worldWidth() - 20;
+				entity.p(pos);
+			}
 			var el = entity.el ? entity.el() : entity;
 			el.css('left', (pos - (el.width() / 2)) + "px");
 		},

@@ -10,7 +10,7 @@ define(['app/graphics/graphics', 'app/eventmanager', 'app/gamestate'], function(
 		G.setPosition(lootIcon, entity.p());
 		setTimeout(function() {
 			G.remove(lootIcon);
-		}, 2000);
+		}, 1500);
 	}
 	
 	function updateLootButton(loot, num) {

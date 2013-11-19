@@ -26,7 +26,7 @@ define(['app/action/action', 'app/eventmanager'], function(Action, EventManager)
 			var _e = this._entity;
 			setTimeout(function() {
 				_e.paused = false;
-			}, 2000);
+			}, 1500);
 		}
 	};
 	
