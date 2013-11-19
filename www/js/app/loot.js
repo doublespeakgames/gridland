@@ -14,8 +14,13 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 	}
 	
 	function getLoot(entity) {
-		// TODO: Give out stuff randomly
+		var r = Math.random();
 		var loot = "healthPotion";
+		if(r < 0.2) {
+			loot = "bomb";
+		} else if(r < 0.5) {
+			loot = "equipment";
+		}
 		
 		E.trigger("lootGained", [loot, entity]);
 		var num = GameState.items[loot] || 0;

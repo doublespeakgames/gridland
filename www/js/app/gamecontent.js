@@ -415,10 +415,30 @@ define({
 	
 	LootType: {
 		healthPotion: {
-			// TODO: stuff!
 			onUse: function() {
 				require(['app/eventmanager', 'app/gamestate'], function(E, State) {
 					E.trigger('healDude', [Math.floor(State.maxHealth() / 2)]);
+				});
+			}
+		},
+		manaPotion: {
+			onUse: function() {
+				require(['app/eventmanager', 'app/gamestate'], function(E, State) {
+					E.trigger('gainMana', [Math.floor(State.maxMana() / 2)]);
+				});
+			}
+		},
+		bomb: {
+			onUse: function() {
+				require(['app/eventmanager'], function(E) {
+					E.trigger('wipeMonsters');
+				});
+			}
+		},
+		equipment: {
+			onUse: function() {
+				require(['app/eventmanager'], function(E) {
+					E.trigger('fillEquipment');
 				});
 			}
 		}

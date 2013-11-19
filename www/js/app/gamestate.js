@@ -98,6 +98,10 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			return 20 + 10 * this.level;
 		},
 		
+		maxMana: function() {
+			return 0; // TODO
+		},
+		
 		maxShield: function() {
 			if(this.hasBuilding(Content.BuildingType.Sawmill5)) {
 				return 18;

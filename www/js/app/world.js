@@ -19,15 +19,20 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			this.isNight = false;
 			this.celestialPosition = 0;
 			
+			EventManager.bind('wipeMonsters', this.wipeMonsters);
 			EventManager.bind('healDude', this.healDude);
 			EventManager.bind('newEntity', this.handleNewEntity);
 			EventManager.bind('tilesCleared', this.handleTileClear);
 			EventManager.bind('noMoreMoves', this.handleNoMoreMoves);
 			EventManager.bind('tilesSwapped', this.handleTilesSwapped);
 			EventManager.bind('levelUp', function() {
-				require(['app/world'], function(World) {
-					World.wipeMonsters();
-				});
+				var w = require('app/world');
+				w.wipeMonsters();
+			});
+			EventManager.bind('fillEquipment', function() {
+				var w = require('app/world'), s = require('app/gamestate');
+				w.addDefense(s.maxShield());
+				w.addAttack(s.maxSword());
 			});
 			
 			for(var i in GameState.buildings) {
@@ -265,11 +270,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		},
 		
 		wipeMonsters: function() {
-			for(var i in this.stuff) {
-				var entity = this.stuff[i];
+			var w = require('app/world'), e = require('app/eventmanager');
+			for(var i in w.stuff) {
+				var entity = w.stuff[i];
 				if(entity.hostile) {
 					entity.wiped = true;
 					entity.die();
+					e.trigger('monsterKilled', [entity]);
 				}
 			}
 		},
@@ -417,18 +424,18 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		
 		addDefense: function(num) {
 			this.dude.shield += num;
-			if(this.dude.shield > this.dude.maxShield()) {
-				this.dude.shield = this.dude.maxShield();
+			if(this.dude.shield > GameState.maxShield()) {
+				this.dude.shield = GameState.maxShield();
 			}
-			Graphics.updateShield(this.dude.shield, this.dude.maxShield());
+			Graphics.updateShield(this.dude.shield, GameState.maxShield());
 		},
 		
 		addAttack: function(num) {
 			this.dude.sword += num;
-			if(this.dude.sword > this.dude.maxSword()) {
-				this.dude.sword = this.dude.maxSword();
+			if(this.dude.sword > GameState.maxSword()) {
+				this.dude.sword = GameState.maxSword();
 			}
-			Graphics.updateSword(this.dude.sword, this.dude.maxSword());
+			Graphics.updateSword(this.dude.sword, GameState.maxSword());
 		},
 		
 		spawnMonster: function(monsterType, tiles, side) {

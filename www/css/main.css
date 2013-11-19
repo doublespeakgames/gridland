@@ -1248,27 +1248,26 @@ body.night {
 	left: 6px;
 }
 
-.loot.healthPotion
-.itemButton.healthPotion {
-	background-position: 0 0;
-}
-
 .loot {
 	bottom: 35px;
 }
 
-.loot.healthPotion {
+.loot.healthPotion
+.itemButton.healthPotion div:nth-child(1) {
 	background-position: 0 0;
 }
 
-.loot.manaPotion {
-	background-color: blue;
+.loot.manaPotion,
+.itemButton.manaPotion div:nth-child(1) {
+	background-position: -28px 0;
 }
 
-.loot.goldenSword {
-	background-color: yellow;
+.loot.bomb,
+.itemButton.bomb div:nth-child(1) {
+	background-position: -56px 0;
 }
 
-.loot.goldenShield {
-	background-color: orange;
+.loot.equipment,
+.itemButton.equipment div:nth-child(1) {
+	background-position: -84px 0;
 }
