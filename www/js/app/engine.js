@@ -67,7 +67,23 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];
 				}
-				Loot.useItem($(e.currentTarget).data('lootName'));
+				Loot.useItem($(e.target).closest('.itemButton').data('lootName'));
+			});
+			World.el().on("mousedown touchstart", function(e) {
+				// Handle wacky touch event objects
+				if(e.originalEvent.changedTouches) {
+					e = e.originalEvent.changedTouches[0];
+				}
+				EventManager.trigger('showCosts');
+				return false;
+			});
+			World.el().on("mousedown touchstart", '.blockPile', function(e) {
+				// Handle wacky touch event objects
+				if(e.originalEvent.changedTouches) {
+					e = e.originalEvent.changedTouches[0];
+				}
+				EventManager.trigger('showCosts', [$(e.target).closest('.building')]);
+				return false;
 			});
 		},
 		

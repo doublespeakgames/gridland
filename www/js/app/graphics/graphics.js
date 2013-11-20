@@ -11,6 +11,22 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 			EventManager.bind('newEntity', this.addToWorld);
 			EventManager.bind('healthChanged', this.updateHealthBar);
 			EventManager.bind('dayBreak', this.handleDayBreak);
+			EventManager.bind('showCosts', function(building) {
+				var pile;
+				if(building) {
+					if(building.el) building = building.el();
+					pile = building.find('.blockPile');
+				} else {
+					pile = $('.blockPile');
+				}
+				pile.addClass('showCosts');
+				setTimeout(function() {
+					pile.removeClass('showCosts').addClass('fadeCosts');
+				}, 10);
+				setTimeout(function() {
+					pile.removeClass('fadeCosts');
+				}, 510);
+			});
 			
 			require(['app/graphics/loot'], function(LootGraphics) {
 				LootGraphics.init();
@@ -45,6 +61,19 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 			el.width(this.TILE_WIDTH * cols);
 			el.height(this.TILE_HEIGHT * rows);
 			testTile.remove();
+			return el;
+		},
+		
+		createResourceContainer: function(resource, number) {
+			var cols = 1;
+			if(number > 5) {
+				cols = 2;
+				number = Math.ceil(number / 2);
+			}
+			var el = $('<div>').addClass('container')
+				.addClass(resource).addClass('width' + cols)
+				.addClass('height' + number);
+			$('<div>').addClass('ghost').appendTo(el);
 			return el;
 		},
 		
@@ -314,7 +343,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 		},
 		
 		dropBlock: function(block, destinationBuilding) {
-			block.el().appendTo($('.blockPile', destinationBuilding.el()));
+			var container = $('.blockPile', destinationBuilding.el())
+				.find('.container.' + block.options.type.className);
+			block.el().appendTo(container);
 			block.el().css('top', '0px');
 		},
 		

@@ -39,8 +39,14 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent', 'app/gr
 	
 	Building.prototype.el = function() {
 		if(this._el == null) {
-			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className)
-				.append(Graphics.make("blockPile"));
+			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className);
+			var blockPile = Graphics.make("blockPile");
+			
+			for(var r in this.options.type.cost) {
+				blockPile.append(Graphics.createResourceContainer(r, this.options.type.cost[r]));
+			}
+			
+			this._el.append(blockPile);
 		}
 		return this._el;
 	};

@@ -635,7 +635,7 @@ body.night {
 	top: -60px;
     margin: auto;
 	height: 60px;
-    width: 40px;
+    width: 50px;
     font-size: 0px;
 	transform: rotate(180deg);
 	-moz-transform: rotate(180deg);
@@ -648,9 +648,66 @@ body.night {
 	-ms-transition: opacity 300ms linear;
 	-o-transition: opacity 300ms linear;
 	opacity: 1;
+	cursor: pointer;
 }
 
 .night .blockPile, .night .resources {
+	opacity: 0;
+}
+
+.blockPile .container {
+	float: right;
+	position: relative;
+}
+
+.blockPile .container.width1 {
+	width: 10px;
+}
+
+.blockPile .container.width2 {
+	width: 20px;
+}
+
+.blockPile .container.height1 {
+	height: 10px;
+}
+
+.blockPile .container.height2 {
+	height: 20px;
+}
+
+.blockPile .container.height3 {
+	height: 30px;
+}
+
+.blockPile .container.height4 {
+	height: 40px;
+}
+
+.blockPile .container.height5 {
+	height: 50px;
+}
+
+.blockPile .ghost {
+	position: absolute;
+	opacity: 0.3;
+	width: 100%;
+	height: 100%;
+	display: none;
+	transition: opacity 500ms linear;
+	-webkit-transition: opacity 500ms linear;
+	-moz-transition: opacity 500ms linear;
+	-ms-transition: opacity 500ms linear;
+	-o-transition: opacity 500ms linear;
+}
+
+.blockPile.showCosts .ghost {
+	display: block;
+	opacity: 1;
+}
+
+.blockPile.fadeCosts .ghost {
+	display: block;
 	opacity: 0;
 }
 
@@ -676,39 +733,51 @@ body.night {
 	-o-transition: width 300ms linear, background-color 200ms linear;
 }
 
-.block.grain div {
+.block.grain div,
+.grain .ghost  {
 	background-color: #FFE97F;
 }
 
-.block.wood div {
+.block.wood div,
+.wood .ghost {
 	background-color: #7C5840;
 }
 
 .wood4 .block.wood div,
+.wood4 .wood .ghost,
 .wood5 .block.wood div,
-.wood6 .block.wood div {
+.wood5 .wood .ghost,
+.wood6 .block.wood div,
+.wood6 .wood .ghost {
 	background-color: #876C5B;
 }
 
-.block.stone div {
+.block.stone div,
+.stone .ghost {
 	background-color: #C4C4C4;
 }
 
 .stone4 .block.stone div,
+.stone4 .stone .ghost,
 .stone5 .block.stone div,
-.stone6 .block.stone div {
+.stone5 .stone .ghost,
+.stone6 .block.stone div,
+.stone6 .stone .ghost {
 	background-color: #135468;
 }
 
-.block.clay div {
+.block.clay div,
+.clay .ghost {
 	background-color: #C65645;
 }
 
-.block.cloth div {
+.block.cloth div,
+.cloth .ghost {
 	background-color: #EEDFA6;
 }
 
-.cloth3 .block.cloth div {
+.cloth3 .block.cloth div,
+.cloth3 .cloth .ghost {
 	background-color: #853AFF;
 }
 

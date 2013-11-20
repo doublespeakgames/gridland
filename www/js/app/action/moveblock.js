@@ -1,4 +1,4 @@
-define(['app/action/action'], function(Action) {
+define(['app/action/action', 'app/eventmanager'], function(Action, E) {
 	
 	var MoveBlock = function(options) {
 		this.block = options.block;
@@ -23,6 +23,7 @@ define(['app/action/action'], function(Action) {
 					dude.move(_action.destination.dudeSpot(), function(dude) {
 						require(['app/graphics/graphics'], function(Graphics) {
 							Graphics.dropBlock(_action.block, _action.destination);
+							E.trigger('showCosts', [_action.destination]);
 							dude.carrying = null;
 							_action.destination.requiredResources[_action.block.options.type.className]--;
 							dude.action = null;
