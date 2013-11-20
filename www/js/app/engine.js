@@ -1,6 +1,6 @@
 define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
-        'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot'], 
-		function($, EventManager, Analytics, Graphics, Content, GameBoard, GameState, World, Loot) {
+        'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot', 'app/gameoptions'], 
+		function($, EventManager, Analytics, Graphics, Content, GameBoard, GameState, World, Loot, Options) {
 
 	return {
 		DRAG_THRESHOLD: 30, // in pixels

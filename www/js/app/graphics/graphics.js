@@ -1,5 +1,5 @@
-define(['jquery', 'app/eventmanager', 'app/textStore'], 
-		function($, EventManager, TextStore) {
+define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions'], 
+		function($, EventManager, TextStore, Options) {
 	return {
 		BOARD_PAD: 2,
 		init: function() {
@@ -12,20 +12,22 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 			EventManager.bind('healthChanged', this.updateHealthBar);
 			EventManager.bind('dayBreak', this.handleDayBreak);
 			EventManager.bind('showCosts', function(building) {
-				var pile;
-				if(building) {
-					if(building.el) building = building.el();
-					pile = building.find('.blockPile');
-				} else {
-					pile = $('.blockPile');
+				if(!Options.get('showCosts')) {
+					var pile;
+					if(building) {
+						if(building.el) building = building.el();
+						pile = building.find('.blockPile');
+					} else {
+						pile = $('.blockPile');
+					}
+					pile.addClass('showCosts');
+					setTimeout(function() {
+						pile.addClass('fadeCosts');
+					}, 10);
+					setTimeout(function() {
+						pile.removeClass('showCosts fadeCosts');
+					}, 510);
 				}
-				pile.addClass('showCosts');
-				setTimeout(function() {
-					pile.removeClass('showCosts').addClass('fadeCosts');
-				}, 10);
-				setTimeout(function() {
-					pile.removeClass('fadeCosts');
-				}, 510);
 			});
 			
 			require(['app/graphics/loot'], function(LootGraphics) {
@@ -53,6 +55,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore'],
 		createBoard: function(rows, cols) {
 			// Generate the board element
 			var el = $('<div>').addClass('gameBoard').addClass('litBorder');
+			if(Options.get('showCosts')) {
+				el.addClass('showCosts');
+			};
 			$('<div>').addClass('tileContainer').attr('id', 'tileContainer').appendTo(el);
 			// Determine the board dimensions based on the size of the tiles
 			var testTile = $('<div>').addClass('tile').hide().appendTo('body');
