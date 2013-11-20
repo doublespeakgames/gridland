@@ -261,8 +261,7 @@ define({
 			position: 210,
 			cost: {
 				stone: 2,
-				clay: 2,
-				cloth: 1
+				clay: 2
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -339,8 +338,7 @@ define({
 			position: 270,
 			cost: {
 				wood: 2,
-				clay: 2,
-				cloth: 1
+				clay: 2
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
