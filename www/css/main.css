@@ -656,7 +656,7 @@ body.night {
 }
 
 .blockPile .container {
-	float: right;
+	float: left;
 	position: relative;
 }
 
