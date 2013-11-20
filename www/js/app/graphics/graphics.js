@@ -29,6 +29,16 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions'],
 					}, 510);
 				}
 			});
+			EventManager.bind('toggleCosts', function(visible) {
+				if(visible) {
+					$('.gameBoard').addClass('showCosts');
+				} else {
+					$('.gameBoard').addClass('fadeCosts');
+					setTimeout(function() {
+						$('.gameBoard').removeClass('showCosts fadeCosts');
+					}, 500);
+				}
+			});
 			
 			require(['app/graphics/loot'], function(LootGraphics) {
 				LootGraphics.init();

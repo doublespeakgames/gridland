@@ -199,7 +199,7 @@ define({
 			cost: {
 				stone: 2,
 				wood: 2,
-				cloth: 2,
+				cloth: 1,
 				clay: 8
 			},
 			requiredLevel: 1,
@@ -226,10 +226,10 @@ define({
 			className: 'weaver2',
 			position: 150,
 			cost: {
-				wood: 1,
-				stone: 1,
+				wood: 2,
+				stone: 2,
 				clay: 1,
-				cloth: 5
+				cloth: 3
 			},
 			requiredLevel: 1,
 			tileMod: 'cloth',
@@ -243,10 +243,10 @@ define({
 			className: 'weaver3',
 			position: 150,
 			cost: {
-				wood: 2,
-				stone: 2,
+				wood: 4,
+				stone: 4,
 				clay: 2,
-				cloth: 8
+				cloth: 5
 			},
 			requiredLevel: 1,
 			tileMod: 'cloth',
@@ -262,7 +262,7 @@ define({
 			cost: {
 				stone: 2,
 				clay: 2,
-				cloth: 2
+				cloth: 1
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -276,7 +276,7 @@ define({
 			cost: {
 				stone: 4,
 				clay: 2,
-				cloth: 2
+				cloth: 1
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -292,7 +292,7 @@ define({
 			cost: {
 				stone: 6,
 				clay: 3,
-				cloth: 3
+				cloth: 2
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -308,7 +308,7 @@ define({
 			cost: {
 				stone: 8,
 				clay: 4,
-				cloth: 4
+				cloth: 2
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -324,7 +324,7 @@ define({
 			cost: {
 				stone: 10,
 				clay: 5,
-				cloth: 5
+				cloth: 2
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -340,7 +340,7 @@ define({
 			cost: {
 				wood: 2,
 				clay: 2,
-				cloth: 2
+				cloth: 1
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
@@ -354,7 +354,7 @@ define({
 			cost: {
 				wood: 4,
 				clay: 2,
-				cloth: 2
+				cloth: 1
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
@@ -370,7 +370,7 @@ define({
 			cost: {
 				wood: 6,
 				clay: 3,
-				cloth: 3
+				cloth: 2
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
@@ -386,7 +386,7 @@ define({
 			cost: {
 				wood: 8,
 				clay: 4,
-				cloth: 4
+				cloth: 2
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
@@ -402,7 +402,7 @@ define({
 			cost: {
 				wood: 10,
 				clay: 5,
-				cloth: 5
+				cloth: 2
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',

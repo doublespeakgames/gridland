@@ -205,7 +205,6 @@ define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'ap
 		handleMatches: function(tiles) {
 			
 			this.removals++;
-			var newTiles = [];
 			var colsToDrop = {};
 			var resourcesGained = {};
 

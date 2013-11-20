@@ -74,7 +74,15 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];
 				}
-				EventManager.trigger('showCosts');
+				EventManager.trigger('toggleCosts', [true]);
+				return false;
+			});
+			World.el().on("mouseup touchend", function(e) {
+				// Handle wacky touch event objects
+				if(e.originalEvent.changedTouches) {
+					e = e.originalEvent.changedTouches[0];
+				}
+				EventManager.trigger('toggleCosts', [false]);
 				return false;
 			});
 			World.el().on("mousedown touchstart", '.blockPile', function(e) {
