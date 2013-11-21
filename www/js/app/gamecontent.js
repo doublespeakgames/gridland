@@ -442,6 +442,12 @@ define({
 		}
 	},
 	
+	lootPools: {
+		rare: ['bomb'],
+		uncommon: ['equipment'],
+		common: ['healthPotion']
+	},
+	
 	getResourceType: function(className) {
 		for(var c in this.ResourceType) {
 			if(className == this.ResourceType[c].className) {

@@ -1,6 +1,12 @@
 define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'app/gamecontent'], 
 		function(E, TreasureChest, GameState, Content) {
 	
+	var probabilities = {
+		rare: 0.10,
+		uncommon: 0.35,
+		common: 1
+	}
+	
 	function rollForLoot(Monster) {
 		// %15 chance for normal monster, %5 for every tile after that.
 		var chance = Monster.options.tiles * 0.05;
@@ -15,19 +21,32 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 	
 	function getLoot(entity) {
 		var r = Math.random();
-		var loot = "healthPotion";
-		if(r < 0.2) {
-			loot = "bomb";
-		} else if(r < 0.5) {
-			loot = "equipment";
+		var lootPool = null;
+		for(var rarity in probabilities) {
+			if(r < probabilities[rarity]) {
+				lootPool = Content.lootPools[rarity];
+				break;
+			}
+		}
+		var poolSize = 0;
+		for(poolSize in lootPool) {}
+		poolSize++; // Correct for array 0-indexing
+		
+		r = Math.random();
+		var lootName = null;
+		for(i in lootPool) {
+			lootName = lootPool[i];
+			if(r < (i + 1) / poolSize) {
+				break;
+			}
 		}
 		
-		E.trigger("lootGained", [loot, entity]);
-		var num = GameState.items[loot] || 0;
+		E.trigger("lootGained", [lootName, entity]);
+		var num = GameState.items[lootName] || 0;
 		num++;
 		num = num < 3 ? num : 3;
-		GameState.items[loot] = num;
-		E.trigger("updateLoot", [loot, num]);
+		GameState.items[lootName] = num;
+		E.trigger("updateLoot", [lootName, num]);
 	}
 	
 	return {
