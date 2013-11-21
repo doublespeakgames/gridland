@@ -21,6 +21,7 @@ define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'ap
 			for (var i = 0; i < this.options.columns; i++) {
 				this.tiles.push([]);
 			}
+			this.totals = {};
 		},
 
 		el : function() {
@@ -232,6 +233,9 @@ define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'ap
 					// Drop remaining tiles
 					var pCounts = GameBoard.tileMap();
 					var nextCount = 0;
+					for(i in pCounts) {
+						nextCount += pCounts[i];
+					}
 					var newTiles = [];
 					var dropList = [];
 					for(col in colsToDrop) {
@@ -258,6 +262,10 @@ define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'ap
 								base += prob;
 							}
 							var type = Content.getResourceType(typeClass);
+							
+							var n = GameBoard.totals[typeClass] || 0;
+							GameBoard.totals[typeClass] = n + 1;
+							
 							nextCount = 0;
 							for(var t in pCounts) {
 								if(t == type.className) {

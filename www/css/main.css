@@ -1232,8 +1232,8 @@ body.night {
 .treasureChest {
 	position: absolute;
 	bottom: 0px;
-	width: 24px;
-	height: 25px;
+	width: 26px;
+	height: 26px;
 	background-image: url(../img/treasureChest.png);
 }
 
