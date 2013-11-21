@@ -175,9 +175,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions'],
 		
 		phaseTransition: function(celestial, callback) {
 			celestial.el().css('top', '100%');
+			$('body').toggleClass('night');
 			var _g = this;
 			setTimeout(function() {
-				$('body').toggleClass('night');
 				if($('body').hasClass('night')) {
 					celestial.animation(1);
 				} else {
