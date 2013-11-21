@@ -510,11 +510,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions'],
 			effect.css('height', '100%');
 			setTimeout(function() {
 				effect.css({
-					'width': '200px',
-					'left': (p - 100) + 'px',
+					'width': '100%',
+					'left': '0px',
 					'opacity': 0
 				});
-			}, 300);
+			}, 500);
 		},
 		
 		updateHealthBar: function(entity) {
