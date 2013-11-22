@@ -19,7 +19,7 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 		var G = require('app/graphics/graphics');
 		var btn = G.get("." + loot, el());
 		if(btn == null) {
-			btn = G.make("hidden itemButton " + loot)
+			btn = G.make("hidden button litBorder " + loot)
 				.append(G.make())
 				.append(G.make()).append(G.make()).append(G.make())
 				.data('lootName', loot)
@@ -52,6 +52,14 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 			
 			for(var lootName in State.items) {
 				updateLootButton(lootName, State.items[lootName]);
+			}
+		},
+		
+		attachHandler: function(event, element, handler) {
+			if(element) {
+				el().on(event, element, handler);
+			} else {
+				el().on(event, handler);
 			}
 		}
 	};

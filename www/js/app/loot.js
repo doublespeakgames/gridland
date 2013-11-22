@@ -5,7 +5,7 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 		rare: 0.10,
 		uncommon: 0.35,
 		common: 1
-	}
+	};
 	
 	function rollForLoot(Monster) {
 		// %15 chance for normal monster, %5 for every tile after that.
