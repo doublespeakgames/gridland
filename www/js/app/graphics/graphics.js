@@ -1,5 +1,8 @@
-define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions'], 
-		function($, EventManager, TextStore, Options) {
+define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
+        'app/graphics/gameboard', 'app/graphics/world', 'app/graphics/resources', 
+        'app/graphics/loot', 'app/graphics/magic'], 
+		function($, EventManager, TextStore, Options, BoardGraphics, WorldGraphics, ResourceGraphics,
+				LootGraphics, MagicGraphics) {
 	return {
 		BOARD_PAD: 2,
 		init: function() {
@@ -40,9 +43,16 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions'],
 				}
 			});
 			
-			require(['app/graphics/loot'], function(LootGraphics) {
-				LootGraphics.init();
-			});
+			BoardGraphics.init();
+			WorldGraphics.init();
+			ResourceGraphics.init();
+			LootGraphics.init();
+			MagicGraphics.init();
+		},
+		
+		attachHandler: function(moduleName, event, element, handler) {
+			var module = require('app/graphics/' + moduleName.toLowerCase());
+			module.attachHandler(event, element, handler);
 		},
 		
 		get: function(selector, context) {
@@ -98,10 +108,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions'],
 		
 		addToWorld: function(entity) {
 			if(entity.el == null) {
-				$('.world').append(entity);
+				WorldGraphics.add(entity);
 			} else {
 				var g = require('app/graphics/graphics');
-				$('.world').append(entity.el());
+				WorldGraphics.add(entity.el());
 				if(entity.p) {
 					g.setPosition(entity, entity.p());
 				}
@@ -114,7 +124,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions'],
 		},
 		
 		addToScreen: function(entity) {
-			$('body').append(entity.el());
+			$('body').append(entity.el ? entity.el() : entity);
 		},
 		
 		addToBoard: function(entity) {
@@ -122,15 +132,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions'],
 		},
 		
 		hide: function(entity) {
-			entity.el().addClass('hidden');
+			(entity.el ? entity.el() : entity).addClass('hidden');
 		},
 		
 		show: function(entity) {
-			entity.el().removeClass('hidden');
-		},
-		
-		addResource: function(block) {
-			$('.resources').append(block.el());
+			(entity.el ? entity.el() : entity).removeClass('hidden');
 		},
 		
 		addToTileContainer: function(entity) {

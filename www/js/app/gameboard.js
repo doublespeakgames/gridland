@@ -1,6 +1,6 @@
-define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'app/entity/tile', 
+define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile', 
         'app/resources', 'app/gamecontent', 'app/gamestate'], 
-		function($, Engine, Graphics, EventManager, Tile, Resources, Content, State) {
+		function($, Engine, EventManager, Tile, Resources, Content, State) {
 	return {
 		dropCount: 0,
 		removals: 0,
@@ -13,22 +13,13 @@ define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'ap
 		init : function(opts) {
 			$.extend(this.options, opts);
 			this._el = null;
-			Graphics.clearBoard();
 			Resources.loaded = false;
-			Graphics.addToScreen(this);
 			this.tiles = [];
 			this.filling = false;
 			for (var i = 0; i < this.options.columns; i++) {
 				this.tiles.push([]);
 			}
 			this.totals = {};
-		},
-
-		el : function() {
-			if (this._el == null) {
-				this._el = Graphics.createBoard(this.options.rows, this.options.columns);
-			}
-			return this._el;
 		},
 		
 		tileMap: function() {
@@ -121,16 +112,18 @@ define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'ap
 		},
 		
 		addTiles: function(tiles) {
-			Graphics.addTilesToContainer(tiles);
+			var G = require('app/graphics/graphics');
+			G.addTilesToContainer(tiles);
 			for(var t in tiles) {
 				var tile = tiles[t];
 				tile.el().removeClass('hidden');
-				Graphics.setPositionInBoard(tile, tile.options.row, tile.options.column);
+				G.setPositionInBoard(tile, tile.options.row, tile.options.column);
 			}
 			return tiles;
 		},
 		
 		dropTiles: function(tiles) {
+			var G = require('app/graphics/graphics');
 			this.dropCount++;
 			for(var t in tiles) {
 				var tile = tiles[t];
@@ -153,8 +146,8 @@ define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'ap
 				tile.options.row = finalRow;
 			}
 			
-			Graphics.dropTiles(tiles, function() {
-				require(['app/graphics/graphics', 'app/gameboard', 'app/eventmanager'], function(Graphics, GameBoard, EventManager) {
+			G.dropTiles(tiles, function() {
+				require(['app/gameboard', 'app/eventmanager'], function(GameBoard, EventManager) {
 					GameBoard.dropCount--;
 					if(GameBoard.dropCount == 0) {
 						var matches = [];
@@ -199,12 +192,12 @@ define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'ap
 				}
 				col.length = 0;
 			}
-			
-			Graphics.removeTiles(tiles, this.fill);
+			var G = require('app/graphics/graphics');
+			G.removeTiles(tiles, this.fill);
 		},
 		
 		handleMatches: function(tiles) {
-			
+			var G = require('app/graphics/graphics');
 			this.removals++;
 			var colsToDrop = {};
 			var resourcesGained = {};
@@ -226,7 +219,7 @@ define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'ap
 			
 			EventManager.trigger('tilesCleared', [resourcesGained, this.swapSide]);
 			
-			Graphics.removeTiles(tiles, function() {
+			G.removeTiles(tiles, function() {
 				require(['app/gameboard', 'app/entity/tile', 'app/resources', 'app/gamecontent', 'app/gamestate'], 
 						function(GameBoard, Tile, Resources, Content, State) {
 					
@@ -294,7 +287,8 @@ define(['jquery', 'app/engine', 'app/graphics/graphics', 'app/eventmanager', 'ap
 		},
 		
 		switchTiles: function(tile1, tile2, skipMatch) {
-			Graphics.switchTiles(tile1, tile2, function(tile1, tile2) {
+			var G = require('app/graphics/graphics');
+			G.switchTiles(tile1, tile2, function(tile1, tile2) {
 				require(['app/gameboard', 'app/eventmanager'], function(GameBoard, EventManager) {
 					var r1 = tile1.options.row, c1 = tile1.options.column;
 					GameBoard.tiles[tile1.options.column][tile1.options.row] = tile2;

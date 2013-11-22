@@ -11,11 +11,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		},
 		init: function(opts) {
 			$.extend(this.options, opts);
-			this._el = null;
 			this.dude = null;
 			this.celestial = null;
 			this.stuff.length = 0;
-			Graphics.addToBoard(this);
 			this.isNight = false;
 			this.celestialPosition = 0;
 			
@@ -212,7 +210,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				dude.animation(0);
 				dude.animationOnce(7);
 				Graphics.addToWorld(dude);
-				dude.p(World.el().width() / 2);
+				dude.p(Graphics.worldWidth() / 2);
 				Graphics.setPosition(dude, dude.p());
 			});
 		},

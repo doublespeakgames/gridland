@@ -40,11 +40,11 @@ body.night {
 	bottom: 0px;
 	border-top: 2px solid;
 	background-color: white;
-	transition: all 200ms linear;
-	-webkit-transition: all 200px linear;
-	-moz-transition: all 200px linear;
-	-ms-transition: all 200px linear;
-	-o-transition: all 200px linear;
+	transition: background-color 700ms linear, height 200ms linear !important;
+	-webkit-transition: background-color 700ms linear, height 200ms linear !important;
+	-moz-transition: background-color 700ms linear, height 200ms linear !important;
+	-ms-transition: background-color 700ms linear, height 200ms linear !important;
+	-o-transition: background-color 700ms linear, height 200ms linear !important;
 }
 
 .night .menuBar {

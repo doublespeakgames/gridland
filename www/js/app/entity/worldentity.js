@@ -1,5 +1,5 @@
-define(['app/entity/entity', 'app/graphics/graphics', 'app/eventmanager', 'app/action/actionfactory'], 
-	function(Entity, Graphics, EventManager, ActionFactory) {
+define(['app/entity/entity', 'app/eventmanager', 'app/action/actionfactory'], 
+	function(Entity, EventManager, ActionFactory) {
 	
 	var MOVE_ANIMS = {
 		idle: 0,
@@ -49,7 +49,8 @@ define(['app/entity/entity', 'app/graphics/graphics', 'app/eventmanager', 'app/a
 				return;
 			}
 			var _entity = this;
-			Graphics.animateMove(this, position, function() {
+			var G = require('app/graphics/graphics');
+			G.animateMove(this, position, function() {
 				// Stop the move animation
 				_entity.animation(MOVE_ANIMS.idle);
 				if(callback != null) {
@@ -61,12 +62,13 @@ define(['app/entity/entity', 'app/graphics/graphics', 'app/eventmanager', 'app/a
 	
 	worldEntity.prototype.moveTo = function(target, callback) {
 		if(this.tempAnimation == null) {
+			var G = require('app/graphics/graphics');
 			var position = target.p();
 			if(position < 30) {
 				position = 30;
 			}
-			if(position > Graphics.worldWidth() - 30) {
-				position = Graphics.worldWidth() - 30;
+			if(position > G.worldWidth() - 30) {
+				position = G.worldWidth() - 30;
 			}
 			if(this.p() < position) {
 				// Moving right
@@ -85,14 +87,14 @@ define(['app/entity/entity', 'app/graphics/graphics', 'app/eventmanager', 'app/a
 			}
 			var _entity = this;
 			var _target = target;
-			Graphics.animateMove(this, position, function() {
+			G.animateMove(this, position, function() {
 				// Stop the move animation
 				_entity.animation(MOVE_ANIMS.idle);
 				if(callback != null) {
 					callback(_entity);
 				}
 			}, function() {
-				return _entity.p() > 10 && _entity.p() < Graphics.worldWidth() - 10 && _entity.attackRange(_target);
+				return _entity.p() > 10 && _entity.p() < G.worldWidth() - 10 && _entity.attackRange(_target);
 			});
 		}
 	};

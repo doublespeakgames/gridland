@@ -15,10 +15,11 @@ define(['app/entity/entity', 'app/graphics/graphics', 'app/gamecontent'], functi
 	
 	tile.prototype.el = function() {
 		if(this._el == null) {
+			var G = require('app/graphics/graphics');
 			var el = this._el = Entity.prototype.el.call(this)
 				.addClass(this.options.type.className)
-				.append(Graphics.make('litBorder daySide'))
-				.append(Graphics.make('litBorder nightSide'));
+				.append(G.make('litBorder daySide'))
+				.append(G.make('litBorder nightSide'));
 			el.data("tile", this);
 		}
 		return this._el;

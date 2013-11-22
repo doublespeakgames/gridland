@@ -1,10 +1,12 @@
-define(['app/graphics/graphics', 'app/eventmanager', 'app/gamestate'], function(G, E, State) {
+
+define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 	
 	function openChest(chest) {
 		chest.animation(1);
 	}
 	
 	function drawLoot(loot, entity) {
+		var G = require('app/graphics/graphics');
 		var lootIcon = G.make('loot ' + loot);
 		G.addToWorld(lootIcon);
 		G.setPosition(lootIcon, entity.p());
@@ -14,6 +16,7 @@ define(['app/graphics/graphics', 'app/eventmanager', 'app/gamestate'], function(
 	}
 	
 	function updateLootButton(loot, num) {
+		var G = require('app/graphics/graphics');
 		var btn = G.get("." + loot, el());
 		if(btn == null) {
 			btn = G.make("hidden itemButton " + loot)
@@ -28,6 +31,7 @@ define(['app/graphics/graphics', 'app/eventmanager', 'app/gamestate'], function(
 	
 	var _el = null;
 	function el() {
+		var G = require('app/graphics/graphics');
 		if(_el == null) {
 			_el = G.make('hidden inventory litBorder');
 			G.addToBoard(_el);

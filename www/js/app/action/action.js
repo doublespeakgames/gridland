@@ -1,4 +1,4 @@
-define(['app/graphics/graphics'], function(G) {
+define(function() {
 	
 	var Action = function() {};
 	Action.prototype.doAction = function(dude) {
@@ -6,6 +6,7 @@ define(['app/graphics/graphics'], function(G) {
 	};
 	
 	Action.prototype.terminateAction = function(dude) {
+		var G = require('app/graphics/graphics');
 		dude.animation(0);
 		G.stop(dude);
 		dude.action = null;	

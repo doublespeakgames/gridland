@@ -1,4 +1,4 @@
-define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics/graphics'], function(WorldEntity, Content, Graphics) {
+define(['app/entity/worldentity', 'app/gamecontent'], function(WorldEntity, Content) {
 	
 	var Block = function(options) {
 		this.options = $.extend({}, this.options, {
@@ -19,8 +19,9 @@ define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics/graphics'], f
 	};
 	
 	Block.prototype.el = function() {
+		var G = require('app/graphics/graphics');
 		if(this._el == null) {
-			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className).append(Graphics.make());
+			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className).append(G.make());
 		}
 		return this._el;
 	};
@@ -33,8 +34,9 @@ define(['app/entity/worldentity', 'app/gamecontent', 'app/graphics/graphics'], f
 	
 	Block.prototype.quantity = function(value) {
 		if(value != null) {
+			var G = require('app/graphics/graphics');
 			this._quantity = value > this.max ? this.max : value;
-			Graphics.updateBlock(this);
+			G.updateBlock(this);
 		}
 		return this._quantity;
 	};

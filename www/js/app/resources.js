@@ -1,4 +1,5 @@
-define(['jquery', 'app/graphics/graphics', 'app/gamecontent', 'app/gamestate'], function($, Graphics, Content, GameState) {
+define(['jquery', 'app/eventmanager', 'app/gamecontent', 'app/gamestate'], 
+		function($, EventManager, Content, GameState) {
 	return {
 		options : {
 			rows: 3,
@@ -6,34 +7,13 @@ define(['jquery', 'app/graphics/graphics', 'app/gamecontent', 'app/gamestate'], 
 		},
 		init : function(opts) {
 			$.extend(this.options, opts);
-			this._el = null;
-			Graphics.hide(this);
-			Graphics.addToWorld(this);
-			
-			for(var i in GameState.stores) {
-				var block = GameState.stores[i];
-				Graphics.addResource(block);
-				Graphics.updateBlock(block);
-			}
-			
-			var _g = Graphics;
-			var _t = this;
-			setTimeout(function() {
-				_g.show(_t);
-			}, 10);
 			this.loaded = true;
-		},
-
-		el : function() {
-			if (this._el == null) {
-				this._el = Graphics.make("resources");
-			}
-			return this._el;
+			EventManager.trigger('resourceInit');
 		},
 		
 		returnBlock: function(block) {
 			GameState.stores.push(block);
-			Graphics.addResource(block);
+			EventManager.trigger("addResource", [block]);
 			this.checkMaximum();
 		},
 		
@@ -58,7 +38,7 @@ define(['jquery', 'app/graphics/graphics', 'app/gamecontent', 'app/gamestate'], 
 						GameState.stores.push(block);
 						// If the stores are full, eject the oldest
 						Resources.checkMaximum();
-						Graphics.addResource(block);
+						EventManager.trigger("addResource", [block]);
 					}
 					// Add the resource
 					var remainder = quantity - block.spaceLeft();

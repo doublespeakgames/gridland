@@ -26,15 +26,15 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			EventManager.init();
 			Analytics.init();
 			GameState.load();
-			Graphics.init();
 			GameBoard.init();
+			Graphics.init();
 			World.init();
 			Loot.init();
 			GameBoard.fill();
 			World.launchDude();
 			
 			var _engine = this;
-			GameBoard.el().on("mousedown touchstart", ".tile", function(e) {
+			Graphics.attachHandler("GameBoard", "mousedown touchstart", '.tile', function(e) {
 				if(!_engine.dragging) {
 					// Handle wacky touch event objects
 					if(e.originalEvent.changedTouches) {
@@ -48,7 +48,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				}
 				return false;
 			});
-			GameBoard.el().on("mouseup touchend", function(e) {
+			Graphics.attachHandler("GameBoard", "mouseup touchend", function(e) {
 				if(_engine.dragging) {
 					_engine.dragging = false;
 					// Handle wacky touch event objects
@@ -62,14 +62,14 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				}
 				return false;
 			});
-			GameBoard.el().on("mousedown touchstart", ".itemButton", function(e) {
+			Graphics.attachHandler("GameBoard", "mousedown touchstart", ".itemButton", function(e) {
 				// Handle wacky touch event objects
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];
 				}
 				Loot.useItem($(e.target).closest('.itemButton').data('lootName'));
 			});
-			World.el().on("mousedown touchstart", function(e) {
+			Graphics.attachHandler("World", "mousedown touchstart", function(e) {
 				// Handle wacky touch event objects
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];
@@ -77,7 +77,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				EventManager.trigger('toggleCosts', [true]);
 				return false;
 			});
-			World.el().on("mouseup touchend", function(e) {
+			Graphics.attachHandler("World", "mouseup touchend", function(e) {
 				// Handle wacky touch event objects
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];
@@ -85,7 +85,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				EventManager.trigger('toggleCosts', [false]);
 				return false;
 			});
-			World.el().on("mousedown touchstart", '.blockPile', function(e) {
+			Graphics.attachHandler("World", "mousedown touchstart", '.blockPile', function(e) {
 				// Handle wacky touch event objects
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];

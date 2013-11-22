@@ -1,4 +1,4 @@
-define([ 'jquery', 'app/graphics/graphics' ], function($, Graphics) {
+define([ 'jquery' ], function($) {
 	
 	var entity = function(options) {
 		
@@ -18,7 +18,8 @@ define([ 'jquery', 'app/graphics/graphics' ], function($, Graphics) {
 	 */
 	entity.prototype.el = function() {
 		if(this._el == null) {
-			this._el = Graphics.make(this.options.className);
+			var G = require('app/graphics/graphics');
+			this._el = G.make(this.options.className);
 		}
 		return this._el;
 	};
@@ -52,7 +53,8 @@ define([ 'jquery', 'app/graphics/graphics' ], function($, Graphics) {
 				this.tempAnimation = null;
 			}
 		}
-		Graphics.updateSprite(this);
+		var G = require('app/graphics/graphics');
+		G.updateSprite(this);
 	};
 	
 	entity.prototype.animation = function(row, stopTempAnimations) {
@@ -61,13 +63,15 @@ define([ 'jquery', 'app/graphics/graphics' ], function($, Graphics) {
 		}
 		this.animationRow = row;
 		this.frame = 0;
-		Graphics.updateSprite(this);
+		var G = require('app/graphics/graphics');
+		G.updateSprite(this);
 	};
 	
 	entity.prototype.animationOnce = function(row) {
 		this.tempAnimation = row;
 		this.frame = 0;
-		Graphics.updateSprite(this);
+		var G = require('app/graphics/graphics');
+		G.updateSprite(this);
 	};
 
 	return entity;
