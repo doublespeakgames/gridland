@@ -40,11 +40,11 @@ body.night {
 	bottom: 0px;
 	border-top: 2px solid;
 	background-color: white;
-	transition: background-color 700ms linear, height 200ms linear !important;
-	-webkit-transition: background-color 700ms linear, height 200ms linear !important;
-	-moz-transition: background-color 700ms linear, height 200ms linear !important;
-	-ms-transition: background-color 700ms linear, height 200ms linear !important;
-	-o-transition: background-color 700ms linear, height 200ms linear !important;
+	transition: background-color 700ms linear, border-color 700ms linear, opacity 200ms linear, height 200ms linear !important;
+	-webkit-transition: background-color 700ms linear, border-color 700ms linear, opacity 200ms linear, height 200ms linear !important;
+	-moz-transition: background-color 700ms linear, border-color 700ms linear, opacity 200ms linear, height 200ms linear !important;
+	-ms-transition: background-color 700ms linear, border-color 700ms linear, opacity 200ms linear, height 200ms linear !important;
+	-o-transition: background-color 700ms linear, border-color 700ms linear, opacity 200ms linear, height 200ms linear !important;
 }
 
 .night .menuBar {
@@ -54,7 +54,6 @@ body.night {
 @media screen and (max-height: 700px) {
 	.menuBar, .night .menuBar {
 		border-top: 0px;
-		background-color: transparent;
 	}
 	
 	.night .menuBtn, .menuBtn {
@@ -71,11 +70,11 @@ body.night {
 	right: 3px;
 	top: 3px;
 	cursor: pointer;
-	transition: all 300ms linear;
-	-webkit-transition: all 300ms linear;
-	-moz-transition: all 300ms linear;
-	-ms-transition: all 300ms linear;
-	-o-transition: all 300ms linear;
+	transition: border-color 700ms linear !important;
+	-webkit-transition: border-color 700ms linear !important;
+	-moz-transition: border-color 700ms linear !important;
+	-ms-transition: border-color 700ms linear !important;
+	-o-transition: border-color 700ms linear !important;
 }
 
 .menuBtn .nightSprite {
