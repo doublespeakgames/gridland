@@ -55,9 +55,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			module.attachHandler(event, element, handler);
 		},
 		
-		get: function(selector, context) {
+		get: function(selector, context, returnEmpty) {
 			var ret = context ? context.find(selector) : $(selector);
-			if(ret.length > 0) {
+			if(returnEmpty || ret.length > 0) {
 				return ret;
 			}
 			return null;

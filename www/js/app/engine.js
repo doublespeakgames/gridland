@@ -1,6 +1,6 @@
 define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
-        'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot', 'app/gameoptions'], 
-		function($, EventManager, Analytics, Graphics, Content, GameBoard, GameState, World, Loot, Options) {
+        'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot', 'app/magic', 'app/gameoptions'], 
+		function($, EventManager, Analytics, Graphics, Content, GameBoard, GameState, World, Loot, Magic, Options) {
 
 	return {
 		DRAG_THRESHOLD: 30, // in pixels
@@ -46,6 +46,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 					var tile = $.data(this, "tile");
 					_engine.startDrag(tile);
 				}
+				EventManager.trigger('toggleMenu');
 				return false;
 			});
 			Graphics.attachHandler("GameBoard", "mouseup touchend", function(e) {
@@ -62,18 +63,33 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				}
 				return false;
 			});
-			Graphics.attachHandler("Loot", "mousedown touchstart", ".button", function(e) {
+			Graphics.attachHandler("GameBoard", "mousedown touchstart", ".inventory .button", function(e) {
 				// Handle wacky touch event objects
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];
 				}
+				EventManager.trigger('toggleMenu');
 				Loot.useItem($(e.target).closest('.button').data('lootName'));
+				return false;
+			});
+			Graphics.attachHandler("GameBoard", "mousedown touchstart", ".magic .button", function(e) {
+				// Handle wacky touch event objects
+				if(e.originalEvent.changedTouches) {
+					e = e.originalEvent.changedTouches[0];
+				}
+				EventManager.trigger('toggleMenu', [$(e.target).closest('.button')]);
+				return false;
+			});
+			$('body').off().on('mousedown touchstart', function(e) {
+				EventManager.trigger('toggleMenu');
+				return false;
 			});
 			Graphics.attachHandler("World", "mousedown touchstart", function(e) {
 				// Handle wacky touch event objects
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];
 				}
+				EventManager.trigger('toggleMenu');
 				EventManager.trigger('toggleCosts', [true]);
 				return false;
 			});

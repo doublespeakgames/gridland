@@ -53,14 +53,6 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 			for(var lootName in State.items) {
 				updateLootButton(lootName, State.items[lootName]);
 			}
-		},
-		
-		attachHandler: function(event, element, handler) {
-			if(element) {
-				el().on(event, element, handler);
-			} else {
-				el().on(event, handler);
-			}
 		}
 	};
 });

@@ -1351,9 +1351,11 @@ body.night {
 /** Magic **/
 .magic {
 	position: absolute;
+	z-index: 1;
 	left: 0px;
 	top: 100%;
 	width: 242px;
+	height: 44px;
 	transition: opacity 200ms linear;
 	-webkit-transition: opacity 200ms linear;
 	-moz-transition: opacity 200ms linear;
@@ -1382,12 +1384,25 @@ body.night {
 }
 
 .magic .button {
+	position: absolute;
+	bottom: 0px;
 	background-color: white;
 	background-image: url(../img/magic.png);
 	background-position: center;
 	background-repeat: no-repeat;
+	transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
+	-webkit-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
+	-moz-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
+	-ms-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
+	-o-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
 }
 
 .night .magic .button {
 	background-color: black;
+}
+
+.magic .button.open {
+	height: 300px;
+	width: 300px;
+	border-radius: 152px;
 }

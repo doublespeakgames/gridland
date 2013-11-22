@@ -1,4 +1,4 @@
-define(['app/entity/worldEntity'], function(WorldEntity) {
+define(['app/entity/worldentity'], function(WorldEntity) {
 	
 	var TreasureChest = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
