@@ -590,6 +590,10 @@ body.night {
 	background-image: url(../img/sawmill.png);
 }
 
+.tower {
+	background-image: url(../img/tower.png);
+}
+
 .resources {
 	z-index: 2;
 	position: absolute;
@@ -1266,7 +1270,7 @@ body.night {
 	opacity: 1;
 }
 
-.button div {
+.inventory .button > div {
 	position: absolute;
 	width: 8px;
 	height: 8px;
@@ -1280,37 +1284,37 @@ body.night {
 	-o-transition: background-color 200ms linear;
 }
 
-.button div:nth-child(2) {
+.inventory .button div:nth-child(2) {
 	bottom: 0px;
 	left: 0px;	
 }
 
-.button.charge_1 div:nth-child(2),
-.button.charge_2 div:nth-child(2),
-.button.charge_3 div:nth-child(2) {
+.inventory .button.charge_1 div:nth-child(2),
+.inventory .button.charge_2 div:nth-child(2),
+.inventory .button.charge_3 div:nth-child(2) {
 	background-color: white;
 }
 
-.button div:nth-child(3) {
+.inventory .button div:nth-child(3) {
 	bottom: -5px;
 	left: 14px;
 }
 
-.button.charge_2 div:nth-child(3),
-.button.charge_3 div:nth-child(3) {
+.inventory .button.charge_2 div:nth-child(3),
+.inventory .button.charge_3 div:nth-child(3) {
 	background-color: white;
 }
 
-.button div:nth-child(4) {
+.inventory .button div:nth-child(4) {
 	bottom: 0px;
 	right: 0px;
 }
 
-.button.charge_3 div:nth-child(4) {
+.inventory .button.charge_3 div:nth-child(4) {
 	background-color: white;
 }
 
-.button div:nth-child(1),
+.inventory .button div:nth-child(1),
 .loot {
 	position: absolute;
 	width: 28px;
@@ -1318,7 +1322,7 @@ body.night {
 	background-image: url(../img/items.png);
 }
 
-.button div:nth-child(1) {
+.inventory .button div:nth-child(1) {
 	border: none;
 	bottom: 7px;
 	left: 6px;
@@ -1349,6 +1353,14 @@ body.night {
 }
 
 /** Magic **/
+.gem {
+	position: absolute;
+	background: url(../img/gem.png) no-repeat;
+	width: 12px;
+	height: 24px;
+	top: 35px;
+}
+
 .magic {
 	position: absolute;
 	z-index: 1;
@@ -1363,43 +1375,59 @@ body.night {
 	-o-transition: opacity 200ms linear;
 }
 
-.manaBar {
-	border-style: solid;
-	border-width: 2px;
-	height: 15px;
-	position: absolute;
-	left: -2px;
-	right: 38px;
-}
-
-.manaBar div {
-	background-color: #4D4DBC;
-	height: 100%;
-	width: 0;
-	transition: width 200ms linear;
-	-webkit-transition: width 200ms linear;
-	-moz-transition: width 200ms linear;
-	-ms-transition: width 200ms linear;
-	-o-transition: width 200ms linear;
-}
-
 .magic .button {
 	position: absolute;
 	bottom: 0px;
-	background-color: white;
-	background-image: url(../img/magic.png);
-	background-position: center;
-	background-repeat: no-repeat;
 	transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
 	-webkit-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
 	-moz-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
 	-ms-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
 	-o-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
+	overflow: hidden;
 }
 
-.night .magic .button {
+.magic .button:after {
+	width: 100%;
+	height: 100%;
+	content: '';
+	display: block;
+	position: absolute;
+	background-image: url(../img/magic.png);
+	background-position: 20% 20%;
+	background-repeat: no-repeat;
+	transition: opacity 200ms linear;
+	-webkit-transition: opacity 200ms linear;
+	-moz-transition: opacity 200ms linear;
+	-ms-transition: opacity 200ms linear;
+	-o-transition: opacity 200ms linear;
+}
+
+.magic .button.open:after {
+	opacity: 0;
+}
+
+.magic .button > div {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	height: 0px;
+	width: 100%;
+	background-color: #4D4DBC;
+	transition: height 200ms linear;
+	-webkit-transition: height 200ms linear, background-color 200ms linear;
+	-moz-transition: height 200ms linear, background-color 200ms linear;
+	-ms-transition: height 200ms linear, background-color 200ms linear;
+	-o-transition: height 200ms linear, background-color 200ms linear;
+}
+
+.magic .button.open > div {
+	background-color: white;
+}
+
+.night .magic .button.open > div {
 	background-color: black;
 }
+
 
 .magic .button.open {
 	height: 300px;

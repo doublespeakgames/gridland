@@ -1,7 +1,8 @@
 define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 'app/entity/building', 
 		'app/gamecontent', 'app/gamestate', 'app/action/actionfactory', 'app/entity/monster/monsterfactory',
-        'app/entity/block'], 
-		function($, EventManager, Analytics, Graphics, Building, Content, GameState, ActionFactory, MonsterFactory, Block) {
+        'app/entity/block', 'app/entity/gem'], 
+		function($, EventManager, Analytics, Graphics, Building, Content, GameState, 
+				ActionFactory, MonsterFactory, Block, Gem) {
 	return {
 		stuff: [],
 		
@@ -13,6 +14,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			$.extend(this.options, opts);
 			this.dude = null;
 			this.celestial = null;
+			this.gem = null;
 			this.stuff.length = 0;
 			this.isNight = false;
 			this.celestialPosition = 0;
@@ -23,6 +25,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			EventManager.bind('tilesCleared', this.handleTileClear);
 			EventManager.bind('noMoreMoves', this.handleNoMoreMoves);
 			EventManager.bind('tilesSwapped', this.handleTilesSwapped);
+			EventManager.bind('updateGem', this.updateGem);
 			EventManager.bind('levelUp', function() {
 				var w = require('app/world');
 				w.wipeMonsters();
@@ -416,6 +419,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					GameState.level < buildingType.requiredLevel) {
 				return false;
 			}
+			if(buildingType.test && !buildingType.test(GameState)) {
+				return false;
+			}
 			if(buildingType.replaces != null) {
 				var replaceType = Content.getBuildingType(buildingType.replaces);
 				if(!GameState.hasBuilding(replaceType)) {
@@ -445,6 +451,17 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			var monster = MonsterFactory.getMonster(monsterType, {tiles: tiles});
 			Graphics.addMonster(monster, side);
 			this.stuff.push(monster);
+		},
+		
+		updateGem: function() {
+			if(GameState.gem > 0) {
+				if(this.gem == null) {
+					var gem = this.gem = new Gem();
+					gem.p(Content.BuildingType.Tower.position);
+					EventManager.trigger('newEntity', [gem]);
+				}
+				this.gem.animation(GameState.gem - 1);
+			}
 		}
 	};
 });

@@ -113,6 +113,12 @@ define({
 				}
 				R.setSize(5, 4);
 			});
+		},
+		
+		'tower': function() {
+			require(['app/eventmanager'], function(E) {
+				E.trigger('enableMagic');
+			});
 		}
 	},
 	
@@ -409,6 +415,17 @@ define({
 			defaultAnimation: 4,
 			priority: 7
 		},
+		
+		Tower: {
+			className: 'tower',
+			position: 330,
+			cost: {},
+			requiredLevel: 1,
+			priority: 1,
+			test: function(State) {
+				return State.gem >= 4;
+			}
+		}
 	},
 	
 	LootType: {
