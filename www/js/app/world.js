@@ -36,6 +36,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				w.addAttack(s.maxSword());
 			});
 			
+			this.updateGem();
+			
 			for(var i in GameState.buildings) {
 				var building = GameState.buildings[i];
 				if(building.built && !building.obsolete) {
@@ -454,13 +456,14 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		},
 		
 		updateGem: function() {
+			var w = require('app/world');
 			if(GameState.gem > 0) {
-				if(this.gem == null) {
-					var gem = this.gem = new Gem();
+				if(w.gem == null) {
+					var gem = w.gem = new Gem();
 					gem.p(Content.BuildingType.Tower.position);
 					EventManager.trigger('newEntity', [gem]);
 				}
-				this.gem.animation(GameState.gem - 1);
+				w.gem.animation(GameState.gem - 1);
 			}
 		}
 	};
