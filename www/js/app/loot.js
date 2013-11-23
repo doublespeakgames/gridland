@@ -20,30 +20,35 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 	}
 	
 	function getLoot(entity) {
-		var r = Math.random();
-		var lootPool = null;
-		for(var rarity in probabilities) {
-			if(r < probabilities[rarity]) {
-				lootPool = Content.lootPools[rarity];
-				break;
-			}
-		}
-		var poolSize = 0;
-		for(poolSize in lootPool) {}
-		poolSize++; // Correct for array 0-indexing
-		
-		r = Math.random();
 		var lootName = null;
-		for(i in lootPool) {
-			lootName = lootPool[i];
-			if(r < (i + 1) / poolSize) {
-				break;
+		
+		if(GameState.gem < 4 && Math.random() < 0.05) {
+			lootName = "shard";
+		} else {
+			var r = Math.random();
+			var lootPool = null;
+			for(var rarity in probabilities) {
+				if(r < probabilities[rarity]) {
+					lootPool = Content.lootPools[rarity];
+					break;
+				}
+			}
+			var poolSize = 0;
+			for(poolSize in lootPool) {}
+			poolSize++; // Correct for array 0-indexing
+			
+			r = Math.random();
+			for(i in lootPool) {
+				lootName = lootPool[i];
+				if(r < (i + 1) / poolSize) {
+					break;
+				}
 			}
 		}
 		
 		E.trigger("lootGained", [lootName, entity]);
-		if(lootName == "gem") {
-			// Gems are special. Maybe abstract this later...
+		if(lootName == "shard") {
+			// Shards are special. Maybe abstract this later...
 			var num = GameState.gem || 0;
 			GameState.gem = ++num > 4 ? 4 : num;
 			E.trigger("updateGem");

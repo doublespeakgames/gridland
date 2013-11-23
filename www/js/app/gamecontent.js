@@ -460,7 +460,7 @@ define({
 	},
 	
 	lootPools: {
-		rare: ['bomb', 'gem'],
+		rare: ['bomb'],
 		uncommon: ['equipment'],
 		common: ['healthPotion']
 	},

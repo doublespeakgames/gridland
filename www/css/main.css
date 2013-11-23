@@ -1352,6 +1352,10 @@ body.night {
 	background-position: -84px 0;
 }
 
+.loot.shard {
+	background-position: -112px 0;
+}
+
 /** Magic **/
 .gem {
 	position: absolute;
