@@ -46,7 +46,7 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 			// Gems are special. Maybe abstract this later...
 			var num = GameState.gem || 0;
 			GameState.gem = ++num > 4 ? 4 : num;
-			E.trigger("upgadeGem", [GameState.gem]);
+			E.trigger("updateGem");
 		} else {
 			var num = GameState.items[lootName] || 0;
 			num++;
