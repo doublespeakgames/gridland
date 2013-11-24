@@ -26,6 +26,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			EventManager.bind('noMoreMoves', this.handleNoMoreMoves);
 			EventManager.bind('tilesSwapped', this.handleTilesSwapped);
 			EventManager.bind('updateGem', this.updateGem);
+			EventManager.bind('phaseChange', this.phaseTransition);
 			EventManager.bind('levelUp', function() {
 				var w = require('app/world');
 				w.wipeMonsters();
@@ -250,22 +251,22 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		},
 		
 		phaseTransition: function() {
-			this.inTransition = true;
-			var _w = this;
-			Graphics.phaseTransition(this.celestial, function() {
-				_w.inTransition = false;
+			var W = require('app/world');
+			W.inTransition = true;
+			Graphics.phaseTransition(W.celestial, function() {
+				W.inTransition = false;
 			});
-			this.isNight = !this.isNight;
-			if(this.dude.action != null) {
-				this.dude.action.terminateAction(this.dude);						
+			W.isNight = !W.isNight;
+			if(W.dude.action != null) {
+				W.dude.action.terminateAction(W.dude);						
 			}
-			this.celestialPosition = 0;
-			this.dude.shield = 0;
-			this.dude.sword = 0;
+			W.celestialPosition = 0;
+			W.dude.shield = 0;
+			W.dude.sword = 0;
 			Graphics.updateShield(0, 0);
 			Graphics.updateSword(0, 0);
 			
-			if(!this.isNight) {
+			if(!W.isNight) {
 				GameState.dayNumber++;
 				GameState.save();
 				Graphics.notifySave();

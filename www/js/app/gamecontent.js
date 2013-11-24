@@ -475,7 +475,9 @@ define({
 	Spells: {
 		resetBoard: {
 			onUse: function() {
-				console.log('RESET BOARD!');
+				require(['app/eventmanager'], function(E) {
+					E.trigger('refreshBoard');
+				});
 			}
 		},
 		haste: {
@@ -485,7 +487,9 @@ define({
 		},
 		phaseChange: {
 			onUse: function() {
-				console.log('PHASE CHANGE!');
+				require(['app/eventmanager'], function(E) {
+					E.trigger('phaseChange');
+				});
 			}
 		},
 		freezeTime: {

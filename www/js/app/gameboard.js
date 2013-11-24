@@ -20,6 +20,8 @@ define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile',
 				this.tiles.push([]);
 			}
 			this.totals = {};
+			
+			EventManager.bind("refreshBoard", this.refreshBoard);
 		},
 		
 		tileMap: function() {
@@ -41,11 +43,10 @@ define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile',
 		},
 		
 		fill : function() {
-			this.filling = true;
+			var B = require('app/gameboard');
+			B.filling = true;
 			setTimeout(function() {
-				require(['app/gameboard'], function(GameBoard) {
-					GameBoard._doFill(0);
-				});
+				B._doFill(0);
 			}, 100);
 		},
 
@@ -181,9 +182,10 @@ define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile',
 		},
 		
 		refreshBoard: function() {
+			var B = require('app/gameboard');
 			var tiles = [];
-			for(var c in this.tiles) {
-				var col = this.tiles[c];
+			for(var c in B.tiles) {
+				var col = B.tiles[c];
 				for(var r in col) {
 					var tile = col[r];
 					if(tile != null) {
@@ -193,7 +195,7 @@ define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile',
 				col.length = 0;
 			}
 			var G = require('app/graphics/graphics');
-			G.removeTiles(tiles, this.fill);
+			G.removeTiles(tiles, B.fill);
 		},
 		
 		handleMatches: function(tiles) {
