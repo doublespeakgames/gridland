@@ -1,4 +1,4 @@
-define(['app/action/action', 'app/graphics/graphics'], function(Action, Graphics) {
+define(['app/action/action'], function(Action) {
 	
 	var Shoot = function(options) {
 		if(options) {
@@ -24,6 +24,7 @@ define(['app/action/action', 'app/graphics/graphics'], function(Action, Graphics
 	
 	Shoot.prototype.doFrameAction = function(frame) {
 		if(frame == 3) {
+			var Graphics = require('app/graphics/graphics');
 			var start = this._entity.p();
 			var end = this.target.p();
 			var _action = this;

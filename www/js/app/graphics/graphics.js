@@ -482,7 +482,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		fireArrow: function(arrowClass, speed, start, end, callback) {
 			var dist = end - start;
-			var ARROW_TIME = 700;
+			var ARROW_TIME = 1000;
 			var arrow = $('<div>').addClass(arrowClass).addClass(dist > 0 ? 'right' : 'left');
 			arrow.attr('style', 'left:' + start + 'px;');
 			$('.world').append(arrow);

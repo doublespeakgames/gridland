@@ -74,6 +74,13 @@ define({
 				weaver2: 3,
 				weaver3: 4
 			}
+		},
+		Mana: {
+			className: 'mana',
+			nightEffect: {
+				'default': 'spawn:zombie', // TODO: Add special mana monsters
+			},
+			multipliers: {}
 		}
 	},
 	

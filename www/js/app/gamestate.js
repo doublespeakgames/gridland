@@ -10,6 +10,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			this.dayNumber = 1;
 			this.items = {};
 			this.gem = 0;
+			this.mana = 0;
 			Analytics.trackEvent('game', 'create');
 		},
 		
@@ -30,6 +31,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 					this.xp = savedState.xp;
 					this.dayNumber = savedState.dayNumber || 1;
 					this.gem = savedState.gem || 0;
+					this.mana = savedState.mana || 0;
 				} else {
 					this.create();
 				}
@@ -48,7 +50,8 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 					xp: this.xp,
 					dayNumber: this.dayNumber,
 					items: this.items,
-					gem: this.gem
+					gem: this.gem,
+					mana: this.mana
 				};
 				for(b in this.buildings) {
 					var building = this.buildings[b];
@@ -141,6 +144,14 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 				return 6;
 			}
 			return 3;
+		},
+		
+		maxMana: function() {
+			return 3;
+		},
+		
+		magicEnabled: function() {
+			return this.gem >= 4;
 		}
 	};
 });

@@ -9,6 +9,7 @@
 		if(_el == null) {
 			_el = G.make('hidden magic')
 				.append(G.make('button litBorder').append(G.make()));
+			updateMana(State.mana, State.maxMana());
 			G.addToBoard(_el);
 			setTimeout(function() {
 				_el.removeClass('hidden');

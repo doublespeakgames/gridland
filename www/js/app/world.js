@@ -150,6 +150,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 						}
 						if(type == Content.ResourceType.Grain) {
 							EventManager.trigger("healDude", [quantity]);
+						} else if(type ==  Content.ResourceType.Mana) {
+							World.addMana(quantity);
 						} else {
 							Resources.collectResource(Content.getResourceType(typeName), quantity);
 						}
@@ -447,6 +449,14 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				this.dude.sword = GameState.maxSword();
 			}
 			Graphics.updateSword(this.dude.sword, GameState.maxSword());
+		},
+		
+		addMana: function(num) {
+			GameState.mana = GameState.mana ? GameState.mana + num : num;
+			if(GameState.mana > GameState.maxMana()) {
+				GameState.mana = GameState.maxMana();
+			}
+			EventManager.trigger("updateMana", [GameState.mana, GameState.maxMana()]);
 		},
 		
 		spawnMonster: function(monsterType, tiles, side) {

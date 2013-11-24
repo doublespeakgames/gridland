@@ -197,31 +197,54 @@ define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile',
 		},
 		
 		handleMatches: function(tiles) {
-			var G = require('app/graphics/graphics');
+			var G = require('app/graphics/graphics'),
+				S = require('app/gamestate');
 			this.removals++;
-			var colsToDrop = {};
+			var tilesRemovedInColumn = {};
 			var resourcesGained = {};
 
 			// Remove matched tiles
+			var resourceColumns = {};
 			for(t in tiles) {
 				var tileToRemove = tiles[t];
+				var rList = resourceColumns[tileToRemove.options.type.className];
+				if(!rList) {
+					rList = resourceColumns[tileToRemove.options.type.className] = [];
+				}
+				rList.push(tileToRemove.options.column);
 				var gained = resourcesGained[tileToRemove.options.type.className] || 0;
 				resourcesGained[tileToRemove.options.type.className] = gained + 1;
 				if(this.tiles[tileToRemove.options.column][tileToRemove.options.row] != null) {
 					this.tiles[tileToRemove.options.column][tileToRemove.options.row] = null;
-					if(colsToDrop[tileToRemove.options.column] == null) {
-						colsToDrop[tileToRemove.options.column] = 0;
+					if(tilesRemovedInColumn[tileToRemove.options.column] == null) {
+						tilesRemovedInColumn[tileToRemove.options.column] = 0;
 					}
-					colsToDrop[tileToRemove.options.column]++;
+					tilesRemovedInColumn[tileToRemove.options.column]++;
 				}
 				tileToRemove.options.row = -1;
+			}
+			
+			// Check for matches of 4 or more
+			var specialColumns = {};
+			if(S.magicEnabled()) {
+				for(var resource in resourceColumns) {
+					var rCol = resourceColumns[resource];
+					var num = resourcesGained[resource];
+					if(num >= 4) {
+						var cIndex = Math.floor(Math.random() * rCol.length);
+						var selectedColumn = rCol[cIndex];
+						var n = specialColumns[selectedColumn] || 0;
+						specialColumns[selectedColumn] = n + 1;
+					}
+				}
 			}
 			
 			EventManager.trigger('tilesCleared', [resourcesGained, this.swapSide]);
 			
 			G.removeTiles(tiles, function() {
-				require(['app/gameboard', 'app/entity/tile', 'app/resources', 'app/gamecontent', 'app/gamestate'], 
-						function(GameBoard, Tile, Resources, Content, State) {
+				var GameBoard = require('app/gameboard'), 
+					Tile = 		require('app/entity/tile'), 
+					Content = 	require('app/gamecontent');
 					
 					// Drop remaining tiles
 					var pCounts = GameBoard.tileMap();
@@ -231,47 +254,68 @@ define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile',
 					}
 					var newTiles = [];
 					var dropList = [];
-					for(col in colsToDrop) {
+					for(col in tilesRemovedInColumn) {
 						for(var r = GameBoard.options.rows - 1; r >= 0; r--) {
 							if(GameBoard.tiles[col][r] != null) {
 								dropList.push(GameBoard.tiles[col][r]);
 							}
 						}
-						for(var i = 1, num = colsToDrop[col]; i <= num; i++) {
-							var probs = {};
-							for(var p in pCounts) {
-								probs[p] = pCounts[p] / nextCount;
+						
+						// Place mana tiles, if necessary
+						var gemRows = {};
+						if(S.magicEnabled()) {
+							var gemsInColumn = specialColumns[col];
+							if(gemsInColumn != null && gemsInColumn > 0) {
+								var possibleRows = [];
+								for(var i = 1, num = tilesRemovedInColumn[col]; i <= num; i++) {
+									possibleRows.push(i);
+								}
+								for(var i = 0; i < gemsInColumn && possibleRows.length > 0; i++) {
+									var rIndex = Math.floor(Math.random() * possibleRows.length);
+									var row = possibleRows[rIndex];
+									gemRows[row] = true;
+								}
 							}
-							var r = Math.random();
-							var base = 0;
+						}
+						
+						for(var i = 1, num = tilesRemovedInColumn[col]; i <= num; i++) {
 							var typeClass = "";
-							for(var className in probs) {
-								typeClass = className;
-								var prob = probs[className];
-//								console.log(className + ": " + r + " < " + prob + " + " + base);
-								if(r < prob + base) {
-									break;
+							if(gemRows[i]) {
+								typeClass = "mana";
+							} else {
+								var probs = {};
+								for(var p in pCounts) {
+									probs[p] = pCounts[p] / nextCount;
 								}
-								base += prob;
-							}
-							var type = Content.getResourceType(typeClass);
-							
-							var n = GameBoard.totals[typeClass] || 0;
-							GameBoard.totals[typeClass] = n + 1;
-							
-							nextCount = 0;
-							for(var t in pCounts) {
-								if(t == type.className) {
-									pCounts[t]--;
-								} else {
-									pCounts[t] = 2;
+								var r = Math.random();
+								var base = 0;
+								for(var className in probs) {
+									typeClass = className;
+									var prob = probs[className];
+	//								console.log(className + ": " + r + " < " + prob + " + " + base);
+									if(r < prob + base) {
+										break;
+									}
+									base += prob;
 								}
-								nextCount += pCounts[t];
+								
+								var n = GameBoard.totals[typeClass] || 0;
+								GameBoard.totals[typeClass] = n + 1;
+								
+								nextCount = 0;
+								for(var t in pCounts) {
+									if(t == typeClass) {
+										pCounts[t]--;
+									} else {
+										pCounts[t] = 2;
+									}
+									nextCount += pCounts[t];
+								}
 							}
 							newTiles.push(new Tile({
 								column: parseInt(col),
 								row: -i,
-								type: type
+								type: Content.getResourceType(typeClass)
 							}));
 						}
 					}
@@ -282,7 +326,6 @@ define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile',
 					
 					GameBoard.removals--;
 					if(GameBoard.removals < 0) GameBoard.removals = 0;
-				});
 			});
 		},
 		
