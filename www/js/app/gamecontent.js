@@ -472,6 +472,29 @@ define({
 		common: ['healthPotion']
 	},
 	
+	Spells: {
+		resetBoard: {
+			onUse: function() {
+				console.log('RESET BOARD!');
+			}
+		},
+		haste: {
+			onUse: function() {
+				console.log('HASTE!');
+			}
+		},
+		phaseChange: {
+			onUse: function() {
+				console.log('PHASE CHANGE!');
+			}
+		},
+		freezeTime: {
+			onUse: function() {
+				console.log('FREEZE TIME!');
+			}
+		}
+	},
+	
 	getResourceType: function(className) {
 		for(var c in this.ResourceType) {
 			if(className == this.ResourceType[c].className) {

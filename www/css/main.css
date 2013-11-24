@@ -1392,7 +1392,6 @@ body.night {
 	-moz-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
 	-ms-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
 	-o-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
-	overflow: hidden;
 }
 
 .magic .button:after {
@@ -1415,31 +1414,101 @@ body.night {
 	opacity: 0;
 }
 
-.magic .button > div {
+.magic .button > .inner {
 	position: absolute;
 	left: 0px;
 	bottom: 0px;
-	height: 0px;
 	width: 100%;
-	background-color: #4D4DBC;
-	transition: height 200ms linear;
-	-webkit-transition: height 200ms linear, background-color 200ms linear;
-	-moz-transition: height 200ms linear, background-color 200ms linear;
-	-ms-transition: height 200ms linear, background-color 200ms linear;
-	-o-transition: height 200ms linear, background-color 200ms linear;
+	height: 100%;
+	border-radius: 22px;
+	overflow: hidden;
+	-webkit-transition: all 200ms linear;
+	-moz-transition: all 200ms linear;
+	-ms-transition: all 200ms linear;
+	-o-transition: all 200ms linear;
 }
 
-.magic .button.open > div {
+.magic .button.open > .inner {
+	border-radius: 62px;
+}
+
+.magic .button > .inner > div {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	width: 100%;
+	height: 0px;
+	background-color: #4D4DBC;
+	-webkit-transition: all 200ms linear;
+	-moz-transition: all 200ms linear;
+	-ms-transition: all 200ms linear;
+	-o-transition: all 200ms linear;
+}
+
+.magic .button.open > .inner > div {
 	background-color: white;
 }
 
-.night .magic .button.open > div {
+.night .magic .button.open > .inner > div {
 	background-color: black;
 }
 
 
 .magic .button.open {
-	height: 300px;
-	width: 300px;
-	border-radius: 152px;
+	height: 120px;
+	width: 120px;
+	border-radius: 62px;
+}
+
+.spells {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	transition: opacity 200ms linear;
+	-webkit-transition: opacity 200ms linear;
+	-moz-transition: opacity 200ms linear;
+	-ms-transition: opacity 200ms linear;
+	-o-transition: opacity 200ms linear;
+}
+
+.open .spells {
+	opacity: 1;
+}
+
+.spells > div {
+	z-index: 100;
+	position: absolute;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 22px;
+	width: 40px;
+	height: 40px; 
+	margin-top: -22px;
+	margin-left: -22px;
+	background-color: white;
+}
+
+.night .spells > div {
+	background-color: black;
+}
+
+.spells > div:nth-child(1) {
+	left: 15%;
+	top: 15%;
+}
+
+.spells > div:nth-child(2) {
+	left: 50%;
+	top: 0px;
+}
+
+.spells > div:nth-child(3) {
+	left: 85%;
+	top: 15%;
+}
+
+.spells > div:nth-child(4) {
+	left: 100%;
+	top: 50%;
 }

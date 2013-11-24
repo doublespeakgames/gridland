@@ -30,6 +30,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			Graphics.init();
 			World.init();
 			Loot.init();
+			Magic.init();
 			GameBoard.fill();
 			World.launchDude();
 			
@@ -77,7 +78,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];
 				}
-				EventManager.trigger('toggleMenu', [$(e.target).closest('.button')]);
+				EventManager.trigger('magicClick', [$(e.target)]);
 				return false;
 			});
 			$('body').off().on('mousedown touchstart', function(e) {
