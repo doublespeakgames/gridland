@@ -1445,15 +1445,6 @@ body.night {
 	-o-transition: all 200ms linear;
 }
 
-.magic .button.open > .inner > div {
-	background-color: white;
-}
-
-.night .magic .button.open > .inner > div {
-	background-color: black;
-}
-
-
 .magic .button.open {
 	height: 120px;
 	width: 120px;
@@ -1511,4 +1502,41 @@ body.night {
 .spells > div:nth-child(4) {
 	left: 100%;
 	top: 50%;
+}
+
+.spell {
+	background-image: url(../img/spells.png);
+	background-repeat: no-repeat;
+}
+
+.spell.resetBoard {
+	background-position: 0 0;
+}
+
+.night .spell.resetBoard {
+	background-position: 0 -40px;
+}
+
+.spell.haste {
+	background-position: -40px 0;
+}
+
+.night .spell.haste {
+	background-position: -40px -40px;
+}
+
+.spell.freezeTime {
+	background-position: -80px 0;
+}
+
+.night .spell.freezeTime {
+	background-position: -80px -40px;
+}
+
+.spell.phaseChange {
+	background-position: -120px 0;
+}
+
+.night .spell.phaseChange {
+	background-position: -120px -40px;
 }
