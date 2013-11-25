@@ -5,6 +5,7 @@ define(['app/entity/worldentity', 'app/graphics/graphics'],
 		this.options = $.extend({}, this.options, options);
 		this.hostile = true;
 		this.action = null;
+		this.noIdle = true;
 	};
 	Monster.prototype = new WorldEntity({
 		className: 'monster'

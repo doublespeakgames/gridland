@@ -34,7 +34,9 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 		var _action = this;
 		require(['app/graphics/graphics'], function(Graphics) {
 			Graphics.stop(dude);
-			dude.animation(0);
+			if(!dude.noIdle) {
+				dude.animation(0);
+			}
 			dude.action = null;
 			Graphics.sinkBuilding(_action.building);			
 		});

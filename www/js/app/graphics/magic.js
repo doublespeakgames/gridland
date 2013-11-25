@@ -5,6 +5,7 @@
 	var _el = null;
 	var _open = false;
 	var _spells = null;
+	var _states = null;
 	
 	function el() {
 		if(_el == null) {
@@ -30,6 +31,15 @@
 			}
 		}
 		return _spells;
+	}
+	
+	function states() {
+		if(_states == null) {
+			var G = require('app/graphics/graphics');
+			_states = G.make('states');
+			G.addToBoard(_states);
+		}
+		return _states;
 	}
 	
 	function updateMana(current, total) {
@@ -64,6 +74,7 @@
 		
 		if(button && !open && State.mana >= MANA_COST) {
 			button.append(spells());
+			spells().css('left'); // redraw
 			button.addClass('open');
 			_open = true;
 		}
@@ -74,12 +85,28 @@
 		G.get('.button.open').removeClass('open');
 	}
 	
+	function drawStateEffect(effect) {
+		var G = require('app/graphics/graphics');
+		var state = states().find('.' + effect.className);
+		state.remove();
+		state = G.make(effect.className).appendTo(states());
+		
+		setTimeout(function() {
+			state.addClass('expiring');
+		}, effect.duration - 3000);
+		
+		setTimeout(function() {
+			state.remove();
+		}, effect.duration);
+	}
+	
 	return {
 		init: function() {
 			_el = null;
 			E.bind("updateMana", updateMana);
 			E.bind("magicClick", handleClick);
 			E.bind("toggleMenu", toggleMenu);
+			E.bind("newStateEffect", drawStateEffect);
 			E.bind("enableMagic", function() {
 				el(); // Trigger graphics initialization
 			});

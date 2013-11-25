@@ -37,7 +37,9 @@ define(['app/action/action', 'app/eventmanager'], function(Action, E) {
 	MoveBlock.prototype.terminateAction = function(dude) {
 		var _action = this;
 		require(['app/graphics/graphics', 'app/resources'], function(Graphics, Resources) {
-			dude.animation(0);
+			if(!dude.noIdle) {
+				dude.animation(0);
+			}
 			Graphics.stop(dude);
 			if(dude.carrying != null) {
 				Resources.returnBlock(_action.block);

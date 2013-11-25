@@ -78,7 +78,7 @@ define({
 		Mana: {
 			className: 'mana',
 			nightEffect: {
-				'default': 'spawn:zombie', // TODO: Add special mana monsters
+				'default': 'spawn:fireElemental', // TODO: Add special mana monsters
 			},
 			multipliers: {}
 		}
@@ -471,8 +471,8 @@ define({
 	},
 	
 	StateEffects: {
-		timeFreeze: {
-			className: 'timeFreeze',
+		freezeTime: {
+			className: 'freezeTime',
 			duration: 15000
 		},
 		haste: {
@@ -490,8 +490,9 @@ define({
 		},
 		haste: {
 			onUse: function() {
-				var E = require('app/eventmanager');
-				E.trigger('newStateEffect', this.StateEffects.haste);
+				var E = require('app/eventmanager'),
+					C = require('app/gamecontent');
+				E.trigger('newStateEffect', [C.StateEffects.haste]);
 			}
 		},
 		phaseChange: {
@@ -502,8 +503,9 @@ define({
 		},
 		freezeTime: {
 			onUse: function() {
-				var E = require('app/eventmanager');
-				E.trigger('newStateEffect', this.StateEffects.timeFreeze);
+				var E = require('app/eventmanager'),
+					C = require('app/gamecontent');
+				E.trigger('newStateEffect', [C.StateEffects.freezeTime]);
 			}
 		}
 	},

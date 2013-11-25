@@ -1537,39 +1537,61 @@ body.night {
 	top: 50%;
 }
 
-.spell {
+.spell,
+.states > div {
 	background-image: url(../img/spells.png);
 	background-repeat: no-repeat;
 }
 
-.spell.resetBoard {
+.resetBoard {
 	background-position: 0 0;
 }
 
-.night .spell.resetBoard {
+.night .resetBoard {
 	background-position: 0 -40px;
 }
 
-.spell.haste {
+.haste {
 	background-position: -40px 0;
 }
 
-.night .spell.haste {
+.night .haste {
 	background-position: -40px -40px;
 }
 
-.spell.freezeTime {
+.freezeTime {
 	background-position: -80px 0;
 }
 
-.night .spell.freezeTime {
+.night .freezeTime {
 	background-position: -80px -40px;
 }
 
-.spell.phaseChange {
+.phaseChange {
 	background-position: -120px 0;
 }
 
-.night .spell.phaseChange {
+.night .phaseChange {
 	background-position: -120px -40px;
+}
+
+.states {
+	position: absolute;
+	right: -32px;
+	bottom: 0px;
+	width: 30px;
+	height: 180px;
+}
+
+.states > div {
+	width: 40px;
+	height: 40px;	
+}
+
+.states > div.expiring {
+	animation: pulse 500ms infinite;
+	-webkit-animation: pulse 500ms infinite;
+	-moz-animation: pulse 500ms infinite;
+	-ms-animation: pulse 500ms infinite;
+	-o-animation: pulse 500ms infinite;
 }

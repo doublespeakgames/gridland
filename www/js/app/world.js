@@ -179,7 +179,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 						continue;
 					}
 					
-					var frozen = World.effects['timeFreeze'] != null && entity != World.dude;
+					var frozen = World.effects['freezeTime'] != null && entity != World.dude;
 					
 					if((entity.hostile || entity.lootable) && !World.isNight) {
 						// Monsters and chests cannot survive the daylight
@@ -253,7 +253,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		},
 		
 		advanceTime: function(steps) {
-			if(this.effects['timeFreeze'] != null) {
+			if(this.effects['freezeTime'] != null) {
 				// Time does not advance when frozen
 				return;
 			}
@@ -509,19 +509,15 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		},
 		
 		addStateEffect: function(effect) {
-			console.log('starting effect: ' + effect.className);
 			var W = require('app/world');
 			W.stopAllActions();
 			var existingEffect = W.effects[effect.className];
 			if(existingEffect != null) {
-				console.log('cleared existing effect');
 				clearTimeout(existingEffect);
 			}
 			W.effects[effect.className] = setTimeout(function() {
-				console.log('effect expired: ' + effect.className);
 				W.effects[effect.className] = null;
 				W.stopAllActions();
-				EventManager.trigger('eventExpired', [effect]);
 			}, effect.duration);
 		}
 	};
