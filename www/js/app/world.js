@@ -3,6 +3,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
         'app/entity/block', 'app/entity/gem'], 
 		function($, EventManager, Analytics, Graphics, Building, Content, GameState, 
 				ActionFactory, MonsterFactory, Block, Gem) {
+	
+	var hasteTick = false;
+	
 	return {
 		stuff: [],
 		
@@ -75,7 +78,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			if(this.gameLoop != null) {
 				clearInterval(this.gameLoop);
 			}
-			this.gameLoop = setInterval(this.makeStuffHappen, 200);
+			this.gameLoop = setInterval(this.makeStuffHappen, 100);
 			this.inTransition = false;
 		},
 		
@@ -165,53 +168,63 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		
 		makeStuffHappen: function() {
 			var World = require('app/world');
-			var newStuff = [];
-			for(var i = 0, len = World.stuff.length; i < len; i++) {
-				var entity = World.stuff[i];
-				
-				var frozen = World.effects['timeFreeze'] != null && entity != World.dude;
-				
-				if((entity.hostile || entity.lootable) && !World.isNight) {
-					// Monsters and chests cannot survive the daylight
-					if(entity.action != null) {
-						entity.action.terminateAction(entity);
+			
+			if(!hasteTick || World.effects['haste'] != null) {
+				var newStuff = [];
+				for(var i = 0, len = World.stuff.length; i < len; i++) {
+					var entity = World.stuff[i];
+					
+					if(hasteTick && entity != World.dude) {
+						newStuff.push(entity);
+						continue;
 					}
-					entity.el().remove();
-					entity.gone = true;
-				} 
-				if(entity.action != null && !entity.gone && !frozen) {
-					entity.action.doFrameAction(entity.frame);
-				}
-				if(!entity.gone) {
-					if(!entity.paused && !frozen) {
-						entity.animate();
-						entity.think();
+					
+					var frozen = World.effects['timeFreeze'] != null && entity != World.dude;
+					
+					if((entity.hostile || entity.lootable) && !World.isNight) {
+						// Monsters and chests cannot survive the daylight
+						if(entity.action != null) {
+							entity.action.terminateAction(entity);
+						}
+						entity.el().remove();
+						entity.gone = true;
+					} 
+					if(entity.action != null && !entity.gone && !frozen) {
+						entity.action.doFrameAction(entity.frame);
 					}
-					newStuff.push(entity);
-				} else if(entity.hostile && World.isNight && !entity.wiped) {
-					EventManager.trigger('monsterKilled', [entity]);
-					World.dude.gainXp(entity.xp);
-					World.advanceTime();
-				} else if(entity == World.dude) {
-					// Dude is dead. Long live the dude.
-					this.inTransition = true;
-					GameState.saveXp();
-					Graphics.fadeOut(function() {
-						setTimeout(function() {
-							require(['app/graphics/graphics'], function(G) {
-								Graphics.setNight(false);
-							}, 500);
-						});
-						setTimeout(function() {
-							require(['app/engine'], function(Engine) {
-								Engine.init();
+					if(!entity.gone) {
+						if(!entity.paused && !frozen) {
+							entity.animate();
+							entity.think();
+						}
+						newStuff.push(entity);
+					} else if(entity.hostile && World.isNight && !entity.wiped) {
+						EventManager.trigger('monsterKilled', [entity]);
+						World.dude.gainXp(entity.xp);
+						World.advanceTime();
+					} else if(entity == World.dude) {
+						// Dude is dead. Long live the dude.
+						this.inTransition = true;
+						GameState.saveXp();
+						Graphics.fadeOut(function() {
+							setTimeout(function() {
+								require(['app/graphics/graphics'], function(G) {
+									Graphics.setNight(false);
+								}, 500);
 							});
-						}, 1000);
-					});
+							setTimeout(function() {
+								require(['app/engine'], function(Engine) {
+									Engine.init();
+								});
+							}, 1000);
+						});
+					}
 				}
+				World.stuff.length = 0;
+				World.stuff = newStuff;
 			}
-			World.stuff.length = 0;
-			World.stuff = newStuff;
+			
+			hasteTick = !hasteTick;
 		},
 		
 		launchDude: function() {
