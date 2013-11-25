@@ -34,6 +34,11 @@
 	
 	function updateMana(current, total) {
 		var percent = Math.ceil((current / total) * 100);
+		if(current == total) {
+			el().find('.button').addClass('full');
+		} else {
+			el().find('.button').removeClass('full');
+		}
 		el().find('.button > .inner > div').css('height', percent + '%');
 	}
 	

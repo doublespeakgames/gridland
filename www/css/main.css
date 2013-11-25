@@ -1414,6 +1414,39 @@ body.night {
 	opacity: 0;
 }
 
+@keyframes glow {
+	0% { box-shadow: 0 0 10px 0px #4D4DBC; }
+	100% { box-shadow: 0 0 15px 2px #4D4DBC; }
+}
+
+@-webkit-keyframes glow {
+	0% { box-shadow: 0 0 10px 0px #4D4DBC; }
+	100% { box-shadow: 0 0 15px 2px #4D4DBC; }
+}
+
+@-moz-keyframes glow {
+	0% { box-shadow: 0 0 10px 0px #4D4DBC; }
+	100% { box-shadow: 0 0 15px 2px #4D4DBC; }
+}
+
+@-ms-keyframes glow {
+	0% { box-shadow: 0 0 10px 0px #4D4DBC; }
+	100% { box-shadow: 0 0 15px 2px #4D4DBC; }
+}
+
+@-o-keyframes glow {
+	0% { box-shadow: 0 0 10px 0px #4D4DBC; }
+	100% { box-shadow: 0 0 15px 2px #4D4DBC; }
+}
+
+.magic .button.full {
+	animation: glow 500ms infinite;
+	-webkit-animation: glow 500ms infinite;
+	-moz-animation: glow 500ms infinite;
+	-ms-animation: glow 500ms infinite;
+	-o-animation: glow 500ms infinite;
+}
+
 .magic .button > .inner {
 	position: absolute;
 	left: 0px;
