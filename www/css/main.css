@@ -435,6 +435,18 @@ body.night {
 	background-position: -52px -260px;
 }
 
+.stone7 .tile.stone > div {
+	background-position: -52px -312px;
+}
+
+.stone8 .tile.stone > div {
+	background-position: -52px -364px;
+}
+
+.stone9 .tile.stone > div {
+	background-position: -52px -416px;
+}
+
 .tile.wood > div {
 	background-position: -104px 0;
 }
@@ -776,6 +788,15 @@ body.night {
 .stone6 .block.stone div,
 .stone6 .stone .ghost {
 	background-color: #135468;
+}
+
+.stone7 .block.stone div,
+.stone7 .stone .ghost,
+.stone8 .block.stone div,
+.stone8 .stone .ghost,
+.stone9 .block.stone div,
+.stone9 .stone .ghost {
+	background-color: #0097FE;
 }
 
 .block.clay div,
