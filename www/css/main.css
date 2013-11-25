@@ -471,6 +471,18 @@ body.night {
 	background-position: -104px -260px;
 }
 
+.wood7 .tile.wood > div {
+	background-position: -104px -312px;
+}
+
+.wood8 .tile.wood > div {
+	background-position: -104px -364px;
+}
+
+.wood9 .tile.wood > div {
+	background-position: -104px -416px;
+}
+
 .tile.clay > div {
 	background-position: -156px 0px;
 }
@@ -774,6 +786,15 @@ body.night {
 .wood6 .block.wood div,
 .wood6 .wood .ghost {
 	background-color: #876C5B;
+}
+
+.wood7 .block.wood div,
+.wood7 .wood .ghost,
+.wood8 .block.wood div,
+.wood8 .wood .ghost,
+.wood9 .block.wood div,
+.wood9 .wood .ghost {
+	background-color: #FFD800;
 }
 
 .block.stone div,
