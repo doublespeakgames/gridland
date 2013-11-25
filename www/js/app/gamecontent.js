@@ -438,30 +438,28 @@ define({
 	LootType: {
 		healthPotion: {
 			onUse: function() {
-				require(['app/eventmanager', 'app/gamestate'], function(E, State) {
-					E.trigger('healDude', [Math.floor(State.maxHealth() / 2)]);
-				});
+				var E = require('app/eventmanager'),
+					S = require('app/gamestate');
+				E.trigger('healDude', [Math.floor(S.maxHealth() / 2)]);
 			}
 		},
 		manaPotion: {
 			onUse: function() {
-				require(['app/eventmanager', 'app/gamestate'], function(E, State) {
-					E.trigger('gainMana', [Math.floor(State.maxMana() / 2)]);
-				});
+				var E = require('app/eventmanager'),
+					S = require('app/gamestate');
+				E.trigger('gainMana', [Math.floor(S.maxMana() / 2)]);
 			}
 		},
 		bomb: {
 			onUse: function() {
-				require(['app/eventmanager'], function(E) {
-					E.trigger('wipeMonsters');
-				});
+				var E = require('app/eventmanager');
+				E.trigger('wipeMonsters');
 			}
 		},
 		equipment: {
 			onUse: function() {
-				require(['app/eventmanager'], function(E) {
-					E.trigger('fillEquipment');
-				});
+				var E = require('app/eventmanager');
+				E.trigger('fillEquipment');
 			}
 		}
 	},
@@ -472,29 +470,40 @@ define({
 		common: ['healthPotion']
 	},
 	
+	StateEffects: {
+		timeFreeze: {
+			className: 'timeFreeze',
+			duration: 15000
+		},
+		haste: {
+			className: 'haste',
+			duration: 30000
+		}
+	},
+	
 	Spells: {
 		resetBoard: {
 			onUse: function() {
-				require(['app/eventmanager'], function(E) {
-					E.trigger('refreshBoard');
-				});
+				var E = require('app/eventmanager');
+				E.trigger('refreshBoard');
 			}
 		},
 		haste: {
 			onUse: function() {
-				console.log('HASTE!');
+				var E = require('app/eventmanager');
+				E.trigger('newStateEffect', this.StateEffects.haste);
 			}
 		},
 		phaseChange: {
 			onUse: function() {
-				require(['app/eventmanager'], function(E) {
-					E.trigger('phaseChange');
-				});
+				var E = require('app/eventmanager');
+				E.trigger('phaseChange');
 			}
 		},
 		freezeTime: {
 			onUse: function() {
-				console.log('FREEZE TIME!');
+				var E = require('app/eventmanager');
+				E.trigger('newStateEffect', this.StateEffects.timeFreeze);
 			}
 		}
 	},

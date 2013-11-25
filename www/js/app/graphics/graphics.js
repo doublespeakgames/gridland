@@ -308,7 +308,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			el.stop().animate({
 				'left': pos - (entity.width() / 2)
 			}, {
-				duration: dist * entity.options.speed, 
+				duration: dist * entity.speed(), 
 				easing: 'linear', 
 				step: function(now, tween) {
 					entity.p(now + entity.width() / 2);

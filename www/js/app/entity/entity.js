@@ -73,6 +73,10 @@ define([ 'jquery' ], function($) {
 		var G = require('app/graphics/graphics');
 		G.updateSprite(this);
 	};
+	
+	entity.prototype.speed = function() {
+		return this.options.speed;
+	};
 
 	return entity;
 });

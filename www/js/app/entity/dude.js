@@ -111,5 +111,9 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 		}
 	};
 	
+	dude.prototype.speed = function() {
+		return World.effects['haste'] == null ? this.options.speed : this.options.speed / 4;
+	}
+	
 	return dude;
 });
