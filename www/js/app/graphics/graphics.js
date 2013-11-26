@@ -326,7 +326,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		raiseBuilding: function(building, callback) {
 			var el = building.el();
 			$('.blockPile', el).animate({
-				'top': '100%'
+				'top': '120px'
 			}, {
 				duration: 5000,
 				easing: 'linear'
@@ -338,6 +338,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				duration: 5000,
 				easing: 'linear',
 				complete: function() {
+					el.find('.blockPile').remove();
 					if(building.options.type.tileMod) {
 						var tiles = $('.tile.' + building.options.type.tileMod);
 						tiles.addClass('hidden');

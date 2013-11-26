@@ -16,6 +16,9 @@ define({
 		Wood: {
 			className: 'wood',
 			nightEffect: {
+				'sawmill8': 'shield:9',
+				'sawmill7': 'shield:8',
+				'sawmill6': 'shield:7',
 				'sawmill5': 'shield:6',
 				'sawmill4': 'shield:5',
 				'sawmill3': 'shield:4',
@@ -28,12 +31,18 @@ define({
 				sawmill2: 2,
 				sawmill3: 3,
 				sawmill4: 3,
-				sawmill5: 3
+				sawmill5: 3,
+				sawmill6: 4,
+				sawmill7: 4,
+				sawmill8: 4
 			}
 		},
 		Stone: {
 			className: 'stone',
 			nightEffect: {
+				'blacksmith8': 'sword:9',
+				'blacksmith7': 'sword:8',
+				'blacksmith6': 'sword:7',
 				'blacksmith5': 'sword:6',
 				'blacksmith4': 'sword:5',
 				'blacksmith3': 'sword:4',
@@ -46,7 +55,10 @@ define({
 				blacksmith2: 2,
 				blacksmith3: 3,
 				blacksmith4: 3,
-				blacksmith5: 3
+				blacksmith5: 3,
+				blacksmith6: 4,
+				blacksmith7: 4,
+				blacksmith8: 4
 			}
 		},
 		Clay: {
@@ -421,6 +433,54 @@ define({
 			replaces: 'sawmill4',
 			defaultAnimation: 4,
 			priority: 7
+		},
+		
+		Sawmill6: {
+			className: 'sawmill6',
+			position: 270,
+			cost: {
+				wood: 12,
+				clay: 6,
+				cloth: 3
+			},
+			requiredLevel: 1,
+			tileMod: 'wood',
+			tileLevel: 7,
+			replaces: 'sawmill5',
+			defaultAnimation: 5,
+			priority: 8
+		},
+		
+		Sawmill7: {
+			className: 'sawmill7',
+			position: 270,
+			cost: {
+				wood: 16,
+				clay: 8,
+				cloth: 3
+			},
+			requiredLevel: 1,
+			tileMod: 'wood',
+			tileLevel: 8,
+			replaces: 'sawmill6',
+			defaultAnimation: 6,
+			priority: 9
+		},
+		
+		Sawmill8: {
+			className: 'sawmill8',
+			position: 270,
+			cost: {
+				wood: 20,
+				clay: 10,
+				cloth: 5
+			},
+			requiredLevel: 1,
+			tileMod: 'wood',
+			tileLevel: 9,
+			replaces: 'sawmill7',
+			defaultAnimation: 7,
+			priority: 10
 		},
 		
 		Tower: {

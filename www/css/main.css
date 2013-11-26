@@ -606,7 +606,10 @@ body.night {
 .blacksmith2,
 .blacksmith3,
 .blacksmith4,
-.blacksmith5 {
+.blacksmith5,
+.blacksmith6,
+.blacksmith7,
+.blacksmith8 {
 	background-image: url(../img/blacksmith.png);
 }
 
@@ -614,7 +617,10 @@ body.night {
 .sawmill2,
 .sawmill3,
 .sawmill4,
-.sawmill5 {
+.sawmill5,
+.sawmill6,
+.sawmill7,
+.sawmill8 {
 	background-image: url(../img/sawmill.png);
 }
 
@@ -718,6 +724,21 @@ body.night {
 
 .blockPile .container.height5 {
 	height: 50px;
+}
+.blockPile .container.height6 {
+	height: 60px;
+}
+.blockPile .container.height7 {
+	height: 70px;
+}
+.blockPile .container.height8 {
+	height: 80px;
+}
+.blockPile .container.height9 {
+	height: 90px;
+}
+.blockPile .container.height10 {
+	height: 100px;
 }
 
 .blockPile .ghost {
