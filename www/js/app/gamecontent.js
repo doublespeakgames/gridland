@@ -358,6 +358,54 @@ define({
 			priority: 7
 		},
 		
+		Blacksmith6: {
+			className: 'blacksmith6',
+			position: 210,
+			cost: {
+				stone: 12,
+				clay: 6,
+				cloth: 3
+			},
+			requiredLevel: 1,
+			tileMod: 'stone',
+			tileLevel: 7,
+			replaces: 'blacksmith5',
+			defaultAnimation: 5,
+			priority: 8
+		},
+		
+		Blacksmith7: {
+			className: 'blacksmith7',
+			position: 210,
+			cost: {
+				stone: 16,
+				clay: 8,
+				cloth: 3
+			},
+			requiredLevel: 1,
+			tileMod: 'stone',
+			tileLevel: 8,
+			replaces: 'blacksmith6',
+			defaultAnimation: 6,
+			priority: 9
+		},
+		
+		Blacksmith8: {
+			className: 'blacksmith8',
+			position: 210,
+			cost: {
+				stone: 20,
+				clay: 10,
+				cloth: 5
+			},
+			requiredLevel: 1,
+			tileMod: 'stone',
+			tileLevel: 9,
+			replaces: 'blacksmith7',
+			defaultAnimation: 7,
+			priority: 10
+		},
+		
 		Sawmill: {
 			className: 'sawmill',
 			position: 270,
