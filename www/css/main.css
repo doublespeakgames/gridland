@@ -1154,7 +1154,29 @@ body.night {
 	background-position: -150px 0;
 }
 
+.wood7 .shield {
+	background-position: -180px -30px;
+}
 
+.wood7 .shield > div {
+	background-position: -180px 0;
+}
+
+.wood8 .shield {
+	background-position: -210px -30px;
+}
+
+.wood8 .shield > div {
+	background-position: -210px 0;
+}
+
+.wood9 .shield {
+	background-position: -240px -30px;
+}
+
+.wood9 .shield > div {
+	background-position: -240px 0;
+}
 
 .sword {
 	width: 30px;
@@ -1215,6 +1237,30 @@ body.night {
 
 .stone6 .sword > div {
 	background-position: -150px 0;
+}
+
+.stone7 .sword {
+	background-position: -180px -30px;
+}
+
+.stone7 .sword > div {
+	background-position: -180px 0;
+}
+
+.stone8 .sword {
+	background-position: -210px -30px;
+}
+
+.stone8 .sword > div {
+	background-position: -210px 0;
+}
+
+.stone9 .sword {
+	background-position: -240px -30px;
+}
+
+.stone9 .sword > div {
+	background-position: -240px 0;
 }
 
 .xpBar {
