@@ -224,7 +224,7 @@ define({
 			cost: {
 				stone: 2,
 				wood: 2,
-				cloth: 1,
+				cloth: 2,
 				clay: 8
 			},
 			requiredLevel: 1,
@@ -233,6 +233,23 @@ define({
 			replaces: 'bricklayer2',
 			defaultAnimation: 2,
 			priority: 6
+		},
+		
+		Bricklayer4: {
+			className: 'bricklayer4',
+			position: 90,
+			cost: {
+				stone: 4,
+				wood: 4,
+				cloth: 4,
+				clay: 12
+			},
+			requiredLevel: 1,
+			tileMod: 'clay',
+			tileLevel: 3,
+			replaces: 'bricklayer3',
+			defaultAnimation: 3,
+			priority: 8
 		},
 		
 		Weaver: {

@@ -495,6 +495,10 @@ body.night {
 	background-position: -156px -104px;
 }
 
+.clay4 .tile.clay > div {
+	background-position: -156px -156px;
+}
+
 .tile.cloth > div {
 	background-position: -208px 0px;
 }
@@ -592,13 +596,15 @@ body.night {
 
 .bricklayer,
 .bricklayer2,
-.bricklayer3 {
+.bricklayer3,
+.bricklayer4 {
 	background-image: url(../img/bricklayer.png);
 }
 
 .weaver,
 .weaver2,
-.weaver3 {
+.weaver3,
+.weaver4 {
 	background-image: url(../img/weaver.png);
 }
 
