@@ -933,6 +933,16 @@ body.night {
 	margin-left: 14px;
 }
 
+.demon {
+	height: 86px;
+	width: 72px;
+	background: url(../img/demon.png) no-repeat;
+}
+
+.demon .healthBar {
+	margin-left: 6px;
+}
+
 .rat {
 	height: 13px;
 	width: 40px;

@@ -109,6 +109,15 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 		},
 		
 		maxShield: function() {
+			if(this.hasBuilding(Content.BuildingType.Sawmill8)) {
+				return 27;
+			}
+			if(this.hasBuilding(Content.BuildingType.Sawmill7)) {
+				return 24;
+			}
+			if(this.hasBuilding(Content.BuildingType.Sawmill6)) {
+				return 21;
+			}
 			if(this.hasBuilding(Content.BuildingType.Sawmill5)) {
 				return 18;
 			}
@@ -128,6 +137,15 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 		},
 		
 		maxSword: function() {
+			if(this.hasBuilding(Content.BuildingType.Blacksmith8)) {
+				return 27;
+			}
+			if(this.hasBuilding(Content.BuildingType.Blacksmith7)) {
+				return 24;
+			}
+			if(this.hasBuilding(Content.BuildingType.Blacksmith6)) {
+				return 21;
+			}
 			if(this.hasBuilding(Content.BuildingType.Blacksmith5)) {
 				return 18;
 			}

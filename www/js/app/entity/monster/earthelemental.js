@@ -2,9 +2,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		function(Monster, ActionFactory) {
 	
 	var EarthElemental = function(options) {
-		this.options = $.extend({}, this.options, {
-			power: 3
-		}, options);
+		this.options = $.extend({}, this.options, {}, options);
 		this.hp(this.maxHealth());
 		this.xp = 2;
 	};

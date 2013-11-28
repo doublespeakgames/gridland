@@ -2,9 +2,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		function(Monster, ActionFactory) {
 	
 	var WaterElemental = function(options) {
-		this.options = $.extend({}, this.options, {
-			power: 3
-		}, options);
+		this.options = $.extend({}, this.options, {}, options);
 		this.hostile = true;
 		this.action = null;
 		this.hp(this.maxHealth());

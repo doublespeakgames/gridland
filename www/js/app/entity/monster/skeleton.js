@@ -2,9 +2,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		function(Monster, ActionFactory, Graphics) {
 	
 	var Skeleton = function(options) {
-		this.options = $.extend({}, this.options, {
-			xp: 3
-		}, options);
+		this.options = $.extend({}, this.options, {}, options);
 		this.hp(this.maxHealth());
 	};
 	Skeleton.prototype = new Monster({
