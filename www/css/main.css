@@ -972,6 +972,16 @@ body.night {
 	margin-left: 20px;
 }
 
+.imp {
+	height: 60px;
+	width: 30px;
+	background: url(../img/imp.png) no-repeat;
+}
+
+.imp .healthBar {
+	margin-left: 0px;
+}
+
 .skeleton {
 	height: 32px;
 	width: 27px;
@@ -1579,6 +1589,11 @@ body.night {
 	height: 100%;
 	border-radius: 22px;
 	overflow: hidden;
+	transform: rotate(180deg);
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
 	-webkit-transition: all 200ms linear;
 	-moz-transition: all 200ms linear;
 	-ms-transition: all 200ms linear;
@@ -1590,9 +1605,6 @@ body.night {
 }
 
 .magic .button > .inner > div {
-	position: absolute;
-	left: 0px;
-	bottom: 0px;
 	width: 100%;
 	height: 0px;
 	background-color: #4D4DBC;
