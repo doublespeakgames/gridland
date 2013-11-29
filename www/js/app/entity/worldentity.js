@@ -32,79 +32,82 @@ define(['app/entity/entity', 'app/eventmanager', 'app/action/actionfactory'],
 	};
 	
 	worldEntity.prototype.move = function(position, callback) {
-		if(this.tempAnimation == null) {
-			if(this.p() < position) {
-				// Moving right
-				this.animation(this.getAnimation("right"));
-				this.lastDir = "right";
-			} else if(this.p() > position) {
-				// Moving left
-				this.animation(this.getAnimation("left"));
-				this.lastDir = "left";
-			} else {
-				// No movement required
-				if(callback != null) {
-					callback(this);
-				}
-				return;
+		this.tempAnimation = null;
+		if(this.p() < position) {
+			// Moving right
+			this.animation(this.getAnimation("right"));
+			this.lastDir = "right";
+		} else if(this.p() > position) {
+			// Moving left
+			this.animation(this.getAnimation("left"));
+			this.lastDir = "left";
+		} else {
+			// No movement required
+			if(callback != null) {
+				callback(this);
 			}
-			var _entity = this;
-			var G = require('app/graphics/graphics');
-			G.animateMove(this, position, function() {
-				// Stop the move animation
-				_entity.animation(MOVE_ANIMS.idle);
-				if(callback != null) {
-					callback(_entity);
-				}
-			});
+			return;
 		}
+		var _entity = this;
+		var G = require('app/graphics/graphics');
+		G.animateMove(this, position, function() {
+			// Stop the move animation
+			_entity.makeIdle();
+			if(callback != null) {
+				callback(_entity);
+			}
+		});
 	};
 	
 	worldEntity.prototype.moveTo = function(target, callback) {
-		if(this.tempAnimation == null) {
-			var G = require('app/graphics/graphics');
-			var position = target.p();
-			if(position < 30) {
-				position = 30;
-			}
-			if(position > G.worldWidth() - 30) {
-				position = G.worldWidth() - 30;
-			}
-			if(this.p() < position) {
-				// Moving right
-				this.animation(this.getAnimation("right"));
-				this.lastDir = "right";
-			} else if(this.p() > position) {
-				// Moving left
-				this.animation(this.getAnimation("left"));
-				this.lastDir = "left";
-			} else {
-				// No movement required
-				if(callback != null) {
-					callback(this);
-				}
-				return;
-			}
-			var _entity = this;
-			var _target = target;
-			G.animateMove(this, position, function() {
-				// Stop the move animation
-				_entity.animation(MOVE_ANIMS.idle);
-				if(callback != null) {
-					callback(_entity);
-				}
-			}, function() {
-				return _entity.p() > 10 && _entity.p() < G.worldWidth() - 10 && _entity.attackRange(_target);
-			});
+		var G = require('app/graphics/graphics');
+		this.tempAnimation = null;
+		var position = target.p();
+		if(position < 30) {
+			position = 30;
 		}
+		if(position > G.worldWidth() - 30) {
+			position = G.worldWidth() - 30;
+		}
+		if(this.p() < position) {
+			// Moving right
+			this.animation(this.getAnimation("right"));
+			this.lastDir = "right";
+		} else if(this.p() > position) {
+			// Moving left
+			this.animation(this.getAnimation("left"));
+			this.lastDir = "left";
+		} else {
+			// No movement required
+			if(callback != null) {
+				callback(this);
+			}
+			return;
+		}
+		var _entity = this;
+		var _target = target;
+		G.animateMove(this, position, function() {
+			// Stop the move animation
+			_entity.makeIdle();
+			if(callback != null) {
+				callback(_entity);
+			}
+		}, function() {
+			return _entity.p() > 10 && _entity.p() < G.worldWidth() - 10 && _entity.attackRange(_target);
+		});
 	};
 	
 	worldEntity.prototype.think = function() {
 		// Nothing
+		return false;
+	};
+	
+	worldEntity.prototype.makeIdle = function() {
+		this.animation(MOVE_ANIMS.idle);
 	};
 	
 	worldEntity.prototype.isIdle = function() {
-		return this.tempAnimation == null && this.animationRow == MOVE_ANIMS.idle;
+		return this.action == null;
 	};
 	
 	worldEntity.prototype.attackRange = function(target) {

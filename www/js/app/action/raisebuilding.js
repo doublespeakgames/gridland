@@ -15,7 +15,7 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 				Graphics.raiseBuilding(_action.building, function() {
 					_action.building.built = true;
 					World.stuff.push(_action.building);
-					dude.animation(0);
+					dude.makeIdle();;
 					dude.action = null;
 					var cb = Content.BuildingCallbacks[_action.building.options.type.className];
 					if(cb) {
@@ -34,9 +34,7 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 		var _action = this;
 		require(['app/graphics/graphics'], function(Graphics) {
 			Graphics.stop(dude);
-			if(!dude.noIdle) {
-				dude.animation(0);
-			}
+			dude.makeIdle();
 			dude.action = null;
 			Graphics.sinkBuilding(_action.building);			
 		});

@@ -14,22 +14,23 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	
 	Zombie.prototype.think = function() {
 		var _this = this;
-		require(['app/world'], function(World) {
-			if(_this.isIdle() && _this.isAlive() && _this.action == null) {
-				if(!_this.attackRange(World.dude)) {
-					_this.action = ActionFactory.getAction("MoveTo", {
-						target: World.dude
-					});
-				} else {
-					_this.action = ActionFactory.getAction("Attack", {
-						target: World.dude
-					});
-				}
-				if(_this.action != null) {
-					_this.action.doAction(_this);
-				}
+		var World = require('app/world');
+		if(_this.isIdle() && _this.isAlive() && _this.action == null) {
+			if(!_this.attackRange(World.dude)) {
+				_this.action = ActionFactory.getAction("MoveTo", {
+					target: World.dude
+				});
+			} else {
+				_this.action = ActionFactory.getAction("Attack", {
+					target: World.dude
+				});
 			}
-		});
+			if(_this.action != null) {
+				_this.action.doAction(_this);
+				return true;
+			}
+		}
+		return false;
 	};
 	
 	Zombie.prototype.maxHealth = function() {

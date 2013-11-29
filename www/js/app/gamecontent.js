@@ -4,6 +4,7 @@ define({
 		Grain: {
 			className: 'grain',
 			nightEffect: {
+				'castle': 'spawn:demon',
 				'fort': 'spawn:earthElemental',
 				'house': 'spawn:hauntedArmour',
 				'default': 'spawn:zombie'

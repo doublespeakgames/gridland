@@ -38,8 +38,10 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 			if(activity != null) {
 				this.action = activity;
 				this.action.doAction(this);
+				return true;
 			}
 		}
+		return false;
 	};
 	
 	dude.prototype.gainXp = function(xp) {

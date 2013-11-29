@@ -189,13 +189,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 						entity.el().remove();
 						entity.gone = true;
 					} 
-					if(entity.action != null && !entity.gone && !frozen) {
-						entity.action.doFrameAction(entity.frame);
-					}
 					if(!entity.gone) {
 						if(!entity.paused && !frozen) {
-							entity.animate();
-							entity.think();
+							// Only animate if a new action wasn't created
+							entity.think() || entity.animate();
+							if(entity.action != null) {
+								entity.action.doFrameAction(entity.frame);
+							}
 						}
 						newStuff.push(entity);
 					} else if(entity.hostile && World.isNight && !entity.wiped) {
@@ -232,8 +232,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					function(World, Graphics, Dude, GameState) {
 				var dude = World.dude = new Dude();
 				World.stuff.push(dude);
-				dude.animation(0);
-				dude.animationOnce(7);
+				dude.makeIdle();
+				dude.action = ActionFactory.getAction("Climb");
+				dude.action.doAction(dude);
 				Graphics.addToWorld(dude);
 				dude.p(Graphics.worldWidth() / 2);
 				Graphics.setPosition(dude, dude.p());

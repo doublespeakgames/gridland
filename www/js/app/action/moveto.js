@@ -11,7 +11,7 @@ define(['app/action/action'], function(Action) {
 		this._entity = entity;
 		entity.moveTo(_action.target, function(entity) {
 			require(['app/graphics/graphics'], function(Graphics) {
-				entity.animation(0);
+				entity.makeIdle();
 				entity.action = null;
 			});
 		});

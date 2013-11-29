@@ -20,6 +20,10 @@ define(['app/entity/worldentity', 'app/graphics/graphics'],
 		return this._el;
 	};
 	
+	Monster.prototype.makeIdle = function() {
+		// Nothing. Monsters have no idle animation.
+	};
+	
 	Monster.constructor = Monster;
 	
 	return Monster;

@@ -102,14 +102,6 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				EventManager.trigger('toggleCosts', [false]);
 				return false;
 			});
-			Graphics.attachHandler("World", "mousedown touchstart", '.blockPile', function(e) {
-				// Handle wacky touch event objects
-				if(e.originalEvent.changedTouches) {
-					e = e.originalEvent.changedTouches[0];
-				}
-				EventManager.trigger('showCosts', [$(e.target).closest('.building')]);
-				return false;
-			});
 		},
 		
 		_debug: function(text) {

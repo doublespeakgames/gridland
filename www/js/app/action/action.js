@@ -7,9 +7,7 @@ define(function() {
 	
 	Action.prototype.terminateAction = function(dude) {
 		var G = require('app/graphics/graphics');
-		if(!dude.noIdle) {
-			dude.animation(0);
-		}
+		dude.makeIdle();
 		G.stop(dude);
 		dude.action = null;	
 	};
