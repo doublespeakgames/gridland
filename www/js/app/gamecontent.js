@@ -65,6 +65,7 @@ define({
 		Clay: {
 			className: 'clay',
 			nightEffect: {
+				'bricklayer4': 'spawn:imp',
 				'bricklayer3': 'spawn:waterElemental',
 				'bricklayer2': 'spawn:spider',
 				'default': 'spawn:rat'
@@ -72,7 +73,8 @@ define({
 			multipliers: {
 				bricklayer: 2,
 				bricklayer2: 3,
-				bricklayer3: 4
+				bricklayer3: 4,
+				bricklayer4: 5
 			}
 		},
 		Cloth: {
@@ -247,7 +249,7 @@ define({
 			},
 			requiredLevel: 1,
 			tileMod: 'clay',
-			tileLevel: 3,
+			tileLevel: 4,
 			replaces: 'bricklayer3',
 			defaultAnimation: 3,
 			priority: 8
