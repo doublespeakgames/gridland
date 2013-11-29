@@ -41,13 +41,14 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent'], functi
 		if(this._el == null) {
 			var G = require('app/graphics/graphics');
 			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className);
-			var blockPile = G.make("blockPile");
 			
-			for(var r in this.options.type.cost) {
-				blockPile.append(G.createResourceContainer(r, this.options.type.cost[r]));
+			if(!this.built) {
+				var blockPile = G.make("blockPile");
+				for(var r in this.options.type.cost) {
+					blockPile.append(G.createResourceContainer(r, this.options.type.cost[r]));
+				}
+				this._el.append(blockPile);
 			}
-			
-			this._el.append(blockPile);
 		}
 		return this._el;
 	};
