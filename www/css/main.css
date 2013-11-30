@@ -1012,6 +1012,16 @@ body.night {
 	margin-left: 0px;
 }
 
+.warlock {
+	height: 37px;
+	width: 24px;
+	background: url(../img/warlock.png) no-repeat;
+}
+
+.warlock .healthBar {
+	margin-left: -3px;
+}
+
 .arrow {
 	position: absolute;
 	height: 1px;
