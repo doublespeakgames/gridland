@@ -10,22 +10,23 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 		var _action = this;
 		dude.move(this.building.dudeSpot(), function(dude) {
 			dude.animation(8);
-			require(["app/graphics/graphics", "app/gamecontent", 'app/resources', 'app/world'], 
-					function(Graphics, Content, R, World) {
-				Graphics.raiseBuilding(_action.building, function() {
-					_action.building.built = true;
-					World.stuff.push(_action.building);
-					dude.makeIdle();;
-					dude.action = null;
-					var cb = Content.BuildingCallbacks[_action.building.options.type.className];
-					if(cb) {
-						cb();
-					}
-					// Remove replaced building, if necessary
-					if(_action.building.options.type.replaces != null) {
-						World.removeBuilding(Content.getBuildingType(_action.building.options.type.replaces));
-					}
-				});
+			var World = require('app/world'),
+				Graphics = require('app/graphics/graphics'),
+				Content = require('app/gamecontent'),
+				E = require('app/eventmanager');
+			Graphics.raiseBuilding(_action.building, function() {
+				_action.building.built = true;
+				E.trigger('buildingComplete', [_action.building]);
+				dude.makeIdle();;
+				dude.action = null;
+				var cb = Content.BuildingCallbacks[_action.building.options.type.className];
+				if(cb) {
+					cb();
+				}
+				// Remove replaced building, if necessary
+				if(_action.building.options.type.replaces != null) {
+					World.removeBuilding(Content.getBuildingType(_action.building.options.type.replaces));
+				}
 			});
 		});
 	};

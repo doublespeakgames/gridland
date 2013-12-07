@@ -20,7 +20,7 @@ define(['app/action/action'], function(Action) {
 	MoveTo.prototype.doFrameAction = function(frame) {
 		var _this = this;
 		require(['app/world'], function(W) {
-			if(frame == 3 && _this._entity == W.dude) {
+			if(frame == 3 && _this._entity == W.getDude()) {
 				// Reset the dude's move action every step to make sure he's
 				// attacking the closest enemy all the time
 				var closest = W.findClosestMonster();

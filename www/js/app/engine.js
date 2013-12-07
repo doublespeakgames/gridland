@@ -2,6 +2,37 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
         'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot', 'app/magic', 'app/gameoptions'], 
 		function($, EventManager, Analytics, Graphics, Content, GameBoard, GameState, World, Loot, Magic, Options) {
 
+	function initializeModules(modules, callback) {
+		// init all modules passed to me
+		var module = null;
+		(function initModule() {
+			if(module == null) {
+				if(modules.length == 0) {
+					return callback();
+				} else {
+					module = modules.shift();
+					module.init();
+				}
+			}
+			if(isReady(module)) {
+				module = null;
+				initModule();
+			} else {
+				setTimeout(initModule, 50);
+			}
+		})();
+	}
+	
+	function isReady(module) {
+		if(typeof module.isReady == 'function'){
+			return module.isReady();
+		}
+		if(module.isReady != null) {
+			return module.isReady;
+		}
+		return true;
+	}
+	
 	return {
 		DRAG_THRESHOLD: 30, // in pixels
 		activeTile: null,
@@ -12,9 +43,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		init: function(opts) {
 			$.extend(this.options, opts);
 		
-			$('#test').off().click(function() { require(['app/world'], function(W) {
-				W.phaseTransition();
-			}); });
+			$('#test').off().click(function() { 
+				EventManager.trigger('phaseChange');
+			});
 			
 			$('.menuBtn').off().on("click touchstart", function() {
 				require(['jquery'], function($) {
@@ -23,16 +54,19 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			});
 			
 			// Start the game
-			EventManager.init();
-			Analytics.init();
 			GameState.load();
-			GameBoard.init();
-			Graphics.init();
-			World.init();
-			Loot.init();
-			Magic.init();
-			GameBoard.fill();
-			World.launchDude();
+			initializeModules([
+				EventManager,
+				Analytics,
+				GameBoard,
+				Graphics,
+				World,
+				Loot,
+				Magic
+			], function() {
+				GameBoard.fill();
+				EventManager.trigger('launchDude');
+			});
 			
 			var _engine = this;
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", '.tile', function(e) {

@@ -16,13 +16,13 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		var _this = this;
 		var World = require('app/world');
 		if(_this.isIdle() && _this.isAlive() && _this.action == null) {
-			if(!_this.attackRange(World.dude)) {
+			if(!_this.attackRange(World.getDude())) {
 				_this.action = ActionFactory.getAction("MoveTo", {
-					target: World.dude
+					target: World.getDude()
 				});
 			} else {
 				_this.action = ActionFactory.getAction("FastAttack", {
-					target: World.dude
+					target: World.getDude()
 				});
 			}
 			if(_this.action != null) {

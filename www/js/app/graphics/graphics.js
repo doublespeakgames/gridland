@@ -3,12 +3,15 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
         'app/graphics/loot', 'app/graphics/magic'], 
 		function($, EventManager, TextStore, Options, BoardGraphics, WorldGraphics, ResourceGraphics,
 				LootGraphics, MagicGraphics) {
+	
+	var textStore;
+	
 	return {
 		BOARD_PAD: 2,
 		init: function() {
 			$('body').removeClass('night');
 			
-			this.textStore = new TextStore();
+			textStore = new TextStore();
 			
 			EventManager.bind('monsterKilled', this.monsterKilled);
 			EventManager.bind('newEntity', this.addToWorld);
@@ -48,6 +51,14 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			ResourceGraphics.init();
 			LootGraphics.init();
 			MagicGraphics.init();
+		},
+		
+		isReady: function() {
+			return textStore && textStore.isReady();
+		},
+		
+		getText: function(key) {
+			return textStore.get(key);
 		},
 		
 		attachHandler: function(moduleName, event, element, handler) {
@@ -534,7 +545,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		handleDayBreak: function(dayNumber) {
 			require(['app/graphics/graphics'], function(Graphics) {
-				var txt = Graphics.textStore.get('DAY');
+				var txt = Graphics.getText('DAY');
 				var notifier = $('<div>').addClass('dayNotifier').text(txt + " " + dayNumber).appendTo('.world');
 				setTimeout(function() {
 					$('.monster, .treasureChest').remove();

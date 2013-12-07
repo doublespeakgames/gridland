@@ -101,46 +101,28 @@ define({
 	
 	BuildingCallbacks: {
 		'shack': function() {
-			require(['app/resources', 'app/world'], function(R, W) {
-				R.init();
-				W.launchCelestial();
-			});
+			var e = require('app/eventmanager');
+			e.trigger('resourceStoreChanged', [3, 3]);
 		},
 		
 		'house': function() {
-			require(['app/resources', 'app/world'], function(R, W) {
-				if(!R.loaded) {
-					R.init();
-					W.launchCelestial();
-				}
-				R.setSize(4, 3);
-			});
+			var e = require('app/eventmanager');
+			e.trigger('resourceStoreChanged', [4, 3]);
 		},
 		
 		'fort': function() {
-			require(['app/resources', 'app/world'], function(R, W) {
-				if(!R.loaded) {
-					R.init();
-					W.launchCelestial();
-				}
-				R.setSize(4, 4);
-			});
+			var e = require('app/eventmanager');
+			e.trigger('resourceStoreChanged', [4, 4]);
 		},
 		
 		'castle': function() {
-			require(['app/resources', 'app/world'], function(R, W) {
-				if(!R.loaded) {
-					R.init();
-					W.launchCelestial();
-				}
-				R.setSize(5, 4);
-			});
+			var e = require('app/eventmanager');
+			e.trigger('resourceStoreChanged', [5, 4]);
 		},
 		
 		'tower': function() {
-			require(['app/eventmanager'], function(E) {
-				E.trigger('enableMagic');
-			});
+			var e = require('app/eventmanager');
+			e.trigger('enableMagic');
 		}
 	},
 	

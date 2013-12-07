@@ -1,6 +1,6 @@
-define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics/graphics', 
+define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics', 
         'app/gamestate', 'app/action/actionfactory', 'app/gamecontent'], 
-		function(EventManager, WorldEntity, World, Graphics, State, ActionFactory, Content) {
+		function(EventManager, WorldEntity, Graphics, State, ActionFactory, Content) {
 	var dude = function() {
 		this._el = null;
 		this.carrying = null;
@@ -34,7 +34,7 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 	
 	dude.prototype.think = function() {
 		if(this.isIdle() && this.action == null) {
-			var activity = World.getActivity();
+			var activity = require('app/world').getActivity();
 			if(activity != null) {
 				this.action = activity;
 				this.action.doAction(this);
@@ -114,8 +114,9 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/world', 'app/graphics
 	};
 	
 	dude.prototype.speed = function() {
-		return World.effects['haste'] == null ? this.options.speed : this.options.speed / 4;
-	}
+		var W = require('app/world');
+		return !W.hasEffect('haste') ? this.options.speed : this.options.speed / 4;
+	};
 	
 	return dude;
 });
