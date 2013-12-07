@@ -511,6 +511,10 @@ body.night {
 	background-position: -208px -104px;
 }
 
+.cloth4 .tile.cloth > div {
+	background-position: -208px -156px;
+}
+
 .tile.mana > div {
 	background-position: -260px 0px;
 }
