@@ -408,10 +408,11 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					GameState.saveXp();
 					Graphics.fadeOut(function() {
 						setTimeout(function() {
+							stuff.length = 0;
 							Graphics.setNight(false);
 						}, 500);
 						setTimeout(function() {
-							Engine.init();
+							require('app/engine').init();
 						}, 1000);
 					});
 				}

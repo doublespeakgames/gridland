@@ -80,6 +80,7 @@ define({
 		Cloth: {
 			className: 'cloth',
 			nightEffect: {
+				'weaver4': 'spawn:warlock',
 				'weaver3': 'spawn:fireElemental',
 				'weaver2': 'spawn:lizardman',
 				'default': 'spawn:skeleton'
@@ -87,7 +88,8 @@ define({
 			mulitpliers: {
 				weaver: 2,
 				weaver2: 3,
-				weaver3: 4
+				weaver3: 4,
+				weaver4: 5
 			}
 		},
 		Mana: {
@@ -281,6 +283,23 @@ define({
 			replaces: 'weaver2',
 			defaultAnimation: 2,
 			priority: 6
+		},
+		
+		Weaver4: {
+			className: 'weaver4',
+			position: 150,
+			cost: {
+				wood: 5,
+				stone: 5,
+				clay: 5,
+				cloth: 10
+			},
+			requiredLevel: 1,
+			tileMod: 'cloth',
+			tileLevel: 4,
+			replaces: 'weaver3',
+			defaultAnimation: 3,
+			priority: 8
 		},
 		
 		Blacksmith: {
