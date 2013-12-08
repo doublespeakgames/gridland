@@ -2,6 +2,12 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
         'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot', 'app/magic', 'app/gameoptions'], 
 		function($, EventManager, Analytics, Graphics, Content, GameBoard, GameState, World, Loot, Magic, Options) {
 
+	var DRAG_THRESHOLD = 30; // in pixels
+	var activeTile = null;
+	var dragging = false;
+	var dragStart = {x: 0, y: 0};
+	
+	
 	function initializeModules(modules, callback) {
 		// init all modules passed to me
 		var module = null;
@@ -33,12 +39,49 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		return true;
 	}
 	
-	return {
-		DRAG_THRESHOLD: 30, // in pixels
-		activeTile: null,
-		dragging: false,
-		dragStart: {x: 0, y: 0},
-		
+	function canMove() {
+		return GameBoard.canMove() && World.canMove();
+	}
+	
+	function startDrag(tile) {
+		if(canMove()) {
+			if(activeTile == null) {
+				// Select the tile
+				activeTile = tile;
+				Graphics.selectTile(tile);		
+			} else {
+				// Either initiate a switch, or deselect
+				var active = activeTile;
+				activeTile = null;
+				Graphics.deselectTile(active);
+				if(tile.isAdjacent(active)) {
+					GameBoard.switchTiles(active, tile);
+				}
+			}
+		}
+	}
+	
+	function endDrag(delta) {
+		if(activeTile != null) {
+			var dx = delta.x / DRAG_THRESHOLD;
+			dx = dx < 0 ? Math.ceil(dx) : Math.floor(dx);
+			dx = dx / Math.abs(dx) || 0;
+			var dy = delta.y / DRAG_THRESHOLD;
+			dy = dy < 0 ? Math.ceil(dy) : Math.floor(dy);
+			dy = dy / Math.abs(dy) || 0;
+			if(Math.abs(dx) + Math.abs(dy) == 1) {
+				var active = activeTile;
+				activeTile = null;
+				Graphics.deselectTile(active);
+				try {
+					var sibling = GameBoard.getTile(active.options.column + dx, active.options.row + dy);
+					GameBoard.switchTiles(active, sibling);
+				} catch(e) {console.log('No drag for you!');}
+			}
+		}
+	}
+	
+	var Engine = {
 		options: {},
 		init: function(opts) {
 			$.extend(this.options, opts);
@@ -64,36 +107,35 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				Loot,
 				Magic
 			], function() {
-				GameBoard.fill();
+				EventManager.trigger('refreshBoard');
 				EventManager.trigger('launchDude');
 			});
 			
-			var _engine = this;
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", '.tile', function(e) {
-				if(!_engine.dragging) {
+				if(!dragging) {
 					// Handle wacky touch event objects
 					if(e.originalEvent.changedTouches) {
 						e = e.originalEvent.changedTouches[0];
 					}
-					_engine.dragStart.x = e.clientX;
-					_engine.dragStart.y = e.clientY;
-					_engine.dragging = true;
+					dragStart.x = e.clientX;
+					dragStart.y = e.clientY;
+					dragging = true;
 					var tile = $.data(this, "tile");
-					_engine.startDrag(tile);
+					startDrag(tile);
 				}
 				EventManager.trigger('toggleMenu');
 				return false;
 			});
 			Graphics.attachHandler("GameBoard", "mouseup touchend", function(e) {
-				if(_engine.dragging) {
-					_engine.dragging = false;
+				if(dragging) {
+					dragging = false;
 					// Handle wacky touch event objects
 					if(e.originalEvent.changedTouches) {
 						e = e.originalEvent.changedTouches[0];
 					}
-					_engine.endDrag({ 
-						x: e.clientX - _engine.dragStart.x,
-						y: e.clientY - _engine.dragStart.y
+					endDrag({ 
+						x: e.clientX - dragStart.x,
+						y: e.clientY - dragStart.y
 					});
 				}
 				return false;
@@ -140,48 +182,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		
 		_debug: function(text) {
 			$('#debug').text(text);
-		},
-		
-		canMove: function() {
-			return GameBoard.dropCount == 0 && GameBoard.removals == 0 && !World.inTransition;
-		},
-		
-		startDrag: function(tile) {
-			if(this.canMove()) {
-				if(this.activeTile == null) {
-					// Select the tile
-					this.activeTile = tile;
-					Graphics.selectTile(tile);		
-				} else {
-					// Either initiate a switch, or deselect
-					var active = this.activeTile;
-					this.activeTile = null;
-					Graphics.deselectTile(active);
-					if(tile.isAdjacent(active)) {
-						GameBoard.switchTiles(active, tile);
-					}
-				}
-			}
-		},
-		
-		endDrag: function(delta) {
-			if(this.activeTile != null) {
-				var dx = delta.x / this.DRAG_THRESHOLD;
-				dx = dx < 0 ? Math.ceil(dx) : Math.floor(dx);
-				dx = dx / Math.abs(dx) || 0;
-				var dy = delta.y / this.DRAG_THRESHOLD;
-				dy = dy < 0 ? Math.ceil(dy) : Math.floor(dy);
-				dy = dy / Math.abs(dy) || 0;
-				if(Math.abs(dx) + Math.abs(dy) == 1) {
-					var active = this.activeTile;
-					this.activeTile = null;
-					Graphics.deselectTile(active);
-					try {
-						var sibling = GameBoard.tiles[active.options.column + dx][active.options.row + dy];
-						GameBoard.switchTiles(active, sibling);
-					} catch(e) {console.log('No drag for you!');}
-				}
-			}
 		}
 	};
+	
+	return Engine;
 });

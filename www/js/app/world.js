@@ -208,6 +208,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			return findClosest(function(thing) {
 				return thing.lootable && !thing.gone;
 			});
+		},
+		
+		canMove: function() {
+			return !inTransition;
 		}
 	};
 	
