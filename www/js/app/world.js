@@ -13,7 +13,6 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	var celestialPosition = 0;
 	var stuff = [];
 	var inTransition = false;
-	var _el = null;
 	var gameLoop = null;
 	
 	var World = {		
@@ -88,13 +87,6 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			}
 			gameLoop = setInterval(makeStuffHappen, 100);
 			inTransition = false;
-		},
-		
-		el: function() {
-			if(_el == null) {
-				_el = Graphics.make('world');
-			}
-			return _el;
 		},
 		
 		/**
