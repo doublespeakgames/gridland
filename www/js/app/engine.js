@@ -6,7 +6,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 	var activeTile = null;
 	var dragging = false;
 	var dragStart = {x: 0, y: 0};
-	
+	var graphicsCallback = null;
 	
 	function initializeModules(modules, callback) {
 		// init all modules passed to me
@@ -81,6 +81,14 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		}
 	}
 	
+	function handleGraphicsComplete() {
+		if(typeof graphicsCallback == 'function') {
+			var cb = graphicsCallback;
+			graphicsCallback = null;
+			cb();
+		}
+	}
+	
 	var Engine = {
 		options: {},
 		init: function(opts) {
@@ -107,6 +115,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				Loot,
 				Magic
 			], function() {
+				EventManager.bind('graphicsActionComplete', handleGraphicsComplete);
 				EventManager.trigger('refreshBoard');
 				EventManager.trigger('launchDude');
 			});
@@ -178,6 +187,11 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				EventManager.trigger('toggleCosts', [false]);
 				return false;
 			});
+		},
+		
+		setGraphicsCallback: function(cb) {
+			if(graphicsCallback != null) throw "Already waiting on graphics!";
+			graphicsCallback = cb;
 		},
 		
 		_debug: function(text) {

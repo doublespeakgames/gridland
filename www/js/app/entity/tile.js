@@ -1,4 +1,4 @@
-define(['app/entity/entity', 'app/graphics/graphics', 'app/gamecontent'], function(Entity, Graphics, Content) {
+define(['app/entity/entity', 'app/gamecontent'], function(Entity, Content) {
 	
 	var tile = function(options) {
 		this.options = $.extend({}, this.options, {

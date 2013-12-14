@@ -2,6 +2,7 @@ define({
 	
 	ResourceType: {
 		Grain: {
+			char: 'g',
 			className: 'grain',
 			nightEffect: {
 				'castle': 'spawn:demon',
@@ -15,6 +16,7 @@ define({
 			}
 		},
 		Wood: {
+			char: 'w',
 			className: 'wood',
 			nightEffect: {
 				'sawmill8': 'shield:9',
@@ -39,6 +41,7 @@ define({
 			}
 		},
 		Stone: {
+			char: 's',
 			className: 'stone',
 			nightEffect: {
 				'blacksmith8': 'sword:9',
@@ -63,6 +66,7 @@ define({
 			}
 		},
 		Clay: {
+			char: 'c',
 			className: 'clay',
 			nightEffect: {
 				'bricklayer4': 'spawn:imp',
@@ -78,6 +82,7 @@ define({
 			}
 		},
 		Cloth: {
+			char: 'l',
 			className: 'cloth',
 			nightEffect: {
 				'weaver4': 'spawn:warlock',
@@ -93,6 +98,7 @@ define({
 			}
 		},
 		Mana: {
+			char: 'm',
 			className: 'mana',
 			nightEffect: {
 				'default': 'spawn:fireElemental', // TODO: Add special mana monsters
@@ -639,9 +645,10 @@ define({
 		}
 	},
 	
-	getResourceType: function(className) {
+	getResourceType: function(query) {
 		for(var c in this.ResourceType) {
-			if(className == this.ResourceType[c].className) {
+			if(query.length == 1 && query == this.ResourceType[c].char || 
+					query == this.ResourceType[c].className) {
 				return this.ResourceType[c];
 			}
 		}

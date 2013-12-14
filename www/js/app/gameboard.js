@@ -1,16 +1,17 @@
-define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile', 
+define(['jquery', 'app/eventmanager', 'app/entity/tile', 
         'app/resources', 'app/gamecontent', 'app/gamestate'], 
-		function($, Engine, EventManager, Tile, Resources, Content, State) {
+		function($, EventManager, Tile, Resources, Content, State) {
 	
 	var dropCount = 0;
 	var removals = 0;
 	var checkQueue = [];
-	var tiles = [];
+	var tileString = '';
 	var filling = false;
 	var totals = {};
 	var swapSide = null;
 	
 	var GameBoard = {
+		SEP: 'X',
 		options : {
 			rows : 8,
 			columns : 8
@@ -19,45 +20,39 @@ define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile',
 			$.extend(this.options, opts);
 			_el = null;
 			Resources.loaded = false;
-			tiles = [];
 			filling = false;
-			for (var i = 0; i < this.options.columns; i++) {
-				tiles.push([]);
-			}
+			tileString = '';
 			totals = {};
 			
 			EventManager.bind("refreshBoard", refreshBoard);
 		},
 		
 		switchTiles: function(tile1, tile2, skipMatch) {
-			var G = require('app/graphics/graphics');
-			G.switchTiles(tile1, tile2, function(tile1, tile2) {
-				var r1 = tile1.options.row, c1 = tile1.options.column;
-				tiles[tile1.options.column][tile1.options.row] = tile2;
-				tiles[tile2.options.column][tile2.options.row] = tile1;
-				tile1.options.row = tile2.options.row;
-				tile1.options.column = tile2.options.column;
-				tile2.options.row = r1;
-				tile2.options.column = c1;
-				
-				if(!skipMatch) {
-					swapSide = tile1.options.column < GameBoard.options.columns / 2 ? 'left' : 'right';
-					// Check for matches
-					var matches = checkMatches(tile1);
-					matches = matches.concat(checkMatches(tile2));
-				
-					if(matches.length > 0) {
-						handleMatches(matches);
-					} else {
-						GameBoard.switchTiles(tile1, tile2, true);
-						EventManager.trigger('tilesSwapped');
-					}
-				}
-			});
-		},
-		
-		getTile: function(column, row) {
-			return tiles[column][row];
+			// TODO: Rewrite
+//			var G = require('app/graphics/graphics');
+//			G.switchTiles(tile1, tile2, function(tile1, tile2) {
+//				var r1 = tile1.options.row, c1 = tile1.options.column;
+//				tiles[tile1.options.column][tile1.options.row] = tile2;
+//				tiles[tile2.options.column][tile2.options.row] = tile1;
+//				tile1.options.row = tile2.options.row;
+//				tile1.options.column = tile2.options.column;
+//				tile2.options.row = r1;
+//				tile2.options.column = c1;
+//				
+//				if(!skipMatch) {
+//					swapSide = tile1.options.column < GameBoard.options.columns / 2 ? 'left' : 'right';
+//					// Check for matches
+//					var matches = checkMatches(tile1);
+//					matches = matches.concat(checkMatches(tile2));
+//				
+//					if(matches.length > 0) {
+//						handleMatches(matches);
+//					} else {
+//						GameBoard.switchTiles(tile1, tile2, true);
+//						EventManager.trigger('tilesSwapped');
+//					}
+//				}
+//			});
 		},
 		
 		canMove: function() {
@@ -67,141 +62,132 @@ define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile',
 	
 	function tileMap() {
 		var map = {
-			'grain' : 2,
-			'wood' : 2,
-			'stone' : 2
+			'g' : 2,
+			'w' : 2,
+			's' : 2
 		};
 
 		if(State.hasBuilding(Content.BuildingType.BrickLayer)) {
-			map.clay = 2;
+			map.c = 2;
 		}
 		if(State.hasBuilding(Content.BuildingType.Weaver)) {
-			map.cloth = 2;
+			map.l = 2;
 		}
 		
 		return map;
 	}
 	
 	function fill() {
-		filling = true;
-		(function doFill(num) {
-			var row = 7 - Math.floor(num / GameBoard.options.columns);
-			var col = Math.floor(num % GameBoard.options.rows);
-
-			// console.log('[' + row + ', ' + col + ']');
-
-			// Pieces to the left and the bottom could potentially be present
-			var pCounts = tileMap();
-			if (col > 0) {
-				var sibling = tiles[col - 1][row];
-				pCounts[sibling.options.type.className]--;
-				if (col > 1 && tiles[col - 2][row].options.type.className == sibling.options.type.className) {
-					// console.log('horizontal detection: ' + sibling.options.type.className + ' == ' + GameBoard.tiles[col - 2][row].options.type.className);
-					pCounts[sibling.options.type.className]--;
-				}
-			}
-			if (row < GameBoard.options.rows - 1) {
-				var sibling = tiles[col][row + 1];
-				pCounts[sibling.options.type.className]--;
-				if (row < GameBoard.options.rows - 2 && tiles[col][row + 2].options.type.className == sibling.options.type.className) {
-					// console.log('vertical detection: ' + sibling.options.type.className + ' == ' + GameBoard.tiles[col][row + 2].options.type.className);
-					pCounts[sibling.options.type.className]--;
-				}
-			}
-			var total = 0;
-			for (tileClass in pCounts) {
-				pCounts[tileClass] = pCounts[tileClass] < 0 ? 0 : pCounts[tileClass];
-				total += pCounts[tileClass];
-			}
-
-			var baseline = 0;
-			var r = Math.random();
-			var theClass = "";
-			for (tileClass in pCounts) {
-				theClass = tileClass;
-				var chance = pCounts[tileClass] / total;
-				// console.log(tileClass + ': ' + r + ' < ' + baseline + ' + ' + pCounts[tileClass]  + ' / ' + total  + ' (' + chance + ')');
-				if (r < baseline + chance) {
-					break;
-				}
-				baseline += chance;
-			}
-			var type = Content.getResourceType(theClass);
-			
-			dropTiles(addTiles([new Tile({
-				type : type,
-				row: -1,
-				column: col
-			})]));
-			
-			if (num < GameBoard.options.columns * GameBoard.options.rows - 1) {
-				setTimeout(function() {
-					doFill(num + 1);
-				}, 20);
-			}
-		})(0);
-	}
-	
-	function addTiles(tilesToAdd) {
-		var G = require('app/graphics/graphics');
-		G.addTilesToContainer(tilesToAdd);
-		for(var t in tilesToAdd) {
-			var tile = tilesToAdd[t];
-			tile.el().removeClass('hidden');
-			G.setPositionInBoard(tile, tile.options.row, tile.options.column);
-		}
-		return tilesToAdd;
-	}
-	
-	function dropTiles(tilestoDrop) {
-		var G = require('app/graphics/graphics');
-		dropCount++;
-		for(var t in tilestoDrop) {
-			var tile = tilestoDrop[t];
-			if($.inArray(tile, checkQueue) == -1) {
-				checkQueue.push(tile);
-			}
-			var col = tiles[tile.options.column];
-			var finalRow = tile.options.row;
-			while (finalRow < GameBoard.options.rows - 1 && col[finalRow + 1] == null) {
-				finalRow++;
-			}
-			// Don't drop the tile if the column is full
-			if (finalRow < 0) {
-				throw "Cannot drop tile in full columns, idiot!";
-			}
-			if(tile.options.row >= 0) {
-				tiles[tile.options.column][tile.options.row] = null;
-			}
-			tiles[tile.options.column][finalRow] = tile;
-			tile.options.row = finalRow;
-		}
+		for(var col = 0, numCols = GameBoard.options.columns; col < numCols; col++) {
+			for(var row = 0, numRows = GameBoard.options.rows; row < numRows; row++) {
+				
+				// console.log('[' + row + ', ' + col + ']');
 		
-		G.dropTiles(tilestoDrop, function() {
-			dropCount--;
-			if(dropCount == 0) {
-				var matches = [];
-				while(checkQueue.length > 0) {
-					var curMatches = checkMatches(checkQueue.pop());
-					for(var m in curMatches) {
-						var match = curMatches[m];
-						if($.inArray(match, matches) == -1) {
-							matches.push(match);
-						}
+				// Pieces to the left and the top could potentially be present
+				var pCounts = tileMap();
+				if (col > 0) {
+					var sibling = getTile(row, col - 1);
+					pCounts[sibling]--;
+					if (col > 1 && getTile(row, col - 2) == sibling) {
+						// console.log('horizontal detection: ' + sibling.options.type.className + ' == ' + GameBoard.tiles[col - 2][row].options.type.className);
+						pCounts[sibling]--;
 					}
 				}
-				if(matches.length > 0) {
-					handleMatches(matches);
-				} else if(!areMovesAvailable()) {
-					noMoreMoves();
-				} else if(!filling) {
-					EventManager.trigger('tilesSwapped');
-				} else if(filling) {
-					filling = false;
+				if (row > 0) {
+					var sibling = getTile(row - 1, col);
+					pCounts[sibling]--;
+					if (row > 1 && getTile(row - 2, col) == sibling) {
+						// console.log('vertical detection: ' + sibling.options.type.className + ' == ' + GameBoard.tiles[col][row + 2].options.type.className);
+						pCounts[sibling]--;
+					}
 				}
+				var total = 0;
+				for (tileChar in pCounts) {
+					pCounts[tileChar] = pCounts[tileChar] < 0 ? 0 : pCounts[tileChar];
+					total += pCounts[tileChar];
+				}
+		
+				var baseline = 0;
+				var r = Math.random();
+				var theChar = "";
+				for (tileChar in pCounts) {
+					theChar = tileChar;
+					var chance = pCounts[tileChar] / total;
+					// console.log(tileClass + ': ' + r + ' < ' + baseline + ' + ' + pCounts[tileClass]  + ' / ' + total  + ' (' + chance + ')');
+					if (r < baseline + chance) {
+						break;
+					}
+					baseline += chance;
+				}
+				
+				tileString += theChar;
 			}
-		});
+			
+			tileString += GameBoard.SEP;
+		}
+		EventManager.trigger("draw", ['board.fill', tileString]);
 	}
+	
+//	function addTiles(tilesToAdd) {
+//		var G = require('app/graphics/graphics');
+//		G.addTilesToContainer(tilesToAdd);
+//		for(var t in tilesToAdd) {
+//			var tile = tilesToAdd[t];
+//			tile.el().removeClass('hidden');
+//			G.setPositionInBoard(tile, tile.options.row, tile.options.column);
+//		}
+//		return tilesToAdd;
+//	}
+//	
+//	function dropTiles(tilestoDrop) {
+//		var G = require('app/graphics/graphics');
+//		dropCount++;
+//		for(var t in tilestoDrop) {
+//			var tile = tilestoDrop[t];
+//			if($.inArray(tile, checkQueue) == -1) {
+//				checkQueue.push(tile);
+//			}
+//			var col = tiles[tile.options.column];
+//			var finalRow = tile.options.row;
+//			while (finalRow < GameBoard.options.rows - 1 && col[finalRow + 1] == null) {
+//				finalRow++;
+//			}
+//			// Don't drop the tile if the column is full
+//			if (finalRow < 0) {
+//				throw "Cannot drop tile in full columns, idiot!";
+//			}
+//			if(tile.options.row >= 0) {
+//				tiles[tile.options.column][tile.options.row] = null;
+//			}
+//			tiles[tile.options.column][finalRow] = tile;
+//			tile.options.row = finalRow;
+//		}
+//		
+//		G.dropTiles(tilestoDrop, function() {
+//			dropCount--;
+//			if(dropCount == 0) {
+//				var matches = [];
+//				while(checkQueue.length > 0) {
+//					var curMatches = checkMatches(checkQueue.pop());
+//					for(var m in curMatches) {
+//						var match = curMatches[m];
+//						if($.inArray(match, matches) == -1) {
+//							matches.push(match);
+//						}
+//					}
+//				}
+//				if(matches.length > 0) {
+//					handleMatches(matches);
+//				} else if(!areMovesAvailable()) {
+//					noMoreMoves();
+//				} else if(!filling) {
+//					EventManager.trigger('tilesSwapped');
+//				} else if(filling) {
+//					filling = false;
+//				}
+//			}
+//		});
+//	}
 	
 	function noMoreMoves() {
 		// Refresh the board and incur penalties
@@ -210,19 +196,9 @@ define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile',
 	}
 	
 	function refreshBoard() {
-		var tilesToRemove = [];
-		for(var c in tiles) {
-			var col = tiles[c];
-			for(var r in col) {
-				var tile = col[r];
-				if(tile != null) {
-					tilesToRemove.push(tile);
-				}
-			}
-			col.length = 0;
-		}
-		var G = require('app/graphics/graphics');
-		G.removeTiles(tilesToRemove, fill);
+		tileString = "";
+		require('app/engine').setGraphicsCallback(fill);
+		EventManager.trigger("draw", ['board.clear', {}]);
 	}
 	
 	// TODO: Make this function less huge and ugly
@@ -537,6 +513,12 @@ define(['jquery', 'app/engine', 'app/eventmanager', 'app/entity/tile',
 			}
 		}
 		return false;
+	}
+	
+	function getTile(row, col) {
+		// Tiles are defined in a single flat string in column-row order
+		// Each column is terminated with a separator character
+		return tileString.charAt(col * (GameBoard.options.rows + 1) + row);
 	}
 	
 	return GameBoard;
