@@ -7,7 +7,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	var tiles = [];
 	var TILE_WIDTH = 0, TILE_HEIGHT = 0;
 	var BOARD_PAD = 2;
-	var FILL_DELAY = 50;
+	var FILL_DELAY = 100;
 	
 	function el() {
 		if (_el == null) {
@@ -74,6 +74,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	}
 	
 	function drawFillBoard(tileString) {
+		var start = Date.now();
 		var t = tileString.split('');
 		var col = 0, row = 0;
 		var mTime = (GameBoard.options.rows + GameBoard.options.columns) * FILL_DELAY;
@@ -93,13 +94,14 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 				tileContainer.append(tile.el());
 				setTimeout(function() {
 					updatePositionInBoard(tile);
-				}, mTime - ((row + (GameBoard.options.columns - col)) * FILL_DELAY));
+				}, 200 + mTime - ((row + (GameBoard.options.columns - col)) * FILL_DELAY));
 				row++;
 			}
 			if(t.length > 0) {
-				_f();
+				setTimeout(_f, 0);
 			}
 		})();
+		console.log("drew fill in " + (Date.now() - start) + "ms");
 		return mTime;
 	}
 	
@@ -129,13 +131,8 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		var top = row * TILE_HEIGHT + BOARD_PAD;
 		var left = column * TILE_WIDTH + BOARD_PAD;
 		el.css({
-			transform: 'translate3d(' + left + 'px, ' + top + 'px, 0)',
-			left: entity._leftPos,
+			transform: 'translate3d(' + left + 'px, ' + top + 'px, 0)'
 		});
-		
-		// Force a redraw so our CSS animations don't skip
-		// TODO: Do this in a lighter way. It's slowing down mobile pretty bad.
-//		el.css('left');
 	}
 	
 	return {
