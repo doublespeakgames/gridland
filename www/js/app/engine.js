@@ -40,7 +40,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 	}
 	
 	function canMove() {
-		return GameBoard.canMove() && World.canMove();
+		return graphicsCallback == null && GameBoard.canMove() && World.canMove();
 	}
 	
 	function startDrag(tile) {
@@ -55,7 +55,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				activeTile = null;
 				Graphics.deselectTile(active);
 				if(tile.isAdjacent(active)) {
-					GameBoard.switchTiles(active, tile);
+					GameBoard.switchTiles(
+						{row: active.options.row, col: active.options.column}, 
+						{row: tile.options.row, col: tile.options.column}
+					);
 				}
 			}
 		}
@@ -73,10 +76,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				var active = activeTile;
 				activeTile = null;
 				Graphics.deselectTile(active);
-				try {
-					var sibling = GameBoard.getTile(active.options.column + dx, active.options.row + dy);
-					GameBoard.switchTiles(active, sibling);
-				} catch(e) {console.log('No drag for you!');}
+				GameBoard.switchTiles(
+					{row: active.options.row, col: active.options.column}, 
+					{row: active.options.row + dy, col: active.options.column + dx}
+				);
 			}
 		}
 	}

@@ -6,9 +6,11 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	var removals = 0;
 	var checkQueue = [];
 	var tileString = '';
+	var rowString = '';
 	var filling = false;
 	var totals = {};
 	var swapSide = null;
+	var detectMatches = null;
 	
 	var GameBoard = {
 		SEP: 'X',
@@ -24,35 +26,27 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			tileString = '';
 			totals = {};
 			
+			detectMatches = new RegExp("([^" + GameBoard.SEP + "])\\1{2,}", "g");
+			
 			EventManager.bind("refreshBoard", refreshBoard);
 		},
 		
-		switchTiles: function(tile1, tile2, skipMatch) {
-			// TODO: Rewrite
-//			var G = require('app/graphics/graphics');
-//			G.switchTiles(tile1, tile2, function(tile1, tile2) {
-//				var r1 = tile1.options.row, c1 = tile1.options.column;
-//				tiles[tile1.options.column][tile1.options.row] = tile2;
-//				tiles[tile2.options.column][tile2.options.row] = tile1;
-//				tile1.options.row = tile2.options.row;
-//				tile1.options.column = tile2.options.column;
-//				tile2.options.row = r1;
-//				tile2.options.column = c1;
-//				
-//				if(!skipMatch) {
-//					swapSide = tile1.options.column < GameBoard.options.columns / 2 ? 'left' : 'right';
-//					// Check for matches
-//					var matches = checkMatches(tile1);
-//					matches = matches.concat(checkMatches(tile2));
-//				
-//					if(matches.length > 0) {
-//						handleMatches(matches);
-//					} else {
-//						GameBoard.switchTiles(tile1, tile2, true);
-//						EventManager.trigger('tilesSwapped');
-//					}
-//				}
-//			});
+		switchTiles: function(pos1, pos2, skipMatch) {
+			
+			console.log(tileString);
+			
+			var char1 = getTile(pos1.row, pos1.col),
+				char2 = getTile(pos2.row, pos2.col);
+			setTile(pos1.row, pos1.col, char2);
+			setTile(pos2.row, pos2.col, char1);
+			
+			console.log(tileString);
+			
+			require('app/engine').setGraphicsCallback(checkMatches);
+			EventManager.trigger('draw', ['board.swap', {
+				pos1: pos1,
+				pos2: pos2
+			}]);
 		},
 		
 		canMove: function() {
@@ -125,6 +119,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			
 			tileString += GameBoard.SEP;
 		}
+		require('app/engine').setGraphicsCallback(function(){});
 		EventManager.trigger("draw", ['board.fill', tileString]);
 	}
 	
@@ -330,56 +325,95 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		});
 	}
 	
-	function checkMatches(tile) {
-		var hMatches = [tile], vMatches = [tile];			
-		if(tile.options.column > 0) {
-			var testTile = tiles[tile.options.column - 1][tile.options.row];
-			while(testTile != null && testTile.options.type == tile.options.type) {
-				hMatches.push(testTile);
-				if(testTile.options.column == 0) break;
-				testTile = tiles[testTile.options.column - 1][testTile.options.row];
-			}
-		}
-		if(tile.options.column < GameBoard.options.columns - 1) {
-			var testTile = tiles[tile.options.column + 1][tile.options.row];
-			while(testTile != null && testTile.options.type == tile.options.type) {
-				hMatches.push(testTile);
-				if(testTile.options.column == GameBoard.options.columns - 1) break;
-				testTile = tiles[testTile.options.column + 1][testTile.options.row];
-			}
-		}
-		if(tile.options.row > 0) {
-			var testTile = tiles[tile.options.column][tile.options.row - 1];
-			while(testTile != null && testTile.options.type == tile.options.type) {
-				vMatches.push(testTile);
-				if(testTile.options.row == 0) break;
-				testTile = tiles[testTile.options.column][testTile.options.row - 1];
-			}
-		}
-		if(tile.options.row < GameBoard.options.rows - 1) {
-			var testTile = tiles[tile.options.column][tile.options.row + 1];
-			while(testTile != null && testTile.options.type == tile.options.type) {
-				vMatches.push(testTile);
-				if(testTile.options.row == GameBoard.options.rows - 1) break;
-				testTile = tiles[testTile.options.column][testTile.options.row + 1];
-			}
-		}
-
-		// Only return matches that form rows/columns of three or more
-		var matches = [];
-		if(hMatches.length >= 3) {
-			matches = matches.concat(hMatches);
-		}
-		if(vMatches.length >= 3) {
-			for(var t in vMatches) {
-				var tile = vMatches[t];
-				if($.inArray(tile, matches) == -1) {
-					matches.push(tile);
+	function checkMatches() {
+		
+		generateRowString();
+		
+		var vMask = makeMask(tileString), hMask = makeMask(tileString);
+		var matchDetected = false;
+		
+		// Detect vertical matches
+		tileString.replace(detectMatches, function(match, p1, offset, string) {
+			matchDetected = true;
+			for(var i = 0, l = match.length; i < l; i++) {
+		        vMask[offset + i] = 1;
+		    }
+		});
+		
+		// Detect horizontal matches
+		rowString.replace(detectMatches, function(match, p1, offset, string) {
+			matchDetected = true;
+			for(var i = 0, l = match.length; i < l; i++) {
+		        hMask[indexFromRowString(offset + i)] = 1;
+		    }
+		});
+		
+		var toRemove = [];
+		if(matchDetected) {
+			console.log('match found');
+			for(var i in vMask) {
+				if(vMask[i] == 1 || hMask[i] == 1) {
+					toRemove.push(getPosition(i));
 				}
 			}
+			// TODO: Add a real callback
+			require('app/engine').setGraphicsCallback(function() {});
+			EventManager.trigger('draw', ['board.match', {
+				removed: toRemove
+			}]);
 		}
-
-		return matches;
+		
+		
+		// TODO: Rewrite
+//		var hMatches = [tile], vMatches = [tile];			
+//		if(tile.options.column > 0) {
+//			var testTile = tiles[tile.options.column - 1][tile.options.row];
+//			while(testTile != null && testTile.options.type == tile.options.type) {
+//				hMatches.push(testTile);
+//				if(testTile.options.column == 0) break;
+//				testTile = tiles[testTile.options.column - 1][testTile.options.row];
+//			}
+//		}
+//		if(tile.options.column < GameBoard.options.columns - 1) {
+//			var testTile = tiles[tile.options.column + 1][tile.options.row];
+//			while(testTile != null && testTile.options.type == tile.options.type) {
+//				hMatches.push(testTile);
+//				if(testTile.options.column == GameBoard.options.columns - 1) break;
+//				testTile = tiles[testTile.options.column + 1][testTile.options.row];
+//			}
+//		}
+//		if(tile.options.row > 0) {
+//			var testTile = tiles[tile.options.column][tile.options.row - 1];
+//			while(testTile != null && testTile.options.type == tile.options.type) {
+//				vMatches.push(testTile);
+//				if(testTile.options.row == 0) break;
+//				testTile = tiles[testTile.options.column][testTile.options.row - 1];
+//			}
+//		}
+//		if(tile.options.row < GameBoard.options.rows - 1) {
+//			var testTile = tiles[tile.options.column][tile.options.row + 1];
+//			while(testTile != null && testTile.options.type == tile.options.type) {
+//				vMatches.push(testTile);
+//				if(testTile.options.row == GameBoard.options.rows - 1) break;
+//				testTile = tiles[testTile.options.column][testTile.options.row + 1];
+//			}
+//		}
+//
+//		// Only return matches that form rows/columns of three or more
+//		var matches = [];
+//		if(hMatches.length >= 3) {
+//			matches = matches.concat(hMatches);
+//		}
+//		if(vMatches.length >= 3) {
+//			for(var t in vMatches) {
+//				var tile = vMatches[t];
+//				if($.inArray(tile, matches) == -1) {
+//					matches.push(tile);
+//				}
+//			}
+//		}
+//
+//		return matches;
 	}
 	
 	function areMovesAvailable() {
@@ -515,10 +549,51 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		return false;
 	}
 	
-	function getTile(row, col) {
+	function getIndex(row, col) {
 		// Tiles are defined in a single flat string in column-row order
 		// Each column is terminated with a separator character
-		return tileString.charAt(col * (GameBoard.options.rows + 1) + row);
+		return col * (GameBoard.options.rows + 1) + row;
+	}
+	
+	function getPosition(index) {
+		var c = index / (GameBoard.options.rows + 1);
+		return {
+			row: index % (GameBoard.options.rows + 1),
+			col: c | c // Faster than Math.floor
+		};
+	}
+	
+	function getTile(row, col) {
+		return tileString.charAt(getIndex(row, col));
+	}
+	
+	function setTile(row, col, char) {
+		var idx = getIndex(row, col);
+		tileString = tileString.substring(0, idx) + char + tileString.substring(idx + 1);
+	}
+	
+	function makeMask(s) {
+	    var m = [];
+	    for(var i = 0, len = s.length; i < len; i++) {
+	        m.push(0);
+	    }
+	    return m;
+	}
+	
+	function generateRowString() {
+		rowString = '';
+		for(var row = 0; row < GameBoard.options.rows; row++) {
+			for(var col = 0; col < GameBoard.options.columns; col++) {
+				rowString += getTile(row, col);
+			}
+			rowString += GameBoard.SEP;
+		}
+	}
+	
+	function indexFromRowString(idx) {
+		var c = idx / (GameBoard.options.columns + 1);
+		c = c|c;
+		return (idx % (GameBoard.options.rows + 1))*(GameBoard.options.rows + 1) + c;
 	}
 	
 	return GameBoard;
