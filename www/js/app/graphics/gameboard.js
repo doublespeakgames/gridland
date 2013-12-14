@@ -74,7 +74,6 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	}
 	
 	function drawFillBoard(tileString) {
-		var start = Date.now();
 		var t = tileString.split('');
 		var col = 0, row = 0;
 		var mTime = (GameBoard.options.rows + GameBoard.options.columns) * FILL_DELAY;
@@ -101,8 +100,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 				setTimeout(_f, 0);
 			}
 		})();
-		console.log("drew fill in " + (Date.now() - start) + "ms");
-		return mTime;
+		return mTime + 200;
 	}
 	
 	function drawMatch(opts) {

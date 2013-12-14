@@ -72,7 +72,6 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	}
 	
 	function fill() {
-		var start = Date.now();
 		for(var col = 0, numCols = GameBoard.options.columns; col < numCols; col++) {
 			for(var row = 0, numRows = GameBoard.options.rows; row < numRows; row++) {
 				
@@ -120,7 +119,6 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			
 			tileString += GameBoard.SEP;
 		}
-		console.log("Generated board in " + (Date.now() - start) + "ms");
 		require('app/engine').setGraphicsCallback(function(){});
 		EventManager.trigger("draw", ['board.fill', tileString]);
 	}
