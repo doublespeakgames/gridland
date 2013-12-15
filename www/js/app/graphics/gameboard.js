@@ -83,14 +83,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 				col++;
 				row = 0;
 			} else {
-				var tile = new Tile({
-					type: Content.getResourceType(tileChar),
-					row: row,
-					column: col
-				});
-				setTile(row, col, tile);
-				updatePositionInBoard(tile, tile.options.row - GameBoard.options.rows);
-				tileContainer.append(tile.el());
+				var tile = newTile(row, col, tileChar);
 				setTimeout(function() {
 					updatePositionInBoard(tile);
 				}, 200 + mTime - ((row + (GameBoard.options.columns - col)) * FILL_DELAY));
@@ -104,22 +97,43 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	}
 	
 	function drawMatch(opts) {
-		// Add new tiles to the top
-		// TODO
-		
-		// Remove matches tiles
+		var tilesToUpdate = [];
+		// Remove matched tiles
 		if(opts.removed) {
 			for(var i in opts.removed) {
 				var pos = opts.removed[i];
-				getTile(pos.row, pos.col).el().addClass('hidden');
-//				setTile(pos.row, pos.col, null);
+				removeTile(pos.row, pos.col);
+				// Drop each tile above this tile one space
+				for(var r = pos.row - 1; r >= 0; r--) {
+					var t = getTile(r, pos.col);
+					if(t) {
+						t.options.row++;
+						tilesToUpdate.push(t);
+					}
+				}
 			}
 		}
-			
-		// Drop the new tiles
-		// TODO
 		
-		return 200; // TODO: This will be longer
+		// Add new tiles to the top
+		// TODO: As expected, this is the heaviest thing. Optimize it.
+		if(opts.added) {
+			for(var i in opts.added) {
+				var a = opts.added[i];
+				var tile = newTile(a.row, a.col, a.char);
+				tilesToUpdate.push(tile);
+			}
+		}
+		
+		setTimeout(function() {
+			// Drop tiles that need dropping
+			for(var i in tilesToUpdate) {
+				var t = tilesToUpdate[i];
+				setTile(t.options.row, t.options.column, t);
+				updatePositionInBoard(t);
+			}
+		}, 200);
+		
+		return 400;
 	}
 	
 	function updatePositionInBoard(entity, row, column) {
@@ -131,6 +145,29 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		el.css({
 			transform: 'translate3d(' + left + 'px, ' + top + 'px, 0)'
 		});
+	}
+	
+	function newTile(row, col, tileChar) {
+		var tile = new Tile({
+			type: Content.getResourceType(tileChar),
+			row: row,
+			column: col
+		});
+		setTile(row, col, tile);
+		updatePositionInBoard(tile, tile.options.row - GameBoard.options.rows);
+		tileContainer.append(tile.el());
+		
+		return tile;
+	}
+	
+	function removeTile(row, col) {
+		var t = getTile(row, col);
+		setTile(row, col, null);
+		t.el().addClass('hidden');
+		setTimeout(function() {
+			t.el().remove();
+			t._el = null;
+		}, 200);
 	}
 	
 	return {

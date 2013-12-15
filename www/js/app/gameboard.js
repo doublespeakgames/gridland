@@ -4,13 +4,13 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	
 	var dropCount = 0;
 	var removals = 0;
-	var checkQueue = [];
 	var tileString = '';
 	var rowString = '';
-	var filling = false;
-	var totals = {};
 	var swapSide = null;
 	var detectMatches = null;
+	var findHoles = null;
+	var lastSwitch = null;
+	var HOLE = 'O';
 	
 	var GameBoard = {
 		SEP: 'X',
@@ -22,27 +22,36 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			$.extend(this.options, opts);
 			_el = null;
 			Resources.loaded = false;
-			filling = false;
 			tileString = '';
-			totals = {};
 			
 			detectMatches = new RegExp("([^" + GameBoard.SEP + "])\\1{2,}", "g");
+			findHoles = new RegExp(HOLE, "g");
 			
 			EventManager.bind("refreshBoard", refreshBoard);
 		},
 		
-		switchTiles: function(pos1, pos2, skipMatch) {
+		switchTiles: function(pos1, pos2) {
 			
-			console.log(tileString);
+			var cb = checkMatches;
+			if(!pos1 && !pos2 && lastSwitch) {
+				// We are reverting a switch
+				pos1 = lastSwitch.pos2;
+				pos2 = lastSwitch.pos1;
+				cb = function() {};
+			}
+			
+			swapSide = pos1.col < GameBoard.options.columns / 2 ? 'left' : 'right';
+			lastSwitch = {
+				pos1: pos1,
+				pos2: pos2
+			};
 			
 			var char1 = getTile(pos1.row, pos1.col),
 				char2 = getTile(pos2.row, pos2.col);
 			setTile(pos1.row, pos1.col, char2);
 			setTile(pos2.row, pos2.col, char1);
 			
-			console.log(tileString);
-			
-			require('app/engine').setGraphicsCallback(checkMatches);
+			require('app/engine').setGraphicsCallback(cb);
 			EventManager.trigger('draw', ['board.swap', {
 				pos1: pos1,
 				pos2: pos2
@@ -95,26 +104,8 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 						pCounts[sibling]--;
 					}
 				}
-				var total = 0;
-				for (tileChar in pCounts) {
-					pCounts[tileChar] = pCounts[tileChar] < 0 ? 0 : pCounts[tileChar];
-					total += pCounts[tileChar];
-				}
-		
-				var baseline = 0;
-				var r = Math.random();
-				var theChar = "";
-				for (tileChar in pCounts) {
-					theChar = tileChar;
-					var chance = pCounts[tileChar] / total;
-					// console.log(tileClass + ': ' + r + ' < ' + baseline + ' + ' + pCounts[tileClass]  + ' / ' + total  + ' (' + chance + ')');
-					if (r < baseline + chance) {
-						break;
-					}
-					baseline += chance;
-				}
 				
-				tileString += theChar;
+				tileString += generateTile(pCounts);
 			}
 			
 			tileString += GameBoard.SEP;
@@ -122,67 +113,6 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		require('app/engine').setGraphicsCallback(function(){});
 		EventManager.trigger("draw", ['board.fill', tileString]);
 	}
-	
-//	function addTiles(tilesToAdd) {
-//		var G = require('app/graphics/graphics');
-//		G.addTilesToContainer(tilesToAdd);
-//		for(var t in tilesToAdd) {
-//			var tile = tilesToAdd[t];
-//			tile.el().removeClass('hidden');
-//			G.setPositionInBoard(tile, tile.options.row, tile.options.column);
-//		}
-//		return tilesToAdd;
-//	}
-//	
-//	function dropTiles(tilestoDrop) {
-//		var G = require('app/graphics/graphics');
-//		dropCount++;
-//		for(var t in tilestoDrop) {
-//			var tile = tilestoDrop[t];
-//			if($.inArray(tile, checkQueue) == -1) {
-//				checkQueue.push(tile);
-//			}
-//			var col = tiles[tile.options.column];
-//			var finalRow = tile.options.row;
-//			while (finalRow < GameBoard.options.rows - 1 && col[finalRow + 1] == null) {
-//				finalRow++;
-//			}
-//			// Don't drop the tile if the column is full
-//			if (finalRow < 0) {
-//				throw "Cannot drop tile in full columns, idiot!";
-//			}
-//			if(tile.options.row >= 0) {
-//				tiles[tile.options.column][tile.options.row] = null;
-//			}
-//			tiles[tile.options.column][finalRow] = tile;
-//			tile.options.row = finalRow;
-//		}
-//		
-//		G.dropTiles(tilestoDrop, function() {
-//			dropCount--;
-//			if(dropCount == 0) {
-//				var matches = [];
-//				while(checkQueue.length > 0) {
-//					var curMatches = checkMatches(checkQueue.pop());
-//					for(var m in curMatches) {
-//						var match = curMatches[m];
-//						if($.inArray(match, matches) == -1) {
-//							matches.push(match);
-//						}
-//					}
-//				}
-//				if(matches.length > 0) {
-//					handleMatches(matches);
-//				} else if(!areMovesAvailable()) {
-//					noMoreMoves();
-//				} else if(!filling) {
-//					EventManager.trigger('tilesSwapped');
-//				} else if(filling) {
-//					filling = false;
-//				}
-//			}
-//		});
-//	}
 	
 	function noMoreMoves() {
 		// Refresh the board and incur penalties
@@ -196,145 +126,21 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		EventManager.trigger("draw", ['board.clear', {}]);
 	}
 	
-	// TODO: Make this function less huge and ugly
-	function handleMatches(matchedTiles) {
-		var G = require('app/graphics/graphics');
-		removals++;
-		var tilesRemovedInColumn = {};
-		var resourcesGained = {};
-
-		// Remove matched tiles
-		var resourceColumns = {};
-		for(t in matchedTiles) {
-			var tileToRemove = matchedTiles[t];
-			var rList = resourceColumns[tileToRemove.options.type.className];
-			if(!rList) {
-				rList = resourceColumns[tileToRemove.options.type.className] = [];
-			}
-			rList.push(tileToRemove.options.column);
-			var gained = resourcesGained[tileToRemove.options.type.className] || 0;
-			resourcesGained[tileToRemove.options.type.className] = gained + 1;
-			if(tiles[tileToRemove.options.column][tileToRemove.options.row] != null) {
-				tiles[tileToRemove.options.column][tileToRemove.options.row] = null;
-				if(tilesRemovedInColumn[tileToRemove.options.column] == null) {
-					tilesRemovedInColumn[tileToRemove.options.column] = 0;
-				}
-				tilesRemovedInColumn[tileToRemove.options.column]++;
-			}
-			tileToRemove.options.row = -1;
-		}
-		
-		// Check for matches of 4 or more
-		var specialColumns = {};
-		if(State.magicEnabled()) {
-			for(var resource in resourceColumns) {
-				var rCol = resourceColumns[resource];
-				var num = resourcesGained[resource];
-				if(num >= 4) {
-					var cIndex = Math.floor(Math.random() * rCol.length);
-					var selectedColumn = rCol[cIndex];
-					var n = specialColumns[selectedColumn] || 0;
-					specialColumns[selectedColumn] = n + 1;
-				}
-			}
-		}
-		
-		EventManager.trigger('tilesCleared', [resourcesGained, swapSide]);
-		
-		G.removeTiles(matchedTiles, function() {
-			// Drop remaining tiles
-			var pCounts = tileMap();
-			var nextCount = 0;
-			for(i in pCounts) {
-				nextCount += pCounts[i];
-			}
-			var newTiles = [];
-			var dropList = [];
-			for(col in tilesRemovedInColumn) {
-				for(var r = GameBoard.options.rows - 1; r >= 0; r--) {
-					if(tiles[col][r] != null) {
-						dropList.push(tiles[col][r]);
-					}
-				}
-				
-				// Place mana tiles, if necessary
-				var gemRows = {};
-				if(State.magicEnabled()) {
-					var gemsInColumn = specialColumns[col];
-					if(gemsInColumn != null && gemsInColumn > 0) {
-						var possibleRows = [];
-						for(var i = 1, num = tilesRemovedInColumn[col]; i <= num; i++) {
-							possibleRows.push(i);
-						}
-						for(var i = 0; i < gemsInColumn && possibleRows.length > 0; i++) {
-							var rIndex = Math.floor(Math.random() * possibleRows.length);
-							var row = possibleRows[rIndex];
-							gemRows[row] = true;
-						}
-					}
-				}
-				
-				for(var i = 1, num = tilesRemovedInColumn[col]; i <= num; i++) {
-					var typeClass = "";
-					if(gemRows[i]) {
-						typeClass = "mana";
-					} else {
-						var probs = {};
-						for(var p in pCounts) {
-							probs[p] = pCounts[p] / nextCount;
-						}
-						var r = Math.random();
-						var base = 0;
-						for(var className in probs) {
-							typeClass = className;
-							var prob = probs[className];
-//								console.log(className + ": " + r + " < " + prob + " + " + base);
-							if(r < prob + base) {
-								break;
-							}
-							base += prob;
-						}
-						
-						var n = totals[typeClass] || 0;
-						totals[typeClass] = n + 1;
-						
-						nextCount = 0;
-						for(var t in pCounts) {
-							if(t == typeClass) {
-								pCounts[t]--;
-							} else {
-								pCounts[t] = 2;
-							}
-							nextCount += pCounts[t];
-						}
-					}
-					newTiles.push(new Tile({
-						column: parseInt(col),
-						row: -i,
-						type: Content.getResourceType(typeClass)
-					}));
-				}
-			}
-			
-			dropList = dropList.concat(newTiles);
-			addTiles(newTiles);
-			dropTiles(dropList);
-			
-			removals--;
-			if(removals < 0) removals = 0;
-		});
-	}
-	
 	function checkMatches() {
-		
 		generateRowString();
 		
 		var vMask = makeMask(tileString), hMask = makeMask(tileString);
 		var matchDetected = false;
 		
+		var gemsInColumn = {};
+		
 		// Detect vertical matches
 		tileString.replace(detectMatches, function(match, p1, offset, string) {
 			matchDetected = true;
+			if(match.length > 3) {
+				var column = getColumn(offset);
+				gemsInColumn[column] = gemsInColumn[column] ? gemsInColumn[column] + 1 : 1;
+			}
 			for(var i = 0, l = match.length; i < l; i++) {
 		        vMask[offset + i] = 1;
 		    }
@@ -344,209 +150,92 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		rowString.replace(detectMatches, function(match, p1, offset, string) {
 			matchDetected = true;
 			for(var i = 0, l = match.length; i < l; i++) {
+				if(match.length > 3) {
+					var column = getColumn(offset + i, true);
+					gemsInColumn[column] = gemsInColumn[column] ? gemsInColumn[column] + 1 : 1;
+				}
 		        hMask[indexFromRowString(offset + i)] = 1;
 		    }
 		});
 		
 		var toRemove = [];
+		var newTiles = [];
+		var resourcesGained = {};
 		if(matchDetected) {
-			console.log('match found');
-			for(var i in vMask) {
+			for(var i = 0, len = vMask.length; i < len; i++) {
 				if(vMask[i] == 1 || hMask[i] == 1) {
+					var c = Content.getResourceType(getTile(i)).className;
+					resourcesGained[c] = resourcesGained[c] ? resourcesGained[c] + 1 : 1;
+					setTile(i, HOLE);
 					toRemove.push(getPosition(i));
 				}
 			}
+			
+			// Remove holes and add new tiles
+			var pCounts = tileMap();
+			var total = getTotal(pCounts);
+			tileString = tileString.replace(findHoles, '');
+			var columns = tileString.split(GameBoard.SEP);
+			for(var colIndex = 0, len = columns.length - 1; colIndex < len; colIndex++) {
+				var column = columns[colIndex];
+				var needed = GameBoard.options.rows - column.length;
+				if(needed > 0) {
+					// Repopulate the column
+					var numGems = gemsInColumn[colIndex] && State.magicEnabled() ? gemsInColumn[colIndex] : 0;
+					var gemRows = {};
+					if(numGems > 0) {
+						// Determine where the gems will fall
+						var possibleRows = [];
+						for(var x = 0; x < numGems; x++){
+							possibleRows.push(x);
+						}
+						while(numGems > 0 && possibleRows.length > 0) {
+							var r = Math.random() * possibleRows.length;
+							r = r|r;
+							gemRows[possibleRows[r]] = true;
+							possibleRows.splice(r, 1);
+							numGems--;
+						}
+					}
+					for(var rowIndex = needed - 1; rowIndex >= 0; rowIndex--) {
+						var newChar;
+						if(gemRows[rowIndex]) {
+							newChar = 'm';
+						} else {
+							newChar = generateTile(pCounts, total);
+						}
+						column = newChar + column;
+						newTiles.push({
+							row: rowIndex,
+							col: colIndex,
+							char: newChar
+						});
+					}
+					columns[colIndex] = column;
+				}
+			}
+			tileString = columns.join(GameBoard.SEP);
+			lastSwitch = null;
+
 			// TODO: Add a real callback
-			require('app/engine').setGraphicsCallback(function() {});
+			require('app/engine').setGraphicsCallback(checkMatches);
 			EventManager.trigger('draw', ['board.match', {
-				removed: toRemove
+				removed: toRemove,
+				added: newTiles
 			}]);
+			EventManager.trigger('tilesCleared', [resourcesGained, swapSide]);
+		} else {
+			EventManager.trigger('tilesSwapped');
+			if(lastSwitch) {
+				// Revert the switch
+				GameBoard.switchTiles();
+			}
 		}
-		
-		
-		// TODO: Rewrite
-//		var hMatches = [tile], vMatches = [tile];			
-//		if(tile.options.column > 0) {
-//			var testTile = tiles[tile.options.column - 1][tile.options.row];
-//			while(testTile != null && testTile.options.type == tile.options.type) {
-//				hMatches.push(testTile);
-//				if(testTile.options.column == 0) break;
-//				testTile = tiles[testTile.options.column - 1][testTile.options.row];
-//			}
-//		}
-//		if(tile.options.column < GameBoard.options.columns - 1) {
-//			var testTile = tiles[tile.options.column + 1][tile.options.row];
-//			while(testTile != null && testTile.options.type == tile.options.type) {
-//				hMatches.push(testTile);
-//				if(testTile.options.column == GameBoard.options.columns - 1) break;
-//				testTile = tiles[testTile.options.column + 1][testTile.options.row];
-//			}
-//		}
-//		if(tile.options.row > 0) {
-//			var testTile = tiles[tile.options.column][tile.options.row - 1];
-//			while(testTile != null && testTile.options.type == tile.options.type) {
-//				vMatches.push(testTile);
-//				if(testTile.options.row == 0) break;
-//				testTile = tiles[testTile.options.column][testTile.options.row - 1];
-//			}
-//		}
-//		if(tile.options.row < GameBoard.options.rows - 1) {
-//			var testTile = tiles[tile.options.column][tile.options.row + 1];
-//			while(testTile != null && testTile.options.type == tile.options.type) {
-//				vMatches.push(testTile);
-//				if(testTile.options.row == GameBoard.options.rows - 1) break;
-//				testTile = tiles[testTile.options.column][testTile.options.row + 1];
-//			}
-//		}
-//
-//		// Only return matches that form rows/columns of three or more
-//		var matches = [];
-//		if(hMatches.length >= 3) {
-//			matches = matches.concat(hMatches);
-//		}
-//		if(vMatches.length >= 3) {
-//			for(var t in vMatches) {
-//				var tile = vMatches[t];
-//				if($.inArray(tile, matches) == -1) {
-//					matches.push(tile);
-//				}
-//			}
-//		}
-//
-//		return matches;
 	}
 	
 	function areMovesAvailable() {
-		// scan rows
-		for(var row = 0; row < GameBoard.options.rows; row++) {
-			for(var center = 1; center < GameBoard.options.columns - 1; center++) {
-				var frame = [
-					tiles[center - 1][row],
-					tiles[center][row],
-					tiles[center + 1][row]
-				];
-				
-				/* The three possible patterns are:
-				 * xox, xxo, oxx
-				 * No other patterns can result in a move
-				 */
-				if(frame[0] != null && frame[1] != null && frame[0].options.type == frame[1].options.type) {
-					// xxo
-					var type = frame[0].options.type;
-					if(row < GameBoard.options.rows - 1 && tiles[center + 1][row + 1] != null &&
-							tiles[center + 1][row + 1].options.type == type) {
-						return true;	
-					}
-					if(row > 0 && tiles[center + 1][row - 1] && 
-							tiles[center + 1][row - 1].options.type == type) {
-						return true;
-					}
-					if(center < GameBoard.options.columns - 2 && tiles[center + 2][row] != null &&
-							tiles[center + 2][row].options.type == type) {
-						return true;
-					}
-				}
-				if(frame[0] != null && frame[2] != null && frame[0].options.type == frame[2].options.type) {
-					// xox
-					var type = frame[0].options.type;
-					if(row < GameBoard.options.rows - 1 && tiles[center][row + 1] != null &&
-							tiles[center][row + 1].options.type == type) {
-						return true;	
-					}
-					if(row > 0 && tiles[center][row - 1] != null &&
-							tiles[center][row - 1].options.type == type) {
-						return true;
-					}
-				}
-				if(frame[1] != null && frame[2] != null && frame[1].options.type == frame[2].options.type) {
-					// oxx
-					var type = frame[1].options.type;
-					if(row < GameBoard.options.rows - 1 && tiles[center - 1][row + 1] != null && 
-							tiles[center - 1][row + 1].options.type == type) {
-						return true;	
-					}
-					if(row > 0 && tiles[center - 1][row - 1] != null && 
-							tiles[center - 1][row - 1].options.type == type) {
-						return true;
-					}
-					if(center > 1 && tiles[center - 2][row] != null && 
-							tiles[center - 2][row].options.type == type) {
-						return true;
-					}
-				}
-			}
-		}
-		// scan columns
-		for(var column = 0; column < GameBoard.options.columns; column++) {
-			for(var center = 1; center < GameBoard.options.rows - 1; center++) {
-				var frame = [
-					tiles[column][center - 1],
-					tiles[column][center],
-					tiles[column][center + 1]
-				];
-				
-				/* The three possible patterns are:
-				 * x  x  o
-				 * o  x  x
-				 * x, o, x 
-				 * No other patterns can result in a move
-				 */
-				if(frame[0] != null && frame[1] != null && frame[0].options.type == frame[1].options.type) {
-					/*  x
-					 *  x
-					 *  o
-					 */ 
-					var type = frame[0].options.type;
-					if(column < GameBoard.options.column - 1 && tiles[column + 1][center + 1] != null && 
-							tiles[column + 1][center + 1].options.type == type) {
-						return true;	
-					}
-					if(column > 0 && tiles[column - 1][center + 1] != null && 
-							tiles[column - 1][center + 1].options.type == type) {
-						return true;
-					}
-					if(center < GameBoard.options.rows - 2 && tiles[column][center + 2] != null && 
-							tiles[column][center + 2].options.type == type) {
-						return true;
-					}
-				}
-				if(frame[0] != null && frame[2] != null && frame[0].options.type == frame[2].options.type) {
-					/*  x
-					 *  o
-					 *  x
-					 */
-					var type = frame[0].options.type;
-					if(column < GameBoard.options.columns - 1 && tiles[column + 1][center] != null && 
-							tiles[column + 1][center].options.type == type) {
-						return true;	
-					}
-					if(column > 0 && tiles[column - 1][center] != null && 
-							tiles[column - 1][center].options.type == type) {
-						return true;
-					}
-				}
-				if(frame[1] != null && frame[2] != null && frame[1].options.type == frame[2].options.type) {
-					/*  o
-					 *  x
-					 *  x
-					 */
-					var type = frame[1].options.type;
-					if(column < GameBoard.options.column - 1 && tiles[column + 1][center - 1] != null && 
-							tiles[column + 1][center - 1].options.type == type) {
-						return true;	
-					}
-					if(column > 0 && tiles[column - 1][center - 1] != null && 
-							tiles[column - 1][center - 1].options.type == type) {
-						return true;
-					}
-					if(center > 1 && tiles[column][center - 2] != null && 
-							tiles[column][center - 2].options.type == type) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
+		// TODO: Rewrite this with regex
+		return true;
 	}
 	
 	function getIndex(row, col) {
@@ -555,20 +244,35 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		return col * (GameBoard.options.rows + 1) + row;
 	}
 	
-	function getPosition(index) {
+	function getColumn(index, rowOriented) {
+		if(rowOriented) return getRow(index);
 		var c = index / (GameBoard.options.rows + 1);
+		return c|c; // Faster than Math.floor
+	}
+	
+	function getRow(index, rowOriented) {
+		if(rowOriented) return getColumn(index);
+		return index % (GameBoard.options.rows + 1);
+	}
+	
+	function getPosition(index) {
 		return {
-			row: index % (GameBoard.options.rows + 1),
-			col: c | c // Faster than Math.floor
+			row: getRow(index),
+			col: getColumn(index)
 		};
 	}
 	
 	function getTile(row, col) {
+		if(col == null) {
+			return tileString.charAt(row);
+		}
 		return tileString.charAt(getIndex(row, col));
 	}
 	
-	function setTile(row, col, char) {
-		var idx = getIndex(row, col);
+	function setTile(p1, p2, p3) {
+		// Either (row, column, character) or (index, character)
+		var idx = p3 ? getIndex(p1, p2) : p1;
+		var char = p3 ? p3 : p2;
 		tileString = tileString.substring(0, idx) + char + tileString.substring(idx + 1);
 	}
 	
@@ -594,6 +298,36 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		var c = idx / (GameBoard.options.columns + 1);
 		c = c|c;
 		return (idx % (GameBoard.options.rows + 1))*(GameBoard.options.rows + 1) + c;
+	}
+	
+	function getTotal(pCounts) {
+		total = 0;
+		for (tileChar in pCounts) {
+			pCounts[tileChar] = pCounts[tileChar] < 0 ? 0 : pCounts[tileChar];
+			total += pCounts[tileChar];
+		}
+		return total;
+	}
+	
+	function generateTile(pCounts, total) {
+		if(total == null) {
+			total = getTotal(pCounts);
+		}
+
+		var baseline = 0;
+		var r = Math.random();
+		var theChar = "";
+		for (tileChar in pCounts) {
+			theChar = tileChar;
+			var chance = pCounts[tileChar] / total;
+			// console.log(tileClass + ': ' + r + ' < ' + baseline + ' + ' + pCounts[tileClass]  + ' / ' + total  + ' (' + chance + ')');
+			if (r < baseline + chance) {
+				break;
+			}
+			baseline += chance;
+		}
+		
+		return theChar;
 	}
 	
 	return GameBoard;

@@ -163,10 +163,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			(entity.el ? entity.el() : entity).removeClass('hidden');
 		},
 		
-		addToTileContainer: function(entity) {
-			$('.tileContainer').append(entity.el());
-		},
-		
 		addTilesToContainer: function(entities) {
 			var elements = document.createDocumentFragment();
 			for(var e in entities) {
@@ -253,63 +249,12 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			el.css('left', (pos - (el.width() / 2)) + "px");
 		},
 		
-		dropTiles: function(tiles, callback) {
-			
-			if(callback) {
-				setTimeout(callback, 200);
-			}
-			
-			for(var t in tiles) {
-				var tile = tiles[t];
-				var el = tile.el();
-				
-				var finalTop = (tile.options.row + 1) * this.TILE_HEIGHT + this.BOARD_PAD;
-				var tString = 'translate3d('+ ((tile.options.column * this.TILE_WIDTH) + this.BOARD_PAD - tile._leftPos) + 'px,' + finalTop + 'px,0);';
-				
-				el[0].setAttribute('style', 'left:' + tile._leftPos + 'px;transform:' + tString + '-webkit-transform:' + tString + 
-						'-moz-transform:' + tString + '-ms-transform:' + tString + '-o-transform:' + tString);
-			}
-		},
-		
-		switchTiles: function(tile1, tile2, callback) {
-			var el1 = tile1.el(), el2 = tile2.el();
-			
-			el1.css('transform', 'translate3d(' + ((tile2.options.column * this.TILE_WIDTH + this.BOARD_PAD) - tile1._leftPos) + 'px,' 
-					+ ((tile2.options.row + 1) * this.TILE_WIDTH + this.BOARD_PAD) + 'px,0)');
-			el2.css('transform', 'translate3d(' + ((tile1.options.column * this.TILE_WIDTH + this.BOARD_PAD) - tile2._leftPos) + 'px,'
-					+ ((tile1.options.row + 1) * this.TILE_WIDTH + this.BOARD_PAD) + 'px,0)');
-			
-			if(callback) {
-				setTimeout(function() {
-					callback(tile1, tile2);
-				}, 200);
-			}
-		},
-		
 		selectTile: function(tile) {
 			tile.el().addClass('selected');
 		},
 		
 		deselectTile: function(tile) {
 			tile.el().removeClass('selected');
-		},
-		
-		removeTiles: function(tiles, callback) {
-			for(var t in tiles) {
-				var tile = tiles[t];
-				if(tile != null) {
-					tile.el().addClass('hidden');
-				}
-			}
-			setTimeout(function() {
-				for(var t in tiles) {
-					var tile = tiles[t];
-					if(tile != null) {
-						tile.el().remove();
-					}
-				}
-				callback(tiles);
-			}, 300);
 		},
 		
 		animateMove: function(entity, pos, callback, stopShort) {
