@@ -6,7 +6,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 	var activeTile = null;
 	var dragging = false;
 	var dragStart = {x: 0, y: 0};
-	
+	var graphicsCallback = null;
 	
 	function initializeModules(modules, callback) {
 		// init all modules passed to me
@@ -40,7 +40,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 	}
 	
 	function canMove() {
-		return GameBoard.canMove() && World.canMove();
+		return graphicsCallback == null && GameBoard.canMove() && World.canMove();
 	}
 	
 	function startDrag(tile) {
@@ -55,7 +55,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				activeTile = null;
 				Graphics.deselectTile(active);
 				if(tile.isAdjacent(active)) {
-					GameBoard.switchTiles(active, tile);
+					GameBoard.switchTiles(
+						{row: active.options.row, col: active.options.column}, 
+						{row: tile.options.row, col: tile.options.column}
+					);
 				}
 			}
 		}
@@ -73,11 +76,19 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				var active = activeTile;
 				activeTile = null;
 				Graphics.deselectTile(active);
-				try {
-					var sibling = GameBoard.getTile(active.options.column + dx, active.options.row + dy);
-					GameBoard.switchTiles(active, sibling);
-				} catch(e) {console.log('No drag for you!');}
+				GameBoard.switchTiles(
+					{row: active.options.row, col: active.options.column}, 
+					{row: active.options.row + dy, col: active.options.column + dx}
+				);
 			}
+		}
+	}
+	
+	function handleGraphicsComplete() {
+		if(typeof graphicsCallback == 'function') {
+			var cb = graphicsCallback;
+			graphicsCallback = null;
+			cb();
 		}
 	}
 	
@@ -107,6 +118,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				Loot,
 				Magic
 			], function() {
+				EventManager.bind('graphicsActionComplete', handleGraphicsComplete);
 				EventManager.trigger('refreshBoard');
 				EventManager.trigger('launchDude');
 			});
@@ -178,6 +190,11 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				EventManager.trigger('toggleCosts', [false]);
 				return false;
 			});
+		},
+		
+		setGraphicsCallback: function(cb) {
+			if(graphicsCallback != null) throw "Already waiting on graphics!";
+			graphicsCallback = cb;
 		},
 		
 		_debug: function(text) {

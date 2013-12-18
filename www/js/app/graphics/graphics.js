@@ -6,12 +6,46 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	
 	var textStore;
 	
-	return {
-		BOARD_PAD: 2,
+	function handleDrawRequest(requestString, options) {
+		var moduleString = requestString.substring(0, requestString.indexOf('.'));
+		requestString = requestString.substring(requestString.indexOf('.') + 1);
+		
+		var module = null;
+		switch(moduleString.toLowerCase()) {
+			case 'board':
+				module = BoardGraphics;
+				break;
+			case 'world':
+				module = WorldGraphics;
+				break;
+			case 'resource':
+				module = ResourceGraphics;
+				break;
+			case 'loot':
+				module = LootGraphics;
+				break;
+			case 'magic':
+				module = MagicGraphics;
+				break;
+		}
+		
+		var time = 0;
+		if(module != null && module.handleDrawRequest) {
+			time = module.handleDrawRequest(requestString, options);
+		}
+		
+		setTimeout(function() {
+			EventManager.trigger('graphicsActionComplete');
+		}, time);
+	}
+	
+	var Graphics = {
 		init: function() {
 			$('body').removeClass('night');
 			
 			textStore = new TextStore();
+			
+			EventManager.bind('draw', handleDrawRequest);
 			
 			EventManager.bind('monsterKilled', this.monsterKilled);
 			EventManager.bind('newEntity', this.addToWorld);
@@ -79,27 +113,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			thing.remove();
 		},
 		
-		clearBoard: function() {
-			$('.gameBoard').remove();
-		},
-		
-		createBoard: function(rows, cols) {
-			// Generate the board element
-			var el = $('<div>').addClass('gameBoard').addClass('litBorder');
-			if(Options.get('showCosts')) {
-				el.addClass('showCosts');
-			};
-			$('<div>').addClass('tileContainer').attr('id', 'tileContainer').appendTo(el);
-			// Determine the board dimensions based on the size of the tiles
-			var testTile = $('<div>').addClass('tile').hide().appendTo('body');
-			this.TILE_WIDTH = testTile.width();
-			this.TILE_HEIGHT = testTile.height();
-			el.width(this.TILE_WIDTH * cols);
-			el.height(this.TILE_HEIGHT * rows);
-			testTile.remove();
-			return el;
-		},
-		
 		createResourceContainer: function(resource, number) {
 			var cols = 1;
 			if(number > 5) {
@@ -148,10 +161,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		show: function(entity) {
 			(entity.el ? entity.el() : entity).removeClass('hidden');
-		},
-		
-		addToTileContainer: function(entity) {
-			$('.tileContainer').append(entity.el());
 		},
 		
 		addTilesToContainer: function(entities) {
@@ -240,77 +249,12 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			el.css('left', (pos - (el.width() / 2)) + "px");
 		},
 		
-		setPositionInBoard: function(entity, row, column) {
-			var el = entity.el();
-			var top = row * this.TILE_HEIGHT + this.BOARD_PAD;
-			entity._leftPos = this.TILE_WIDTH * column + this.BOARD_PAD;
-			el.css({
-				transform: 'translate3d(0, ' + top + 'px, 0)',
-				left: entity._leftPos,
-			});
-			
-			// Force a redraw so our CSS animations don't skip
-			// TODO: Do this in a lighter way. It's slowing down mobile pretty bad.
-			el.css('left');
-		},
-		
-		dropTiles: function(tiles, callback) {
-			
-			if(callback) {
-				setTimeout(callback, 200);
-			}
-			
-			for(var t in tiles) {
-				var tile = tiles[t];
-				var el = tile.el();
-				
-				var finalTop = (tile.options.row + 1) * this.TILE_HEIGHT + this.BOARD_PAD;
-				var tString = 'translate3d('+ ((tile.options.column * this.TILE_WIDTH) + this.BOARD_PAD - tile._leftPos) + 'px,' + finalTop + 'px,0);';
-				
-				el[0].setAttribute('style', 'left:' + tile._leftPos + 'px;transform:' + tString + '-webkit-transform:' + tString + 
-						'-moz-transform:' + tString + '-ms-transform:' + tString + '-o-transform:' + tString);
-			}
-		},
-		
-		switchTiles: function(tile1, tile2, callback) {
-			var el1 = tile1.el(), el2 = tile2.el();
-			
-			el1.css('transform', 'translate3d(' + ((tile2.options.column * this.TILE_WIDTH + this.BOARD_PAD) - tile1._leftPos) + 'px,' 
-					+ ((tile2.options.row + 1) * this.TILE_WIDTH + this.BOARD_PAD) + 'px,0)');
-			el2.css('transform', 'translate3d(' + ((tile1.options.column * this.TILE_WIDTH + this.BOARD_PAD) - tile2._leftPos) + 'px,'
-					+ ((tile1.options.row + 1) * this.TILE_WIDTH + this.BOARD_PAD) + 'px,0)');
-			
-			if(callback) {
-				setTimeout(function() {
-					callback(tile1, tile2);
-				}, 200);
-			}
-		},
-		
 		selectTile: function(tile) {
 			tile.el().addClass('selected');
 		},
 		
 		deselectTile: function(tile) {
 			tile.el().removeClass('selected');
-		},
-		
-		removeTiles: function(tiles, callback) {
-			for(var t in tiles) {
-				var tile = tiles[t];
-				if(tile != null) {
-					tile.el().addClass('hidden');
-				}
-			}
-			setTimeout(function() {
-				for(var t in tiles) {
-					var tile = tiles[t];
-					if(tile != null) {
-						tile.el().remove();
-					}
-				}
-				callback(tiles);
-			}, 300);
 		},
 		
 		animateMove: function(entity, pos, callback, stopShort) {
@@ -561,4 +505,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			monster.el().find('.healthBar').addClass('hidden');
 		}
 	};
+	
+	return Graphics;
 });
