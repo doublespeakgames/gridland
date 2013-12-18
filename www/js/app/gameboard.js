@@ -260,13 +260,12 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	}
 	
 	function areMovesAvailable() {
-		
 		generateRowString();
 		var match;
 
 		// xxo + oxx
 		var re = /(.?)([^X])\2(.)/g;
-		while(match = re.exec(stringToTest)) {
+		while(match = re.exec(tileString)) {
 			if(match[1] && match[1] != GameBoard.SEP && adjacentCount(match.index, match[2]) > 1) 
 				return true;
 			if(match[3] != GameBoard.SEP && adjacentCount(match.index + match[0].length - 1, match[2]) > 1) 
@@ -282,7 +281,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		
 		// xox
 		re = /([^X])[^X]\1/g;
-		while(match = re.exec(stringToTest)) {
+		while(match = re.exec(tileString)) {
 			if(adjacentCount(match.index + 1, match[1]) > 2) return true;
 		}
 		while(match = re.exec(rowString)) {
