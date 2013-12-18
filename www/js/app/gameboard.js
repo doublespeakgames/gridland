@@ -149,11 +149,11 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		// Detect horizontal matches
 		rowString.replace(detectMatches, function(match, p1, offset, string) {
 			matchDetected = true;
+			if(match.length > 3) {
+				var column = getColumn(offset + Math.floor(Math.random() * match.length), true);
+				gemsInColumn[column] = gemsInColumn[column] ? gemsInColumn[column] + 1 : 1;
+			}
 			for(var i = 0, l = match.length; i < l; i++) {
-				if(match.length > 3) {
-					var column = getColumn(offset + i, true);
-					gemsInColumn[column] = gemsInColumn[column] ? gemsInColumn[column] + 1 : 1;
-				}
 		        hMask[indexFromRowString(offset + i)] = 1;
 		    }
 		});
@@ -229,13 +229,10 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			if(lastSwitch) {
 				// Revert the switch
 				GameBoard.switchTiles();
+			} else if(!areMovesAvailable()) {
+				noMoreMoves();
 			}
 		}
-	}
-	
-	function areMovesAvailable() {
-		// TODO: Rewrite this with regex
-		return true;
 	}
 	
 	function getIndex(row, col) {
@@ -260,6 +257,54 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			row: getRow(index),
 			col: getColumn(index)
 		};
+	}
+	
+	function areMovesAvailable() {
+		
+		generateRowString();
+		var match;
+
+		// xxo + oxx
+		var re = /(.?)([^X])\2(.)/g;
+		while(match = re.exec(stringToTest)) {
+			if(match[1] && match[1] != GameBoard.SEP && adjacentCount(match.index, match[2]) > 1) 
+				return true;
+			if(match[3] != GameBoard.SEP && adjacentCount(match.index + match[0].length - 1, match[2]) > 1) 
+				return true;
+		}
+		while(match = re.exec(rowString)) {
+			if(match[1] && match[1] != GameBoard.SEP && adjacentCount(indexFromRowString(match.index), match[2]) > 1) 
+				return true;
+			if(match[3] != GameBoard.SEP && adjacentCount(indexFromRowString(match.index + match[0].length - 1), 
+					match[2]) > 1) 
+				return true;
+		}
+		
+		// xox
+		re = /([^X])[^X]\1/g;
+		while(match = re.exec(stringToTest)) {
+			if(adjacentCount(match.index + 1, match[1]) > 2) return true;
+		}
+		while(match = re.exec(rowString)) {
+			if(adjacentCount(indexFromRowString(match.index + 1), match[1]) > 2) return true;
+		}
+
+		return false;
+	}
+	
+	function getAdjacentTiles(index) {
+		return [index > 0 ? getTile(index - 1) : null, 
+				index < tileString.length - 1 ? getTile(index + 1) : null, 
+		        index > GameBoard.options.rows ? getTile(index - GameBoard.options.rows - 1) : null, 
+		        index < tileString.length - GameBoard.options.rows - 2 ? getTile(index + GameBoard.options.rows + 1) : null];
+	}
+	
+	function adjacentCount(index, char) {
+		var count = 0;
+		getAdjacentTiles(index).forEach(function(c) {
+			if(c === char) count++;
+		});
+		return count;
 	}
 	
 	function getTile(row, col) {
