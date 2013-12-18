@@ -217,7 +217,6 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			tileString = columns.join(GameBoard.SEP);
 			lastSwitch = null;
 
-			// TODO: Add a real callback
 			require('app/engine').setGraphicsCallback(checkMatches);
 			EventManager.trigger('draw', ['board.match', {
 				removed: toRemove,
