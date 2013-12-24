@@ -19,8 +19,8 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 	dude.prototype.el = function() {
 		if(this._el == null) {
 			this._el = WorldEntity.prototype.el.call(this)
-				.append(Graphics.make("animationLayer nightSprite"))
-				.append(Graphics.make("heldBlock"));
+				.append(Graphics.make("animationLayer nightSprite"));
+			this.held = Graphics.make("heldBlock").appendTo(this._el);;
 		}
 		return this._el;
 	};
@@ -104,11 +104,11 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 		WorldEntity.prototype.animate.call(this);
 		if(this.carrying != null) {
 			if(this.frame == 1) {
-				this.carrying.el().css('top', '1px');
+				this.held.css({transform: 'translate3d(0px, 1px, 0px)'});
 			} else if(this.frame == 3) {
-				this.carrying.el().css('top', '-1px');
+				this.held.css({transform: 'translate3d(0px, -1px, 0px)'});
 			} else {
-				this.carrying.el().css('top', '0px');
+				this.held[0].style = '';
 			}
 		}
 	};
