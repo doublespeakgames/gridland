@@ -90,7 +90,7 @@ define({
 				'weaver2': 'spawn:lizardman',
 				'default': 'spawn:skeleton'
 			},
-			mulitpliers: {
+			multipliers: {
 				weaver: 2,
 				weaver2: 3,
 				weaver3: 4,

@@ -19,6 +19,7 @@ define(['jquery', 'app/eventmanager', 'app/gamecontent', 'app/gamestate'],
 		
 		collectResource: function(type, quantity) {
 			if(this.loaded) {
+				console.log('Got ' + quantity + ' ' + type.className);
 				require(['app/entity/block', 'app/resources', 'app/gamestate', 'app/gamecontent'], 
 						function(Block, Resources, GameState, Content) {
 					// Find a block to fill 
