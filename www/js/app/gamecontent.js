@@ -101,7 +101,7 @@ define({
 			char: 'm',
 			className: 'mana',
 			nightEffect: {
-				'default': 'spawn:fireElemental', // TODO: Add special mana monsters
+				'default': 'spawn:lich',
 			},
 			multipliers: {}
 		}

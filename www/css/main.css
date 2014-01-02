@@ -1025,6 +1025,12 @@ body.night {
 	margin-left: -3px;
 }
 
+.lich {
+	height: 60px;
+	width: 41px;
+	background: url(../img/lich.png) no-repeat;
+}
+
 .arrow {
 	position: absolute;
 	height: 1px;
