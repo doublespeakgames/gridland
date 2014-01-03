@@ -1,6 +1,6 @@
 define(['app/action/moveblock', 'app/action/raisebuilding', 'app/action/moveto', 'app/action/attack', 'app/action/die',
-        'app/action/fastattack', 'app/action/shoot', 'app/action/getloot', 'app/action/climb'], 
-		function(MoveBlock, RaiseBuilding, MoveTo, Attack, Die, FastAttack, Shoot, GetLoot, Climb) {
+        'app/action/fastattack', 'app/action/shoot', 'app/action/getloot', 'app/action/climb', 'app/action/lichspell'], 
+		function(MoveBlock, RaiseBuilding, MoveTo, Attack, Die, FastAttack, Shoot, GetLoot, Climb, LichSpell) {
 	
 	return {
 		_actions: {
@@ -12,7 +12,8 @@ define(['app/action/moveblock', 'app/action/raisebuilding', 'app/action/moveto',
 			"Shoot": Shoot,
 			"Die": Die,
 			"GetLoot": GetLoot,
-			"Climb": Climb
+			"Climb": Climb,
+			"LichSpell": LichSpell
 		},
 		
 		getAction: function(actionName, options) {
