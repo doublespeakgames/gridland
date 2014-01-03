@@ -11,18 +11,20 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 		// %15 chance for normal monster, %5 for every tile after that.
 		var chance = Monster.options.tiles * 0.05;
 		var roll = Math.random();
-		if(roll < chance) {
+		if(Monster.forceLoot || roll < chance) {
 			// Drop loot!
-			var treasure = new TreasureChest();
+			var treasure = new TreasureChest({forceLoot: Monster.getLoot()});
 			treasure.p(Monster.p());
 			E.trigger('newEntity', [treasure]);
 		}
 	}
 	
-	function getLoot(entity) {
+	function getLoot(treasure) {
 		var lootName = null;
 		
-		if(GameState.gem < 4 && Math.random() < 0.05) {
+		if(treasure.options.forceLoot) {
+			lootName = treasure.options.forceLoot;
+		} else if(GameState.gem < 4 && Math.random() < 0.05) {
 			lootName = "shard";
 		} else {
 			var r = Math.random();
@@ -46,7 +48,7 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 			}
 		}
 		
-		E.trigger("lootGained", [lootName, entity]);
+		E.trigger("lootGained", [lootName, treasure]);
 		if(lootName == "shard") {
 			// Shards are special. Maybe abstract this later...
 			var num = GameState.gem || 0;

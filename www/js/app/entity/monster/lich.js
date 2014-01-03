@@ -15,7 +15,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	
 	Lich.prototype.think = function() {
 		var World = require('app/world');
-		if(this.spellCooldown-- == 0) {
+		if(this.isAlive() && this.spellCooldown-- == 0) {
 			this.spellCooldown = 12;
 			if(this.action) {
 				this.action.terminateAction(this);
@@ -44,8 +44,16 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		return false;
 	};
 	
+	// Always drop loot;
+	Lich.prototype.forceLoot = true;
+	
+	Lich.prototype.getLoot = function() {
+		// Lich always drops dragons. How does it carry them all?!
+		return "dragon";
+	};
+	
 	Lich.prototype.maxHealth = function() {
-		return 30;
+		return 3;//30;
 	};
 	
 	Lich.prototype.getDamage = function() {

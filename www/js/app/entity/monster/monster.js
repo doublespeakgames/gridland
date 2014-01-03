@@ -24,6 +24,13 @@ define(['app/entity/worldentity', 'app/graphics/graphics'],
 		// Nothing. Monsters have no idle animation.
 	};
 	
+	Monster.prototype.forceDrop = false;
+	
+	Monster.prototype.getLoot = function() {
+		// Trigger default loot rolls in most cases
+		return null;
+	};
+	
 	Monster.constructor = Monster;
 	
 	return Monster;

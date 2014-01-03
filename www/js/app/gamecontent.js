@@ -596,6 +596,11 @@ define({
 				var E = require('app/eventmanager');
 				E.trigger('fillEquipment');
 			}
+		},
+		dragon: {
+			onUse: function() {
+				console.log("TODO: SUMMON THE DRAGON!");
+			}
 		}
 	},
 	

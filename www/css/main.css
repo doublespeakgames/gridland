@@ -1514,6 +1514,11 @@ body.night {
 	background-position: -112px 0;
 }
 
+.loot.dragon,
+.button.dragon div:nth-child(1) {
+	background-position: -140px 0;
+}
+
 /** Magic **/
 .gem {
 	position: absolute;
