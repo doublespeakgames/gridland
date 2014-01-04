@@ -10,7 +10,10 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	var detectMatches = null;
 	var findHoles = null;
 	var lastSwitch = null;
+	var effectString = null;
+	var effectMap = {};
 	var HOLE = 'O';
+	var NO_EFFECT = '!';
 	
 	var GameBoard = {
 		SEP: 'X',
@@ -168,6 +171,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 					resourcesGained[c] = resourcesGained[c] ? resourcesGained[c] + 1 : 1;
 					setTile(i, HOLE);
 					toRemove.push(getPosition(i));
+					
 				}
 			}
 			
@@ -371,6 +375,50 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		}
 		
 		return theChar;
+	}
+	
+	function nextEffectChar() {
+		// valid numbers are from 34 to 255, excluding SEP
+		for(var i = 34; i < 255; i++) {
+			var effectChar = String.fromCharString(i);
+			if(effectChar == GameBoard.SEP) continue;
+			if(effectMap[effectChar] == null) {
+				return effectChar;
+			}
+		}
+		throw "No effect characters available. Something's wrong!";
+	}
+	
+	function createEffect(row, column, effectType) {
+		// Create the effect string, if necessary
+		if(effectString == null) {
+			effectString = '';
+			for(var col = 0, numCols = GameBoard.options.columns; col < numCols; col++) {
+				for(var row = 0, numRows = GameBoard.options.rows; row < numRows; row++) {
+					effectString += NO_EFFECT;
+				}
+				effectString += GameBoard.SEP;
+			}
+		}
+		
+		var idx = getIndex(row, column);
+		if(effectString.charAt(idx) != HOLE) {
+			// There's already an effect here. I think we'll just let it slide.
+			return;
+		}
+		
+		// Create a new entry in the effect map
+		var effectChar = nextEffectChar();
+		effectMap[effectChar] = {
+			type: effectType,
+			duration: Content.getEffectType(effectType).duration
+		};
+		
+		// Add the effect character to the effect string
+		effectString = effectString.substring(0, idx) + effectChar + tileString.substring(idx + 1);
+		
+		// Tell everyone (just Graphics, really...)
+		EventManager.trigger('newTileEffect', [row, column, effectType]);
 	}
 	
 	return GameBoard;

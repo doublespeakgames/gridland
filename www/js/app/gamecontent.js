@@ -650,6 +650,13 @@ define({
 		}
 	},
 	
+	TileEffects: {
+		explosive: {
+			duration: 5
+			// TODO: Add the onMatch effect
+		}
+	},
+	
 	getResourceType: function(query) {
 		for(var c in this.ResourceType) {
 			if(query.length == 1 && query == this.ResourceType[c].char || 
@@ -667,5 +674,9 @@ define({
 			}
 		}
 		return null;
+	},
+	
+	getTileEffects: function(effectString) {
+		return this.TileEffects[effectString];
 	}
 });
