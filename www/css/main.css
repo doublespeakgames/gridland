@@ -387,11 +387,13 @@ body.night {
 }
 
 .tile .daySide {
-	background: url(../img/tiles_day.png) no-repeat;
+	background-image: url(../img/tiles_day.png);
+	background-repeat: no-repeat;
 }
 
 .tile .nightSide {
-	background: url(../img/tiles_night.png) no-repeat;
+	background-image: url(../img/tiles_night.png);
+	background-repeat: no-repeat;
 }
 
 .tile.grain > div {
@@ -1754,4 +1756,9 @@ body.night {
 	-moz-animation: pulse 500ms infinite;
 	-ms-animation: pulse 500ms infinite;
 	-o-animation: pulse 500ms infinite;
+}
+
+/** Tile Effects **/
+.tile.effect_explosive > div {
+	background-color: orange;
 }

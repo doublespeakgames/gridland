@@ -8,6 +8,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	var rowString = '';
 	var swapSide = null;
 	var detectMatches = null;
+	var areEffects = null;
 	var findHoles = null;
 	var lastSwitch = null;
 	var effectString = null;
@@ -26,11 +27,15 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			_el = null;
 			Resources.loaded = false;
 			tileString = '';
+			effectString = null;
 			
 			detectMatches = new RegExp("([^" + GameBoard.SEP + "])\\1{2,}", "g");
 			findHoles = new RegExp(HOLE, "g");
+			areEffects = new RegExp("[^" + NO_EFFECT + GameBoard.SEP + "]");
 			
 			EventManager.bind("refreshBoard", refreshBoard);
+			EventManager.bind("createTileEffect", createEffect);
+			EventManager.bind("tilesSwapped", expireEffects);
 		},
 		
 		switchTiles: function(pos1, pos2) {
@@ -49,16 +54,34 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 				pos2: pos2
 			};
 			
+			// Swap the tiles
 			var char1 = getTile(pos1.row, pos1.col),
 				char2 = getTile(pos2.row, pos2.col);
 			setTile(pos1.row, pos1.col, char2);
 			setTile(pos2.row, pos2.col, char1);
+			
+			// Swap effects, if present
+			if(effectString) {
+				var effect1 = getEffectTile(pos1.row, pos1.col),
+					effect2 = getEffectTile(pos2.row, pos2.col);
+				setEffectTile(pos1.row, pos1.col, effect2);
+				setEffectTile(pos2.row, pos2.col, effect1);
+				
+				_debugTileEffects();
+			}
 			
 			require('app/engine').setGraphicsCallback(cb);
 			EventManager.trigger('draw', ['board.swap', {
 				pos1: pos1,
 				pos2: pos2
 			}]);
+		},
+		
+		addEffectRandomly: function(effectType) {
+			var row = Math.random() * GameBoard.options.rows;
+			var col = Math.random() * GameBoard.options.rows;
+			
+			createEffect(row|row, col|col, effectType);
 		},
 		
 		canMove: function() {
@@ -172,20 +195,35 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 					setTile(i, HOLE);
 					toRemove.push(getPosition(i));
 					
+					// Remove entries in the effectString, if necessary
+					if(effectString) {
+						// TODO: Trigger effect
+						setEffectTile(i, HOLE);
+					}
 				}
 			}
+			
+			_debugTileEffects();
 			
 			// Remove holes and add new tiles
 			var pCounts = tileMap();
 			var total = getTotal(pCounts);
 			tileString = tileString.replace(findHoles, '');
 			var columns = tileString.split(GameBoard.SEP);
+			var effectColumns = null;
+			
+			if(effectString) {
+				effectString = effectString.replace(findHoles, '');
+				effectColumns = effectString.split(GameBoard.SEP);
+			}
+			
 			for(var colIndex = 0, len = columns.length - 1; colIndex < len; colIndex++) {
 				var column = columns[colIndex];
 				var needed = GameBoard.options.rows - column.length;
 				if(needed > 0) {
 					// Repopulate the column
-					var numGems = gemsInColumn[colIndex] && State.magicEnabled() ? gemsInColumn[colIndex] : 0;
+					var numGems = !require('app/engine').isNight() && gemsInColumn[colIndex] && State.magicEnabled() ? 
+							gemsInColumn[colIndex] : 0;
 					var gemRows = {};
 					if(numGems > 0) {
 						// Determine where the gems will fall
@@ -214,11 +252,20 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 							col: colIndex,
 							char: newChar
 						});
+						
+						if(effectString) {
+							effectColumns[colIndex] = NO_EFFECT + effectColumns[colIndex];
+						}
 					}
 					columns[colIndex] = column;
 				}
 			}
 			tileString = columns.join(GameBoard.SEP);
+			if(effectString) {
+				effectString = effectColumns.join(GameBoard.SEP);
+				checkEffectString();
+				_debugTileEffects();
+			}
 			lastSwitch = null;
 
 			require('app/engine').setGraphicsCallback(checkMatches);
@@ -228,7 +275,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			}]);
 			EventManager.trigger('tilesCleared', [resourcesGained, swapSide]);
 		} else {
-			EventManager.trigger('tilesSwapped');
+			EventManager.trigger('tilesSwapped', [lastSwitch == null]);
 			if(lastSwitch) {
 				// Revert the switch
 				GameBoard.switchTiles();
@@ -316,11 +363,36 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		return tileString.charAt(getIndex(row, col));
 	}
 	
+	function getEffectTile(row, col) {
+		if(!effectString) return null;
+		if(col == null) {
+			return effectString.charAt(row);
+		}
+		return effectString.charAt(getIndex(row, col));
+	}
+	
 	function setTile(p1, p2, p3) {
 		// Either (row, column, character) or (index, character)
 		var idx = p3 ? getIndex(p1, p2) : p1;
 		var char = p3 ? p3 : p2;
 		tileString = tileString.substring(0, idx) + char + tileString.substring(idx + 1);
+	}
+	
+	function setEffectTile(p1, p2, p3) {
+		// Create the effect string, if necessary
+		if(effectString == null) {
+			effectString = '';
+			for(var c = 0, numCols = GameBoard.options.columns; c < numCols; c++) {
+				for(var r = 0, numRows = GameBoard.options.rows; r < numRows; r++) {
+					effectString += NO_EFFECT;
+				}
+				effectString += GameBoard.SEP;
+			}
+		}
+		// Either (row, column, character) or (index, character)
+		var idx = p3 ? getIndex(p1, p2) : p1;
+		var char = p3 ? p3 : p2;
+		effectString = effectString.substring(0, idx) + char + effectString.substring(idx + 1);
 	}
 	
 	function makeMask(s) {
@@ -380,7 +452,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	function nextEffectChar() {
 		// valid numbers are from 34 to 255, excluding SEP
 		for(var i = 34; i < 255; i++) {
-			var effectChar = String.fromCharString(i);
+			var effectChar = String.fromCharCode(i);
 			if(effectChar == GameBoard.SEP) continue;
 			if(effectMap[effectChar] == null) {
 				return effectChar;
@@ -389,20 +461,20 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		throw "No effect characters available. Something's wrong!";
 	}
 	
-	function createEffect(row, column, effectType) {
-		// Create the effect string, if necessary
-		if(effectString == null) {
-			effectString = '';
-			for(var col = 0, numCols = GameBoard.options.columns; col < numCols; col++) {
-				for(var row = 0, numRows = GameBoard.options.rows; row < numRows; row++) {
-					effectString += NO_EFFECT;
-				}
-				effectString += GameBoard.SEP;
-			}
+	// TODO: Remove this function
+	function _debugTileEffects() {
+		return;
+		if(effectString) {
+			$('#debug').html(effectString.replace(GameBoard.SEP, '<br/>', 'g'));
+		} else {
+			$('#debug').html('');
 		}
+	}
+	
+	function createEffect(row, column, effectType) {
 		
 		var idx = getIndex(row, column);
-		if(effectString.charAt(idx) != HOLE) {
+		if(effectString && effectString.charAt(idx) != NO_EFFECT) {
 			// There's already an effect here. I think we'll just let it slide.
 			return;
 		}
@@ -415,10 +487,52 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		};
 		
 		// Add the effect character to the effect string
-		effectString = effectString.substring(0, idx) + effectChar + tileString.substring(idx + 1);
+		setEffectTile(row, column, effectChar);
 		
-		// Tell everyone (just Graphics, really...)
-		EventManager.trigger('newTileEffect', [row, column, effectType]);
+		// Tell Graphics
+		EventManager.trigger('draw', ['board.effect', {
+			row: row,
+			column: column,
+			effectType: effectType
+		}]);
+		
+		_debugTileEffects();
+	}
+	
+	function expireEffects(matched) {
+		if(matched && effectString) {
+			// Update tile effect durations
+			for(var c in effectMap) {
+				var effect = effectMap[c];
+				effect.duration--;
+				if(effect.duration <= 0) {
+					removeEffect(c);
+				}
+			}
+		}
+	}
+	
+	function removeEffect(effectChar) {
+		var idx = effectString.indexOf(effectChar);
+		if(idx >= 0) {
+			// Tell Graphics
+			EventManager.trigger('draw', ['board.removeeffect', {
+				row: getRow(idx),
+				column: getColumn(idx),
+				effectType: effectMap[effectChar].type
+			}]);
+			setEffectTile(idx, NO_EFFECT);
+			effectMap[effectChar] = null;
+			checkEffectString();
+			
+			_debugTileEffects();
+		}
+	}
+	
+	function checkEffectString() {
+		if(!areEffects.test(effectString)) {
+			effectString = null;
+		}
 	}
 	
 	return GameBoard;

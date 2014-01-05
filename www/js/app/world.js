@@ -204,6 +204,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		
 		canMove: function() {
 			return !inTransition;
+		},
+		
+		isNight: function() {
+			return isNight;
 		}
 	};
 	

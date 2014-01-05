@@ -170,6 +170,14 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		}, 200);
 	}
 	
+	function drawTileEffect(options) {
+		getTile(options.row, options.column).el().addClass('effect_' + options.effectType);
+	}
+	
+	function removeTileEffect(options) {
+		getTile(options.row, options.column).el().removeClass('effect_' + options.effectType);
+	}
+	
 	return {
 		init: function() {
 			G = require('app/graphics/graphics');
@@ -196,6 +204,10 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 					return drawSwapTiles(options);
 				case 'match':
 					return drawMatch(options);
+				case 'effect':
+					return drawTileEffect(options);
+				case 'removeeffect':
+					return removeTileEffect(options);
 			}
 		}
 	};

@@ -44,16 +44,13 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		return false;
 	};
 	
-	// Always drop loot;
-	Lich.prototype.forceLoot = true;
-	
 	Lich.prototype.getLoot = function() {
 		// Lich always drops dragons. How does it carry them all?!
 		return "dragon";
 	};
 	
 	Lich.prototype.maxHealth = function() {
-		return 3;//30;
+		return 3000;//30;
 	};
 	
 	Lich.prototype.getDamage = function() {

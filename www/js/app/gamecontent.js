@@ -676,7 +676,7 @@ define({
 		return null;
 	},
 	
-	getTileEffects: function(effectString) {
+	getEffectType: function(effectString) {
 		return this.TileEffects[effectString];
 	}
 });

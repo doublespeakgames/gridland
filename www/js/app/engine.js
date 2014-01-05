@@ -197,6 +197,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			graphicsCallback = cb;
 		},
 		
+		isNight: function() {
+			return World.isNight();
+		},
+		
 		_debug: function(text) {
 			$('#debug').text(text);
 		}
