@@ -96,6 +96,9 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 			}
 			State.health -= damage;
 			State.health = State.health < 0 ? 0 : State.health;
+			if(State.health == 0 && this.action) {
+				this.action.terminateAction(this);
+			}
 			Graphics.updateHealth(State.health, State.maxHealth());
 		}
 	};

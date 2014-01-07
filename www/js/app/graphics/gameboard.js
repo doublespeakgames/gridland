@@ -140,11 +140,17 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		row = row || entity.options.row;
 		column = column || entity.options.column;
 		var el = entity.el();
-		var top = row * TILE_HEIGHT + BOARD_PAD;
-		var left = column * TILE_WIDTH + BOARD_PAD;
+		var p = getPosition(row, column);
 		el.css({
-			transform: 'translate3d(' + left + 'px, ' + top + 'px, 0)'
+			transform: 'translate3d(' + p.left + 'px, ' + p.top + 'px, 0)'
 		});
+	}
+	
+	function getPosition(row, column) {
+		return {
+			top: row * TILE_HEIGHT + BOARD_PAD,
+			left: column * TILE_WIDTH + BOARD_PAD
+		};
 	}
 	
 	function newTile(row, col, tileChar) {
@@ -178,12 +184,31 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		getTile(options.row, options.column).el().removeClass('effect_' + options.effectType);
 	}
 	
+	function explode(options) {
+		var explosion = G.make('explosion');
+		var p = getPosition(options.row, options.column);
+		explosion.css({
+			transform: 'translate3d(' + p.left + 'px, ' + p.top + 'px, 0)'
+		});
+		tileContainer.append(explosion);
+		setTimeout(function() {
+			explosion.remove();
+		}, 400);
+		explosion.show(function() {
+			explosion.addClass('exploded');
+		});
+	}
+	
 	return {
 		init: function() {
 			G = require('app/graphics/graphics');
 			tiles.length = 0;
 			_el = null;
 			el();
+			
+			E.bind('drawEffect', drawTileEffect);
+			E.bind('drawRemoveEffect', removeTileEffect);
+			E.bind('drawExplode', explode);
 		},
 		
 		attachHandler: function(event, element, handler) {
@@ -204,10 +229,6 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 					return drawSwapTiles(options);
 				case 'match':
 					return drawMatch(options);
-				case 'effect':
-					return drawTileEffect(options);
-				case 'removeeffect':
-					return removeTileEffect(options);
 			}
 		}
 	};

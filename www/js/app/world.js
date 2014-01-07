@@ -34,6 +34,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			EventManager.bind('launchDude', launchDude);
 			EventManager.bind('wipeMonsters', wipeMonsters);
 			EventManager.bind('healDude', healDude);
+			EventManager.bind('hurtDude', hurtDude);
 			EventManager.bind('newEntity', handleNewEntity);
 			EventManager.bind('buildingComplete', handleNewEntity);
 			EventManager.bind('tilesCleared', handleTileClear);
@@ -515,6 +516,12 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	function healDude(amount) {
 		if(dude != null) {
 			dude.heal(amount);
+		}
+	}
+	
+	function hurtDude(amount) {
+		if(dude != null) {
+			dude.takeDamage(amount);
 		}
 	}
 	

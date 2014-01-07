@@ -188,20 +188,49 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		var newTiles = [];
 		var resourcesGained = {};
 		if(matchDetected) {
+			var perTile = {};
 			for(var i = 0, len = vMask.length; i < len; i++) {
-				if(vMask[i] == 1 || hMask[i] == 1) {
+				if((vMask[i] == 1 || hMask[i] == 1) && getTile(i) != HOLE) {
 					var c = Content.getResourceType(getTile(i)).className;
 					resourcesGained[c] = resourcesGained[c] ? resourcesGained[c] + 1 : 1;
+					perTile[i] = c;
 					setTile(i, HOLE);
 					toRemove.push(getPosition(i));
 					
 					// Remove entries in the effectString, if necessary
 					if(effectString) {
-						// TODO: Trigger effect
+						var effectChar = effectString.charAt(i);
 						setEffectTile(i, HOLE);
+						if(effectChar != NO_EFFECT) {
+							var effect = effectMap[effectChar];
+							effectMap[effectChar] = null;
+							Content.getEffectType(effect.type).onMatch(getRow(i), getColumn(i)).forEach(function(tileMod) {
+								var idx = getIndex(tileMod.row, tileMod.column);
+								switch(tileMod.effect) {
+								case 'remove':
+									setTile(idx, HOLE);
+									setEffectTile(idx, HOLE);
+									var retro = perTile[idx];
+									if(retro && retro != '-') {
+										perTile[idx] = '-';
+										resourcesGained[retro]--;
+									} else if(!retro) {
+										perTile[idx] = '-';
+										toRemove.push({
+											row: tileMod.row,
+											col: tileMod.column
+										});
+									}
+									break;
+								// More effects later?
+								}
+							});
+						}
 					}
 				}
 			}
+			
+			console.log(resourcesGained);
 			
 			_debugTileEffects();
 			
@@ -490,7 +519,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		setEffectTile(row, column, effectChar);
 		
 		// Tell Graphics
-		EventManager.trigger('draw', ['board.effect', {
+		EventManager.trigger('drawEffect', [{
 			row: row,
 			column: column,
 			effectType: effectType
@@ -502,11 +531,13 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	function expireEffects(matched) {
 		if(matched && effectString) {
 			// Update tile effect durations
-			for(var c in effectMap) {
-				var effect = effectMap[c];
-				effect.duration--;
-				if(effect.duration <= 0) {
-					removeEffect(c);
+			for(var e in effectMap) {
+				var effect = effectMap[e];
+				if(effect != null) {
+					effect.duration--;
+					if(effect.duration <= 0) {
+						removeEffect(e);
+					}
 				}
 			}
 		}
@@ -516,7 +547,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		var idx = effectString.indexOf(effectChar);
 		if(idx >= 0) {
 			// Tell Graphics
-			EventManager.trigger('draw', ['board.removeeffect', {
+			EventManager.trigger('drawRemoveeffect', [{
 				row: getRow(idx),
 				column: getColumn(idx),
 				effectType: effectMap[effectChar].type

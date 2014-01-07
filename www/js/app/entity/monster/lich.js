@@ -5,7 +5,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		this.options = $.extend({}, this.options, {}, options);
 		this.hp(this.maxHealth());
 		this.xp = 3;
-		this.spellCooldown = 12;
+		this.spellCooldown = 24;
 	};
 	Lich.prototype = new Monster({
 		monsterClass: 'lich',
@@ -16,7 +16,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	Lich.prototype.think = function() {
 		var World = require('app/world');
 		if(this.isAlive() && this.spellCooldown-- == 0) {
-			this.spellCooldown = 12;
+			this.spellCooldown = 24;
 			if(this.action) {
 				this.action.terminateAction(this);
 			}

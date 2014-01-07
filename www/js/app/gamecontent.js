@@ -652,8 +652,28 @@ define({
 	
 	TileEffects: {
 		explosive: {
-			duration: 5
-			// TODO: Add the onMatch effect
+			duration: 5,
+			onMatch: function(row, column) {
+				// a'splode!
+				var E = require('app/eventmanager'),
+					B = require('app/gameboard');
+				var tileMods = [];
+				for(var r = -1; r < 2; r++) {
+					if(row + r < 0 || row + r >= B.options.rows) continue;
+					for(var c = -1; c < 2; c++) {
+						if(column + c < 0 || column + c >= B.options.columns) continue;
+						tileMods.push({
+							row: row + r,
+							column: column + c,
+							effect: 'remove'
+						});
+					}
+				}
+				E.trigger("hurtDude", [30]);
+				E.trigger("drawExplode", [{row: row, column: column}]);
+				
+				return tileMods;
+			}
 		}
 	},
 	
