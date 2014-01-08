@@ -42,11 +42,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	};
 	
 	Warlock.prototype.maxHealth = function() {
-		return 3;
+		return 9; // 1 hit with sword, 3 without
 	};
 	
 	Warlock.prototype.getDamage = function() {
-		return 18;
+		// Between 0 and 30 
+		return 15;
 	};
 	
 	return Warlock;

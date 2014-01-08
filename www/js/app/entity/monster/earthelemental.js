@@ -34,11 +34,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	EarthElemental.prototype.maxHealth = function() {
-		return 18;
+		return 14; // 3 hits with a sword, 7 hits without
 	};
 	
 	EarthElemental.prototype.getDamage = function() {
-		return 1;
+		// between 4 and 12 damage
+		return 2;
 	};
 	
 	return EarthElemental;

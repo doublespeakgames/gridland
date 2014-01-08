@@ -36,11 +36,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Imp.prototype.maxHealth = function() {
-		return 6;
+		return 18; // 2 hits with sword, 6 without
 	};
 	
 	Imp.prototype.getDamage = function() {
-		return 5;
+		// Between 3 and 30
+		return 3;
 	};
 	
 	return Imp;

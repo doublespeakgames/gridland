@@ -66,8 +66,6 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 					effect2 = getEffectTile(pos2.row, pos2.col);
 				setEffectTile(pos1.row, pos1.col, effect2);
 				setEffectTile(pos2.row, pos2.col, effect1);
-				
-				_debugTileEffects();
 			}
 			
 			require('app/engine').setGraphicsCallback(cb);
@@ -230,10 +228,6 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 				}
 			}
 			
-			console.log(resourcesGained);
-			
-			_debugTileEffects();
-			
 			// Remove holes and add new tiles
 			var pCounts = tileMap();
 			var total = getTotal(pCounts);
@@ -293,7 +287,6 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			if(effectString) {
 				effectString = effectColumns.join(GameBoard.SEP);
 				checkEffectString();
-				_debugTileEffects();
 			}
 			lastSwitch = null;
 
@@ -490,16 +483,6 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		throw "No effect characters available. Something's wrong!";
 	}
 	
-	// TODO: Remove this function
-	function _debugTileEffects() {
-		return;
-		if(effectString) {
-			$('#debug').html(effectString.replace(GameBoard.SEP, '<br/>', 'g'));
-		} else {
-			$('#debug').html('');
-		}
-	}
-	
 	function createEffect(row, column, effectType) {
 		
 		var idx = getIndex(row, column);
@@ -524,8 +507,6 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			column: column,
 			effectType: effectType
 		}]);
-		
-		_debugTileEffects();
 	}
 	
 	function expireEffects(matched) {
@@ -555,8 +536,6 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			setEffectTile(idx, NO_EFFECT);
 			effectMap[effectChar] = null;
 			checkEffectString();
-			
-			_debugTileEffects();
 		}
 	}
 	

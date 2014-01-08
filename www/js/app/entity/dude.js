@@ -74,16 +74,15 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 		Graphics.updateHealth(State.health, State.maxHealth());
 	};
 	
-	dude.prototype.getDamage = function(damageToKill) {
-		var damage = 1;
-		damageToKill -= damage;
+	dude.prototype.getDamage = function() {
 		if(this.sword > 0) {
-			var add = this.sword > damageToKill ? damageToKill : this.sword;
-			damage += add;
-			this.sword -=  add;
+			this.sword--;
 			Graphics.updateSword(this.sword, State.maxSword());
+			return State.swordDamage();
 		}
-		return damage;
+		
+		// 1, 1, 1, 2, 2, 2, 3, 3, 3...
+		return Math.floor((State.level - 1) / 3) + 1;
 	};
 	
 	dude.prototype.takeDamage = function(damage) {
@@ -114,6 +113,14 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 				this.held[0].style = '';
 			}
 		}
+	};
+	
+	dude.prototype.animationOnce = function(row) {
+		// Unarmed animation
+		if((row == 3 || row == 4) && this.sword == 0) {
+			row += 8;
+		}
+		WorldEntity.prototype.animationOnce.call(this, row);
 	};
 	
 	dude.prototype.speed = function() {

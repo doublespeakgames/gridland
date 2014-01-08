@@ -42,11 +42,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	};
 	
 	FireElemental.prototype.maxHealth = function() {
-		return 2;
+		return 6; // 1 hit with sword, 3 without
 	};
 	
 	FireElemental.prototype.getDamage = function() {
-		return 9;
+		// Between 0 and 12 damage
+		return 6;
 	};
 	
 	return FireElemental;

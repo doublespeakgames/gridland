@@ -34,11 +34,11 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Demon.prototype.maxHealth = function() {
-		return 27;
+		return 27; // 3 hits with sword, 9 without
 	};
 	
 	Demon.prototype.getDamage = function() {
-		return 1;
+		return 3; // Between 6 and 24
 	};
 	
 	return Demon;

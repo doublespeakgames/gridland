@@ -104,64 +104,45 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			return 20 + 10 * this.level;
 		},
 		
-		maxMana: function() {
-			return 0; // TODO
-		},
-		
 		maxShield: function() {
-			if(this.hasBuilding(Content.BuildingType.Sawmill8)) {
-				return 27;
+			var highestMod = 1;
+			for(var i in this.buildings) {
+				var building = this.buildings[i];
+				if(building.options.type.tileMod == 'wood' && 
+						building.options.type.tileLevel > highestMod &&
+						building.built) {
+					highestMod = building.options.type.tileLevel;
+				}
 			}
-			if(this.hasBuilding(Content.BuildingType.Sawmill7)) {
-				return 24;
-			}
-			if(this.hasBuilding(Content.BuildingType.Sawmill6)) {
-				return 21;
-			}
-			if(this.hasBuilding(Content.BuildingType.Sawmill5)) {
-				return 18;
-			}
-			if(this.hasBuilding(Content.BuildingType.Sawmill4)) {
-				return 15;
-			}
-			if(this.hasBuilding(Content.BuildingType.Sawmill3)) {
-				return 12;
-			}
-			if(this.hasBuilding(Content.BuildingType.Sawmill2)) {
-				return 9;
-			}
-			if(this.hasBuilding(Content.BuildingType.Sawmill)) {
-				return 6;
-			}
-			return 3;
+			return 3 * highestMod;
 		},
 		
 		maxSword: function() {
-			if(this.hasBuilding(Content.BuildingType.Blacksmith8)) {
-				return 27;
+			var highestMod = 1;
+			for(var i in this.buildings) {
+				var building = this.buildings[i];
+				if(building.options.type.tileMod == 'stone' && 
+						building.options.type.tileLevel > highestMod &&
+						building.built) {
+					highestMod = building.options.type.tileLevel;
+				}
 			}
-			if(this.hasBuilding(Content.BuildingType.Blacksmith7)) {
-				return 24;
+			// 3, 6, 9, 3, 6, 9, 3, 6, 9...
+			return 3 * (((highestMod - 1) % 3) + 1);
+		},
+		
+		swordDamage: function() {
+			var highestMod = 1;
+			for(var i in this.buildings) {
+				var building = this.buildings[i];
+				if(building.options.type.tileMod == 'stone' && 
+						building.options.type.tileLevel > highestMod &&
+						building.built) {
+					highestMod = building.options.type.tileLevel;
+				}
 			}
-			if(this.hasBuilding(Content.BuildingType.Blacksmith6)) {
-				return 21;
-			}
-			if(this.hasBuilding(Content.BuildingType.Blacksmith5)) {
-				return 18;
-			}
-			if(this.hasBuilding(Content.BuildingType.Blacksmith4)) {
-				return 15;
-			}
-			if(this.hasBuilding(Content.BuildingType.Blacksmith3)) {
-				return 12;
-			}
-			if(this.hasBuilding(Content.BuildingType.Blacksmith2)) {
-				return 9;
-			}
-			if(this.hasBuilding(Content.BuildingType.Blacksmith)) {
-				return 6;
-			}
-			return 3;
+			// 3, 3, 3, 6, 6, 6, 9, 9, 9...
+			return 3 + Math.floor((highestMod - 1) / 3) * 3;
 		},
 		
 		maxMana: function() {

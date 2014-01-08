@@ -36,11 +36,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Spider.prototype.maxHealth = function() {
-		return 3;
+		return 4; // 2 hits with a sword, 4 without
 	};
 	
 	Spider.prototype.getDamage = function() {
-		return 2;
+		// Between 2 and 6 (doublestrike)
+		return 1;
 	};
 	
 	return Spider;

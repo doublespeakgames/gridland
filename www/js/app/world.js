@@ -46,8 +46,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			EventManager.bind('levelUp', wipeMonsters);
 			EventManager.bind('resourceStoreChanged', handleResourceStoreChanged);
 			EventManager.bind('fillEquipment', function() {
-				addDefense(GameState.maxShield());
-				addAttack(GameState.maxSword());
+				fillDefense();
+				fillAttack();
 			});
 			
 			updateGem();
@@ -241,19 +241,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		return true;
 	}
 	
-	function addDefense(num) {
-		dude.shield += num;
-		if(dude.shield > GameState.maxShield()) {
-			dude.shield = GameState.maxShield();
-		}
+	function fillDefense() {
+		dude.shield += State.maxShield();
 		Graphics.updateShield(dude.shield, GameState.maxShield());
 	}
 	
-	function addAttack(num) {
-		dude.sword += num;
-		if(dude.sword > GameState.maxSword()) {
-			dude.sword = GameState.maxSword();
-		}
+	function fillAttack() {
+		dude.sword = GameState.maxSword();
 		Graphics.updateSword(dude.sword, GameState.maxSword());
 	}
 	
@@ -343,10 +337,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 						spawnMonster(nightEffect[1], resourcesGained[typeName], side);
 						break;
 					case "shield":
-						addDefense(parseInt(nightEffect[1]) * resourcesGained[typeName]);
+						fillDefense();
 						break;
 					case "sword":
-						addAttack(parseInt(nightEffect[1]) * resourcesGained[typeName]);
+						fillAttack();
 						break;
 					}
 				}

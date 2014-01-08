@@ -36,11 +36,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	WaterElemental.prototype.maxHealth = function() {
-		return 4;
+		return 8; // 2 hits with a sword, 4 without
 	};
 	
 	WaterElemental.prototype.getDamage = function() {
-		return 3;
+		// Between 4 and 12
+		return 2;
 	};
 	
 	return WaterElemental;

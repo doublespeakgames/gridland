@@ -19,15 +19,7 @@ define({
 			char: 'w',
 			className: 'wood',
 			nightEffect: {
-				'sawmill8': 'shield:9',
-				'sawmill7': 'shield:8',
-				'sawmill6': 'shield:7',
-				'sawmill5': 'shield:6',
-				'sawmill4': 'shield:5',
-				'sawmill3': 'shield:4',
-				'sawmill2': 'shield:3',
-				'sawmill': 'shield:2',
-				'default': 'shield:1'				
+				'default': 'shield'				
 			},
 			multipliers: {
 				sawmill: 2,
@@ -44,15 +36,7 @@ define({
 			char: 's',
 			className: 'stone',
 			nightEffect: {
-				'blacksmith8': 'sword:9',
-				'blacksmith7': 'sword:8',
-				'blacksmith6': 'sword:7',
-				'blacksmith5': 'sword:6',
-				'blacksmith4': 'sword:5',
-				'blacksmith3': 'sword:4',
-				'blacksmith2': 'sword:3',
-				'blacksmith': 'sword:2',
-				'default': 'sword:1'
+				'default': 'sword'
 			},
 			multipliers: {
 				blacksmith: 2,
