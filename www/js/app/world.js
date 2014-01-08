@@ -242,7 +242,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	}
 	
 	function fillDefense() {
-		dude.shield += State.maxShield();
+		dude.shield = GameState.maxShield();
 		Graphics.updateShield(dude.shield, GameState.maxShield());
 	}
 	

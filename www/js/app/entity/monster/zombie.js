@@ -34,7 +34,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Zombie.prototype.maxHealth = function() {
-		return 2;
+		return 3;
 	};
 	
 	Zombie.prototype.getDamage = function() {
