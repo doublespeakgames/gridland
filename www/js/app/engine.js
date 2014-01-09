@@ -173,6 +173,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				EventManager.trigger('toggleMenu');
 				return false;
 			});
+			Graphics.attachHandler("World", "mousedown touchstart", '.blockPile', function(e) {
+				// Handle wacky touch event objects
+				if(e.originalEvent.changedTouches) {
+					e = e.originalEvent.changedTouches[0];
+				}
+				EventManager.trigger('prioritizeBuilding', [$(e.currentTarget).data('building')]);
+			});
 			Graphics.attachHandler("World", "mousedown touchstart", function(e) {
 				// Handle wacky touch event objects
 				if(e.originalEvent.changedTouches) {

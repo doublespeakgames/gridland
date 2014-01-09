@@ -1,8 +1,10 @@
 define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 'app/entity/building', 
 		'app/gamecontent', 'app/gamestate', 'app/action/actionfactory', 'app/entity/monster/monsterfactory',
-        'app/entity/block', 'app/entity/gem', 'app/resources', 'app/entity/celestial', 'app/entity/dude'], 
+        'app/entity/block', 'app/entity/gem', 'app/resources', 'app/entity/celestial', 'app/entity/dude',
+        'app/entity/star'], 
 		function($, EventManager, Analytics, Graphics, Building, Content, GameState, 
-				ActionFactory, MonsterFactory, Block, Gem, Resources, Celestial, Dude) {
+				ActionFactory, MonsterFactory, Block, Gem, Resources, Celestial, Dude,
+				Star) {
 	
 	var hasteTick = false;
 	var dude = null;
@@ -14,6 +16,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	var stuff = [];
 	var inTransition = false;
 	var gameLoop = null;
+	var star = null;
+	var prioritizedBuilding = null;
 	
 	var World = {		
 		options: {
@@ -37,6 +41,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			EventManager.bind('hurtDude', hurtDude);
 			EventManager.bind('newEntity', handleNewEntity);
 			EventManager.bind('buildingComplete', handleNewEntity);
+			EventManager.bind('buildingComplete', clearPriorityIfNeeded);
 			EventManager.bind('tilesCleared', handleTileClear);
 			EventManager.bind('noMoreMoves', handleNoMoreMoves);
 			EventManager.bind('tilesSwapped', handleTilesSwapped);
@@ -45,6 +50,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			EventManager.bind('newStateEffect', addStateEffect);
 			EventManager.bind('levelUp', wipeMonsters);
 			EventManager.bind('resourceStoreChanged', handleResourceStoreChanged);
+			EventManager.bind('prioritizeBuilding', prioritizeBuilding);
 			EventManager.bind('fillEquipment', function() {
 				fillDefense();
 				fillAttack();
@@ -119,6 +125,22 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					});
 				}
 			} else {
+				
+				// If there's a prioritized building, set up the action in advance
+				var priorityMove = null;
+				if(prioritizedBuilding) {
+					for(var b in GameState.stores) {
+						var block = GameState.stores[b];
+						var resource = block.options.type.className;
+						if(!block.gone && block.spaceLeft() == 0 && prioritizedBuilding.requiredResources[resource] > 0) {
+							priorityMove = ActionFactory.getAction("MoveBlock", {
+								block: block,
+								destination: prioritizedBuilding
+							});
+						}
+					}
+				}
+				
 				// Look for buildable buildings first
 				var totalNeeded = null;
 				var moveAction = null;
@@ -142,27 +164,31 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 							building: building
 						});
 					}
-				
-					// Then look for moveable resources
+					
+					// Use the prioritized move, if we have one
+					else if(priorityMove) {
+						moveAction = priorityMove;
+					}
+					
+					// Otherwise, look for moveable resources
 					else if(building != null && !building.built) {
 						for(var b in GameState.stores) {
 							var block = GameState.stores[b];
 							if(!block.gone && block.spaceLeft() == 0) {
-								for(var resource in building.requiredResources) {
-									var required = building.requiredResources[resource];
-									var cost = buildingType.cost[resource];
-									var highPriority = priority == null || buildingType.priority < priority || 
-											(buildingType.priority == priority && 
-													(totalNeeded == null || cost < totalNeeded));
-									if(required > 0 && resource == block.options.type.className && highPriority) {
-										// We can move this block!
-										moveAction = ActionFactory.getAction("MoveBlock", {
-											block: block,
-											destination: building
-										});
-										priority = buildingType.priority;
-										totalNeeded = cost;
-									}
+								var resource = block.options.type.className;
+								var required = building.requiredResources[resource];
+								var cost = buildingType.cost[resource];
+								var highPriority = priority == null || buildingType.priority < priority || 
+										(buildingType.priority == priority && 
+												(totalNeeded == null || cost < totalNeeded));
+								if(required > 0 && resource == block.options.type.className && highPriority) {
+									// We can move this block!
+									moveAction = ActionFactory.getAction("MoveBlock", {
+										block: block,
+										destination: building
+									});
+									priority = buildingType.priority;
+									totalNeeded = cost;
 								}
 							}
 						}
@@ -211,6 +237,23 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			return isNight;
 		}
 	};
+	
+	function prioritizeBuilding(building) {
+		if(!star) {
+			star = new Star();
+			EventManager.trigger('newEntity', [star]);
+		}
+		prioritizedBuilding = building;
+		star.p(building.options.type.position);
+		Graphics.setPosition(star, star.p());
+		star.el().removeClass('hidden');
+	}
+	
+	function clearPriorityIfNeeded(building) {
+		if(prioritizedBuilding == building) {
+			star.el().addClass('hidden');
+		}
+	}
 	
 	function findClosest(filter) {
 		var closest = null;

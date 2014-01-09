@@ -545,6 +545,14 @@ body.night {
 	background-color: black;
 }
 
+.star {
+	position: absolute;
+	background: url(../img/star.png) no-repeat;
+	width: 14px;
+	height: 14px;
+	top: 35px;
+}
+
 .dude {
 	background-image: url(../img/dude.png);
 	background-repeat: no-repeat;

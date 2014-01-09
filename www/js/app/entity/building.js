@@ -44,6 +44,7 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent'], functi
 			
 			if(!this.built) {
 				var blockPile = G.make("blockPile");
+				blockPile.data('building', this);
 				for(var r in this.options.type.cost) {
 					blockPile.append(G.createResourceContainer(r, this.options.type.cost[r]));
 				}
