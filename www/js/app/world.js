@@ -239,6 +239,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	};
 	
 	function prioritizeBuilding(building) {
+		if(isNight) return;
 		if(!star) {
 			star = new Star();
 			EventManager.trigger('newEntity', [star]);

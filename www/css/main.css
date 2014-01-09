@@ -710,6 +710,7 @@ body.night {
 
 .night .blockPile, .night .resources {
 	opacity: 0;
+	cursor: default;
 }
 
 .blockPile .container {
