@@ -22,7 +22,6 @@ define(['app/action/action'], function(Action) {
 	};
 	
 	LichSpell.prototype.doFrameAction = function(frame) {
-		// TODO: Actually cast the spell
 		if(frame == 3) {
 			require('app/gameboard').addEffectRandomly('explosive');
 			this._entity.action = null;

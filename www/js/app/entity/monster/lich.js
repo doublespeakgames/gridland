@@ -6,10 +6,11 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		this.hp(this.maxHealth());
 		this.xp = 3;
 		this.spellCooldown = 24;
+		this.teleportCooldown = 72;
 	};
 	Lich.prototype = new Monster({
 		monsterClass: 'lich',
-		speed: 50
+		speed: 100
 	});
 	Lich.constructor = Lich;
 	
@@ -21,6 +22,17 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 				this.action.terminateAction(this);
 			}
 			this.action = ActionFactory.getAction("LichSpell", {
+				target: World.getDude()
+			});
+			this.action.doAction(this);
+			return true;
+		}
+		else if(this.isAlive() && this.teleportCooldown-- == 0) {
+			this.teleportCooldown = 80;
+			if(this.action) {
+				this.action.terminateAction(this);
+			}
+			this.action = ActionFactory.getAction("Teleport", {
 				target: World.getDude()
 			});
 			this.action.doAction(this);
@@ -56,7 +68,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	
 	Lich.prototype.getDamage = function() {
 		// Between 40 and 120
-		return 5;
+		return 0;//5;
 	};
 	
 	Lich.prototype.getHitboxWidth = function() {

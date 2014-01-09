@@ -1031,6 +1031,11 @@ body.night {
 	height: 60px;
 	width: 41px;
 	background: url(../img/lich.png) no-repeat;
+	transition: opacity 300ms linear;
+	-webkit-transition: opacity 300ms linear;
+	-moz-transition: opacity 300ms linear;
+	-ms-transition: opacity 300ms linear;
+	-o-transition: opacity 300ms linear;
 }
 
 .arrow {
