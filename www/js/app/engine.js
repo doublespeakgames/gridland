@@ -76,10 +76,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				var active = activeTile;
 				activeTile = null;
 				Graphics.deselectTile(active);
-				GameBoard.switchTiles(
-					{row: active.options.row, col: active.options.column}, 
-					{row: active.options.row + dy, col: active.options.column + dx}
-				);
+				if(active.options.row + dy >= 0 && active.options.row + dy < GameBoard.options.rows &&
+				   active.options.column + dx >= 0 && active.options.column + dx < GameBoard.options.columns) {
+					GameBoard.switchTiles(
+						{row: active.options.row, col: active.options.column}, 
+						{row: active.options.row + dy, col: active.options.column + dx}
+					);
+				}
 			}
 		}
 	}
