@@ -85,8 +85,11 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 			return State.swordDamage();
 		}
 		
-		// 1, 1, 1, 2, 2, 2, 3, 3, 3...
-		return Math.floor((State.level - 1) / 3) + 1;
+		// 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3...
+		if(State.level < 7) {
+			return 1;
+		}
+		return Math.floor((State.level - 1) / 3);
 	};
 	
 	dude.prototype.takeDamage = function(damage) {
