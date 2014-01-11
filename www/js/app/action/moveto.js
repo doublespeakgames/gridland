@@ -2,6 +2,7 @@ define(['app/action/action'], function(Action) {
 	
 	var MoveTo = function(options) {
 		this.target = options.target;
+		this.useMove = options.useMove;
 	};
 	MoveTo.prototype = new Action();
 	MoveTo.constructor = MoveTo;
@@ -9,7 +10,8 @@ define(['app/action/action'], function(Action) {
 	MoveTo.prototype.doAction = function(entity) {
 		var _action = this;
 		this._entity = entity;
-		entity.moveTo(_action.target, function(entity) {
+		var func = this.useMove ? "move" : "moveTo";
+		entity[func](this.useMove ? _action.target.p() : _action.target, function(entity) {
 			require(['app/graphics/graphics'], function(Graphics) {
 				entity.makeIdle();
 				entity.action = null;
@@ -22,8 +24,11 @@ define(['app/action/action'], function(Action) {
 		require(['app/world'], function(W) {
 			if(frame == 3 && _this._entity == W.getDude()) {
 				// Reset the dude's move action every step to make sure he's
-				// attacking the closest enemy all the time
+				// still doing the right thing.
 				var closest = W.findClosestMonster();
+				if(closest == null) {
+					closest = W.findClosestLoot();
+				}
 				if(closest == null) {
 					_this.terminateAction(_this._entity);
 				} else if(closest != _this.target) {

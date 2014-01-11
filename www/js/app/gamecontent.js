@@ -75,10 +75,10 @@ define({
 				'default': 'spawn:skeleton'
 			},
 			multipliers: {
-				weaver: 2,
-				weaver2: 3,
-				weaver3: 4,
-				weaver4: 5
+				weaver: 1,
+				weaver2: 2,
+				weaver3: 3,
+				weaver4: 4
 			}
 		},
 		Mana: {
@@ -303,8 +303,8 @@ define({
 			position: 210,
 			cost: {
 				stone: 4,
-				clay: 2,
-				cloth: 2
+				clay: 3,
+				cloth: 3
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -319,8 +319,8 @@ define({
 			position: 210,
 			cost: {
 				stone: 6,
-				clay: 5,
-				cloth: 5
+				clay: 6,
+				cloth: 6
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -335,8 +335,8 @@ define({
 			position: 210,
 			cost: {
 				stone: 8,
-				clay: 5,
-				cloth: 5
+				clay: 6,
+				cloth: 6
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -351,8 +351,8 @@ define({
 			position: 210,
 			cost: {
 				stone: 10,
-				clay: 5,
-				cloth: 5
+				clay: 6,
+				cloth: 6
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -415,7 +415,7 @@ define({
 			position: 270,
 			cost: {
 				wood: 2,
-				clay: 2
+				cloth: 2
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
@@ -428,8 +428,8 @@ define({
 			position: 270,
 			cost: {
 				wood: 4,
-				clay: 2,
-				cloth: 2
+				clay: 3,
+				cloth: 3
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
@@ -444,7 +444,7 @@ define({
 			position: 270,
 			cost: {
 				wood: 6,
-				clay: 5,
+				clay: 6,
 				cloth: 6
 			},
 			requiredLevel: 1,
@@ -460,8 +460,8 @@ define({
 			position: 270,
 			cost: {
 				wood: 8,
-				clay: 5,
-				cloth: 5
+				clay: 6,
+				cloth: 6
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
@@ -476,8 +476,8 @@ define({
 			position: 270,
 			cost: {
 				wood: 10,
-				clay: 5,
-				cloth: 5
+				clay: 6,
+				cloth: 6
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',

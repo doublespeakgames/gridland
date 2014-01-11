@@ -120,9 +120,15 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				}
 				// No monsters? Pick up loot!
 				closest = World.findClosestLoot();
-				if(closest != null) {
+				if(closest != null && dude.p() == closest.p()) {
 					return ActionFactory.getAction("GetLoot", {
 						target: closest
+					});
+				} else if(closest != null) {
+					// Move closer
+					return ActionFactory.getAction("MoveTo", {
+						target: closest,
+						useMove: true
 					});
 				}
 			} else {
@@ -557,7 +563,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	function wipeMonsters() {
 		for(var i in stuff) {
 			var entity = stuff[i];
-			if(entity.hostile) {
+			if(entity.hostile && entity.isAlive()) {
 				entity.wiped = true;
 				entity.die();
 				EventManager.trigger('monsterKilled', [entity]);

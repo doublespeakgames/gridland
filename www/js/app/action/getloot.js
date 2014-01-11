@@ -7,18 +7,12 @@ define(['app/action/action', 'app/eventmanager'], function(Action, EventManager)
 	GetLoot.constructor = GetLoot;
 	
 	GetLoot.prototype.doAction = function(entity) {
-		var _action = this;
 		this._entity = entity;
-		entity.move(_action.target.p(), function(entity) {
-			require(['app/graphics/graphics'], function(Graphics) {
-				entity.animationOnce(10);
-				_action.getting = true;
-			});
-		});
+		entity.animationOnce(10);
 	};
 	
 	GetLoot.prototype.doFrameAction = function(frame) {
-		if(this.getting && frame == 3) {
+		if(frame == 3) {
 			EventManager.trigger('pickupLoot', [this.target]);
 			this.target.gone = true;
 			this._entity.action = null;
