@@ -5,6 +5,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				LootGraphics, MagicGraphics) {
 	
 	var textStore;
+	var costsOn = false;
 	
 	function handleDrawRequest(requestString, options) {
 		var moduleString = requestString.substring(0, requestString.indexOf('.'));
@@ -52,7 +53,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			EventManager.bind('healthChanged', this.updateHealthBar);
 			EventManager.bind('dayBreak', this.handleDayBreak);
 			EventManager.bind('showCosts', function(building) {
-				if(!Options.get('showCosts')) {
+				if(!Options.get('showCosts') && !costsOn) {
 					var pile;
 					if(building) {
 						if(building.el) building = building.el();
@@ -71,8 +72,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			});
 			EventManager.bind('toggleCosts', function(visible) {
 				if(visible) {
+					costsOn = true;
 					$('.gameBoard').addClass('showCosts');
 				} else {
+					costsOn = false;
 					$('.gameBoard').addClass('fadeCosts');
 					setTimeout(function() {
 						$('.gameBoard').removeClass('showCosts fadeCosts');

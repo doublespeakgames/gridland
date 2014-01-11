@@ -22,14 +22,14 @@ define({
 				'default': 'shield'				
 			},
 			multipliers: {
-				sawmill: 2,
-				sawmill2: 2,
-				sawmill3: 3,
-				sawmill4: 3,
-				sawmill5: 3,
-				sawmill6: 4,
-				sawmill7: 4,
-				sawmill8: 4
+				sawmill: 1,
+				sawmill2: 1,
+				sawmill3: 2,
+				sawmill4: 2,
+				sawmill5: 2,
+				sawmill6: 3,
+				sawmill7: 3,
+				sawmill8: 3
 			}
 		},
 		Stone: {
@@ -39,14 +39,14 @@ define({
 				'default': 'sword'
 			},
 			multipliers: {
-				blacksmith: 2,
-				blacksmith2: 2,
-				blacksmith3: 3,
-				blacksmith4: 3,
-				blacksmith5: 3,
-				blacksmith6: 4,
-				blacksmith7: 4,
-				blacksmith8: 4
+				blacksmith: 1,
+				blacksmith2: 1,
+				blacksmith3: 2,
+				blacksmith4: 2,
+				blacksmith5: 2,
+				blacksmith6: 3,
+				blacksmith7: 3,
+				blacksmith8: 3
 			}
 		},
 		Clay: {
@@ -59,10 +59,10 @@ define({
 				'default': 'spawn:rat'
 			},
 			multipliers: {
-				bricklayer: 2,
-				bricklayer2: 3,
-				bricklayer3: 4,
-				bricklayer4: 5
+				bricklayer: 1,
+				bricklayer2: 2,
+				bricklayer3: 3,
+				bricklayer4: 4
 			}
 		},
 		Cloth: {
@@ -124,7 +124,7 @@ define({
 			position: 30,
 			cost: {},
 			requiredLevel: 1,
-			animationFrames: 4,
+			animationFrames: 1,
 			priority: 1
 		},
 		
@@ -182,10 +182,9 @@ define({
 			className: 'bricklayer2',
 			position: 90,
 			cost: {
-				stone: 1,
-				wood: 1,
-				cloth: 1,
-				clay: 5
+				stone: 3,
+				wood: 3,
+				clay: 3
 			},
 			requiredLevel: 1,
 			tileMod: 'clay',
@@ -199,10 +198,9 @@ define({
 			className: 'bricklayer3',
 			position: 90,
 			cost: {
-				stone: 2,
-				wood: 2,
-				cloth: 2,
-				clay: 8
+				stone: 5,
+				wood: 5,
+				clay: 5
 			},
 			requiredLevel: 1,
 			tileMod: 'clay',
@@ -216,26 +214,24 @@ define({
 			className: 'bricklayer4',
 			position: 90,
 			cost: {
-				stone: 4,
-				wood: 4,
-				cloth: 4,
-				clay: 12
+				stone: 8,
+				wood: 8,
+				clay: 8
 			},
 			requiredLevel: 1,
 			tileMod: 'clay',
 			tileLevel: 4,
 			replaces: 'bricklayer3',
 			defaultAnimation: 3,
-			priority: 8
+			priority: 9
 		},
 		
 		Weaver: {
 			className: 'weaver',
 			position: 150,
 			cost: { 
-				stone: 4,
-				wood: 4,
-				clay: 2
+				stone: 5,
+				wood: 5
 			},
 			requiredLevel: 1,
 			priority: 2
@@ -245,9 +241,8 @@ define({
 			className: 'weaver2',
 			position: 150,
 			cost: {
-				wood: 2,
-				stone: 2,
-				clay: 1,
+				wood: 3,
+				stone: 3,
 				cloth: 3
 			},
 			requiredLevel: 1,
@@ -262,9 +257,8 @@ define({
 			className: 'weaver3',
 			position: 150,
 			cost: {
-				wood: 4,
-				stone: 4,
-				clay: 2,
+				wood: 5,
+				stone: 5,
 				cloth: 5
 			},
 			requiredLevel: 1,
@@ -279,17 +273,16 @@ define({
 			className: 'weaver4',
 			position: 150,
 			cost: {
-				wood: 5,
-				stone: 5,
-				clay: 5,
-				cloth: 10
+				wood: 8,
+				stone: 8,
+				cloth: 8
 			},
 			requiredLevel: 1,
 			tileMod: 'cloth',
 			tileLevel: 4,
 			replaces: 'weaver3',
 			defaultAnimation: 3,
-			priority: 8
+			priority: 9
 		},
 		
 		Blacksmith: {
@@ -311,14 +304,14 @@ define({
 			cost: {
 				stone: 4,
 				clay: 2,
-				cloth: 1
+				cloth: 2
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
 			tileLevel: 3,
 			replaces: 'blacksmith',
 			defaultAnimation: 1,
-			priority: 4
+			priority: 5
 		},
 		
 		Blacksmith3: {
@@ -326,15 +319,15 @@ define({
 			position: 210,
 			cost: {
 				stone: 6,
-				clay: 3,
-				cloth: 2
+				clay: 5,
+				cloth: 5
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
 			tileLevel: 4,
 			replaces: 'blacksmith2',
 			defaultAnimation: 2,
-			priority: 5
+			priority: 6
 		},
 		
 		Blacksmith4: {
@@ -342,15 +335,15 @@ define({
 			position: 210,
 			cost: {
 				stone: 8,
-				clay: 4,
-				cloth: 2
+				clay: 5,
+				cloth: 5
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
 			tileLevel: 5,
 			replaces: 'blacksmith3',
 			defaultAnimation: 3,
-			priority: 6
+			priority: 7
 		},
 		
 		Blacksmith5: {
@@ -359,62 +352,62 @@ define({
 			cost: {
 				stone: 10,
 				clay: 5,
-				cloth: 2
+				cloth: 5
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
 			tileLevel: 6,
 			replaces: 'blacksmith4',
 			defaultAnimation: 4,
-			priority: 7
+			priority: 8
 		},
 		
 		Blacksmith6: {
 			className: 'blacksmith6',
 			position: 210,
 			cost: {
-				stone: 12,
-				clay: 6,
-				cloth: 3
+				stone: 6,
+				clay: 10,
+				cloth: 10
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
 			tileLevel: 7,
 			replaces: 'blacksmith5',
 			defaultAnimation: 5,
-			priority: 8
+			priority: 9
 		},
 		
 		Blacksmith7: {
 			className: 'blacksmith7',
 			position: 210,
 			cost: {
-				stone: 16,
-				clay: 8,
-				cloth: 3
+				stone: 8,
+				clay: 10,
+				cloth: 10
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
 			tileLevel: 8,
 			replaces: 'blacksmith6',
 			defaultAnimation: 6,
-			priority: 9
+			priority: 10
 		},
 		
 		Blacksmith8: {
 			className: 'blacksmith8',
 			position: 210,
 			cost: {
-				stone: 20,
+				stone: 10,
 				clay: 10,
-				cloth: 5
+				cloth: 10
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
 			tileLevel: 9,
 			replaces: 'blacksmith7',
 			defaultAnimation: 7,
-			priority: 10
+			priority: 11
 		},
 		
 		Sawmill: {
@@ -436,14 +429,14 @@ define({
 			cost: {
 				wood: 4,
 				clay: 2,
-				cloth: 1
+				cloth: 2
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
 			tileLevel: 3,
 			replaces: 'sawmill',
 			defaultAnimation: 1,
-			priority: 4
+			priority: 5
 		},
 		
 		Sawmill3: {
@@ -451,15 +444,15 @@ define({
 			position: 270,
 			cost: {
 				wood: 6,
-				clay: 3,
-				cloth: 2
+				clay: 5,
+				cloth: 6
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
 			tileLevel: 4,
 			replaces: 'sawmill2',
 			defaultAnimation: 2,
-			priority: 5
+			priority: 6
 		},
 		
 		Sawmill4: {
@@ -467,15 +460,15 @@ define({
 			position: 270,
 			cost: {
 				wood: 8,
-				clay: 4,
-				cloth: 2
+				clay: 5,
+				cloth: 5
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
 			tileLevel: 5,
 			replaces: 'sawmill3',
 			defaultAnimation: 3,
-			priority: 6
+			priority: 7
 		},
 		
 		Sawmill5: {
@@ -484,62 +477,62 @@ define({
 			cost: {
 				wood: 10,
 				clay: 5,
-				cloth: 2
+				cloth: 5
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
 			tileLevel: 6,
 			replaces: 'sawmill4',
 			defaultAnimation: 4,
-			priority: 7
+			priority: 8
 		},
 		
 		Sawmill6: {
 			className: 'sawmill6',
 			position: 270,
 			cost: {
-				wood: 12,
-				clay: 6,
-				cloth: 3
+				wood: 6,
+				clay: 10,
+				cloth: 10
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
 			tileLevel: 7,
 			replaces: 'sawmill5',
 			defaultAnimation: 5,
-			priority: 8
+			priority: 9
 		},
 		
 		Sawmill7: {
 			className: 'sawmill7',
 			position: 270,
 			cost: {
-				wood: 16,
-				clay: 8,
-				cloth: 3
+				wood: 8,
+				clay: 10,
+				cloth: 10
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
 			tileLevel: 8,
 			replaces: 'sawmill6',
 			defaultAnimation: 6,
-			priority: 9
+			priority: 10
 		},
 		
 		Sawmill8: {
 			className: 'sawmill8',
 			position: 270,
 			cost: {
-				wood: 20,
+				wood: 10,
 				clay: 10,
-				cloth: 5
+				cloth: 10
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
 			tileLevel: 9,
 			replaces: 'sawmill7',
 			defaultAnimation: 7,
-			priority: 10
+			priority: 11
 		},
 		
 		Tower: {

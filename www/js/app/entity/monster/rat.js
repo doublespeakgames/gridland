@@ -4,7 +4,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	var Rat = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		this.hp(this.maxHealth());
-		this.xp = 2;
+		this.xp = 4;
 	};
 	Rat.prototype = new Monster({
 		monsterClass: 'rat',

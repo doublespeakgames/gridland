@@ -4,7 +4,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	var Lich = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		this.hp(this.maxHealth());
-		this.xp = 3;
+		this.xp = 1000;
 		this.spellCooldown = 24;
 		this.teleportCooldown = 72;
 	};

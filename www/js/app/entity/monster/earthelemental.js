@@ -4,7 +4,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	var EarthElemental = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		this.hp(this.maxHealth());
-		this.xp = 2;
+		this.xp = 20;
 	};
 	EarthElemental.prototype = new Monster({
 		monsterClass: 'earthElemental',

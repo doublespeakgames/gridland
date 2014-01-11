@@ -691,9 +691,8 @@ body.night {
 	position: relative;
 	top: -60px;
 	cursor: pointer;
-    margin: auto;
 	height: 60px;
-    width: 50px;
+    width: 60px;
     font-size: 0px;
 	transform: rotate(180deg);
 	-moz-transform: rotate(180deg);

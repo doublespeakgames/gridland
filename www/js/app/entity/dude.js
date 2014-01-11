@@ -65,7 +65,11 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 	};
 	
 	dude.prototype.toLevel = function() {
-		return 40 * State.level;
+		// 40, 80, 120, 160, 200, 240, 280, 320, 340, 360, 400, 440
+//		return 40 * State.level;
+		
+		// 40, 160, 360, 640, 1000, 1440, 1960, 2560, 3240, 4000...
+		return 40 * Math.pow(State.level, 2);
 	};
 	
 	dude.prototype.heal = function(amount) {

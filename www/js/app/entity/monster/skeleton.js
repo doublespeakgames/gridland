@@ -4,6 +4,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	var Skeleton = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		this.hp(this.maxHealth());
+		this.xp = 3;
 	};
 	Skeleton.prototype = new Monster({
 		monsterClass: 'skeleton',

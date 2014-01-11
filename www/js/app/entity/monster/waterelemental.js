@@ -6,7 +6,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		this.hostile = true;
 		this.action = null;
 		this.hp(this.maxHealth());
-		this.xp = 3;
+		this.xp = 34;
 	};
 	WaterElemental.prototype = new Monster({
 		monsterClass: 'waterElemental',

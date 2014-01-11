@@ -18,6 +18,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	var gameLoop = null;
 	var star = null;
 	var prioritizedBuilding = null;
+	var recorded = null;
 	
 	var World = {		
 		options: {
@@ -235,23 +236,38 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		
 		isNight: function() {
 			return isNight;
+		},
+		
+		startRecording: function() {
+			console.log("Beginning resource recorder");
+			recorded = 0;
+		},
+		
+		reportRecord: function() {
+			console.log(recorded + " resources have been gained.");
 		}
 	};
 	
 	function prioritizeBuilding(building) {
 		if(isNight) return;
-		if(!star) {
-			star = new Star();
-			EventManager.trigger('newEntity', [star]);
+		if(prioritizedBuilding && prioritizedBuilding == building) {
+			// Clear on a second click
+			clearPriorityIfNeeded(building);
+		} else {
+			if(!star) {
+				star = new Star();
+				EventManager.trigger('newEntity', [star]);
+			}
+			prioritizedBuilding = building;
+			star.p(building.options.type.position);
+			Graphics.setPosition(star, star.p());
+			star.el().removeClass('hidden');
 		}
-		prioritizedBuilding = building;
-		star.p(building.options.type.position);
-		Graphics.setPosition(star, star.p());
-		star.el().removeClass('hidden');
 	}
 	
 	function clearPriorityIfNeeded(building) {
 		if(prioritizedBuilding == building) {
+			prioritizedBuilding = null;
 			star.el().addClass('hidden');
 		}
 	}
@@ -389,8 +405,12 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					}
 				}
 			} else {
-				// Apply building multipliers
 				var quantity = resourcesGained[typeName];
+				// Record
+				if(recorded != null) {
+					recorded += quantity;
+				} 
+				// Apply building multipliers
 				if(type.multipliers) {
 					for(var b in type.multipliers) {
 						var bType = Content.getBuildingType(b);
