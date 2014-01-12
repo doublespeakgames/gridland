@@ -302,9 +302,9 @@ define({
 			className: 'blacksmith2',
 			position: 210,
 			cost: {
-				stone: 4,
-				clay: 3,
-				cloth: 3
+				stone: 2,
+				clay: 5,
+				cloth: 5
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -318,9 +318,9 @@ define({
 			className: 'blacksmith3',
 			position: 210,
 			cost: {
-				stone: 6,
-				clay: 6,
-				cloth: 6
+				stone: 2,
+				clay: 8,
+				cloth: 8
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -334,9 +334,9 @@ define({
 			className: 'blacksmith4',
 			position: 210,
 			cost: {
-				stone: 8,
-				clay: 6,
-				cloth: 6
+				stone: 4,
+				clay: 8,
+				cloth: 8
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -350,9 +350,9 @@ define({
 			className: 'blacksmith5',
 			position: 210,
 			cost: {
-				stone: 10,
-				clay: 6,
-				cloth: 6
+				stone: 6,
+				clay: 8,
+				cloth: 8
 			},
 			requiredLevel: 1,
 			tileMod: 'stone',
@@ -427,9 +427,9 @@ define({
 			className: 'sawmill2',
 			position: 270,
 			cost: {
-				wood: 4,
-				clay: 3,
-				cloth: 3
+				wood: 2,
+				clay: 5,
+				cloth: 5
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
@@ -443,9 +443,9 @@ define({
 			className: 'sawmill3',
 			position: 270,
 			cost: {
-				wood: 6,
-				clay: 6,
-				cloth: 6
+				wood: 2,
+				clay: 8,
+				cloth: 8
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
@@ -459,9 +459,9 @@ define({
 			className: 'sawmill4',
 			position: 270,
 			cost: {
-				wood: 8,
-				clay: 6,
-				cloth: 6
+				wood: 4,
+				clay: 8,
+				cloth: 8
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
@@ -475,9 +475,9 @@ define({
 			className: 'sawmill5',
 			position: 270,
 			cost: {
-				wood: 10,
-				clay: 6,
-				cloth: 6
+				wood: 6,
+				clay: 8,
+				cloth: 8
 			},
 			requiredLevel: 1,
 			tileMod: 'wood',
