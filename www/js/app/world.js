@@ -266,14 +266,14 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			prioritizedBuilding = building;
 			star.p(building.options.type.position);
 			Graphics.setPosition(star, star.p());
-			star.el().removeClass('hidden');
+			star.el().css('display', 'block');
 		}
 	}
 	
 	function clearPriorityIfNeeded(building) {
 		if(prioritizedBuilding == building) {
 			prioritizedBuilding = null;
-			star.el().addClass('hidden');
+			star.el().css('display', 'none');
 		}
 	}
 	

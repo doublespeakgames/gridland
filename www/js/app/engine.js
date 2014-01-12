@@ -181,7 +181,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];
 				}
-				EventManager.trigger('prioritizeBuilding', [$(e.currentTarget).data('building')]);
+				EventManager.trigger('prioritizeBuilding', [$(e.target).closest('.blockPile').data('building')]);
 			});
 			Graphics.attachHandler("World", "mousedown touchstart", function(e) {
 				// Handle wacky touch event objects

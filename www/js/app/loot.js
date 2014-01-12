@@ -71,7 +71,7 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 		
 		useItem: function(lootName) {
 			var num = GameState.items[lootName];
-			if(num > 0) {
+			if(num > 0 && require('app/world').canMove()) {
 				num--;
 				GameState.items[lootName] = num;
 				E.trigger('updateLoot', [lootName, num]);

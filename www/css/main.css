@@ -592,7 +592,6 @@ body.night {
 }
 
 .building {
-	z-index: 1;
 	position: absolute;
 	bottom: -80px;
 	width: 60px;
@@ -781,10 +780,6 @@ body.night {
 	border-style: solid;
 	border-color: black;
 	display: none;
-}
-
-.showCosts .ghost {
-	display: block;
 	transition: opacity 500ms linear;
 	-webkit-transition: opacity 500ms linear;
 	-moz-transition: opacity 500ms linear;
@@ -792,8 +787,12 @@ body.night {
 	-o-transition: opacity 500ms linear;
 }
 
-.fadeCosts .ghost {
+.showCosts .ghost {
 	display: block;
+	opacity: 0.7;
+}
+
+.fadeCosts .ghost {
 	opacity: 0;
 }
 
