@@ -536,9 +536,9 @@ body.night {
 	background-color: white;
 	transition: background-color 700ms linear;
 	-webkit-transition: background-color 700ms linear;
+	-moz-transition: background-color 700ms linear;
 	-ms-transition: background-color 700ms linear;
 	-o-transition: background-color 700ms linear;
-	-moz-transition: background-color 700ms linear;
 }
 
 .night .world {
@@ -551,6 +551,16 @@ body.night {
 	width: 14px;
 	height: 14px;
 	top: 35px;
+	opacity: 1;
+	transition: opacity 700ms linear;
+	-webkit-transition: opacity 700ms linear;
+	-moz-transition: opacity 700ms linear;
+	-ms-transition: opacity 700ms linear;
+	-o-transition: opacity 700ms linear;
+}
+
+.night .star {
+	opacity: 0;
 }
 
 .dude {

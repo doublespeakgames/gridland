@@ -213,13 +213,14 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					celestial.animation(0);
 				}
 				celestial.el().css('left', '0px');
+				
+				setTimeout(function() {
+					_g.raiseCelestial(celestial);
+					if(callback != null) {
+						callback();
+					}
+				}, 400);
 			}, 300);
-			setTimeout(function() {
-				_g.raiseCelestial(celestial);
-				if(callback != null) {
-					callback();
-				}
-			}, 700);
 		},
 		
 		raiseCelestial: function(celestial) {

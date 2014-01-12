@@ -184,18 +184,17 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 							if(!block.gone && block.spaceLeft() == 0) {
 								var resource = block.options.type.className;
 								var required = building.requiredResources[resource];
-								var cost = buildingType.cost[resource];
 								var highPriority = priority == null || buildingType.priority < priority || 
 										(buildingType.priority == priority && 
-												(totalNeeded == null || cost < totalNeeded));
-								if(required > 0 && resource == block.options.type.className && highPriority) {
+												(totalNeeded == null || required > totalNeeded));
+								if(required > 0 && highPriority) {
 									// We can move this block!
 									moveAction = ActionFactory.getAction("MoveBlock", {
 										block: block,
 										destination: building
 									});
 									priority = buildingType.priority;
-									totalNeeded = cost;
+									totalNeeded = required;
 								}
 							}
 						}
