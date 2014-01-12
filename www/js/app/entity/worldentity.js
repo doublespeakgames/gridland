@@ -115,6 +115,7 @@ define(['app/entity/entity', 'app/eventmanager', 'app/action/actionfactory'],
 	};
 	
 	worldEntity.prototype.distanceFrom = function(target) {
+		if(Math.abs(this.p() - target.p()) < (this.getHitboxWidth + target.getHitboxWidth()) / 2) return 0;
 		return Math.abs(Math.abs(this.p() - target.p()) - this.getHitboxWidth() / 2 - target.getHitboxWidth() / 2);
 	};
 	
