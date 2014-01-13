@@ -1887,11 +1887,11 @@ body.night {
 	background-color: white;
 	cursor: pointer;
 	margin-left: -12px;
-	transition: opacity 700ms linear;
-	-webkit-transition: opacity 700ms linear;
-	-moz-transition: opacity 700ms linear;
-	-ms-transition: opacity 700ms linear;
-	-o-transition: opacity 700ms linear;
+	transition: border-color 700ms linear, background-color 700ms linear;
+	-webkit-transition: border-color 700ms linear, background-color 700ms linear;
+	-moz-transition: border-color 700ms linear, background-color 700ms linear;
+	-ms-transition: border-color 700ms linear, background-color 700ms linear;
+	-o-transition: border-color 700ms linear, background-color 700ms linear;
 }
 
 .night .sliderHandle {
