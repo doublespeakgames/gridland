@@ -34,7 +34,8 @@ body.night {
 
 .menuBar {
 	z-index: 0;
-	height: 50px;
+	height: 0px;
+	padding-top: 50px;
 	width: 100%;
 	position: fixed;
 	bottom: 0px;
@@ -1843,4 +1844,51 @@ body.night {
 	height: 180px;
 	border-radius: 90px;
 	opacity: 0;
+}
+
+/** Volume sliders **/
+.volumeSlider {
+	position: relative;
+	top: 25%;
+	left: 5%;
+	width: 30%;
+	height: 42px;
+	padding-left: 42px;
+	background: url(../img/music.png) no-repeat;
+}
+
+.volumeSlider .nightSprite {
+	width: 42px;
+	height: 42px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: url(../img/music.png) no-repeat;
+	background-position: 0 -42px;
+}
+
+.sliderTrack {
+	position: relative;
+	float: left;
+	top: 50%;
+	width: 100%;
+	margin-top: -1px;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+}
+
+.sliderHandle {
+	position: absolute;
+	top: 0px;
+	height: 38px;
+	width: 20px;
+	border: 2px solid;
+	background-color: white;
+	cursor: pointer;
+	margin-left: -12px;
+	left: 50%;
+}
+
+.night .sliderHandle {
+	background-color: #000;
 }

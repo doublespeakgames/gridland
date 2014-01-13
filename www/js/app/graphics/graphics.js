@@ -1,8 +1,8 @@
 define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
         'app/graphics/gameboard', 'app/graphics/world', 'app/graphics/resources', 
-        'app/graphics/loot', 'app/graphics/magic'], 
+        'app/graphics/loot', 'app/graphics/magic', 'app/graphics/audio'], 
 		function($, EventManager, TextStore, Options, BoardGraphics, WorldGraphics, ResourceGraphics,
-				LootGraphics, MagicGraphics) {
+				LootGraphics, MagicGraphics, AudioGraphics) {
 	
 	var textStore;
 	var costsOn = false;
@@ -27,6 +27,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				break;
 			case 'magic':
 				module = MagicGraphics;
+				break;
+			case 'audio':
+				module = AudioGraphics;
 				break;
 		}
 		
@@ -88,6 +91,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			ResourceGraphics.init();
 			LootGraphics.init();
 			MagicGraphics.init();
+			AudioGraphics.init();
 		},
 		
 		isReady: function() {
@@ -156,6 +160,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		addToBoard: function(entity) {
 			$('.gameBoard').append(entity.el ? entity.el() : entity);
+		},
+		
+		addToMenu: function(entity) {
+			$('.menuBar').append(entity.el ? entity.el() : entity);
 		},
 		
 		hide: function(entity) {
