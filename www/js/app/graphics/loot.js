@@ -1,4 +1,3 @@
-
 define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 	
 	function openChest(chest) {

@@ -124,7 +124,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				Magic,
 				GameAudio
 			], function() {
-				console.log('Game loaded.');
+//				console.log('Game loaded.');
 				EventManager.bind('graphicsActionComplete', handleGraphicsComplete);
 				EventManager.trigger('refreshBoard');
 				EventManager.trigger('launchDude');

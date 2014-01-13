@@ -1,4 +1,4 @@
-define(function() {
+define(['app/eventmanager'], function(E) {
 	
 	var toLoad = 0;
 	var format = null;
@@ -16,7 +16,7 @@ define(function() {
 	
 	function loadSound(sound) {
 		if(format != null) {
-			console.log(sound + ' loading...');
+//			console.log(sound + ' loading...');
 			toLoad++;
 			sound.element = new Audio("audio/" + sound.file + "." + format);
 			if(sound.loop) {
@@ -27,7 +27,7 @@ define(function() {
 	}
 	
 	function loadCallback() {
-		console.log('loaded');
+//		console.log('loaded');
 		toLoad--;
 	}
 	
@@ -44,15 +44,19 @@ define(function() {
 		return null;
 	}
 	
-	return {
+	var GameAudio = {
 		init: function(options) {
-			console.log('Audio init');
+//			console.log('Audio init');
 			format = chooseFormat();
 			if(format == null) return; // No sound for you!
 			toLoad = 0;
 			for(s in sounds) {
 				loadSound(sounds[s]);
 			}
+			
+			E.bind('setMusicVolume', function(v) {
+				GameAudio.setVolume(v);
+			});
 		},
 		
 		isReady: function() {
@@ -63,6 +67,7 @@ define(function() {
 			for(var s in sounds) {
 				sounds[s].element.volume = volume;
 			}
+//			console.log('set volume to ' + volume);
 		},
 		
 		play: function(sound) {
@@ -73,4 +78,6 @@ define(function() {
 			sounds[sound].element.pause();
 		}
 	};
+	
+	return GameAudio;
 });

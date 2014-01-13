@@ -1,4 +1,4 @@
-	define(['app/eventmanager', 'app/gamestate'], function(E, State) {
+define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 	
 	var MANA_COST = 3;
 		

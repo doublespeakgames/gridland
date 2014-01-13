@@ -1883,12 +1883,18 @@ body.night {
 	height: 38px;
 	width: 20px;
 	border: 2px solid;
+	border-color: black;
 	background-color: white;
 	cursor: pointer;
 	margin-left: -12px;
-	left: 50%;
+	transition: opacity 700ms linear;
+	-webkit-transition: opacity 700ms linear;
+	-moz-transition: opacity 700ms linear;
+	-ms-transition: opacity 700ms linear;
+	-o-transition: opacity 700ms linear;
 }
 
 .night .sliderHandle {
 	background-color: #000;
+	border-color: white;
 }
