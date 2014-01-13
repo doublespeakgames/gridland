@@ -1,6 +1,8 @@
 define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
-        'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot', 'app/magic', 'app/gameoptions'], 
-		function($, EventManager, Analytics, Graphics, Content, GameBoard, GameState, World, Loot, Magic, Options) {
+        'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot', 
+        'app/magic', 'app/gameoptions', 'app/audio'], 
+		function($, EventManager, Analytics, Graphics, Content, GameBoard, 
+				 GameState, World, Loot, Magic, Options, GameAudio) {
 
 	var DRAG_THRESHOLD = 30; // in pixels
 	var activeTile = null;
@@ -119,8 +121,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				Graphics,
 				World,
 				Loot,
-				Magic
+				Magic,
+				GameAudio
 			], function() {
+				console.log('Game loaded.');
 				EventManager.bind('graphicsActionComplete', handleGraphicsComplete);
 				EventManager.trigger('refreshBoard');
 				EventManager.trigger('launchDude');
