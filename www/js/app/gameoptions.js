@@ -1,17 +1,33 @@
 define(function() {
 	
-	var _options = {
+	var gameOptions = {
 		showCosts: false
 	};
 	
-	return {
+	var GameOptions = {
 		get: function(optionName) {
-			return _options[optionName];
+			return gameOptions[optionName];
 		},
 		
 		set: function(optionName, value) {
-			_options[optionName] = value;
+			gameOptions[optionName] = value;
+			if(typeof Storage != 'undefined' && localStorage) {
+				localStorage.gameOptions = JSON.stringify(gameOptions);
+			}
 			return value;
+		},
+		
+		load: function() {
+			try {
+				var savedOptions = JSON.parse(localStorage.gameOptions);
+				if(savedOptions) {
+					gameOptions = savedOptions;
+				}
+			} catch(e) {
+				// Nothing
+			}
 		}
 	};
+	
+	return GameOptions;
 });

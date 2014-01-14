@@ -1,8 +1,8 @@
 define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
         'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot', 
-        'app/magic', 'app/gameoptions', 'app/audio'], 
+        'app/magic', 'app/gameoptions', 'app/audio/audio'], 
 		function($, EventManager, Analytics, Graphics, Content, GameBoard, 
-				 GameState, World, Loot, Magic, Options, GameAudio) {
+				 GameState, World, Loot, Magic, GameOptions, GameAudio) {
 
 	var DRAG_THRESHOLD = 30; // in pixels
 	var activeTile = null;
@@ -103,7 +103,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			$.extend(this.options, opts);
 		
 			$('#test').off().click(function() { 
-				EventManager.trigger('phaseChange');
+				EventManager.trigger('phaseChange', [!Engine.isNight()]);
 			});
 			
 			$('.menuBtn').off().on("click touchstart", function() {
@@ -114,6 +114,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			
 			// Start the game
 			GameState.load();
+			GameOptions.load();
 			initializeModules([
 				EventManager,
 				Analytics,
@@ -126,6 +127,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			], function() {
 //				console.log('Game loaded.');
 				EventManager.bind('graphicsActionComplete', handleGraphicsComplete);
+				EventManager.trigger('gameLoaded');
 				EventManager.trigger('refreshBoard');
 				EventManager.trigger('launchDude');
 			});

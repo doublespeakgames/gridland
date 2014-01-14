@@ -524,7 +524,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			var numSteps = isNight ? World.options.nightMoves : World.options.dayMoves;
 			celestialPosition += steps;
 			if(celestialPosition >= numSteps) {
-				phaseTransition();
+				EventManager.trigger('phaseChange', [!isNight]);
 			} else {
 				var worldWidth = Graphics.worldWidth();
 				celestial.p(Math.floor(worldWidth / numSteps) * celestialPosition);

@@ -1,11 +1,11 @@
 define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 	
 	var xPos = /matrix\(1, 0, 0, 1, ([0-9]+)/;
+	var G = null;
 	
 	var _el = null;
 	var musicHandle = null;
 	function el() {
-		var G = require('app/graphics/graphics');
 		if(_el == null) {
 			musicHandle = G.make('sliderHandle');
 			musicHandle.data('controls', 'music');
@@ -71,12 +71,17 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 	
 	return {
 		init: function() {
+			G = require('app/graphics/graphics');
+			if(_el) {
+				_el.remove();
+			}
 			_el = null;
 			el();
-			setMusicVolume(1);
+			var musicVolume = require('app/gameoptions').get('musicVolume');
+			setMusicVolume(musicVolume != null ? musicVolume : 1);
 			musicHandle.off().on('mousedown touchstart', handleTouchStart);
 			el().off().on('mousemove touchmove', handleTouchMove);
-			$('.menuBar').off().on('mouseup touchend', handleTouchEnd);
+			G.get('.menuBar').off().on('mouseup touchend', handleTouchEnd);
 		}
 	};
 });

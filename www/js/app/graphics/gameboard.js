@@ -13,6 +13,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		if (_el == null) {
 			clearBoard();
 			_el = createBoard(GameBoard.options.rows, GameBoard.options.columns);
+			_el.addClass('hidden');
 			G.addToScreen(_el);
 		}
 		return _el;
@@ -209,6 +210,9 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			E.bind('drawEffect', drawTileEffect);
 			E.bind('drawRemoveEffect', removeTileEffect);
 			E.bind('drawExplode', explode);
+			E.bind('gameLoaded', function() {
+				el().removeClass('hidden');
+			});
 		},
 		
 		attachHandler: function(event, element, handler) {
