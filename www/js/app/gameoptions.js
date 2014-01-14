@@ -1,7 +1,8 @@
 define(function() {
 	
 	var gameOptions = {
-		showCosts: false
+		showCosts: false,
+		musicVolume: 1
 	};
 	
 	var GameOptions = {
