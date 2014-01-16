@@ -68,6 +68,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 					}
 					E.bind('dayBreak', function() {
 						if(!playingMusic) {
+							playingMusic = true;
 							GameAudio.play('DayMusic');
 							GameAudio.play('NightMusic', true);
 						}
