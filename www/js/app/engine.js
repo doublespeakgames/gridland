@@ -9,6 +9,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 	var dragging = false;
 	var dragStart = {x: 0, y: 0};
 	var graphicsCallback = null;
+	var loaded = false;
 	
 	function initializeModules(modules, callback) {
 		// init all modules passed to me
@@ -97,6 +98,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		}
 	}
 	
+	function startGame() {
+		EventManager.bind('graphicsActionComplete', handleGraphicsComplete);
+		EventManager.trigger('gameLoaded');
+		EventManager.trigger('refreshBoard');
+		EventManager.trigger('launchDude');
+	}
+	
 	var Engine = {
 		options: {},
 		init: function(opts) {
@@ -107,9 +115,15 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			});
 			
 			$('.menuBtn').off().on("click touchstart", function() {
-				require(['jquery'], function($) {
-					$('.menuBar').toggleClass('open');
-				});
+				$('.menuBar').toggleClass('open');
+			});
+			
+			$('#playButton').off().on("click touchstart", function() {
+				if(loaded) {
+					GameAudio.play('Click');
+					startGame();
+					$('#loadingScreen').addClass('hidden');
+				}
 			});
 			
 			// Start the game
@@ -125,11 +139,12 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				Magic,
 				GameAudio
 			], function() {
-//				console.log('Game loaded.');
-				EventManager.bind('graphicsActionComplete', handleGraphicsComplete);
-				EventManager.trigger('gameLoaded');
-				EventManager.trigger('refreshBoard');
-				EventManager.trigger('launchDude');
+				if(loaded) {
+					startGame();
+				} else {
+					loaded = true;
+					Graphics.enablePlayButton();
+				}
 			});
 			
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", '.tile', function(e) {

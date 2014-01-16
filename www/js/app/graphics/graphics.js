@@ -515,6 +515,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		monsterKilled: function(monster) {
 			monster.el().find('.healthBar').addClass('hidden');
+		},
+		
+		enablePlayButton: function() {
+			$('#loadingScreen .saveSpinner').addClass('hidden');
+			$('#playButton').removeClass('hidden').text(Graphics.getText('PLAY'));
 		}
 	};
 	

@@ -1,3 +1,4 @@
 define({
-	DAY: 'Day'
+	DAY: 'Day',
+	PLAY: 'Play'
 });

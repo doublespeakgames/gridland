@@ -4,6 +4,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	var toLoad = 0;
 	var format = null;
 	var provider = null;
+	var playingMusic = false;
 	
 	var sounds = {
 		DayMusic: {
@@ -13,19 +14,20 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		NightMusic: {
 			file: 'theme-night',
 			loop: true
+		},
+		Click: {
+			file: 'click'
 		}
 	};
 	
 	function loadSound(sound) {
 		if(format != null) {
-//			console.log(sound + ' loading...');
 			toLoad++;
 			provider.load(sound, format, loadCallback);
 		}
 	}
 	
 	function loadCallback() {
-//		console.log('loaded');
 		toLoad--;
 	}
 	
@@ -56,7 +58,6 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	
 	var GameAudio = {
 		init: function(options) {
-//			console.log('Audio init');
 			if(!provider) { 
 				provider = getProvider();
 				format = chooseFormat();
@@ -65,9 +66,11 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 					for(s in sounds) {
 						loadSound(sounds[s]);
 					}
-					E.bind('gameLoaded', function() {
-						GameAudio.play('DayMusic');
-						GameAudio.play('NightMusic', true);
+					E.bind('dayBreak', function() {
+						if(!playingMusic) {
+							GameAudio.play('DayMusic');
+							GameAudio.play('NightMusic', true);
+						}
 					});
 				}
 			} else {

@@ -35,6 +35,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			effects = {};
 			isNight = false;
 			celestialPosition = 0;
+			var deferredCallbacks = [];
 			
 			EventManager.bind('launchDude', launchDude);
 			EventManager.bind('wipeMonsters', wipeMonsters);
@@ -56,6 +57,11 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				fillDefense();
 				fillAttack();
 			});
+			EventManager.bind('gameLoaded', function() {
+				while(deferredCallbacks.length > 0) {
+					(deferredCallbacks.pop())();
+				}
+			});
 			
 			updateGem();
 			
@@ -71,7 +77,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					building.el().find('.blockPile').css('top', '100%');
 					var cb = Content.BuildingCallbacks[building.options.type.className];
 					if(cb) {
-						cb();
+						deferredCallbacks.push(cb);
 					}
 				} else if(!building.obsolete && canBuild(building.options.type)) {
 					Graphics.addToWorld(building);

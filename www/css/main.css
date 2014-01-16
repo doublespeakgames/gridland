@@ -28,6 +28,62 @@ body.night {
 
 .hidden {
 	opacity: 0 !important;
+	cursor: default !important;
+}
+
+/** Loading Screen **/
+#loadingScreen {
+	z-index: 100;
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	margin-left: -300px;
+    width: 600px;
+    height: 300px;
+    background: url(../img/title.png) top left no-repeat;
+    transition: opacity 700ms linear;
+    -webkit-transition: opacity 700ms linear;
+    -moz-transition: opacity 700ms linear;
+    -ms-transition: opacity 700ms linear;
+    -o-transition: opacity 700ms linear;
+}
+
+#loadingScreen.hidden {
+	z-index: -1;
+}
+
+#loadingScreen .saveSpinner {
+	width: 80px;
+	height: 80px;
+	opacity: 1;
+	width: 80px;
+    bottom: 0px;
+    left: 50%;
+    margin-left: -40px;
+}
+
+#playButton {
+	border: 2px solid #000000;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -77px;
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+   	font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+    font-size: 2em;
+    text-align: center;
+    line-height: 50px;
+    transition: opacity 200ms linear;
+    -webkit-transition: opacity 200ms linear;
+    -moz-transition: opacity 200ms linear;
+    -ms-transition: opacity 200ms linear;
+    -o-transition: opacity 200ms linear;
+}
+
+#playButton:hover {
+	box-shadow: 0 0 5px 5px #CCC;
 }
 
 /** Menu Bar **/
@@ -160,7 +216,7 @@ body.night {
 	height: 40px;
 	position: absolute;
 	left: 3px;
-	top: 3px;
+	bottom: 4px;
 	opacity: 0;
 	transition: opacity 200ms linear;
 	-webkit-transition: opacity 200ms linear;
@@ -175,8 +231,8 @@ body.night {
 
 .saveSpinner div {
 	position: absolute;
-	width: 6px;
-	height: 6px;
+	width: 15%;
+	height: 15%;
 	background-color: black;
 	transition: background-color 700ms linear;
 	-webkit-transition: background-color 700ms linear;
@@ -196,11 +252,11 @@ body.night {
 
 .saveSpinner div:nth-child(1) {
 	top: 0px;
-	left: 17px;
+	left: 42.5%;
 }
 .saveSpinner div:nth-child(2) {
-	top: 4px;
-	right: 4px;
+	top: 10%;
+	right: 10%;
 	animation-delay: -875ms;
 	-webkit-animation-delay: -875ms;
 	-moz-animation-delay: -875ms;
@@ -208,7 +264,7 @@ body.night {
 	-o-animation-delay: -875ms;
 }
 .saveSpinner div:nth-child(3) {
-	top: 17px;
+	top: 42.5%;
 	right: 0px;
 	animation-delay: -750ms;
 	-webkit-animation-delay: -750ms;
@@ -217,8 +273,8 @@ body.night {
 	-o-animation-delay: -750ms;
 }
 .saveSpinner div:nth-child(4) {
-	bottom: 4px;
-	right: 4px;
+	bottom: 10%;
+	right: 10%;
 	animation-delay: -625ms;
 	-webkit-animation-delay: -625ms;
 	-moz-animation-delay: -625ms;
@@ -226,8 +282,8 @@ body.night {
 	-o-animation-delay: -625ms;
 }
 .saveSpinner div:nth-child(5) {
-	top: 34px;
-	left: 17px;
+	bottom: 0;
+	left: 42.5%;
 	animation-delay: -500ms;
 	-webkit-animation-delay: -500ms;
 	-moz-animation-delay: -500ms;
@@ -235,8 +291,8 @@ body.night {
 	-o-animation-delay: -500ms;
 }
 .saveSpinner div:nth-child(6) {
-	bottom: 4px;
-	left: 4px;
+	bottom: 10%;
+	left: 10%;
 	animation-delay: -375ms;
 	-webkit-animation-delay: -375ms;
 	-moz-animation-delay: -375ms;
@@ -244,7 +300,7 @@ body.night {
 	-o-animation-delay: -375ms;
 }
 .saveSpinner div:nth-child(7) {
-	top: 17px;
+	top: 42.5%;
 	left: 0px;
 	animation-delay: -250ms;
 	-webkit-animation-delay: -250ms;
@@ -253,8 +309,8 @@ body.night {
 	-o-animation-delay: -250ms;
 }
 .saveSpinner div:nth-child(8) {
-	top: 4px;
-	left: 4px;
+	top: 10%;
+	left: 10%;
 	animation-delay: -125ms;
 	-webkit-animation-delay: -125ms;
 	-moz-animation-delay: -125ms;
@@ -886,7 +942,7 @@ body.night {
 }
 
 .celestial {
-	z-index: 0;
+	z-index: -1;
 	width: 30px;
 	height: 30px;
 	top: 100%;
