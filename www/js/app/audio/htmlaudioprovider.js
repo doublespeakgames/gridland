@@ -25,10 +25,10 @@ define(function() {
 					sound.data.fadedOut = true;
 					sound.data.volume = 0;
 				}
-				var s = sound.data.cloneNode();
-				s.volume = sound.data.volume;
-				s.fadedOut = sound.data.fadedOut;
-				sound.data = s;
+//				var s = sound.data.cloneNode();
+//				s.volume = sound.data.volume;
+//				s.fadedOut = sound.data.fadedOut;
+//				sound.data = s;
 				sound.data.play();
 			},
 			
