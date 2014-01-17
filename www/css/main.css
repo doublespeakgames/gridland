@@ -64,6 +64,7 @@ body.night {
 
 #playButton {
 	border: 2px solid #000000;
+	border-radius: 8px;
     bottom: 10px;
     left: 50%;
     margin-left: -77px;
