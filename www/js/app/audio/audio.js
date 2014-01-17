@@ -5,6 +5,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	var format = null;
 	var provider = null;
 	var playingMusic = false;
+	var matchNum = 1;
 	
 	var sounds = {
 		DayMusic: {
@@ -17,7 +18,23 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		Click: {
 			file: 'click'
+		},
+		TileClick: {
+			file: 'tileclick'
+		},
+		Match1: {
+			file: 'match1'
+		},
+		Match2: {
+			file: 'match2'
+		},
+		Match3: {
+			file: 'match3'
 		}
+//		,
+//		Match4: {
+//			file: 'match4'
+//		}
 	};
 	
 	function loadSound(sound) {
@@ -56,6 +73,36 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		provider.crossFade(sounds[outSound], sounds[inSound], time);
 	}
 	
+	function setMusicVolume(v) {
+		GameAudio.setMusicVolume(v);
+	}
+	
+	function startMusic() {
+		if(!playingMusic) {
+			playingMusic = true;
+			GameAudio.play('DayMusic');
+			GameAudio.play('NightMusic', true);
+		}
+	}
+	
+	function changeMusic(isNight) {
+		if(isNight) {
+			crossFade('DayMusic', 'NightMusic', 700);
+		} else {
+			crossFade('NightMusic', 'DayMusic', 700);
+		}
+	}
+	
+	function tileSound() {
+		GameAudio.play('TileClick');
+	}
+	
+	function matchSound(r, s, restart) {
+		matchNum = restart ? 1 : matchNum + 1;
+		matchNum = matchNum > 3 ? 3 : matchNum;
+		GameAudio.play('Match' + matchNum);
+	}
+	
 	var GameAudio = {
 		init: function(options) {
 			if(!provider) { 
@@ -66,28 +113,16 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 					for(s in sounds) {
 						loadSound(sounds[s]);
 					}
-					E.bind('dayBreak', function() {
-						if(!playingMusic) {
-							playingMusic = true;
-							GameAudio.play('DayMusic');
-							GameAudio.play('NightMusic', true);
-						}
-					});
+					E.bind('dayBreak', startMusic);
 				}
 			} else {
 				crossFade('NightMusic', 'DayMusic', 700);
 			}
 			
-			E.bind('setMusicVolume', function(v) {
-				GameAudio.setMusicVolume(v);
-			});
-			E.bind('phaseChange', function(isNight) {
-				if(isNight) {
-					crossFade('DayMusic', 'NightMusic', 700);
-				} else {
-					crossFade('NightMusic', 'DayMusic', 700);
-				}
-			});
+			E.bind('tileDrop', tileSound);
+			E.bind('setMusicVolume', setMusicVolume);
+			E.bind('phaseChange', changeMusic);
+			E.bind('tilesCleared', matchSound);
 			
 			var musicVolume = require('app/gameoptions').get('musicVolume');
 			if(musicVolume != null) {

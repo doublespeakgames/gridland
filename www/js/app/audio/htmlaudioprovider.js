@@ -10,7 +10,7 @@ define(function() {
 			
 			load: function(sound, format, callback) {
 				sound.data = new Audio("audio/" + sound.file + "." + format);
-				audioElements.push(sound.data);
+				audioElements.push(sound);
                 if(sound.loop) {
                 	sound.data.loop = true;
                 }
@@ -22,6 +22,10 @@ define(function() {
 					sound.data.fadedOut = true;
 					sound.data.volume = 0;
 				}
+				var s = sound.data.cloneNode();
+				s.volume = sound.data.volume;
+				s.fadedOut = sound.data.fadedOut;
+				sound.data = s;
 				sound.data.play();
 			},
 			
@@ -32,10 +36,10 @@ define(function() {
 			setMusicVolume: function(v) {
 				musicVolume = v;
 				audioElements.forEach(function(a) {
-					if(a.fadedOut) {
-						a.volume = 0;
+					if(a.data.fadedOut) {
+						a.data.volume = 0;
 					} else {
-						a.volume = v;
+						a.data.volume = v;
 					}
 				});
 			},

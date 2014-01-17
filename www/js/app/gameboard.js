@@ -15,6 +15,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	var effectMap = {};
 	var HOLE = 'O';
 	var NO_EFFECT = '!';
+	var moved = false;
 	
 	var GameBoard = {
 		SEP: 'X',
@@ -67,6 +68,8 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 				setEffectTile(pos1.row, pos1.col, effect2);
 				setEffectTile(pos2.row, pos2.col, effect1);
 			}
+			
+			moved = true;
 			
 			require('app/engine').setGraphicsCallback(cb);
 			EventManager.trigger('draw', ['board.swap', {
@@ -295,7 +298,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 				removed: toRemove,
 				added: newTiles
 			}]);
-			EventManager.trigger('tilesCleared', [resourcesGained, swapSide]);
+			EventManager.trigger('tilesCleared', [resourcesGained, swapSide, moved]);
 		} else {
 			EventManager.trigger('tilesSwapped', [lastSwitch == null]);
 			if(lastSwitch) {
@@ -305,6 +308,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 				noMoreMoves();
 			}
 		}
+		moved = false;
 	}
 	
 	function getIndex(row, col) {

@@ -87,6 +87,9 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 				var tile = newTile(row, col, tileChar);
 				setTimeout(function() {
 					updatePositionInBoard(tile);
+					setTimeout(function() {
+						E.trigger('tileDrop');
+					}, 100);
 				}, 200 + mTime - ((row + (GameBoard.options.columns - col)) * FILL_DELAY));
 				row++;
 			}
@@ -133,6 +136,10 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 				updatePositionInBoard(t);
 			}
 		}, 200);
+		
+		setTimeout(function() {
+			E.trigger('tileDrop');
+		}, 300);
 		
 		return 400;
 	}
