@@ -1,9 +1,8 @@
 define(function() {
 	
-	var musiclements = [];
-	var effectslements = [];
+	var musicElements = [];
+	var effectsElements = [];
 	var musicVolume = 1;
-	var effectsVolume = 1;
 	
 	var HtmlAudioProvider = {
 			getInstance: function() {
@@ -49,7 +48,6 @@ define(function() {
 			},
 			
 			setEffectsVolume: function(v) {
-				effectsVolume = v;
 				effectsElements.forEach(function(a) {
 					a.data.volume = v;
 				});
