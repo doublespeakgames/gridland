@@ -1,8 +1,9 @@
-define(function() {
+define(['jquery'], function($) {
 	
 	var gameOptions = {
 		showCosts: false,
-		musicVolume: 1
+		musicVolume: 1,
+		effectsVolume: 1
 	};
 	
 	var GameOptions = {
@@ -22,7 +23,7 @@ define(function() {
 			try {
 				var savedOptions = JSON.parse(localStorage.gameOptions);
 				if(savedOptions) {
-					gameOptions = savedOptions;
+					$.extend(gameOptions, savedOptions);
 				}
 			} catch(e) {
 				// Nothing

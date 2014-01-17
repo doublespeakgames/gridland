@@ -73,10 +73,6 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		provider.crossFade(sounds[outSound], sounds[inSound], time);
 	}
 	
-	function setMusicVolume(v) {
-		GameAudio.setMusicVolume(v);
-	}
-	
 	function startMusic() {
 		if(!playingMusic) {
 			playingMusic = true;
@@ -120,14 +116,13 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			}
 			
 			E.bind('tileDrop', tileSound);
-			E.bind('setMusicVolume', setMusicVolume);
+			E.bind('setMusicVolume', GameAudio.setMusicVolume);
+			E.bind('setEffectsVolume', GameAudio.setEffectsVolume);
 			E.bind('phaseChange', changeMusic);
 			E.bind('tilesCleared', matchSound);
-			
-			var musicVolume = require('app/gameoptions').get('musicVolume');
-			if(musicVolume != null) {
-				GameAudio.setMusicVolume(musicVolume);
-			}
+
+			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
+			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));
 		},
 		
 		isReady: function() {
@@ -137,6 +132,11 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		setMusicVolume: function(volume) {
 			require('app/gameoptions').set('musicVolume', volume);
 			provider.setMusicVolume(volume);
+		},
+		
+		setEffectsVolume: function(volume) {
+			require('app/gameoptions').set('effectsVolume', volume);
+			provider.setEffectsVolume(volume);
 		},
 		
 		play: function(sound, silent) {

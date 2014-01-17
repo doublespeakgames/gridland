@@ -1,7 +1,9 @@
 define(function() {
 	
-	var audioElements = [];
+	var musiclements = [];
+	var effectslements = [];
 	var musicVolume = 1;
+	var effectsVolume = 1;
 	
 	var HtmlAudioProvider = {
 			getInstance: function() {
@@ -10,9 +12,11 @@ define(function() {
 			
 			load: function(sound, format, callback) {
 				sound.data = new Audio("audio/" + sound.file + "." + format);
-				audioElements.push(sound);
                 if(sound.loop) {
                 	sound.data.loop = true;
+                	musicElements.push(sound);
+                } else {
+                	effectsElements.push(sound);
                 }
                 sound.data.addEventListener('canplaythrough', callback);
 			},
@@ -35,12 +39,19 @@ define(function() {
 			
 			setMusicVolume: function(v) {
 				musicVolume = v;
-				audioElements.forEach(function(a) {
+				musicElements.forEach(function(a) {
 					if(a.data.fadedOut) {
 						a.data.volume = 0;
 					} else {
 						a.data.volume = v;
 					}
+				});
+			},
+			
+			setEffectsVolume: function(v) {
+				effectsVolume = v;
+				effectsElements.forEach(function(a) {
+					a.data.volume = v;
 				});
 			},
 			

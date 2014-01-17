@@ -1903,24 +1903,37 @@ body.night {
 }
 
 /** Volume sliders **/
+.volumeControls {
+	position: relative;
+	width: 80%;
+	top: 20%;
+	left: 10%;
+}
 .volumeSlider {
 	position: relative;
-	top: 25%;
-	left: 5%;
-	width: 30%;
-	height: 42px;
+	width: 100%;
+	height: 64px;
 	padding-left: 42px;
 	background: url(../img/music.png) no-repeat;
+	margin-bottom: 40px;
 }
 
 .volumeSlider .nightSprite {
-	width: 42px;
-	height: 42px;
+	width: 35px;
+	height: 100%;
 	position: absolute;
 	top: 0px;
 	left: 0px;
 	background: url(../img/music.png) no-repeat;
-	background-position: 0 -42px;
+	background-position: 0 -64px;
+}
+
+.effectsVolume.volumeSlider {
+	background-position: 0 -128px;
+}
+
+.effectsVolume.volumeSlider .nightSprite {
+	background-position: 0 -192px;
 }
 
 .sliderTrack {
@@ -1936,13 +1949,13 @@ body.night {
 .sliderHandle {
 	position: absolute;
 	top: 0px;
-	height: 38px;
-	width: 20px;
+	height: 60px;
+	width: 40px;
 	border: 2px solid;
 	border-color: black;
 	background-color: white;
 	cursor: pointer;
-	margin-left: -12px;
+	margin-left: -30px;
 	transition: border-color 700ms linear, background-color 700ms linear;
 	-webkit-transition: border-color 700ms linear, background-color 700ms linear;
 	-moz-transition: border-color 700ms linear, background-color 700ms linear;

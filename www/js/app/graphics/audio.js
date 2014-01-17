@@ -5,20 +5,35 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 	
 	var _el = null;
 	var musicHandle = null;
+	var effectsHandle = null;
 	function el() {
 		if(_el == null) {
-			musicHandle = G.make('sliderHandle');
-			musicHandle.data('controls', 'music');
-			_el = G.make('musicVolume volumeSlider').append(G.make('nightSprite'))
-				.append(G.make('sliderTrack litBorder')).append(musicHandle);
+			_el = G.make('volumeControls');
+			var musicSlider = makeSlider('music');
+			var effectsSlider = makeSlider('effects');
+			musicHandle = musicSlider.handle;
+			effectsHandle = effectsSlider.handle;
+			_el.append(musicSlider).append(effectsSlider);
 			G.addToMenu(_el);
 		}
 		return _el;
 	}
 	
+	function makeSlider(type) {
+		var slider = G.make(type + 'Volume volumeSlider').append(G.make('nightSprite'))
+			.append(G.make('sliderTrack litBorder'));
+		slider.handle = G.make('sliderHandle').data('controls', type).appendTo(slider);
+		return slider;
+	}
+	
 	function setMusicVolume(v) {
 		var totalWidth = musicHandle.parent().find('.sliderTrack').width();
 		musicHandle.css('transform', 'translate3d(' + (v * totalWidth) + 'px, 0px, 0px)');
+	}
+	
+	function setEffectsVolume(v) {
+		var totalWidth = effectsHandle.parent().find('.sliderTrack').width();
+		effectsHandle.css('transform', 'translate3d(' + (v * totalWidth) + 'px, 0px, 0px)');
 	}
 	
 	var dragTarget = null;
@@ -41,9 +56,13 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 				dragTarget._cachedOffsetWidth = dragTarget.parent().find('.sliderTrack').width();
 			}
 			var volume = parseFloat(xPos.exec(dragTarget.css('transform'))[1]) / dragTarget._cachedOffsetWidth;
-			
-			if(dragTarget.data('controls') === 'music') {
+
+			switch(dragTarget.data('controls')) {
+			case 'music':
 				E.trigger('setMusicVolume', [volume]);
+				break;
+			case 'effects':
+				E.trigger('setEffectsVolume', [volume]);
 			}
 		}
 		dragTarget = null;
@@ -77,9 +96,10 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 			}
 			_el = null;
 			el();
-			var musicVolume = require('app/gameoptions').get('musicVolume');
-			setMusicVolume(musicVolume != null ? musicVolume : 1);
+			setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			musicHandle.off().on('mousedown touchstart', handleTouchStart);
+			setEffectsVolume(require('app/gameoptions').get('effectsVolume'));
+			effectsHandle.off().on('mousedown touchstart', handleTouchStart);
 			el().off().on('mousemove touchmove', handleTouchMove);
 			G.get('.menuBar').off().on('mouseup touchend', handleTouchEnd);
 		}

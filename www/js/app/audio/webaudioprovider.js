@@ -2,6 +2,7 @@ define(function() {
 	
 	var context = null;
 	var musicVolume = null;
+	var effectsVolume = null;
 	
 	function createSoundSource(sound) {
 		var source = context.createBufferSource();
@@ -13,7 +14,7 @@ define(function() {
 			sound.volume.connect(musicVolume);
 			source.connect(sound.volume);
 		} else {
-			source.connect(musicVolume);
+			source.connect(effectsVolume);
 		}
 		return source;
 	}
@@ -30,6 +31,8 @@ define(function() {
 			
 			musicVolume = context.createGain();
 			musicVolume.connect(context.destination);
+			effectsVolume = context.createGain();
+			effectsVolume.connect(context.destination);
 			return WebAudioProvider;
 		},
 		
@@ -65,6 +68,10 @@ define(function() {
 		
 		setMusicVolume: function(v) {
 			musicVolume.gain.value = v;
+		},
+		
+		setEffectsVolume: function(v) {
+			effectsVolume.gain.value = v;
 		},
 		
 		crossFade: function(outSound, inSound, time) {
