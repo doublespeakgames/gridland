@@ -1908,6 +1908,7 @@ body.night {
 	width: 80%;
 	top: 20%;
 	left: 10%;
+	margin-left: -21px;
 }
 .volumeSlider {
 	position: relative;
