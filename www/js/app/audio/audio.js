@@ -60,7 +60,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	}
 	
 	function getProvider() {
-		var p = null;// WebAudioProvider.getInstance();
+		var p = WebAudioProvider.getInstance();
 		if(p == null) {
 			p = HtmlAudioProvider.getInstance();
 		}
