@@ -55,7 +55,7 @@ define(function() {
 		},
 		
 		play: function(sound, silent) {
-			if(sound.data) {
+			if(sound.buffer) {
 				var source = sound.currentSource = createSoundSource(sound);
 				if(silent && sound.volume != null) {
 					sound.volume.gain.value = 0;
@@ -65,7 +65,7 @@ define(function() {
 		},
 		
 		stop: function(sound) {
-			if(sound.currentSource) {
+			if(sound.buffer) {
 				sound.currentSource.stop(0);
 			}
 		},
@@ -83,7 +83,7 @@ define(function() {
 		},
 		
 		crossFade: function(outSound, inSound, time) {
-			if(outSound.data && inSound.data) {
+			if(outSound.buffer && inSound.buffer) {
 				(function fade() {
 					outSound.volume.gain.value -= 0.1;
 					outSound.volume.gain.value = outSound.volume.gain.value < 0 ? 0 : outSound.volume.gain.value;
