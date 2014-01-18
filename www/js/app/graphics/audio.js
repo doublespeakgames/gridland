@@ -1,6 +1,7 @@
 define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 	
-	var xPos = /matrix\(1, 0, 0, 1, ([0-9]+)/;
+	var xPos3d = /matrix3d\(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, ([0-9\.]+)/;
+	var xPos = /matrix\(1, 0, 0, 1, ([0-9\.]+)/;
 	var G = null;
 	
 	var _el = null;
@@ -26,14 +27,10 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 		return slider;
 	}
 	
-	function setMusicVolume(v) {
-		var totalWidth = musicHandle.parent().find('.sliderTrack').width();
-		musicHandle.css('transform', 'translate3d(' + (v * totalWidth) + 'px, 0px, 0px)');
-	}
-	
-	function setEffectsVolume(v) {
-		var totalWidth = effectsHandle.parent().find('.sliderTrack').width();
-		effectsHandle.css('transform', 'translate3d(' + (v * totalWidth) + 'px, 0px, 0px)');
+	function setVolume(handle, v) {
+		var totalWidth = handle.parent().find('.sliderTrack').width();
+		handle.css('transform', 'translate3d(' + (v * totalWidth) + 'px, 0px, 0px)');
+		handle.data('volume', v);
 	}
 	
 	var dragTarget = null;
@@ -55,7 +52,13 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 				dragTarget._cachedOffsetX = dragTarget.parent().find('.sliderTrack').offset().left;
 				dragTarget._cachedOffsetWidth = dragTarget.parent().find('.sliderTrack').width();
 			}
-			var volume = parseFloat(xPos.exec(dragTarget.css('transform'))[1]) / dragTarget._cachedOffsetWidth;
+			var pos = xPos3d.exec(dragTarget.css('transform'));
+			if(pos == null) {
+				pos = xPos.exec(dragTarget.css('transform'));
+			}
+			if(pos != null) {
+				var volume = parseFloat(pos[1]) / dragTarget._cachedOffsetWidth;
+			}
 
 			switch(dragTarget.data('controls')) {
 			case 'music':
@@ -96,9 +99,9 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 			}
 			_el = null;
 			el();
-			setMusicVolume(require('app/gameoptions').get('musicVolume'));
+			setVolume(musicHandle, require('app/gameoptions').get('musicVolume'));
 			musicHandle.off().on('mousedown touchstart', handleTouchStart);
-			setEffectsVolume(require('app/gameoptions').get('effectsVolume'));
+			setVolume(effectsHandle, require('app/gameoptions').get('effectsVolume'));
 			effectsHandle.off().on('mousedown touchstart', handleTouchStart);
 			el().off().on('mousemove touchmove', handleTouchMove);
 			G.get('.menuBar').off().on('mouseup touchend', handleTouchEnd);

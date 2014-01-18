@@ -91,7 +91,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			ResourceGraphics.init();
 			LootGraphics.init();
 			MagicGraphics.init();
-			AudioGraphics.init();
+			if(!require('app/engine').isSilent()) {
+				AudioGraphics.init();
+			}
 		},
 		
 		isReady: function() {

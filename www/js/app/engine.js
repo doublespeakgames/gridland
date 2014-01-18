@@ -10,6 +10,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 	var dragStart = {x: 0, y: 0};
 	var graphicsCallback = null;
 	var loaded = false;
+	var silent = true;
 	
 	function initializeModules(modules, callback) {
 		// init all modules passed to me
@@ -120,25 +121,30 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			
 			$('#playButton').off().on("click touchstart", function() {
 				if(loaded) {
-					GameAudio.play('Click');
+					if(!silent) {
+						GameAudio.play('Click');
+					}
 					startGame();
 					$('#loadingScreen').addClass('hidden');
 				}
 			});
 			
+			var modules = [EventManager,
+							Analytics,
+							GameBoard,
+							Graphics,
+							World,
+							Loot,
+							Magic];
+			if(window.location.search.indexOf('silent') < 0) {
+				modules.push(GameAudio);
+				silent = false;
+			}
+			
 			// Start the game
 			GameState.load();
 			GameOptions.load();
-			initializeModules([
-				EventManager,
-				Analytics,
-				GameBoard,
-				Graphics,
-				World,
-				Loot,
-				Magic,
-				GameAudio
-			], function() {
+			initializeModules(modules, function() {
 				if(loaded) {
 					startGame();
 				} else {
@@ -230,6 +236,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		
 		isNight: function() {
 			return World.isNight();
+		},
+		
+		isSilent: function() {
+			return silent;
 		},
 		
 		_debug: function(text) {

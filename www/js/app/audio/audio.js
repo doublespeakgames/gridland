@@ -31,10 +31,6 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		Match3: {
 			file: 'match3'
 		}
-//		,
-//		Match4: {
-//			file: 'match4'
-//		}
 	};
 	
 	function loadSound(sound) {
@@ -44,25 +40,27 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		}
 	}
 	
-	function loadCallback() {
+	function loadCallback(file, failed) {
+		if(failed) {
+			console.log("Loading sound " + file + " failed.");
+		}
 		toLoad--;
 	}
 	
 	function chooseFormat() {
 		var a = new Audio();
-		if (!!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''))) {
-			return "mp3";
-		}
 		if (!!(a.canPlayType && a.canPlayType('audio/ogg;').replace(/no/, ''))) {
 			return "ogg";
 		}
-		
+		if (!!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''))) {
+			return "mp3";
+		}
 		// Shouldn't need more formats
 		return null;
 	}
 	
 	function getProvider() {
-		var p = WebAudioProvider.getInstance();
+		var p = null;// WebAudioProvider.getInstance();
 		if(p == null) {
 			p = HtmlAudioProvider.getInstance();
 		}
@@ -140,11 +138,17 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		
 		play: function(sound, silent) {
-			provider.play(sounds[sound], silent);
+			var s = sounds[sound];
+			if(s) {
+				provider.play(s, silent);
+			}
 		},
 		
 		stop: function(sound) {
-			provider.stop(sounds[sound]);
+			var s = sounds[sound];
+			if(s) {
+				provider.stop(sounds[sound]);
+			}
 		}
 	};
 	

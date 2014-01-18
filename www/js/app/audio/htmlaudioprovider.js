@@ -3,6 +3,7 @@ define(function() {
 	var musicElements = [];
 	var effectsElements = [];
 	var musicVolume = 1;
+	var timeout = 30000;
 	
 	var HtmlAudioProvider = {
 			getInstance: function() {
@@ -17,23 +18,38 @@ define(function() {
                 } else {
                 	effectsElements.push(sound);
                 }
-                sound.data.addEventListener('canplaythrough', callback);
+                var failed = setTimeout(function() {
+                	sound.data = null;
+                	callback(sound.file, true);
+                }, timeout);
+                sound.data.addEventListener('canplaythrough', function() {
+                	clearTimeout(failed);
+                	callback(sound.file);
+                });
 			},
 			
 			play: function(sound, silent) {
-				if(silent) {
-					sound.data.fadedOut = true;
-					sound.data.volume = 0;
+				if(sound.data) {
+					if(silent) {
+						sound.data.fadedOut = true;
+						sound.data.volume = 0;
+					}
+					
+					if(sound.loop) {
+						sound.data.play();
+					} else {
+						var s = sound.data.cloneNode();
+						s.volume = sound.data.volume;
+						s.fadedOut = sound.data.fadedOut;
+						s.play();
+					}
 				}
-//				var s = sound.data.cloneNode();
-//				s.volume = sound.data.volume;
-//				s.fadedOut = sound.data.fadedOut;
-//				sound.data = s;
-				sound.data.play();
 			},
 			
 			stop: function(sound) {
-				sound.data.pause();
+				if(sound.data) {
+					sound.data.pause();
+				}
 			},
 			
 			setMusicVolume: function(v) {

@@ -45,19 +45,23 @@ define(function() {
 				context.decodeAudioData(request.response, function(buffer) {
 					sound.buffer = buffer;
 					if(typeof callback === 'function') {
-						callback(sound);
+						callback(sound.file);
 					}
+				}, function() {
+					callback(sound.file, true);
 				});
 			};
 			request.send();
 		},
 		
 		play: function(sound, silent) {
-			var source = sound.currentSource = createSoundSource(sound);
-			if(silent && sound.volume != null) {
-				sound.volume.gain.value = 0;
+			if(sound.data) {
+				var source = sound.currentSource = createSoundSource(sound);
+				if(silent && sound.volume != null) {
+					sound.volume.gain.value = 0;
+				}
+				source.start(0);
 			}
-			source.start(0);
 		},
 		
 		stop: function(sound) {
@@ -67,23 +71,29 @@ define(function() {
 		},
 		
 		setMusicVolume: function(v) {
-			musicVolume.gain.value = v;
+			if(musicVolume) {
+				musicVolume.gain.value = v;
+			}
 		},
 		
 		setEffectsVolume: function(v) {
-			effectsVolume.gain.value = v;
+			if(effectsVolume) {
+				effectsVolume.gain.value = v;
+			}
 		},
 		
 		crossFade: function(outSound, inSound, time) {
-			(function fade() {
-				outSound.volume.gain.value -= 0.1;
-				outSound.volume.gain.value = outSound.volume.gain.value < 0 ? 0 : outSound.volume.gain.value;
-				inSound.volume.gain.value += 0.1;
-				inSound.volume.gain.value = inSound.volume.gain.value > 1 ? 1 : inSound.volume.gain.value;
-				if(outSound.volume.gain.value > 0) {
-					setTimeout(fade, time / 10);
-				}
-			})();
+			if(outSound.data && inSound.data) {
+				(function fade() {
+					outSound.volume.gain.value -= 0.1;
+					outSound.volume.gain.value = outSound.volume.gain.value < 0 ? 0 : outSound.volume.gain.value;
+					inSound.volume.gain.value += 0.1;
+					inSound.volume.gain.value = inSound.volume.gain.value > 1 ? 1 : inSound.volume.gain.value;
+					if(outSound.volume.gain.value > 0) {
+						setTimeout(fade, time / 10);
+					}
+				})();
+			}
 		}
 	};
 	return WebAudioProvider;
