@@ -1,5 +1,11 @@
+html {
+	height: 100%;
+}
+
 body {
-	margin: 0px;
+	height: 100%;
+	border-top: 1px solid black;
+	margin: -1px 0 0 0;
 	padding: 0px;
 	background-color: white;
 	transition: background-color 700ms linear;

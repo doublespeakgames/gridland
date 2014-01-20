@@ -7,7 +7,7 @@ define(function() {
 	function createSoundSource(sound) {
 		var source = context.createBufferSource();
 		source.buffer = sound.buffer;
-		if(sound.loop) {
+		if(sound.music) {
 			source.loop = true;
 			sound.volume = context.createGain();
 			sound.volume.gain.value = 1;
@@ -42,10 +42,19 @@ define(function() {
 			request.responseType = "arraybuffer";
 			
 			request.onload = function() {
+				if(sound.music && !sound.required) {
+					sound.deferred = true;
+					callback(sound.file);
+				}
 				context.decodeAudioData(request.response, function(buffer) {
 					sound.buffer = buffer;
-					if(typeof callback === 'function') {
+					if(!sound.deferred) {
 						callback(sound.file);
+					} else if(sound.deferred) {
+						sound.deferred = false;
+						if(sound.playRequested) {
+							WebAudioProvider.play(sound);
+						}
 					}
 				}, function() {
 					callback(sound.file, true);
@@ -54,13 +63,15 @@ define(function() {
 			request.send();
 		},
 		
-		play: function(sound, silent) {
+		play: function(sound) {
 			if(sound.buffer) {
 				var source = sound.currentSource = createSoundSource(sound);
-				if(silent && sound.volume != null) {
+				if(sound.silentIf && sound.silentIf() && sound.volume != null) {
 					sound.volume.gain.value = 0;
 				}
 				source.start(0);
+			} else if(sound.deferred) {
+				sound.playRequested = true;
 			}
 		},
 		

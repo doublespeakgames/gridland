@@ -10,11 +10,18 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	var sounds = {
 		DayMusic: {
 			file: 'theme-day',
-			loop: true
+			music: true,
+			silentIf: function() {
+				return require('app/engine').isNight();
+			},
+			required: true
 		},
 		NightMusic: {
 			file: 'theme-night',
-			loop: true
+			music: true,
+			silentIf: function() {
+				return !require('app/engine').isNight();
+			}
 		},
 		Click: {
 			file: 'click'

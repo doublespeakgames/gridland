@@ -12,7 +12,7 @@ define(function() {
 			
 			load: function(sound, format, callback) {
 				sound.data = new Audio("audio/" + sound.file + "." + format);
-                if(sound.loop) {
+                if(sound.music) {
                 	sound.data.loop = true;
                 	musicElements.push(sound);
                 } else {
@@ -35,7 +35,7 @@ define(function() {
 						sound.data.volume = 0;
 					}
 					
-					if(sound.loop) {
+					if(sound.music) {
 						sound.data.play();
 					} else {
 						var s = sound.data.cloneNode();
