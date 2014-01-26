@@ -43,6 +43,38 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		}, time);
 	}
 	
+	function showCosts(building) {
+		if(!Options.get('showCosts') && !costsOn) {
+			var pile;
+			if(building) {
+				if(building.el) building = building.el();
+				pile = building.find('.blockPile');
+			} else {
+				pile = $('.blockPile');
+			}
+			pile.addClass('showCosts');
+			setTimeout(function() {
+				pile.addClass('fadeCosts');
+			}, 10);
+			setTimeout(function() {
+				pile.removeClass('showCosts fadeCosts');
+			}, 510);
+		}
+	}
+	
+	function toggleCosts(visible) {
+		if(visible) {
+			costsOn = true;
+			$('.gameBoard').addClass('showCosts');
+		} else {
+			costsOn = false;
+			$('.gameBoard').addClass('fadeCosts');
+			setTimeout(function() {
+				$('.gameBoard').removeClass('showCosts fadeCosts');
+			}, 500);
+		}
+	}
+	
 	var Graphics = {
 		init: function() {
 			$('body').removeClass('night');
@@ -55,36 +87,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			EventManager.bind('newEntity', this.addToWorld);
 			EventManager.bind('healthChanged', this.updateHealthBar);
 			EventManager.bind('dayBreak', this.handleDayBreak);
-			EventManager.bind('showCosts', function(building) {
-				if(!Options.get('showCosts') && !costsOn) {
-					var pile;
-					if(building) {
-						if(building.el) building = building.el();
-						pile = building.find('.blockPile');
-					} else {
-						pile = $('.blockPile');
-					}
-					pile.addClass('showCosts');
-					setTimeout(function() {
-						pile.addClass('fadeCosts');
-					}, 10);
-					setTimeout(function() {
-						pile.removeClass('showCosts fadeCosts');
-					}, 510);
-				}
-			});
-			EventManager.bind('toggleCosts', function(visible) {
-				if(visible) {
-					costsOn = true;
-					$('.gameBoard').addClass('showCosts');
-				} else {
-					costsOn = false;
-					$('.gameBoard').addClass('fadeCosts');
-					setTimeout(function() {
-						$('.gameBoard').removeClass('showCosts fadeCosts');
-					}, 500);
-				}
-			});
+			EventManager.bind('blockDown', showCosts);
+			EventManager.bind('toggleCosts', toggleCosts);
 			
 			BoardGraphics.init();
 			WorldGraphics.init();

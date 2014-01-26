@@ -2,6 +2,7 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 	
 	var RaiseBuilding = function(options) {
 		this.building = options.building;
+		this.hammering = false;
 	};
 	RaiseBuilding.prototype = new Action();
 	RaiseBuilding.constructor = RaiseBuilding;
@@ -14,10 +15,11 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 				Graphics = require('app/graphics/graphics'),
 				Content = require('app/gamecontent'),
 				E = require('app/eventmanager');
+			_action.hammering = true;
 			Graphics.raiseBuilding(_action.building, function() {
 				_action.building.built = true;
 				E.trigger('buildingComplete', [_action.building]);
-				dude.makeIdle();;
+				dude.makeIdle();
 				dude.action = null;
 				var cb = Content.BuildingCallbacks[_action.building.options.type.className];
 				if(cb) {
@@ -30,9 +32,16 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 			});
 		});
 	};
+	
+	RaiseBuilding.prototype.doFrameAction = function(frame) {
+		if(this.hammering && frame == 3) {
+			require('app/eventmanager').trigger('hammer');
+		}
+	};
 
 	RaiseBuilding.prototype.terminateAction = function(dude) {
 		var _action = this;
+		
 		require(['app/graphics/graphics'], function(Graphics) {
 			Graphics.stop(dude);
 			dude.makeIdle();

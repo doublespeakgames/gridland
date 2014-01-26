@@ -37,6 +37,21 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		Match3: {
 			file: 'match3'
+		},
+		Match4: {
+			file: 'match4'
+		},
+		Match5: {
+			file: 'match5'
+		},
+		Hammer: {
+			file: 'hammer'
+		},
+		BlockUp: {
+			file: 'blockup'
+		},
+		BlockDown: {
+			file: 'blockdown'
 		}
 	};
 	
@@ -94,13 +109,9 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		}
 	}
 	
-	function tileSound() {
-		GameAudio.play('TileClick');
-	}
-	
 	function matchSound(r, s, restart) {
 		matchNum = restart ? 1 : matchNum + 1;
-		matchNum = matchNum > 3 ? 3 : matchNum;
+		matchNum = matchNum > 5 ? 5 : matchNum;
 		GameAudio.play('Match' + matchNum);
 	}
 	
@@ -120,11 +131,14 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 				crossFade('NightMusic', 'DayMusic', 700);
 			}
 			
-			E.bind('tileDrop', tileSound);
+			E.bind('tileDrop', GameAudio.play.bind(this, 'TileClick'));
 			E.bind('setMusicVolume', GameAudio.setMusicVolume);
 			E.bind('setEffectsVolume', GameAudio.setEffectsVolume);
 			E.bind('phaseChange', changeMusic);
 			E.bind('tilesCleared', matchSound);
+			E.bind('hammer', GameAudio.play.bind(this, 'Hammer'));
+			E.bind('blockDown', GameAudio.play.bind(this, 'BlockDown'));
+			E.bind('blockUp', GameAudio.play.bind(this, 'BlockUp'));
 
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));
