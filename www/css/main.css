@@ -1991,7 +1991,8 @@ body.night {
 .dragon .neck,
 .dragon .head {
 	position: absolute;
-	transition: transform 500ms ease-out;
+	transition-property: transform;
+	transition-timing-function: ease-out;
 }
 
 .dragon .neck {

@@ -26,7 +26,6 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		dragon: function() {
 			var d = spawnMonster("dragon", null, 'right');
 			d.el().css('left', '100px');
-			d.setPosture('idle');
 			return d;
 		},
 			

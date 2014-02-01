@@ -1,7 +1,10 @@
 define(['app/entity/monster/monster', 'app/action/actionfactory'], 
 		function(Monster, ActionFactory) {
 	
+	var postureSpeedStylesheet = null;
+	
 	var posture = {
+		stretch: [[0, -10], [0, -10], [0, -10], [0, -40]],
 		idle: [[80, -10], [15, -10], [-50, -10], [-50, -40]]
 	};
 	
@@ -13,6 +16,13 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		this.options = $.extend({}, this.options, {}, options);
 		this.hp(this.maxHealth());
 		this.xp = 35;
+		
+		if(!postureSpeedStylesheet) {
+			var style = document.createElement('style');
+			style.appendChild(document.createTextNode("")); // Stupid Webkit
+			document.head.appendChild(style);
+			postureSpeedStylesheet = style.sheet;
+		}
 	};
 	Dragon.prototype = new Monster({
 		monsterClass: 'dragon',
@@ -46,9 +56,23 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		return 0; // TODO
 	};
 	
-	Dragon.prototype.setPosture = function(p) {
+	Dragon.prototype.setPosture = function(p, speed) {
 		var pos = posture[p];
 		if(pos) {
+			if(postureSpeedStylesheet.cssRules.length > 0) {
+				postureSpeedStylesheet.deleteRule(0);
+			}
+			if(postureSpeedStylesheet.addRule) {
+				postureSpeedStylesheet.addRule(
+					'.dragon .neck, .dragon .head', 
+					'transition-duration: ' + speed + 'ms', 
+				0);
+			} else {
+				postureSpeedStylesheet.insertRule(
+					'.dragon .neck, .dragon .head {' +
+					'transition-duration: ' + speed + 'ms; }', 
+				0);
+			}
 			this._segments.forEach(function(e, i) {
 				setSegmentPosture(e, pos[i]);
 			});
