@@ -20,7 +20,16 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	var prioritizedBuilding = null;
 	var recorded = null;
 	
-	var World = {		
+	var World = {
+			
+		// TEMPORARY
+		dragon: function() {
+			var d = spawnMonster("dragon", null, 'right');
+			d.el().css('left', '100px');
+			d.setPosture('idle');
+			return d;
+		},
+			
 		options: {
 			dayMoves: 20,
 			nightMoves: 15
@@ -334,6 +343,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		var monster = MonsterFactory.getMonster(monsterType, {tiles: tiles});
 		Graphics.addMonster(monster, side);
 		stuff.push(monster);
+		return monster;
 	}
 	
 	function updateGem() {
