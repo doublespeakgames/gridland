@@ -1,5 +1,5 @@
-define(['app/entity/entity', 'app/eventmanager', 'app/action/actionfactory'], 
-	function(Entity, EventManager, ActionFactory) {
+define(['app/entity/entity', 'app/eventmanager'], 
+	function(Entity, EventManager) {
 	
 	var MOVE_ANIMS = {
 		idle: 0,
@@ -140,7 +140,7 @@ define(['app/entity/entity', 'app/eventmanager', 'app/action/actionfactory'],
 		if(this.action != null) {
 			this.action.terminateAction(this);
 		}
-		this.action = ActionFactory.getAction("Die");
+		this.action = require('app/action/actionfactory').getAction("Die");
 		this.action.doAction(this);
 	};
 

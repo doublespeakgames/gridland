@@ -1,4 +1,4 @@
-define(['app/action/action'], function(Action) {
+define(['app/action/action', 'app/entity/projectile'], function(Action, Projectile) {
 	
 	var Shoot = function(options) {
 		if(options) {
@@ -28,8 +28,13 @@ define(['app/action/action'], function(Action) {
 			var start = this._entity.p();
 			var end = this.target.p();
 			var _action = this;
-			this.arrow = Graphics.fireArrow(this._entity.options.arrowClass, 
-					this._entity.options.arrowSpeed, start, end, function() {
+			var projectile = new Projectile({
+				projectileClass: this._entity.options.arrowClass,
+				speed: this._entity.options.arrowSpeed,
+				fireFrom: start,
+				fireTo: end
+			});
+			Graphics.fireArrow(projectile, function() {
 				// Check for hit, deal damage
 				if(Math.abs(end - _action.target.p()) <= 5) {
 					_action.target.takeDamage(_action._entity.getDamage());

@@ -1120,20 +1120,32 @@ body.night {
 	-o-transition: opacity 300ms linear;
 }
 
-.arrow {
+.projectile {
 	position: absolute;
-	height: 1px;
+	height: 100%;
 	width: 8px;
-	background-color: white;
 	bottom: 20px;
-	transition: all 500ms linear, left 500ms linear;
-	-webkit-transition: all 500ms linear, left 500ms linear;
-	-moz-transition: all 500ms linear, left 500ms linear;
-	-ms-transition: all 500ms linear, left 500ms linear;
-	-o-transition: all 500ms linear, left 500ms linear;
+	transition: transform 500ms linear;
+	-webkit-transition: transform 500ms linear;
+	-moz-transition: transform 500ms linear;
+	-ms-transition: transform 500ms linear;
+	-o-transition: transform 500ms linear;
 }
 
-.arrow.left {
+.projectileInner {
+	position: absolute;
+	bottom: 0px;
+	width: 8px;
+	height: 1px;
+	background-color: white;
+	transition: transform 500ms linear;
+	-webkit-transition: transform 500ms linear;
+	-moz-transition: transform 500ms linear;
+	-ms-transition: transform 500ms linear;
+	-o-transition: transform 500ms linear;
+}
+
+.left .projectileInner {
 	transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
 	-moz-transform: rotate(45deg);
@@ -1141,7 +1153,7 @@ body.night {
 	-o-transform: rotate(45deg);
 }
 
-.arrow.right {
+.right .projectileInner {
 	transform: rotate(-45deg);
 	-webkit-transform: rotate(-45deg);
 	-moz-transform: rotate(-45deg);
@@ -1149,7 +1161,7 @@ body.night {
 	-o-transform: rotate(-45deg);
 }
 
-.arrow.top {
+.top .projectileInner {
 	transform: translate3d(0, -75px, 0) rotate(0deg);
 	-webkit-transform: translate3d(0, -75px, 0) rotate(0deg);
 	-moz-transform: translate3d(0, -75px, 0) rotate(0deg);
@@ -1162,7 +1174,7 @@ body.night {
 	-o-transition-timing-function: ease-out, linear;
 }
 
-.arrow.bottom {
+.bottom .projectileInner {
 	transition-timing-function: ease-in, linear;
 	-webkit-transition-timing-function: ease-in, linear;
 	-moz-transition-timing-function: ease-in, linear;
@@ -1170,7 +1182,7 @@ body.night {
 	-o-transition-timing-function: ease-in, linear;
 }
 
-.arrow.bottom.left {
+.bottom.left .projectileInner {
 	transform: translate3d(0, 0px, 0) rotate(-45deg);
 	-webkit-transform: translate3d(0, 0px, 0) rotate(-45deg);
 	-moz-transform: translate3d(0, 0px, 0) rotate(-45deg);
@@ -1178,7 +1190,7 @@ body.night {
 	-o-transform: translate3d(0, 0px, 0) rotate(-45deg);
 }
 
-.arrow.bottom.right {
+.bottom.right .projectileInner {
 	transform: translate3d(0, 0px, 0) rotate(45deg);
 	-webkit-transform: translate3d(0, 0px, 0) rotate(45deg);
 	-moz-transform: translate3d(0, 0px, 0) rotate(45deg);
@@ -1186,13 +1198,17 @@ body.night {
 	-o-transform: translate3d(0, 0px, 0) rotate(45deg);
 }
 
-.arrow.fireball {
-	background: url(../img/fireball.png) transparent;
-	height: 7px;
+.fireball {
 	width: 16px;
 }
 
-.arrow.fireball.right {
+.fireball .projectileInner {
+	background: url(../img/fireball.png) transparent;
+	width: 16px;
+	height: 7px;
+}
+
+.fireball.right .projectileInner {
 	background-position: -16px;
 }
 

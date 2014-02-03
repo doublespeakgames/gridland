@@ -454,22 +454,25 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			}, 1500);
 		},
 		
-		fireArrow: function(arrowClass, speed, start, end, callback) {
+		fireArrow: function(arrowEntity, callback) {
+			var start = arrowEntity.options.fireFrom,
+				end = arrowEntity.options.fireTo;
 			var dist = end - start;
 			var ARROW_TIME = 1000;
-			var arrow = $('<div>').addClass(arrowClass).addClass(dist > 0 ? 'right' : 'left');
-			arrow.attr('style', 'left:' + start + 'px;');
+			var arrow = arrowEntity.el();
+			arrow.addClass(dist > 0 ? 'right' : 'left');
+			arrow.attr('style', 'transform: translateX(' + start + 'px);');
 			$('.world').append(arrow);
 			
 			arrow.css('left'); // Force a redraw before animation
 			
 			// Move arrow to top of arc
-			arrow.attr('style', 'left:' + (start + dist/2) + 'px;');
+			arrow.attr('style', 'transform: translateX(' + (start + dist/2) + 'px);');
 			arrow.addClass('top');
 			
 			// Move arrow to end of arc
 			setTimeout(function() {
-				arrow.attr('style', 'left:' + (start + dist) + 'px;');
+				arrow.attr('style', 'transform: translateX(' + (start + dist) + 'px);');
 				arrow.removeClass('top').addClass('bottom');
 				setTimeout(function() {
 					// Remove arrow
@@ -480,7 +483,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				}, ARROW_TIME / 2);
 			}, ARROW_TIME / 2);
 			
-			return arrow;
+			return arrowEntity;
 		},
 		
 		levelUp: function(dude) {
