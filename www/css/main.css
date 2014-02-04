@@ -2041,4 +2041,13 @@ body.night {
 	transform: rotate(0deg) translateX(-10px);
 }
 
+/** TEMPORARY **/
+.dragonTest {
+	position: absolute;
+	height: 10px;
+	width: 10px;
+	border-radius: 50%;
+	background: red;
+}
+
 /** END DRAGON **/

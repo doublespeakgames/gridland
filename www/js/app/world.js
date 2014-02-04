@@ -25,7 +25,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		// TEMPORARY
 		dragon: function() {
 			var d = spawnMonster("dragon", null, 'right');
-			d.el().css('left', '100px');
+			d.p(Graphics.worldWidth() - 75);
+			Graphics.setPosition(d, d.p());
 			return d;
 		},
 			

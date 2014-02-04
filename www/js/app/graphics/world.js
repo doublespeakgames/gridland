@@ -6,6 +6,9 @@ define(['app/eventmanager'], function(E) {
 		if(_el == null) {
 			_el = G.make('world');
 			G.addToBoard(_el);
+			
+			// TEMPORARY
+			_el.append(G.make('dragonTest'));
 		}
 		return _el;
 	}

@@ -3,6 +3,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	
 	var postureSpeedStylesheet = null;
 	
+	var headMount = { x: 20, y: 42 };
 	var posture = {
 		stretch: [[0, -10], [0, -10], [0, -10], [0, -40]],
 		idle: [[80, -10], [15, -10], [-50, -10], [-50, -40]]
@@ -10,6 +11,25 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	
 	function setSegmentPosture(segment, pos) {
 		segment.css('transform', 'rotate(' + pos[0] + 'deg) translateX(' + pos[1] + 'px)');
+	}
+	
+	function rad(deg) {
+	    return deg * Math.PI/180;
+	}
+
+	function rotate(v, theta) {
+	    theta = rad(theta);
+	    return {
+	        x: v.x*Math.cos(theta) - v.y*Math.sin(theta),
+	        y: v.x*Math.sin(theta) + v.y*Math.cos(theta)
+	    };
+	}
+
+	function translate(v, dx, dy) {
+	    return {
+	        x: v.x + dx,
+	        y: v.y + dy
+	    };
 	}
 	
 	var Dragon = function(options) {
@@ -73,8 +93,16 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 					'transition-duration: ' + speed + 'ms; }', 
 				0);
 			}
-			this._segments.forEach(function(e, i) {
-				setSegmentPosture(e, pos[i]);
+			
+			var headPos = { x: 0, y: 0 };
+			for(var i = this._segments.length - 1; i >= 0; i--) {
+				setSegmentPosture(this._segments[i], pos[i]);
+				headPos = rotate(translate(headPos, pos[i][1], 0), pos[i][0]);
+			}
+			var dragonPos = this.el().position();
+			require('app/graphics/graphics').get('.dragonTest').css({ 
+				top: (headMount.y + dragonPos.top + headPos.y) + 'px', 
+				left: (headMount.x + dragonPos.left + headPos.x) + 'px'
 			});
 		}
 	};
