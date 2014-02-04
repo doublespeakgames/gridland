@@ -222,6 +222,8 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			});
 		},
 		
+		el: el,
+		
 		attachHandler: function(event, element, handler) {
 			if(element) {
 				el().on(event, element, handler);

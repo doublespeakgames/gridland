@@ -6,7 +6,9 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	var headMount = { x: 20, y: 42 };
 	var posture = {
 		stretch: [[0, -10], [0, -10], [0, -10], [0, -40]],
-		idle: [[80, -10], [15, -10], [-50, -10], [-50, -40]]
+		idle: [[80, -10], [15, -10], [-50, -10], [-50, -40]],
+		windup: [[100, -14], [20, -14], [-100, -10], [-19, -40]],
+		roar: [[20, -14], [0, -14], [0, -14], [-6, -43]]
 	};
 	
 	function setSegmentPosture(segment, pos) {

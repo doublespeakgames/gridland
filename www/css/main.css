@@ -362,7 +362,11 @@ body.night {
 	border: 2px solid;
 	padding: 2px;
 	opacity: 1;
-	transition: all 700ms linear, opacity 1s linear;
+	transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, transform 300ms cubic-bezier(.06,.48,.53,1.53);
+}
+
+.gameBoard.tilted {
+	transform: rotate(10deg);
 }
 
 .tileContainer {
@@ -1998,6 +2002,7 @@ body.night {
 	height: 112px;
 	width: 154px;
 	background: url(../img/dragon.png) no-repeat;
+	transition: transform 300ms ease-out;
 }
 
 .dragon .healthBar {

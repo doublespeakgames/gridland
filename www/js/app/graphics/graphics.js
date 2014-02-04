@@ -529,6 +529,24 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		enablePlayButton: function() {
 			$('#loadingScreen .saveSpinner').addClass('hidden');
 			$('#playButton').removeClass('hidden').text(Graphics.getText('PLAY'));
+		},
+		
+		landDragon: function(dragon, cb) {
+			dragon.el().css('transform', 'translateY(-100%)')
+			dragon.p(this.worldWidth() - 75);
+			this.addToWorld(dragon);
+			dragon.el().css('left'); // force redraw
+			dragon.el().css('transform', 'translateY(0)');
+			setTimeout(function() {
+				d.setPosture('idle', 500);
+				BoardGraphics.el().addClass('tilted');
+			}, 300);
+			setTimeout(function() {
+				BoardGraphics.el().removeClass('tilted');
+			}, 600);
+			if(cb) {
+				setTimeout(cb, 900);
+			}
 		}
 	};
 	
