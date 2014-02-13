@@ -75,6 +75,19 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		}
 	}
 	
+	function changeTiles(tileTypes, classToAdd, classToRemove) {
+		var tileClasses = '';
+		tileTypes.forEach(function(type) {
+			tileClasses += (tileClasses.length > 0 ? ', ' : '') + '.tile.' + type;
+		});
+		var tiles = $(tileClasses);
+		tiles.addClass('hidden');
+		setTimeout(function() {
+			BoardGraphics.el().removeClass(classToRemove).addClass(classToAdd);
+			tiles.removeClass('hidden');
+		}, 300);
+	}
+	
 	var Graphics = {
 		init: function() {
 			$('body').removeClass('night');
@@ -313,14 +326,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				complete: function() {
 					el.find('.blockPile').remove();
 					if(building.options.type.tileMod) {
-						var tiles = $('.tile.' + building.options.type.tileMod);
-						tiles.addClass('hidden');
-						setTimeout(function() {
-							$('.gameBoard')
-								.removeClass(building.options.type.tileMod + (building.options.type.tileLevel - 1))
-								.addClass(building.options.type.tileMod + building.options.type.tileLevel);
-							tiles.removeClass('hidden');
-						}, 300);
+						changeTiles(
+							[building.options.type.tileMod], 
+							building.options.type.tileMod + building.options.type.tileLevel,
+							building.options.type.tileMod + (building.options.type.tileLevel - 1)
+						);
 					}
 					callback(building);
 				}
@@ -538,8 +548,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			dragon.el().css('left'); // force redraw
 			dragon.el().css('transform', 'translateY(0)');
 			setTimeout(function() {
-				d.setPosture('idle', 500);
+				dragon.setPosture('idle', 500);
 				BoardGraphics.el().addClass('tilted');
+				changeTiles(['clay', 'cloth', 'grain'], 'dragon', '');
 			}, 300);
 			setTimeout(function() {
 				BoardGraphics.el().removeClass('tilted');

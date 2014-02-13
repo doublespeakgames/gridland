@@ -480,6 +480,10 @@ body.night {
 	background-position: 0 -156px;
 }
 
+.dragon .tile.grain > div {
+	background-position: 0 -468px;
+}
+
 .tile.stone > div {
 	background-position: -52px 0;
 }
@@ -568,6 +572,10 @@ body.night {
 	background-position: -156px -156px;
 }
 
+.dragon .tile.clay > div {
+	background-position: -156px -468px;
+}
+
 .tile.cloth > div {
 	background-position: -208px 0px;
 }
@@ -582,6 +590,10 @@ body.night {
 
 .cloth4 .tile.cloth > div {
 	background-position: -208px -156px;
+}
+
+.dragon .tile.cloth > div {
+	background-position: -208px -468px;
 }
 
 .tile.mana > div {
