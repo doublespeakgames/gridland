@@ -550,11 +550,12 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			dragon.el().css('left'); // force redraw
 			dragon.el().css('transform', 'translateY(0)');
 			setTimeout(function() {
+				dragon.animation(0);
+				dragon.animationOnce(2);
 				dragon.el().removeClass('flying');
 				dragon.setPosture('idle', 500);
 				BoardGraphics.el().addClass('tilted');
 				changeTiles(['clay', 'cloth', 'grain'], 'dragon', '');
-				dragon.animation(0);
 			}, 1000);
 			setTimeout(function() {
 				BoardGraphics.el().removeClass('tilted');
