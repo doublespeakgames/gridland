@@ -264,6 +264,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			var spriteRow = entity.tempAnimation == null ? entity.animationRow : entity.tempAnimation;
 			el.css('background-position', -(entity.frame * el.width()) + "px " + -(spriteRow * el.height()) + 'px');
 			$('.animationLayer', el).css('background-position', -(entity.frame * el.width()) + "px " + -(spriteRow * el.height()) + 'px');
+			if(entity.stepFunction) {
+				entity.stepFunction(entity.frame);
+			}
 		},
 		
 		setPosition: function(entity, pos) {
@@ -546,13 +549,30 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			dragon.el().css('transform', 'translateY(-100%)').addClass('flying');
 			dragon.p(this.worldWidth() - 50);
 			dragon.animation(1);
+			dragon.setNeckMount({ x: 50, y: 47 });
 			this.addToWorld(dragon);
 			dragon.el().css('left'); // force redraw
 			dragon.el().css('transform', 'translateY(0)');
 			setTimeout(function() {
 				dragon.animation(0);
-				dragon.animationOnce(2);
-				dragon.el().removeClass('flying');
+				dragon.animationOnce(2, function(frame) {
+					dragon.setNeckMount((function() {
+						switch(frame) {
+							case 0:
+								return { x: 50, y: 47 };
+							case 1:
+								return { x: 30, y: 75 };
+							case 2:
+								return { x: 20, y: 105 };
+							case 3:
+								return null;
+						}
+					})());
+				});
+				dragon.el().removeClass('flying').addClass('landing');
+				setTimeout(function() {
+					dragon.el().removeClass('landing');
+				}, 200);
 				dragon.setPosture('idle', 500);
 				BoardGraphics.el().addClass('tilted');
 				changeTiles(['clay', 'cloth', 'grain'], 'dragon', '');

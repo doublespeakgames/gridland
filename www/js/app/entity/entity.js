@@ -11,6 +11,7 @@ define([ 'jquery' ], function($) {
 		this.frame = 0;
 		this.animationRow = 0;
 		this.tempAnimation = null;
+		this.stepFunction = null;
 	};
 	
 	/**
@@ -51,6 +52,7 @@ define([ 'jquery' ], function($) {
 			this.frame = 0;
 			if(this.tempAnimation != null) {
 				this.tempAnimation = null;
+				this.stepFunction = null;
 			}
 		}
 		var G = require('app/graphics/graphics');
@@ -60,6 +62,7 @@ define([ 'jquery' ], function($) {
 	entity.prototype.animation = function(row, stopTempAnimations) {
 		if(stopTempAnimations) {
 			this.tempAnimation = null;
+			this.stepFunction = null;
 		}
 		this.animationRow = row;
 		this.frame = 0;
@@ -67,10 +70,11 @@ define([ 'jquery' ], function($) {
 		G.updateSprite(this);
 	};
 	
-	entity.prototype.animationOnce = function(row) {
+	entity.prototype.animationOnce = function(row, stepFunction) {
 		this.tempAnimation = row;
 		this.frame = 0;
 		var G = require('app/graphics/graphics');
+		this.stepFunction = stepFunction || null;
 		G.updateSprite(this);
 	};
 	

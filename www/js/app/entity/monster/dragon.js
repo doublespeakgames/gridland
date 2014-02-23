@@ -66,6 +66,14 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		return this._el;
 	};
 	
+	Dragon.prototype.setNeckMount = function(pos) {
+		pos = pos || headMount;
+		this._segments[0].css({
+			top: pos.y + 'px',
+			left: pos.x + 'px'
+		});
+	};
+	
 	Dragon.prototype.think = function() {
 		// TODO
 	};
@@ -106,6 +114,9 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 				top: (headMount.y + dragonPos.top + headPos.y) + 'px', 
 				left: (headMount.x + dragonPos.left + headPos.x) + 'px'
 			});
+			setTimeout(function() {
+				postureSpeedStylesheet.deleteRule(0);
+			}, speed);
 		}
 	};
 	

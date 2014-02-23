@@ -2036,16 +2036,6 @@ body.night {
 	transform: rotate(0deg) translateX(-10px);
 }
 
-.dragon.flying > .neck {
-	top: 40px;
-	left: 50px;
-}
-
-.dragon > .neck {
-	top: 97px;
-	left: 20px;
-}
-
 .dragon .head {
 	height: 28px;
 	width: 60px;
