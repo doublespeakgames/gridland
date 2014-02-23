@@ -362,11 +362,11 @@ body.night {
 	border: 2px solid;
 	padding: 2px;
 	opacity: 1;
-	transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, transform 300ms cubic-bezier(.06,.48,.53,1.53);
+	transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, transform 600ms cubic-bezier(.06,.48,.53,1.53);
 }
 
 .gameBoard.tilted {
-	transform: rotate(10deg);
+	transform: rotate(5deg);
 }
 
 .tileContainer {
@@ -480,7 +480,7 @@ body.night {
 	background-position: 0 -156px;
 }
 
-.dragon .tile.grain > div {
+.dragonFight .tile.grain > div {
 	background-position: 0 -468px;
 }
 
@@ -572,7 +572,7 @@ body.night {
 	background-position: -156px -156px;
 }
 
-.dragon .tile.clay > div {
+.dragonFight .tile.clay > div {
 	background-position: -156px -468px;
 }
 
@@ -592,7 +592,7 @@ body.night {
 	background-position: -208px -156px;
 }
 
-.dragon .tile.cloth > div {
+.dragonFight .tile.cloth > div {
 	background-position: -208px -468px;
 }
 

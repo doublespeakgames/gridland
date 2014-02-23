@@ -28,9 +28,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			d.hostile = false;
 			stuff.push(d);
 			Graphics.landDragon(d, function() {
-				d.setPosture('windup', 300);
-				setTimeout(function() { d.setPosture('roar', 200); }, 300);
-				setTimeout(function() { d.setPosture('idle', 500); d.hostile = true; }, 1000);
+				d.setPosture('windup', 500);
+				setTimeout(function() { d.setPosture('roar', 500); }, 500);
+				setTimeout(function() { d.setPosture('idle', 500); d.hostile = true; }, 1500);
 			});
 			return d;
 		},
