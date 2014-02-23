@@ -115,7 +115,9 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 				left: (headMount.x + dragonPos.left + headPos.x) + 'px'
 			});
 			setTimeout(function() {
-				postureSpeedStylesheet.deleteRule(0);
+				if(postureSpeedStylesheet.cssRules.length > 0) {
+					postureSpeedStylesheet.deleteRule(0);
+				}
 			}, speed);
 		}
 	};

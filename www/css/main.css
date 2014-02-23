@@ -604,6 +604,45 @@ body.night {
 	background-color: red;
 }
 
+.shaking {
+	animation: shake 100ms infinite;
+}
+
+@keyframes shake {
+	0% { transform: translateX(0px) }
+	25% { transform: translateX(-10px) }
+	75% { transform: translateX(10px) }
+	100% { transform: translateX(0px) }
+}
+
+@-webkit-keyframes shake {
+	0% { transform: translateX(0px) }
+	25% { transform: translateX(-10px) }
+	75% { transform: translateX(10px) }
+	100% { transform: translateX(0px) }
+}
+
+@-moz-keyframes shake {
+	0% { transform: translateX(0px) }
+	25% { transform: translateX(-10px) }
+	75% { transform: translateX(10px) }
+	100% { transform: translateX(0px) }
+}
+
+@-ms-keyframes shake {
+	0% { transform: translateX(0px) }
+	25% { transform: translateX(-10px) }
+	75% { transform: translateX(10px) }
+	100% { transform: translateX(0px) }
+}
+
+@-o-keyframes shake {
+	0% { transform: translateX(0px) }
+	25% { transform: translateX(-10px) }
+	75% { transform: translateX(10px) }
+	100% { transform: translateX(0px) }
+}
+
 /** World **/
 
 .world {

@@ -575,9 +575,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			}, 1000);
 			setTimeout(function() {
 				BoardGraphics.el().removeClass('tilted');
-			}, 1300);
+				dragon.setPosture('windup', 500);
+			}, 1500);
+			setTimeout(function() { dragon.setPosture('roar', 500); }, 2000);
+			setTimeout(function() { BoardGraphics.el().addClass('shaking'); }, 2500);
+			setTimeout(function() { BoardGraphics.el().removeClass('shaking'); dragon.setPosture('idle', 500); }, 3500);
 			if(cb) {
-				setTimeout(cb, 1600);
+				setTimeout(cb, 4000);
 			}
 		}
 	};
