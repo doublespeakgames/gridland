@@ -2011,10 +2011,10 @@ body.night {
 /** DRAGON **/
 
 .dragon {
-	height: 112px;
-	width: 154px;
+	height: 164px;
+	width: 204px;
 	background: url(../img/dragon.png) no-repeat;
-	transition: transform 300ms ease-out;
+	transition: transform 1000ms ease-out;
 }
 
 .dragon .healthBar {
@@ -2036,8 +2036,13 @@ body.night {
 	transform: rotate(0deg) translateX(-10px);
 }
 
+.dragon.flying > .neck {
+	top: 40px;
+	left: 50px;
+}
+
 .dragon > .neck {
-	top: 42px;
+	top: 97px;
 	left: 20px;
 }
 

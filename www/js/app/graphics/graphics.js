@@ -542,21 +542,25 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		landDragon: function(dragon, cb) {
-			dragon.el().css('transform', 'translateY(-100%)')
-			dragon.p(this.worldWidth() - 75);
+			dragon.setPosture('idle');
+			dragon.el().css('transform', 'translateY(-100%)').addClass('flying');
+			dragon.p(this.worldWidth() - 50);
+			dragon.animation(1);
 			this.addToWorld(dragon);
 			dragon.el().css('left'); // force redraw
 			dragon.el().css('transform', 'translateY(0)');
 			setTimeout(function() {
+				dragon.el().removeClass('flying');
 				dragon.setPosture('idle', 500);
 				BoardGraphics.el().addClass('tilted');
 				changeTiles(['clay', 'cloth', 'grain'], 'dragon', '');
-			}, 300);
+				dragon.animation(0);
+			}, 1000);
 			setTimeout(function() {
 				BoardGraphics.el().removeClass('tilted');
-			}, 600);
+			}, 1300);
 			if(cb) {
-				setTimeout(cb, 900);
+				setTimeout(cb, 1600);
 			}
 		}
 	};

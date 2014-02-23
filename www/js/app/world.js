@@ -25,11 +25,12 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		// TEMPORARY
 		dragon: function() {
 			var d = MonsterFactory.getMonster("dragon", null);
+			d.hostile = false;
+			stuff.push(d);
 			Graphics.landDragon(d, function() {
 				d.setPosture('windup', 300);
 				setTimeout(function() { d.setPosture('roar', 200); }, 300);
-				setTimeout(function() { d.setPosture('idle', 500); }, 1000);
-				stuff.push(d);
+				setTimeout(function() { d.setPosture('idle', 500); d.hostile = true; }, 1000);
 			});
 			return d;
 		},

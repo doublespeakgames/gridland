@@ -3,7 +3,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	
 	var postureSpeedStylesheet = null;
 	
-	var headMount = { x: 20, y: 42 };
+	var headMount = { x: 20, y: 97 };
 	var posture = {
 		stretch: [[0, -10], [0, -10], [0, -10], [0, -40]],
 		idle: [[80, -10], [15, -10], [-50, -10], [-50, -40]],
@@ -49,7 +49,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	Dragon.prototype = new Monster({
 		monsterClass: 'dragon',
 		speed: 80,
-		animationFrames: 1 //TEMP
+		animationFrames: 4
 	});
 	Dragon.constructor = Dragon;
 	
