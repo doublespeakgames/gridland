@@ -260,13 +260,18 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		updateSprite: function(entity) {
+			// TODO: Cache the entity width. Calling el.width() this often can't be good for performance.
 			var el = entity.el();
 			var spriteRow = entity.tempAnimation == null ? entity.animationRow : entity.tempAnimation;
-			el.css('background-position', -(entity.frame * el.width()) + "px " + -(spriteRow * el.height()) + 'px');
-			$('.animationLayer', el).css('background-position', -(entity.frame * el.width()) + "px " + -(spriteRow * el.height()) + 'px');
+			Graphics.updateSpritePos(el, entity.frame * el.width(), spriteRow * el.height());
 			if(entity.stepFunction) {
 				entity.stepFunction(entity.frame);
 			}
+		},
+		
+		updateSpritePos: function(el, x, y) {
+			el.css('background-position', -(x) + "px " + -(y) + 'px');
+			$('.animationLayer', el).css('background-position', -(x) + "px " + -(y) + 'px');
 		},
 		
 		setPosition: function(entity, pos) {

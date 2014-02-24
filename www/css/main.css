@@ -2076,7 +2076,7 @@ body.night {
 }
 
 .dragon .head {
-	height: 28px;
+	height: 30px;
 	width: 60px;
 	background: url(../img/dragon-head.png) no-repeat;
 	transform-origin: 0 50%;
