@@ -552,12 +552,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		landDragon: function(dragon, cb) {
 			dragon.setPosture('idle');
 			dragon.el().css('transform', 'translateY(-100%)');
-			dragon.p(this.worldWidth() - 50);
+			dragon.p(dragon.options.flip ? 50 : this.worldWidth() - 50);
 			dragon.animation(1);
 			dragon.setNeckMount({ x: 50, y: 47 });
 			this.addToWorld(dragon);
 			dragon.el().css('left'); // force redraw
 			dragon.el().css('transform', 'translateY(0)');
+			var tiltClass = dragon.options.flip ? 'flipTilted' : 'tilted';
 			setTimeout(function() {
 				dragon.animation(0);
 				dragon.animationOnce(2, function(frame) {
@@ -575,11 +576,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					})());
 				});
 				dragon.setPosture('idle', 500);
-				BoardGraphics.el().addClass('tilted');
+				BoardGraphics.el().addClass(tiltClass);
 				changeTiles(['clay', 'cloth', 'grain'], 'dragonFight', '');
 			}, 1000);
 			setTimeout(function() {
-				BoardGraphics.el().removeClass('tilted');
+				BoardGraphics.el().removeClass(tiltClass);
 				dragon.setPosture('windup', 500);
 			}, 1500);
 			setTimeout(function() { dragon.setPosture('roar', 500); }, 2000);
