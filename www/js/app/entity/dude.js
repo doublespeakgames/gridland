@@ -25,6 +25,10 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 		return this._el;
 	};
 	
+	dude.prototype.isAlive = function() {
+		return State.health > 0;
+	};
+	
 	dude.prototype.getAnimation = function(label) {
 		if(label == "right" && this.carrying != null) {
 			return 9;

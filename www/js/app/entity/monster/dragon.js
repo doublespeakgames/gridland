@@ -161,7 +161,18 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Dragon.prototype.think = function() {
-		// TODO
+		if(this.isIdle() && this.isAlive() && this.action == null) {
+			if(this.target.isAlive() && this.distanceFrom(this.target) < 5) {
+				this.action = ActionFactory.getAction('Bite', { target: this.target });
+			}
+			if(this.action != null) {
+				this.action.doAction(this);
+				return true;
+			} else {
+				this.setPosture('idle', 1000);
+			}
+		}
+		return false;
 	};
 	
 	Dragon.prototype.maxHealth = function() {
@@ -169,80 +180,83 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Dragon.prototype.getDamage = function() {
-		return 0; // TODO
+		return 10;
 	};
 	
 	Dragon.prototype.setPosture = function(p, speed) {
-		var pos = posture[p];
-		if(pos) {
-			if(postureSpeedStylesheet.cssRules.length > 0) {
-				postureSpeedStylesheet.deleteRule(0);
-			}
-			if(postureSpeedStylesheet.addRule) {
-				postureSpeedStylesheet.addRule(
-					'.dragon .neck, .dragon .head', 
-					'transition-duration: ' + speed + 'ms', 
-				0);
-			} else {
-				postureSpeedStylesheet.insertRule(
-					'.dragon .neck, .dragon .head {' +
-					'transition-duration: ' + speed + 'ms; }', 
-				0);
-			}
-			
-			var headPos = { x: 0, y: 0, r: 0 };
-			var dynamicPos = null;
-			for(var i = this._segments.length; i > 0; i--) {
-				var r;
-				if(!isNaN(pos[i][0])) {
-					setSegmentPosture(this._segments[i - 1], pos[i], this.options.flip);
-					r = pos[i][0];
-				} else {
-					r = 0;
-					dynamicPos = pos[i];
-				}
-
-				if(i < this._segments.length) {
-					headPos = translate(rotate(headPos, r * (this.options.flip ? -1 : 1)), 
-							pos[i][1] * (this.options.flip ? -1 : 1), 0);
-				}
-			}
-			
-			var dragonPos = this.el().position();
-			this.animateHead = pos[0];
-			var left;
-			if(this.options.flip) {
-				left = dragonPos.left + this.width() - headMount.x + headPos.x - 20;
-			} else {
-				left = headMount.x + dragonPos.left + headPos.x + 10;
-			}
-			
-			var absHeadPos = {
-				x: left,
-				y: headMount.y + dragonPos.top + headPos.y,
-				r: headPos.r
-			};
-			
-			if(dynamicPos != null) {
-				var newPos = [
-				    getTargetRotation.call(this, absHeadPos, { 
-				    	x: this.target.p(), 
-				    	y: require('app/graphics/graphics').worldHeight() - this.target.height()
-			    	}), 
-				    dynamicPos[1]
-			    ];
-				setSegmentPosture(this._segments[this._segments.length - 1], newPos, this.options.flip);
-			}
-			
-			require('app/graphics/graphics').get('.dragonTest').css({ 
-				top: absHeadPos.y + 'px',
-				left: absHeadPos.x + 'px'
-			});
-			setTimeout(function() {
+		if(this.currentPosture == null || this.currentPosture != p) {
+			this.currentPosture = p;
+			var pos = posture[p];
+			if(pos) {
 				if(postureSpeedStylesheet.cssRules.length > 0) {
 					postureSpeedStylesheet.deleteRule(0);
 				}
-			}, speed);
+				if(postureSpeedStylesheet.addRule) {
+					postureSpeedStylesheet.addRule(
+						'.dragon .neck, .dragon .head', 
+						'transition-duration: ' + speed + 'ms', 
+					0);
+				} else {
+					postureSpeedStylesheet.insertRule(
+						'.dragon .neck, .dragon .head {' +
+						'transition-duration: ' + speed + 'ms; }', 
+					0);
+				}
+				
+				var headPos = { x: 0, y: 0, r: 0 };
+				var dynamicPos = null;
+				for(var i = this._segments.length; i > 0; i--) {
+					var r;
+					if(!isNaN(pos[i][0])) {
+						setSegmentPosture(this._segments[i - 1], pos[i], this.options.flip);
+						r = pos[i][0];
+					} else {
+						r = 0;
+						dynamicPos = pos[i];
+					}
+	
+					if(i < this._segments.length) {
+						headPos = translate(rotate(headPos, r * (this.options.flip ? -1 : 1)), 
+								pos[i][1] * (this.options.flip ? -1 : 1), 0);
+					}
+				}
+				
+				var dragonPos = this.el().position();
+				this.animateHead = pos[0];
+				var left;
+				if(this.options.flip) {
+					left = dragonPos.left + this.width() - headMount.x + headPos.x - 20;
+				} else {
+					left = headMount.x + dragonPos.left + headPos.x + 10;
+				}
+				
+				var absHeadPos = {
+					x: left,
+					y: headMount.y + dragonPos.top + headPos.y,
+					r: headPos.r
+				};
+				
+				if(dynamicPos != null) {
+					var newPos = [
+					    getTargetRotation.call(this, absHeadPos, { 
+					    	x: this.target.p(), 
+					    	y: require('app/graphics/graphics').worldHeight() - this.target.height()
+				    	}), 
+					    dynamicPos[1]
+				    ];
+					setSegmentPosture(this._segments[this._segments.length - 1], newPos, this.options.flip);
+				}
+				
+				require('app/graphics/graphics').get('.dragonTest').css({ 
+					top: absHeadPos.y + 'px',
+					left: absHeadPos.x + 'px'
+				});
+				setTimeout(function() {
+					if(postureSpeedStylesheet.cssRules.length > 0) {
+						postureSpeedStylesheet.deleteRule(0);
+					}
+				}, speed);
+			}
 		}
 	};
 	

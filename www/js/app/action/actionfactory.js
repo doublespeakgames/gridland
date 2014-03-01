@@ -1,8 +1,8 @@
 define(['app/action/moveblock', 'app/action/raisebuilding', 'app/action/moveto', 'app/action/attack', 'app/action/die',
         'app/action/fastattack', 'app/action/shoot', 'app/action/getloot', 'app/action/climb', 'app/action/lichspell',
-        'app/action/teleport'], 
+        'app/action/teleport', 'app/action/dragon/land', 'app/action/dragon/bite'], 
 		function(MoveBlock, RaiseBuilding, MoveTo, Attack, Die, FastAttack, Shoot, GetLoot, Climb, LichSpell,
-				 Teleport) {
+				 Teleport, Land, Bite) {
 	
 	return {
 		_actions: {
@@ -16,7 +16,9 @@ define(['app/action/moveblock', 'app/action/raisebuilding', 'app/action/moveto',
 			"GetLoot": GetLoot,
 			"Climb": Climb,
 			"LichSpell": LichSpell,
-			"Teleport": Teleport
+			"Teleport": Teleport,
+			"Land": Land,
+			"Bite": Bite
 		},
 		
 		getAction: function(actionName, options) {
