@@ -6,6 +6,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	
 	var textStore;
 	var costsOn = false;
+	var _ww = null, _wh = null;
 	
 	function handleDrawRequest(requestString, options) {
 		var moduleString = requestString.substring(0, requestString.indexOf('.'));
@@ -170,7 +171,17 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		worldWidth: function() {
-			return $('.world').width();
+			if(_ww == null) {
+				_ww = $('.world').width();
+			}
+			return _ww;
+		},
+		
+		worldHeight: function() {
+			if(_wh == null) {
+				_wh = $('.world').height();
+			}
+			return _wh;
 		},
 		
 		addToScreen: function(entity) {

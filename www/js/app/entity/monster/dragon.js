@@ -8,7 +8,9 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		stretch: ['close', [0, -10], [0, -10], [0, -10], [0, -10]],
 		idle: ['close', [80, -10], [15, -10], [-50, -10], [-50, -10]],
 		windup: ['close', [100, -14], [20, -14], [-100, -10], [-19, -10]],
-		roar: ['open', [40, -14], [0, -14], [0, -14], [-22, -8]]
+		roar: ['open', [40, -14], [0, -14], [0, -14], [-22, -8]],
+		aim: ['open', [80, -10], [15, -10], [-50, -10], ['target', -10]],
+		shoot: ['open', [80, -10], [15, -10], [-50, -10], ['target', 5]],
 	};
 	
 	var _headWidth = null, _headHeight = null, _width = null;
@@ -22,20 +24,33 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	function rad(deg) {
 	    return deg * Math.PI/180;
 	}
+	
+	function deg(rad) {
+		return rad * 180/Math.PI;
+	}
 
 	function rotate(v, theta) {
-	    theta = rad(theta);
+		var tRad = rad(theta);
 	    return {
-	        x: v.x*Math.cos(theta) - v.y*Math.sin(theta),
-	        y: v.x*Math.sin(theta) + v.y*Math.cos(theta)
+	        x: v.x*Math.cos(tRad) - v.y*Math.sin(tRad),
+	        y: v.x*Math.sin(tRad) + v.y*Math.cos(tRad),
+	        r: v.r + theta
 	    };
 	}
 
 	function translate(v, dx, dy) {
 	    return {
 	        x: v.x + dx,
-	        y: v.y + dy
+	        y: v.y + dy,
+	        r: v.r
 	    };
+	}
+	
+	function getTargetRotation(pos, targetPos) {
+		var dx = Math.abs(pos.x - targetPos.x);
+		var dy = Math.abs(pos.y - targetPos.y);
+		var theta = Math.atan(dy/dx);
+		return (this.options.flip ? 1 : -1) * pos.r - deg(theta);
 	}
 	
 	var Dragon = function(options) {
@@ -44,6 +59,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		this.xp = 35;
 		this.headFrame = 0;
 		this.headState = 'close';
+		this.target = this.options.target;
 		
 		if(!postureSpeedStylesheet) {
 			var style = document.createElement('style');
@@ -168,24 +184,50 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 				0);
 			}
 			
-			var headPos = { x: 0, y: 0 };
+			var headPos = { x: 0, y: 0, r: 0 };
+			var dynamicPos = null;
 			for(var i = this._segments.length; i > 0; i--) {
-				setSegmentPosture(this._segments[i - 1], pos[i], this.options.flip);
+				var r;
+				if(!isNaN(pos[i][0])) {
+					setSegmentPosture(this._segments[i - 1], pos[i], this.options.flip);
+					r = pos[i][0];
+				} else {
+					r = 0;
+					dynamicPos = pos[i];
+				}
 				headPos = rotate(translate(headPos, pos[i][1] * (this.options.flip ? -1 : 1), 0), 
-						pos[i][0] * (this.options.flip ? -1 : 1));
+						r * (this.options.flip ? -1 : 1));
 			}
+			
 			var dragonPos = this.el().position();
 			this.animateHead = pos[0];
-			this.headFrame = 0;
 			var left;
 			if(this.options.flip) {
 				left = dragonPos.left + this.width() - headMount.x + headPos.x;
 			} else {
 				left = headMount.x + dragonPos.left + headPos.x;
 			}
+			
+			var absHeadPos = {
+				x: left,
+				y: headMount.y + dragonPos.top + headPos.y + this.headHeight() / 2,
+				r: headPos.r
+			};
+			
+			if(dynamicPos != null) {
+				var newPos = [
+				    getTargetRotation.call(this, absHeadPos, { 
+				    	x: this.target.p(), 
+				    	y: require('app/graphics/graphics').worldHeight() - this.target.height()
+			    	}), 
+				    dynamicPos[1]
+			    ];
+				setSegmentPosture(this._segments[this._segments.length - 1], newPos, this.options.flip);
+			}
+			
 			require('app/graphics/graphics').get('.dragonTest').css({ 
-				top: (headMount.y + dragonPos.top + headPos.y) + 'px', 
-				left: left + 'px'
+				top: absHeadPos.y + 'px',
+				left: absHeadPos.x + 'px'
 			});
 			setTimeout(function() {
 				if(postureSpeedStylesheet.cssRules.length > 0) {

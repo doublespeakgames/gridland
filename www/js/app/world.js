@@ -24,7 +24,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			
 		// TEMPORARY
 		dragon: function(flip) {
-			var d = MonsterFactory.getMonster("dragon", { flip: flip });
+			var d = MonsterFactory.getMonster("dragon", { flip: flip, target: dude });
 			d.hostile = false;
 			stuff.push(d);
 			Graphics.landDragon(d, function() {
