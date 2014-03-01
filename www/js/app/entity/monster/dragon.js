@@ -11,6 +11,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		roar: ['open', [40, -14], [0, -14], [0, -14], [-22, -8]],
 		aim: ['open', [80, -10], [15, -10], [-50, -10], ['target', -10]],
 		shoot: ['open', [80, -10], [15, -10], [-50, -10], ['target', 5]],
+		aimbite: ['open', [80, -17], [-30, -15], [-30, -15], ['target', -10]],
+		bite: ['close-fast', [65, -17], [-62, -17], [-23, -15], ['target', -15]]
 	};
 	
 	var _headWidth = null, _headHeight = null, _width = null;
@@ -112,13 +114,17 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	
 	Dragon.prototype.animate = function() {
 		Monster.prototype.animate.call(this);
-		
+		var inc = 1;
+		if(this.animateHead != null && this.animateHead.indexOf('-fast') > 0) {
+			this.animateHead = this.animateHead.substring(0, this.animateHead.indexOf('-fast'));
+			inc = 2;
+		}
 		if(this.animateHead != null && this.animateHead != this.headState) {
-			if(this.animateHead == 'open' && ++this.headFrame >= 2) {
+			if(this.animateHead == 'open' && (this.headFrame += inc) >= 2) {
 				this.animateHead = null;
 				this.headState = this.animateHead;
 				this.headFrame = 2;
-			} else if(this.animateHead == 'close' && --this.headFrame <= 0) {
+			} else if(this.animateHead == 'close' && (this.headFrame -= inc) <= 0) {
 				this.animateHead = null;
 				this.headState = this.animateHead;
 				this.headFrame = 0;
@@ -195,22 +201,25 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 					r = 0;
 					dynamicPos = pos[i];
 				}
-				headPos = rotate(translate(headPos, pos[i][1] * (this.options.flip ? -1 : 1), 0), 
-						r * (this.options.flip ? -1 : 1));
+
+				if(i < this._segments.length) {
+					headPos = translate(rotate(headPos, r * (this.options.flip ? -1 : 1)), 
+							pos[i][1] * (this.options.flip ? -1 : 1), 0);
+				}
 			}
 			
 			var dragonPos = this.el().position();
 			this.animateHead = pos[0];
 			var left;
 			if(this.options.flip) {
-				left = dragonPos.left + this.width() - headMount.x + headPos.x;
+				left = dragonPos.left + this.width() - headMount.x + headPos.x - 20;
 			} else {
-				left = headMount.x + dragonPos.left + headPos.x;
+				left = headMount.x + dragonPos.left + headPos.x + 10;
 			}
 			
 			var absHeadPos = {
 				x: left,
-				y: headMount.y + dragonPos.top + headPos.y + this.headHeight() / 2,
+				y: headMount.y + dragonPos.top + headPos.y,
 				r: headPos.r
 			};
 			
