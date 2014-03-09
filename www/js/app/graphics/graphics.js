@@ -6,6 +6,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	
 	var textStore;
 	var costsOn = false;
+	var _ww = null, _wh = null;
 	
 	function handleDrawRequest(requestString, options) {
 		var moduleString = requestString.substring(0, requestString.indexOf('.'));
@@ -170,7 +171,17 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		worldWidth: function() {
-			return $('.world').width();
+			if(_ww == null) {
+				_ww = $('.world').width();
+			}
+			return _ww;
+		},
+		
+		worldHeight: function() {
+			if(_wh == null) {
+				_wh = $('.world').height();
+			}
+			return _wh;
 		},
 		
 		addToScreen: function(entity) {
@@ -260,13 +271,18 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		updateSprite: function(entity) {
+			// TODO: Cache the entity width. Calling el.width() this often can't be good for performance.
 			var el = entity.el();
 			var spriteRow = entity.tempAnimation == null ? entity.animationRow : entity.tempAnimation;
-			el.css('background-position', -(entity.frame * el.width()) + "px " + -(spriteRow * el.height()) + 'px');
-			$('.animationLayer', el).css('background-position', -(entity.frame * el.width()) + "px " + -(spriteRow * el.height()) + 'px');
+			Graphics.updateSpritePos(el, entity.frame * el.width(), spriteRow * el.height());
 			if(entity.stepFunction) {
 				entity.stepFunction(entity.frame);
 			}
+		},
+		
+		updateSpritePos: function(el, x, y) {
+			el.css('background-position', -(x) + "px " + -(y) + 'px');
+			$('.animationLayer', el).css('background-position', -(x) + "px " + -(y) + 'px');
 		},
 		
 		setPosition: function(entity, pos) {
@@ -547,12 +563,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		landDragon: function(dragon, cb) {
 			dragon.setPosture('idle');
 			dragon.el().css('transform', 'translateY(-100%)');
-			dragon.p(this.worldWidth() - 50);
+			dragon.p(dragon.options.flip ? 50 : this.worldWidth() - 50);
 			dragon.animation(1);
 			dragon.setNeckMount({ x: 50, y: 47 });
 			this.addToWorld(dragon);
 			dragon.el().css('left'); // force redraw
 			dragon.el().css('transform', 'translateY(0)');
+			var tiltClass = dragon.options.flip ? 'flipTilted' : 'tilted';
 			setTimeout(function() {
 				dragon.animation(0);
 				dragon.animationOnce(2, function(frame) {
@@ -570,11 +587,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					})());
 				});
 				dragon.setPosture('idle', 500);
-				BoardGraphics.el().addClass('tilted');
+				BoardGraphics.el().addClass(tiltClass);
 				changeTiles(['clay', 'cloth', 'grain'], 'dragonFight', '');
 			}, 1000);
 			setTimeout(function() {
-				BoardGraphics.el().removeClass('tilted');
+				BoardGraphics.el().removeClass(tiltClass);
 				dragon.setPosture('windup', 500);
 			}, 1500);
 			setTimeout(function() { dragon.setPosture('roar', 500); }, 2000);

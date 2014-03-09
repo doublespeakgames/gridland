@@ -369,6 +369,10 @@ body.night {
 	transform: rotate(5deg);
 }
 
+.gameBoard.flipTilted {
+	transform: rotate(-5deg);
+}
+
 .tileContainer {
 	z-index: 1;
 	width: 100%;
@@ -2065,23 +2069,32 @@ body.night {
 	position: absolute;
 	transition-property: transform;
 	transition-timing-function: ease-out;
+	transform-origin: 50% 50%;
 }
 
 .dragon .neck {
 	height: 24px;
 	width: 24px;
 	background: url(../img/dragon-neck.png) no-repeat;
-	transform-origin: 50% 50%;
 	transform: rotate(0deg) translateX(-10px);
 }
 
+.dragon.flip .neck {
+	background-position: 0 -24px;
+}
+
 .dragon .head {
-	height: 28px;
-	width: 60px;
+	height: 30px;
+	width: 81px;
 	background: url(../img/dragon-head.png) no-repeat;
-	transform-origin: 0 50%;
 	transform: rotate(0deg) translateX(-40px);
 	top: -6px;
+	left: -30px;
+}
+
+.dragon.flip .head {
+	left: -29px;
+	background-position: 0 -30px;
 }
 
 .dragon .neck .neck {
@@ -2100,6 +2113,7 @@ body.night {
 	width: 10px;
 	border-radius: 50%;
 	background: red;
+	z-index: 100;
 }
 
 /** END DRAGON **/

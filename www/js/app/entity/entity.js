@@ -31,6 +31,13 @@ define([ 'jquery' ], function($) {
 		}
 		return this._width;
 	};
+	
+	entity.prototype.height = function() {
+		if(this._height == null) {
+			this._height = this.el().height();
+		}
+		return this._height;
+	};
 
 	/**
 	 * Gets or sets the position

@@ -23,13 +23,11 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	var World = {
 			
 		// TEMPORARY
-		dragon: function() {
-			var d = MonsterFactory.getMonster("dragon", null);
-			d.hostile = false;
+		dragon: function(flip) {
+			var d = MonsterFactory.getMonster("dragon", { flip: flip, target: dude });
 			stuff.push(d);
-			Graphics.landDragon(d, function() {
-				d.hostile = true;
-			});
+			d.action = ActionFactory.getAction('Land');
+			d.action.doAction(d);
 			return d;
 		},
 			
