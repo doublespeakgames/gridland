@@ -164,6 +164,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		if(this.isIdle() && this.isAlive() && this.action == null) {
 			if(this.target.isAlive() && this.distanceFrom(this.target) < 5) {
 				this.action = ActionFactory.getAction('Bite', { target: this.target });
+			} else if(this.target.isAlive()) {
+				this.action = ActionFactory.getAction('Fireball', { target: this.target });
 			}
 			if(this.action != null) {
 				this.action.doAction(this);
@@ -181,6 +183,10 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	
 	Dragon.prototype.getDamage = function() {
 		return 10;
+	};
+	
+	Dragon.prototype.getFireballDamage = function() {
+		return 30;
 	};
 	
 	Dragon.prototype.setPosture = function(p, speed) {
@@ -230,7 +236,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 					left = headMount.x + dragonPos.left + headPos.x + 10;
 				}
 				
-				var absHeadPos = {
+				this.absHeadPos = {
 					x: left,
 					y: headMount.y + dragonPos.top + headPos.y,
 					r: headPos.r
@@ -238,7 +244,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 				
 				if(dynamicPos != null) {
 					var newPos = [
-					    getTargetRotation.call(this, absHeadPos, { 
+					    getTargetRotation.call(this, this.absHeadPos, { 
 					    	x: this.target.p(), 
 					    	y: require('app/graphics/graphics').worldHeight() - this.target.height()
 				    	}), 
@@ -248,8 +254,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 				}
 				
 				require('app/graphics/graphics').get('.dragonTest').css({ 
-					top: absHeadPos.y + 'px',
-					left: absHeadPos.x + 'px'
+					top: this.absHeadPos.y + 'px',
+					left: this.absHeadPos.x + 'px'
 				});
 				setTimeout(function() {
 					if(postureSpeedStylesheet.cssRules.length > 0) {

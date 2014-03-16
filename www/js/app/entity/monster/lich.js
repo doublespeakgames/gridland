@@ -58,7 +58,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	
 	Lich.prototype.getLoot = function() {
 		// Lich always drops dragons. How does it carry them all?!
-		return "dragon";
+		return "callDragon";
 	};
 	
 	Lich.prototype.maxHealth = function() {

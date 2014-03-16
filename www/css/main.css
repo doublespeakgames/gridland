@@ -1678,7 +1678,7 @@ body.night {
 	background-position: -112px 0;
 }
 
-.loot.dragon,
+.loot.callDragon,
 .button.dragon div:nth-child(1) {
 	background-position: -140px 0;
 }
@@ -2103,6 +2103,14 @@ body.night {
 
 .dragon .neck .neck .neck {
 	transform: rotate(0deg) translateX(-10px);
+}
+
+.dragonFireball {
+	position: absolute;
+	width: 16px;
+	height: 7px;
+	background: url(../img/fireball.png) transparent;
+	transition: transform 300ms linear;
 }
 
 /** TEMPORARY **/
