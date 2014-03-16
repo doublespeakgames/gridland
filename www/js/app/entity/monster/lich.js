@@ -68,7 +68,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	
 	Lich.prototype.getDamage = function() {
 		// Between 40 and 120
-		return 0;//5;
+		return 5;
 	};
 	
 	Lich.prototype.getHitboxWidth = function() {

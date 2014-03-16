@@ -12,6 +12,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	var gem = null;
 	var effects = {};
 	var isNight = false;
+	var hasDragon = false;
 	var celestialPosition = 0;
 	var stuff = [];
 	var inTransition = false;
@@ -28,6 +29,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			stuff.push(d);
 			d.action = ActionFactory.getAction('Land');
 			d.action.doAction(d);
+			hasDragon = true;
 			return d;
 		},
 			
@@ -406,15 +408,22 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			var type = Content.getResourceType(typeName);
 			if(isNight && !inTransition) {
 				var effect = null;
-				for(var b in type.nightEffect) {
-					if(b == "default" || GameState.hasBuilding(Content.getBuildingType(b))) {
-						effect = type.nightEffect[b];
-						break;
+				if(hasDragon && type.dragonEffect) {
+					effect = 'dragon:' + type.dragonEffect;
+				} else {
+					for(var b in type.nightEffect) {
+						if(b == "default" || GameState.hasBuilding(Content.getBuildingType(b))) {
+							effect = type.nightEffect[b];
+							break;
+						}
 					}
 				}
 				if(effect != null) {
 					var nightEffect = effect.split(':');
 					switch(nightEffect[0]) {
+					case "dragon":
+						console.log("Dragon uses " + nightEffect[1]);
+						break;
 					case "spawn":
 						spawnMonster(nightEffect[1], resourcesGained[typeName], side);
 						break;

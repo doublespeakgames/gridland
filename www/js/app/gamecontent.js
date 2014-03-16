@@ -4,6 +4,7 @@ define({
 		Grain: {
 			char: 'g',
 			className: 'grain',
+			dragonEffect: 'wingbuffet',
 			nightEffect: {
 				'castle': 'spawn:demon',
 				'fort': 'spawn:earthElemental',
@@ -52,6 +53,7 @@ define({
 		Clay: {
 			char: 'c',
 			className: 'clay',
+			dragonEffect: 'icebreath',
 			nightEffect: {
 				'bricklayer4': 'spawn:imp',
 				'bricklayer3': 'spawn:waterElemental',
@@ -68,6 +70,7 @@ define({
 		Cloth: {
 			char: 'l',
 			className: 'cloth',
+			dragonEffect: 'firebreath',
 			nightEffect: {
 				'weaver4': 'spawn:warlock',
 				'weaver3': 'spawn:fireElemental',

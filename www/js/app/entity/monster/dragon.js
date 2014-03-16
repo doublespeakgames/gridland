@@ -186,7 +186,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Dragon.prototype.getFireballDamage = function() {
-		return 30;
+		return 0;//30;
 	};
 	
 	Dragon.prototype.setPosture = function(p, speed) {
