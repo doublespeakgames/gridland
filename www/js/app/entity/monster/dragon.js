@@ -9,8 +9,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		idle: ['close', [80, -10], [15, -10], [-50, -10], [-50, -10]],
 		windup: ['close', [100, -14], [20, -14], [-100, -10], [-19, -10]],
 		roar: ['open', [40, -14], [0, -14], [0, -14], [-22, -8]],
-		aim: ['open', [80, -10], [15, -10], [-50, -10], ['target', -10]],
-		shoot: ['open', [80, -10], [15, -10], [-50, -10], ['target', 5]],
+		aim: ['close', [80, -10], [15, -10], [-50, -10], ['target', -10]],
+		shoot: ['open-fast', [80, -10], [15, -10], [-50, -10], ['target', 5]],
 		aimbite: ['open', [80, -17], [-30, -15], [-30, -15], ['target', -10]],
 		bite: ['close-fast', [65, -17], [-62, -17], [-23, -15], ['target', -15]]
 	};
@@ -251,6 +251,11 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 					    dynamicPos[1]
 				    ];
 					setSegmentPosture(this._segments[this._segments.length - 1], newPos, this.options.flip);
+					if(this.options.flip) {
+						this.absHeadPos.r = 180 + newPos[0] - headPos.r;
+					} else {
+						this.absHeadPos.r = -newPos[0] - headPos.r;
+					}
 				}
 				
 				require('app/graphics/graphics').get('.dragonTest').css({ 
