@@ -1,8 +1,9 @@
 define(['app/entity/monster/monster', 'app/action/actionfactory'], 
 		function(Monster, ActionFactory) {
 	
-	var postureSpeedStylesheet = null;
+	var ANIMATION_ROWS = 5;
 	
+	var postureSpeedStylesheet = null;
 	var headMount = { x: 20, y: 97 };
 	var posture = {
 		stretch: ['close', [0, -10], [0, -10], [0, -10], [0, -10]],
@@ -62,6 +63,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		this.headFrame = 0;
 		this.headState = 'close';
 		this.target = this.options.target;
+		this.attackQueue = [];
 		
 		if(!postureSpeedStylesheet) {
 			var style = document.createElement('style');
@@ -138,12 +140,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Dragon.prototype.animation = function(row, stopTempAnimations) {
-		row += this.options.flip ? 3 : 0;
+		row += this.options.flip ? ANIMATION_ROWS : 0;
 		Monster.prototype.animation.call(this, row, stopTempAnimations);
 	};
 	
 	Dragon.prototype.animationOnce = function(row, stepFunction) {
-		row += this.options.flip ? 3 : 0;
+		row += this.options.flip ? ANIMATION_ROWS : 0;
 		Monster.prototype.animationOnce.call(this, row, stepFunction);
 	};
 	
@@ -162,7 +164,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	
 	Dragon.prototype.think = function() {
 		if(this.isIdle() && this.isAlive() && this.action == null) {
-			if(this.target.isAlive() && this.distanceFrom(this.target) < 5) {
+			if(this.attackQueue.length > 0) {
+				this.action = ActionFactory.getAction(
+					this.attackQueue.splice(this.attackQueue.length - 1), 
+					{ target: this.target }
+				);
+			} else if(this.target.isAlive() && this.distanceFrom(this.target) < 5) {
 				this.action = ActionFactory.getAction('Bite', { target: this.target });
 			} else if(this.target.isAlive()) {
 				this.action = ActionFactory.getAction('Fireball', { target: this.target });
@@ -175,6 +182,10 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 			}
 		}
 		return false;
+	};
+	
+	Dragon.prototype.queueAttack = function(attackName) {
+		this.attackQueue.push(attackName);
 	};
 	
 	Dragon.prototype.maxHealth = function() {

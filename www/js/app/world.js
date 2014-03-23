@@ -12,7 +12,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	var gem = null;
 	var effects = {};
 	var isNight = false;
-	var hasDragon = false;
+	var theDragon = null;
 	var celestialPosition = 0;
 	var stuff = [];
 	var inTransition = false;
@@ -29,9 +29,14 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			stuff.push(d);
 			d.action = ActionFactory.getAction('Land');
 			d.action.doAction(d);
-			hasDragon = true;
+			theDragon = d;
 			return d;
 		},
+		dragonAttack: function(attackName) {
+			doDragonAttack(attackName);
+		},
+		
+		// END TEMPORARY
 			
 		options: {
 			dayMoves: 20,
@@ -422,7 +427,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					var nightEffect = effect.split(':');
 					switch(nightEffect[0]) {
 					case "dragon":
-						console.log("Dragon uses " + nightEffect[1]);
+						doDragonAttack(nightEffect[1]);
 						break;
 					case "spawn":
 						spawnMonster(nightEffect[1], resourcesGained[typeName], side);
@@ -620,6 +625,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			launchCelestial();
 		}
 		Resources.setSize(rows, cols);
+	}
+	
+	function doDragonAttack(attackName) {
+		theDragon.queueAttack(attackName);
 	}
 	
 	return World;
