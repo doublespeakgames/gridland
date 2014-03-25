@@ -4,7 +4,7 @@ define({
 		Grain: {
 			char: 'g',
 			className: 'grain',
-			dragonEffect: 'wingbuffet',
+			dragonEffect: 'WingBuffet',
 			nightEffect: {
 				'castle': 'spawn:demon',
 				'fort': 'spawn:earthElemental',

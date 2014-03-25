@@ -413,7 +413,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			var type = Content.getResourceType(typeName);
 			if(isNight && !inTransition) {
 				var effect = null;
-				if(hasDragon && type.dragonEffect) {
+				if(theDragon && type.dragonEffect) {
 					effect = 'dragon:' + type.dragonEffect;
 				} else {
 					for(var b in type.nightEffect) {

@@ -307,13 +307,14 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			tile.el().removeClass('selected');
 		},
 		
-		animateMove: function(entity, pos, callback, stopShort) {
+		animateMove: function(entity, pos, callback, stopShort, speedOverride) {
 			var el = entity.el();
+			var speed = speedOverride || entity.speed();
 			var dist = Math.abs(entity.p() - pos);
 			el.stop().animate({
 				'left': pos - (entity.width() / 2)
 			}, {
-				duration: dist * entity.speed(), 
+				duration: dist * speed, 
 				easing: 'linear', 
 				step: function(now, tween) {
 					entity.p(now + entity.width() / 2);
