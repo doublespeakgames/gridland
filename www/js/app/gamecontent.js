@@ -53,7 +53,7 @@ define({
 		Clay: {
 			char: 'c',
 			className: 'clay',
-			dragonEffect: 'icebreath',
+			dragonEffect: 'IceBeam',
 			nightEffect: {
 				'bricklayer4': 'spawn:imp',
 				'bricklayer3': 'spawn:waterElemental',
@@ -598,6 +598,24 @@ define({
 		haste: {
 			className: 'haste',
 			duration: 30000
+		},
+		frozen: {
+			className: 'frozen',
+			duration: 8000,
+			start: function(entity) {
+				entity.paused = true;
+				this._worldEffect = new (require('app/entity/worldeffect'))('iceBlock');
+				this._worldEffect.p(entity.p());
+				require('app/graphics/graphics').addToWorld(this._worldEffect);
+			},
+			end: function(entity) {
+				entity.paused = false;
+				this._worldEffect.el().remove();
+			}
+		},
+		burning: {
+			className: 'burning',
+			duration: 15000
 		}
 	},
 	

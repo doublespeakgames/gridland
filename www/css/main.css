@@ -1271,6 +1271,17 @@ body.night {
 	background-position: -16px;
 }
 
+.worldEffect {
+	position: absolute;
+	bottom: 0px;
+}
+
+.worldEffect.iceBlock {
+	width: 30px;
+	height: 44px;
+	background: url(../img/iceblock.png) transparent no-repeat;
+}
+
 /** Status **/
 
 .statusContainer {
@@ -1904,6 +1915,14 @@ body.night {
 	background-position: -120px -40px;
 }
 
+.frozen {
+	background-position: -160px 0;
+}
+
+.night .frozen {
+	background-position: -160px -40px;
+}
+
 .states {
 	position: absolute;
 	right: -32px;
@@ -2132,6 +2151,26 @@ body.night {
 	height: 60px;
 	border-radius: 30px;
 	opacity: 0;
+}
+
+@keyframes beam {
+	0%	{ width: 0px; height: 0px; margin-right: 0px; margin-top: 0px; }
+	75% { width: 30px; height: 30px; margin-right: -15px; margin-top: -15px; }
+	100% { width: 400px; height: 0px; margin-right: -15px; margin-top: 0px; }
+}
+
+.dragon .head .iceBeam {
+	position: absolute;
+	right: 94px;
+	top: 19px;
+}
+
+.iceBeam:before {
+	content: ' ';
+	display: block;
+	border-radius: 50%;
+	background-color: white;
+	animation: beam 1000ms 1;
 }
 
 /** TEMPORARY **/

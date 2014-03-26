@@ -1,10 +1,10 @@
 define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 'app/entity/building', 
 		'app/gamecontent', 'app/gamestate', 'app/action/actionfactory', 'app/entity/monster/monsterfactory',
         'app/entity/block', 'app/entity/gem', 'app/resources', 'app/entity/celestial', 'app/entity/dude',
-        'app/entity/star'], 
+        'app/entity/star', 'app/entity/worldeffect'], 
 		function($, EventManager, Analytics, Graphics, Building, Content, GameState, 
 				ActionFactory, MonsterFactory, Block, Gem, Resources, Celestial, Dude,
-				Star) {
+				Star, WorldEffect) {
 	
 	var hasteTick = false;
 	var dude = null;
@@ -380,7 +380,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		if(existingEffect != null) {
 			clearTimeout(existingEffect);
 		}
+		effect.start && effect.start(dude);
 		effects[effect.className] = setTimeout(function() {
+			effect.end && effect.end(dude);
 			effects[effect.className] = null;
 			stopAllActions();
 		}, effect.duration);
