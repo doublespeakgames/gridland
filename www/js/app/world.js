@@ -368,7 +368,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	function stopAllActions() {
 		for(var i in stuff) {
 			var entity = stuff[i];
-			if(entity.action != null) {
+			if(!entity.uninterruptable && entity.action != null) {
 				entity.action.terminateAction(entity);
 			}
 		}

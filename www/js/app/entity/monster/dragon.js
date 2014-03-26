@@ -66,6 +66,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		this.headState = 'close';
 		this.target = this.options.target;
 		this.attackQueue = [];
+		this.uninterruptable = true;
 		
 		if(!postureSpeedStylesheet) {
 			var style = document.createElement('style');

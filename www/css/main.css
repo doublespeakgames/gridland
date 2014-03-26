@@ -2159,9 +2159,20 @@ body.night {
 	100% { width: 400px; height: 0px; margin-right: -15px; margin-top: 0px; }
 }
 
+@keyframes beam-flip {
+	0%	{ width: 0px; height: 0px; margin-left: 0px; margin-top: 0px; }
+	75% { width: 30px; height: 30px; margin-left: -15px; margin-top: -15px; }
+	100% { width: 400px; height: 0px; margin-left: -15px; margin-top: 0px; }
+}
+
 .dragon .head .iceBeam {
 	position: absolute;
 	right: 94px;
+	top: 19px;
+}
+
+.dragon.flip .head .iceBeam {
+	left: 84px;
 	top: 19px;
 }
 

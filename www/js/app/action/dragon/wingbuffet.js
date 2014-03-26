@@ -24,7 +24,7 @@ define(['app/action/action'], function(Action) {
 				this.entity.action = null;
 				this.state = 3;
 			}
-		} else if(frame == 3 && this.state == 1) {
+		} else if(frame == 3 && this.state == 1 && !require('app/world').hasEffect('frozen')) {
 			this.target.action && this.target.action.terminateAction(this.target);
 			this.target.action = require('app/action/actionfactory')
 				.getAction('Slide', { flipped: this.entity.options.flip });
