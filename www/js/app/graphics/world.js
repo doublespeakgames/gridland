@@ -29,6 +29,10 @@ define(['app/eventmanager'], function(E) {
 		
 		add: function(thing) {
 			el().append(thing);
+		},
+		
+		remove: function(thing) {
+			thing.remove();
 		}
 	};
 });

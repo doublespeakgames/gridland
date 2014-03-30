@@ -99,6 +99,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			
 			EventManager.bind('monsterKilled', this.monsterKilled);
 			EventManager.bind('newEntity', this.addToWorld);
+			EventManager.bind('removeEntity', this.removeFromWorld);
 			EventManager.bind('healthChanged', this.updateHealthBar);
 			EventManager.bind('dayBreak', this.handleDayBreak);
 			EventManager.bind('blockDown', showCosts);
@@ -168,6 +169,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				}
 				g.updateSprite(entity);
 			}
+		},
+		
+		removeFromWorld: function(entity) {
+			WorldGraphics.remove(entity.el ? entity.el() : entity);
 		},
 		
 		worldWidth: function() {

@@ -207,6 +207,10 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		return 0;//30;
 	};
 	
+	Dragon.prototype.getFireBlastDamage = function() {
+		return 0; // TODO: Figure this out
+	};
+	
 	Dragon.prototype.setPosture = function(p, speed) {
 		if(this.currentPosture == null || this.currentPosture != p) {
 			this.currentPosture = p;

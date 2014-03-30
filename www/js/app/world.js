@@ -59,6 +59,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			EventManager.bind('healDude', healDude);
 			EventManager.bind('hurtDude', hurtDude);
 			EventManager.bind('newEntity', handleNewEntity);
+			EventManager.bind('removeEntity', handleRemoveEntity);
 			EventManager.bind('buildingComplete', handleNewEntity);
 			EventManager.bind('buildingComplete', clearPriorityIfNeeded);
 			EventManager.bind('tilesCleared', handleTileClear);
@@ -234,7 +235,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		removeBuilding: function(type) {
 			var building = GameState.getBuilding(type);
 			building.obsolete = true;
-			stuff.splice(stuff.indexOf(building));
+			stuff.splice(stuff.indexOf(building), 1);
 			building.el().remove();
 		},
 		
@@ -390,6 +391,15 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	
 	function handleNewEntity(entity) {
 		stuff.push(entity);
+	}
+	
+	function handleRemoveEntity(entity) {
+		for(var i in stuff) {
+			if(stuff[i] == entity) {
+				stuff.splice(i, 1);
+				return;
+			}
+		}
 	}
 	
 	function handleTilesSwapped() {

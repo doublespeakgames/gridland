@@ -1,9 +1,9 @@
 define(['app/action/moveblock', 'app/action/raisebuilding', 'app/action/moveto', 'app/action/attack', 'app/action/die',
         'app/action/fastattack', 'app/action/shoot', 'app/action/getloot', 'app/action/climb', 'app/action/lichspell',
         'app/action/teleport', 'app/action/dragon/land', 'app/action/dragon/bite', 'app/action/dragon/fireball',
-        'app/action/dragon/wingbuffet', 'app/action/slide', 'app/action/dragon/icebeam'], 
+        'app/action/dragon/wingbuffet', 'app/action/slide', 'app/action/dragon/icebeam', 'app/action/dragon/fireblast'], 
 		function(MoveBlock, RaiseBuilding, MoveTo, Attack, Die, FastAttack, Shoot, GetLoot, Climb, LichSpell,
-				 Teleport, Land, Bite, Fireball, WingBuffet, Slide, IceBeam) {
+				 Teleport, Land, Bite, Fireball, WingBuffet, Slide, IceBeam, FireBlast) {
 	
 	return {
 		_actions: {
@@ -23,7 +23,8 @@ define(['app/action/moveblock', 'app/action/raisebuilding', 'app/action/moveto',
 			"Fireball": Fireball,
 			"WingBuffet": WingBuffet,
 			"Slide": Slide,
-			"IceBeam": IceBeam
+			"IceBeam": IceBeam,
+			"FireBlast": FireBlast
 		},
 		
 		getAction: function(actionName, options) {

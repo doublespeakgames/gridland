@@ -604,18 +604,14 @@ define({
 			duration: 8000,
 			start: function(entity) {
 				entity.paused = true;
-				this._worldEffect = new (require('app/entity/worldeffect'))('iceBlock');
+				this._worldEffect = new (require('app/entity/worldeffect'))({effectClass: 'iceBlock'});
 				this._worldEffect.p(entity.p());
-				require('app/graphics/graphics').addToWorld(this._worldEffect);
+				require('app/eventmanager').trigger('newEntity', [this._worldEffect]);
 			},
 			end: function(entity) {
 				entity.paused = false;
-				this._worldEffect.el().remove();
+				require('app/eventmanager').trigger('removeEntity', [this._worldEffect]);
 			}
-		},
-		burning: {
-			className: 'burning',
-			duration: 15000
 		}
 	},
 	

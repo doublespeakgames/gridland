@@ -1279,7 +1279,13 @@ body.night {
 .worldEffect.iceBlock {
 	width: 30px;
 	height: 44px;
-	background: url(../img/iceblock.png) transparent no-repeat;
+	background: url(../img/dragoneffects.png) transparent no-repeat;
+}
+
+.worldEffect.fire {
+	width: 30px;
+	height: 44px;
+	background: url(../img/dragoneffects.png) transparent no-repeat;
 }
 
 /** Status **/
@@ -2165,13 +2171,27 @@ body.night {
 	100% { width: 400px; height: 0px; margin-left: -15px; margin-top: 0px; }
 }
 
-.dragon .head .iceBeam {
+@keyframes blast {
+	0%	{ width: 0px; height: 0px; top: 0px; right: 0px; }
+	75% { width: 30px; height: 30px; top: -15px; right: -15px; }
+	100% { width: 30px; height: 10px; top: -5px; right: 100%; }
+}
+
+@keyframes blast-flip {
+	0%	{ width: 0px; height: 0px; left: 0px; top: 0px; }
+	75% { width: 30px; height: 30px; left: -15px; top: -15px; }
+	100% { width: 30px; height: 10px; left: 100%; top: -5px; }
+}
+
+.dragon .head .iceBeam,
+.dragon .head .fireBlast {
 	position: absolute;
 	right: 94px;
 	top: 19px;
 }
 
-.dragon.flip .head .iceBeam {
+.dragon.flip .head .iceBeam,
+.dragon.flip .head .fireBlast {
 	left: 84px;
 	top: 19px;
 }
@@ -2182,6 +2202,21 @@ body.night {
 	border-radius: 50%;
 	background-color: white;
 	animation: beam 1000ms 1;
+}
+
+.fireBlast:before {
+	content: ' ';
+	display: block;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	border-radius: 50%;
+	background-color: white;
+	animation: blast 1000ms infinite;
+}
+
+.flip .fireBlast:before {
+	animation: blast-flip 1000ms infinite;
 }
 
 /** TEMPORARY **/
