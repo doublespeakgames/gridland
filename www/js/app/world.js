@@ -68,6 +68,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			EventManager.bind('updateGem', updateGem);
 			EventManager.bind('phaseChange', phaseTransition);
 			EventManager.bind('newStateEffect', addStateEffect);
+			EventManager.bind('endStateEffect', endStateEffect);
 			EventManager.bind('levelUp', wipeMonsters);
 			EventManager.bind('resourceStoreChanged', handleResourceStoreChanged);
 			EventManager.bind('prioritizeBuilding', prioritizeBuilding);
@@ -274,6 +275,17 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		
 		reportRecord: function() {
 			console.log(recorded + " resources have been gained.");
+		},
+		
+		removeAllEffects: function(effectClass) {
+			var len = stuff.length;
+			while(len--) {
+				var thing = stuff[len];
+				if(thing instanceof WorldEffect && thing.options.effectClass == effectClass) {
+					stuff.splice(len, 1);
+					thing.el().remove();
+				}
+			}
 		}
 	};
 	
@@ -387,6 +399,14 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			effects[effect.className] = null;
 			stopAllActions();
 		}, effect.duration);
+	}
+	
+	function endStateEffect(effect) {
+		var existingEffect = effects[effect.className];
+		if(existingEffect != null) {
+			clearTimeout(existingEffect);
+			effect.end && effect.end(dude);
+		}
 	}
 	
 	function handleNewEntity(entity) {

@@ -24,11 +24,14 @@ define(['app/action/action'], function(Action) {
 				this.entity.action = null;
 				this.state = 3;
 			}
-		} else if(frame == 3 && this.state == 1 && !require('app/world').hasEffect('frozen')) {
-			this.target.action && this.target.action.terminateAction(this.target);
-			this.target.action = require('app/action/actionfactory')
-				.getAction('Slide', { flipped: this.entity.options.flip });
-			this.target.action.doAction(this.target);
+		} else if(frame == 3 && this.state == 1) {
+			if(!require('app/world').hasEffect('frozen')) {
+				this.target.action && this.target.action.terminateAction(this.target);
+				this.target.action = require('app/action/actionfactory')
+					.getAction('Slide', { flipped: this.entity.options.flip });
+				this.target.action.doAction(this.target);
+			}
+			require('app/world').removeAllEffects('fire');
 		}
 		adjustHead(this.entity, this.state, frame);
 	};

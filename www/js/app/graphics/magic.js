@@ -100,6 +100,10 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 		}, effect.duration);
 	}
 	
+	function removeStateEffect(effect) {
+		states().find('.' + effect.className).remove();
+	}
+	
 	return {
 		init: function() {
 			_el = null;
@@ -107,6 +111,7 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 			E.bind("magicClick", handleClick);
 			E.bind("toggleMenu", toggleMenu);
 			E.bind("newStateEffect", drawStateEffect);
+			E.bind("endStateEffect", removeStateEffect);
 			E.bind("enableMagic", function() {
 				el(); // Trigger graphics initialization
 			});

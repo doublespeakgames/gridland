@@ -1,6 +1,6 @@
 define(['app/action/action'], function(Action) {
 	
-	var DURATION = 5000;
+	var DURATION = 10000;
 	var BURN_DAMAGE = 1;
 	
 	var FireBlast = function(options) {
@@ -40,7 +40,8 @@ define(['app/action/action'], function(Action) {
 						if(Math.abs(_this.target.p() - fireEffect.p()) < fireEffect.width() / 2 ) {
 							_this.target.takeDamage(BURN_DAMAGE);
 							if(require('app/world').hasEffect('frozen')) {
-								
+								require('app/eventmanager').trigger('endStateEffect', 
+										[require('app/gamecontent').StateEffects.frozen]);
 							}
 						} 
 					}

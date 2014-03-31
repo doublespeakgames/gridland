@@ -13,7 +13,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		aim: ['close', [80, -10], [15, -10], [-50, -10], ['target', -10]],
 		aimClose: ['close-fast', [80, -10], [15, -10], [-50, -10], ['target', -10]],
 		aimOpen: ['open', [80, -10], [15, -10], [-50, -10], ['target', -10]],
-		shoot: ['open-fast', [80, -10], [15, -10], [-50, -10], ['target', 5]],
+		shoot: ['open-fast', [80, -10], [15, -10], [-50, -10], ['target', -5]],
 		aimbite: ['open', [80, -17], [-30, -15], [-30, -15], ['target', -10]],
 		bite: ['close-fast', [65, -17], [-62, -17], [-23, -15], ['target', -15]]
 	};
@@ -173,7 +173,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		if(this.isIdle() && this.isAlive() && this.action == null) {
 			if(this.attackQueue.length > 0) {
 				this.action = ActionFactory.getAction(
-					this.attackQueue.splice(this.attackQueue.length - 1), 
+					this.attackQueue.splice(0, 1), 
 					{ target: this.target }
 				);
 			} else if(this.target.isAlive() && this.distanceFrom(this.target) < 5) {
@@ -208,7 +208,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Dragon.prototype.getFireBlastDamage = function() {
-		return 0; // TODO: Figure this out
+		return this.getFireballDamage();
 	};
 	
 	Dragon.prototype.setPosture = function(p, speed) {
