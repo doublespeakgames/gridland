@@ -2086,7 +2086,7 @@ body.night {
 }
 
 .dragon .healthBar {
-	margin-left: 6px;
+	display: none;
 }
 
 .dragon .neck,
@@ -2217,6 +2217,34 @@ body.night {
 
 .flip .fireBlast:before {
 	animation: blast-flip 1000ms infinite;
+}
+
+.bossHealth {
+	position: absolute;
+	border: 2px solid white;
+	background-color: black;
+	box-shadow: 0 0 10px 1px black;
+	margin-left: -202px;
+	top: 5px;
+	left: 50%;
+	z-index: 10;
+	opacity: 0.8;
+	height: 6px;
+	width: 400px;
+	transition: width 1s, opacity 200ms, margin-left 1s;
+}
+
+.bossHealth.noshow {
+	width: 0px;
+	margin-left: 0px;
+	opacity: 0;
+}
+
+.bossHealth div {
+	height: 100%;
+	width: 100%;
+	background-color: #BC4D4D;
+	transition: width 200ms linear;
 }
 
 /** TEMPORARY **/

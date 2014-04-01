@@ -625,7 +625,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	function wipeMonsters() {
 		for(var i in stuff) {
 			var entity = stuff[i];
-			if(entity.hostile && entity.isAlive()) {
+			if(entity.hostile && entity.isAlive() && !entity.isBoss) {
 				entity.wiped = true;
 				entity.die();
 				EventManager.trigger('monsterKilled', [entity]);

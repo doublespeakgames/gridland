@@ -67,6 +67,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		this.target = this.options.target;
 		this.attackQueue = [];
 		this.uninterruptable = true;
+		this.isBoss = true;
 		
 		if(!postureSpeedStylesheet) {
 			var style = document.createElement('style');

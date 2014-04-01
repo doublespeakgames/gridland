@@ -7,6 +7,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	var textStore;
 	var costsOn = false;
 	var _ww = null, _wh = null;
+	var _bossHealth = null;
 	
 	function handleDrawRequest(requestString, options) {
 		var moduleString = requestString.substring(0, requestString.indexOf('.'));
@@ -536,10 +537,14 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		updateHealthBar: function(entity) {
-			var bar = entity.el().find('.healthBar div');
-			if(bar.length > 0) {
-				var healthPercent = Math.floor(entity.hp() / entity.maxHealth() * 100);
-				bar.css('width', healthPercent + '%');
+			if(entity.isBoss) {
+				Graphics.setBossHealth(entity.hp(), entity.maxHealth());
+			} else {
+				var bar = entity.el().find('.healthBar div');
+				if(bar.length > 0) {
+					var healthPercent = Math.floor(entity.hp() / entity.maxHealth() * 100);
+					bar.css('width', healthPercent + '%');
+				}
 			}
 		},
 		
@@ -566,6 +571,25 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			$('#playButton').removeClass('hidden').text(Graphics.getText('PLAY'));
 		},
 		
+		setBossHealth: function(hp, max) {
+			if(_bossHealth == null) {
+				_bossHealth = Graphics.make('bossHealth noshow').append(Graphics.make());
+				WorldGraphics.add(_bossHealth)
+				_bossHealth.css('left');
+				_bossHealth.removeClass('noshow');
+			}
+			
+			_bossHealth.find('div').css('width', (hp / max * 100) + '%');
+			
+			if(hp <= 0) {
+				_bossHealth.addClass('noshow');
+				setTimeout(function() {
+					_bossHealth.remove();
+					_bossHealth = null;
+				}, 1000);
+			}
+		},
+		
 		landDragon: function(dragon, cb) {
 			dragon.setPosture('idle');
 			dragon.el().css('transform', 'translateY(-100%)');
@@ -577,6 +601,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			dragon.el().css('transform', 'translateY(0)');
 			var tiltClass = dragon.options.flip ? 'flipTilted' : 'tilted';
 			setTimeout(function() {
+				EventManager.trigger('wipeMonsters');
 				dragon.animation(0);
 				dragon.animationOnce(2, function(frame) {
 					dragon.setNeckMount((function() {
@@ -597,6 +622,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				changeTiles(['clay', 'cloth', 'grain'], 'dragonFight', '');
 			}, 1000);
 			setTimeout(function() {
+				Graphics.setBossHealth(dragon.hp(), dragon.maxHealth());
 				BoardGraphics.el().removeClass(tiltClass);
 				dragon.setPosture('windup', 500);
 			}, 1500);
