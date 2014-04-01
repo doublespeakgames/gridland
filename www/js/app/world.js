@@ -47,6 +47,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			effects = {};
 			isNight = false;
 			celestialPosition = 0;
+			theDragon = null;
 			var deferredCallbacks = [];
 			
 			EventManager.bind('launchDude', launchDude);
@@ -399,6 +400,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	
 	function endStateEffect(effect) {
 		var existingEffect = effects[effect.className];
+		effects[effect.className] = null;
 		if(existingEffect != null) {
 			clearTimeout(existingEffect);
 			effect.end && effect.end(dude);

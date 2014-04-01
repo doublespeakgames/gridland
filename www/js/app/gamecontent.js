@@ -70,7 +70,7 @@ define({
 		Cloth: {
 			char: 'l',
 			className: 'cloth',
-			dragonEffect: 'firebreath',
+			dragonEffect: 'FireBlast',
 			nightEffect: {
 				'weaver4': 'spawn:warlock',
 				'weaver3': 'spawn:fireElemental',
@@ -605,13 +605,16 @@ define({
 			duration: 8000,
 			start: function(entity) {
 				entity.paused = true;
-				this._worldEffect = new (require('app/entity/worldeffect'))({effectClass: 'iceBlock'});
-				this._worldEffect.p(entity.p());
-				require('app/eventmanager').trigger('newEntity', [this._worldEffect]);
+				if(this._worldEffect == null) {
+					this._worldEffect = new (require('app/entity/worldeffect'))({effectClass: 'iceBlock'});
+					this._worldEffect.p(entity.p());
+					require('app/eventmanager').trigger('newEntity', [this._worldEffect]);
+				}
 			},
 			end: function(entity) {
 				entity.paused = false;
 				require('app/eventmanager').trigger('removeEntity', [this._worldEffect]);
+				this._worldEffect = null;
 			}
 		}
 	},
