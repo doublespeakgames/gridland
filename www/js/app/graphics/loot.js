@@ -20,9 +20,14 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 		if(btn == null) {
 			btn = G.make("hidden button litBorder " + loot)
 				.append(G.make())
-				.append(G.make()).append(G.make()).append(G.make())
 				.data('lootName', loot)
-				.appendTo(el());
+				.appendTo(el())
+				.append(G.make());
+			if(!require('app/gamecontent').LootType[loot].large) {
+				btn.append(G.make()).append(G.make());
+			} else {
+				btn.addClass('large');
+			}
 		}
 		btn.removeClass('charge_0 charge_1 charge_2 charge_3').addClass('charge_' + num);
 		btn.removeClass('hidden');

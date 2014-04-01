@@ -577,9 +577,10 @@ define({
 				E.trigger('fillEquipment');
 			}
 		},
-		dragon: {
+		callDragon: {
+			large: true,
 			onUse: function() {
-				console.log("TODO: SUMMON THE DRAGON!");
+				require('app/eventmanager').trigger('callDragon');
 			}
 		}
 	},

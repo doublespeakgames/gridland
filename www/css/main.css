@@ -1634,7 +1634,8 @@ body.night {
 	background-color: white;
 }
 
-.inventory .button div:nth-child(3) {
+.inventory .button div:nth-child(3),
+.inventory .button.large div:nth-child(2) {
 	bottom: -5px;
 	left: 14px;
 }
@@ -1696,7 +1697,7 @@ body.night {
 }
 
 .loot.callDragon,
-.button.dragon div:nth-child(1) {
+.button.callDragon div:nth-child(1) {
 	background-position: -140px 0;
 }
 

@@ -24,13 +24,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	var World = {
 			
 		// TEMPORARY
-		dragon: function(flip) {
-			var d = MonsterFactory.getMonster("dragon", { flip: flip, target: dude });
-			stuff.push(d);
-			d.action = ActionFactory.getAction('Land');
-			d.action.doAction(d);
-			theDragon = d;
-			return d;
+		dragon: function() {
+			callDragon();
 		},
 		dragonAttack: function(attackName) {
 			doDragonAttack(attackName);
@@ -72,6 +67,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			EventManager.bind('levelUp', wipeMonsters);
 			EventManager.bind('resourceStoreChanged', handleResourceStoreChanged);
 			EventManager.bind('prioritizeBuilding', prioritizeBuilding);
+			EventManager.bind('callDragon', callDragon);
 			EventManager.bind('fillEquipment', function() {
 				fillDefense();
 				fillAttack();
@@ -657,6 +653,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			launchCelestial();
 		}
 		Resources.setSize(rows, cols);
+	}
+	
+	function callDragon() {
+		theDragon = MonsterFactory.getMonster("dragon", { flip: dude.p() >= Graphics.worldWidth() / 2, target: dude });
+		stuff.push(theDragon);
+		theDragon.action = ActionFactory.getAction('Land');
+		theDragon.action.doAction(theDragon);
 	}
 	
 	function doDragonAttack(attackName) {
