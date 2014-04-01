@@ -35,10 +35,15 @@ define(['app/action/action'], function(Action) {
 				setTimeout(function() {
 					explosion.remove();
 				}, 400);
-				entity.action = null;
+				if(!_this.terminated) { entity.action = null; }
 				_this.target.takeDamage(entity.getFireballDamage());
 			}, 300);
 		}, 500);
+	};
+	
+	Fireball.prototype.terminateAction = function(entity) {
+		this.terminated = true;
+		Action.prototype.terminateAction.call(this, entity);
 	};
 
 	return Fireball;

@@ -16,6 +16,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	var HOLE = 'O';
 	var NO_EFFECT = '!';
 	var moved = false;
+	var locked = false;
 	
 	var GameBoard = {
 		SEP: 'X',
@@ -86,7 +87,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		},
 		
 		canMove: function() {
-			return dropCount == 0 && removals == 0;
+			return dropCount == 0 && removals == 0 && !locked;
 		}
 	};
 	

@@ -15,7 +15,9 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		aimOpen: ['open', [80, -10], [15, -10], [-50, -10], ['target', -10]],
 		shoot: ['open-fast', [80, -10], [15, -10], [-50, -10], ['target', -5]],
 		aimbite: ['open', [80, -17], [-30, -15], [-30, -15], ['target', -10]],
-		bite: ['close-fast', [65, -17], [-62, -17], [-23, -15], ['target', -15]]
+		bite: ['close-fast', [65, -17], [-62, -17], [-23, -15], ['target', -15]],
+		thrashup: ['open', [20, -10], [20, -10], [20, -10], [20, -10]],
+		thrashdown: ['open', [-20, -10], [-20, -10], [-20, -10], [-20, -10]]
 	};
 	
 	var _headWidth = null, _headHeight = null, _width = null;
@@ -95,6 +97,14 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 			this._segments.push(G.make('head').appendTo(this._segments[2]));
 		}
 		return this._el;
+	};
+	
+	Dragon.prototype.die = function() {
+		if(this.action != null) {
+			this.action.terminateAction(this);
+		}
+		this.action = require('app/action/actionfactory').getAction("DragonDie");
+		this.action.doAction(this);
 	};
 	
 	Dragon.prototype.getHead = function() {

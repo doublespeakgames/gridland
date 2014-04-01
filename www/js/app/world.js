@@ -25,7 +25,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			
 		// TEMPORARY
 		dragon: function() {
-			callDragon();
+			return callDragon();
 		},
 		dragonAttack: function(attackName) {
 			doDragonAttack(attackName);
@@ -662,6 +662,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		stuff.push(theDragon);
 		theDragon.action = ActionFactory.getAction('Land');
 		theDragon.action.doAction(theDragon);
+		return theDragon;
 	}
 	
 	function doDragonAttack(attackName) {
