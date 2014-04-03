@@ -533,7 +533,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		var idx = effectString.indexOf(effectChar);
 		if(idx >= 0) {
 			// Tell Graphics
-			EventManager.trigger('drawRemoveeffect', [{
+			EventManager.trigger('drawRemoveEffect', [{
 				row: getRow(idx),
 				column: getColumn(idx),
 				effectType: effectMap[effectChar].type

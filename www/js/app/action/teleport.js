@@ -42,5 +42,11 @@ define(['app/action/action'], function(Action) {
 		}
 	};
 	
+	Teleport.prototype.terminateAction = function(entity) {
+		entity.el().removeClass('hidden');
+		entity.hidden = false;
+		Action.prototype.terminateAction.call(this, entity);
+	};
+	
 	return Teleport;
 });

@@ -5,8 +5,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		this.options = $.extend({}, this.options, {}, options);
 		this.hp(this.maxHealth());
 		this.xp = 1000;
-		this.spellCooldown = 24;
-		this.teleportCooldown = 72;
+		this.spellCooldown = 16;
+		this.teleportCooldown = 52;
 	};
 	Lich.prototype = new Monster({
 		monsterClass: 'lich',
