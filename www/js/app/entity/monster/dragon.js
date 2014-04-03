@@ -250,14 +250,14 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 					_this.el().addClass('gone');
 					setTimeout(function() {
 						b.removeClass('bigExplosion').removeClass('fade');
-					}, 500);
+					}, 1000);
 					setTimeout(function() {
 						explosion.remove();
 						_this.el().remove();
 						_this.dead = true;
 						_this.action = null;
 						_this.gone = true;
-					}, 2500);
+					}, 2000);
 				}, delay);
 			}
 		})();
