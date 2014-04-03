@@ -62,8 +62,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	};
 	
 	Lich.prototype.maxHealth = function() {
-		// 9 hits with sword, 25 without
-		return 75;
+		// 15 hits with sword, 40 without
+		return 120;
 	};
 	
 	Lich.prototype.getDamage = function() {
