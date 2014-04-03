@@ -21,6 +21,16 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	var prioritizedBuilding = null;
 	var recorded = null;
 	
+	var _debugMultiplier = 1;
+	window.multiplier = function(n) {
+		_debugMultiplier = n > 0 ? n : 1;
+		if(_debugMultiplier > 1) {
+			World.getDude().options.speed = 1;
+		} else {
+			World.getDude().options.speed = 40;
+		}
+	};
+	
 	var World = {
 			
 		// TEMPORARY
@@ -485,6 +495,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 						}
 					}
 				}
+				// Apply debug multiplier
+				quantity *= _debugMultiplier;
+				
 				if(type == Content.ResourceType.Grain) {
 					EventManager.trigger("healDude", [quantity]);
 				} else if(type ==  Content.ResourceType.Mana) {
@@ -519,7 +532,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					}
 				} else if(entity.hostile) {
 					if(isNight && !entity.wiped) {
-						dude.gainXp(entity.xp);
+						dude.gainXp(entity.xp * _debugMultiplier);
 						advanceTime();
 					}
 					EventManager.trigger('monsterKilled', [entity]);

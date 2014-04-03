@@ -534,6 +534,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					'opacity': 0
 				});
 			}, 500);
+			setTimeout(function() {
+				effect.remove();
+			}, 1000);
 		},
 		
 		updateHealthBar: function(entity) {

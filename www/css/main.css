@@ -1003,7 +1003,9 @@ body.night {
 }
 
 .cloth3 .block.cloth div,
-.cloth3 .cloth .ghost {
+.cloth3 .cloth .ghost,
+.cloth4 .block.cloth div,
+.cloth4 .cloth .ghost {
 	background-color: #853AFF;
 }
 
