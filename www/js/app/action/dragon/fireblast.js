@@ -15,7 +15,7 @@ define(['app/action/action'], function(Action) {
 		var G = require('app/graphics/graphics');
 		entity.setPosture('aimClose', 100);
 		var _this = this;
-		setTimeout(function() {
+		this.timeout = setTimeout(function() {
 			var delta = Math.sqrt(Math.pow(_this.target.p() - entity.absHeadPos.x, 2) + Math.pow(entity.absHeadPos.y, 2));
 			var blast = G.make('fireBlast').css('width', (delta - 60) + 'px');
 			entity.setPosture('aimOpen', 500);
@@ -29,7 +29,8 @@ define(['app/action/action'], function(Action) {
 					explosion.remove();
 				}, 400);
 				blast.remove();
-				entity.action = null;
+				
+				if(!_this.terminated) { entity.action = null; }
 				
 				_this.target.takeDamage(entity.getFireBlastDamage());
 				var fireEffect = new (require('app/entity/worldeffect'))({ 
@@ -53,6 +54,12 @@ define(['app/action/action'], function(Action) {
 				}, DURATION);
 			}, 1000);
 		}, 100);
+	};
+	
+	FireBlast.prototype.terminateAction = function(entity) {
+		this.terminated = true;
+		clearTimeout(this.timeout);
+		Action.prototype.terminateAction.call(this, entity);
 	};
 
 	return FireBlast;

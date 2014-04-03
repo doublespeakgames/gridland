@@ -11,7 +11,8 @@ define(['app/action/action'], function(Action) {
 	IceBeam.prototype.doAction = function(entity) {
 		var beam = require('app/graphics/graphics').make('iceBeam');
 		entity.setPosture('aimClose', 100);
-		setTimeout(function() {
+		var _this = this;
+		this.timeout = setTimeout(function() {
 			entity.setPosture('aimOpen', 500);
 			entity.getHead().append(beam);
 			setTimeout(function() {
@@ -21,9 +22,15 @@ define(['app/action/action'], function(Action) {
 			}, 800);
 			setTimeout(function() {
 				beam.remove();
-				entity.action = null;
+				if(!_this.terminated) { entity.action = null; }
 			}, 1000);
 		}, 100);
+	};
+	
+	IceBeam.prototype.terminateAction = function(entity) {
+		this.terminated = true;
+		clearTimeout(this.timeout);
+		Action.prototype.terminateAction.call(this, entity);
 	};
 
 	return IceBeam;

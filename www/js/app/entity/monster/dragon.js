@@ -60,6 +60,16 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		return (this.options.flip ? 1 : -1) * pos.r - deg(theta);
 	}
 	
+	function explodeSegment(segment) {
+		var explosion = require('app/graphics/graphics').make('segmentExplosion').appendTo(segment);
+		segment.addClass('gone');
+		explosion.css('left');
+		explosion.addClass('exploded');
+		setTimeout(function() {
+			segment.remove();
+		}, 400);
+	}
+	
 	var Dragon = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		this.hp(this.maxHealth());
@@ -220,6 +230,37 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	
 	Dragon.prototype.getFireBlastDamage = function() {
 		return this.getFireballDamage();
+	};
+	
+	Dragon.prototype.explode = function(delay) {
+		var _this = this;
+		var segmentNum = _this._segments.length - 1;
+		(function doExplode() {
+			explodeSegment(_this._segments[segmentNum]);
+			if(segmentNum-- > 0) {
+				setTimeout(doExplode, delay);
+			} else {
+				setTimeout(function() {
+					var explosion = require('app/graphics/graphics').make('dragonExplosion').appendTo(_this.el());
+					var b = require('app/graphics/graphics').get('body');
+					b.addClass('bigExplosion');
+					b.css('left');
+					explosion.addClass('exploded');
+					b.addClass('fade');
+					_this.el().addClass('gone');
+					setTimeout(function() {
+						b.removeClass('bigExplosion').removeClass('fade');
+					}, 500);
+					setTimeout(function() {
+						explosion.remove();
+						_this.el().remove();
+						_this.dead = true;
+						_this.action = null;
+						_this.gone = true;
+					}, 2500);
+				}, delay);
+			}
+		})();
 	};
 	
 	Dragon.prototype.setPosture = function(p, speed) {

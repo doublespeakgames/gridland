@@ -4,22 +4,29 @@ define(['app/action/action'], function(Action) {
 		if(options) {
 			this.target = options.target;
 		}
+		this.timeouts = [];
 	};
 	Bite.prototype = new Action();
 	Bite.constructor = Bite;
 	
 	Bite.prototype.doAction = function(entity) {
 		entity.setPosture('aimbite', 600);
-		setTimeout(function() {
+		this.timeouts.push(setTimeout(function() {
 			entity.setPosture('bite', 200);
-		}, 600);
+		}, 600));
 		var target = this.target;
-		setTimeout(function() {
+		this.timeouts.push(setTimeout(function() {
 			if(entity.distanceFrom(target) < 5) {
 				target.takeDamage(entity.getDamage());
 			}
 			entity.action = null;
-		}, 800);
+		}, 800));
+	};
+	
+	Bite.prototype.terminateAction = function(entity) {
+		for(var i in this.timeouts) {
+			clearTimeout(this.timeouts[i]);
+		}
 	};
 
 	return Bite;

@@ -11,7 +11,7 @@ define(['app/action/action'], function(Action) {
 	Fireball.prototype.doAction = function(entity) {
 		entity.setPosture('aim', 500);
 		var _this = this;
-		setTimeout(function() {
+		this.timeout = setTimeout(function() {
 			var G = require('app/graphics/graphics');
 			var angle = -entity.absHeadPos.r;
 			var delta = -Math.sqrt(Math.pow(_this.target.p() - entity.absHeadPos.x, 2) + Math.pow(entity.absHeadPos.y, 2));
@@ -43,6 +43,7 @@ define(['app/action/action'], function(Action) {
 	
 	Fireball.prototype.terminateAction = function(entity) {
 		this.terminated = true;
+		clearTimeout(this.timeout);
 		Action.prototype.terminateAction.call(this, entity);
 	};
 

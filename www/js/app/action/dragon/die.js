@@ -15,6 +15,7 @@ define(['app/action/action'], function(Action) {
 			entity.setPosture('thrash' + dir, THRASH_SPEED);
 			dir = dir == 'up' ? 'down' : 'up';
 		})();
+		setTimeout(function() { entity.explode(800); }, 1500);
 	};
 
 	return Die;
