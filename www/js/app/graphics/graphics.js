@@ -90,6 +90,16 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		}, 300);
 	}
 	
+	function gameOver() {
+		var stats = Graphics.make().attr('id', 'endGame');
+		stats.append($('<h2>').text(textStore.get('CLEAR')));
+		
+		Graphics.get('body').addClass('bigExplosion').append(stats);
+		setTimeout(function() {
+			stats.addClass('down');
+		}, 2000);
+	}
+	
 	var Graphics = {
 		init: function() {
 			$('body').removeClass('night');
@@ -105,6 +115,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			EventManager.bind('dayBreak', this.handleDayBreak);
 			EventManager.bind('blockDown', showCosts);
 			EventManager.bind('toggleCosts', toggleCosts);
+			EventManager.bind('gameOver', gameOver);
 			
 			BoardGraphics.init();
 			WorldGraphics.init();

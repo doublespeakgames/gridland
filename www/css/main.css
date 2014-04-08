@@ -30,6 +30,7 @@ body.night {
 	margin:auto;
 	border:1px solid black;
 	background-color: red;
+	z-index: 101;
 }
 
 .hidden {
@@ -2303,21 +2304,21 @@ body.night {
 	transform: translate(-200px, -200px);
 }
 
-body.bigExplosion:after {
+body:after {
+	transition: opacity 1000ms linear;
+	opacity: 0;
     display: block;
     background: white;
-    opacity: 1.00;
     content: ' ';
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
-    z-index: 100;
-    transition: opacity 1000ms linear;
 }
 
-body.bigExplosion.fade:after {
-	opacity: 0;
+body.bigExplosion:after {
+    z-index: 100;
+    opacity: 1;
 }
 
 /** TEMPORARY **/
@@ -2332,3 +2333,31 @@ body.bigExplosion.fade:after {
 }
 
 /** END DRAGON **/
+
+/** ENDGAME SCREEN **/
+
+#endGame {
+	width: 350px;
+	height: 500px;
+	border: 2px solid black;
+	transition: transform 300ms ease-in;
+	transform: translate(-182px, 0px);
+	position: absolute;
+	top: -524px;
+	left: 50%;
+	z-index: 101;
+	padding: 10px;
+	font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
+	box-shadow: 0 0 5px 5px #CCC;
+}
+
+#endGame.down {
+	transform: translate(-182px, 700px);
+}
+
+#endGame h2 {
+	text-align: center;
+	font-size: 2em;
+	font-weight: bold;
+	margin: 10px 0;
+}

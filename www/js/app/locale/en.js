@@ -1,4 +1,5 @@
 define({
 	DAY: 'Day',
-	PLAY: 'Play'
+	PLAY: 'Play',
+	CLEAR: 'Clear!'
 });

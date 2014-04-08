@@ -242,15 +242,10 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 			} else {
 				setTimeout(function() {
 					var explosion = require('app/graphics/graphics').make('dragonExplosion').appendTo(_this.el());
-					var b = require('app/graphics/graphics').get('body');
-					b.addClass('bigExplosion');
-					b.css('left');
+					explosion.css('left');
 					explosion.addClass('exploded');
-					b.addClass('fade');
+					require('app/eventmanager').trigger('gameOver');
 					_this.el().addClass('gone');
-					setTimeout(function() {
-						b.removeClass('bigExplosion').removeClass('fade');
-					}, 1000);
 					setTimeout(function() {
 						explosion.remove();
 						_this.el().remove();
