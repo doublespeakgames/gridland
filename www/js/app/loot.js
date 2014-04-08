@@ -55,6 +55,7 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 			GameState.gem = ++num > 4 ? 4 : num;
 			E.trigger("updateGem");
 		} else {
+			GameState.count('LOOT', 1);
 			var num = GameState.items[lootName] || 0;
 			num++;
 			var max = Content.LootType[lootName].large ? 1 : 3;
