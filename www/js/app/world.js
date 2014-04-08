@@ -20,6 +20,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	var star = null;
 	var prioritizedBuilding = null;
 	var recorded = null;
+	var streak = 0;
 	
 	var _debugMultiplier = 1;
 	window.multiplier = function(n) {
@@ -59,6 +60,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			celestialPosition = 0;
 			theDragon = null;
 			var deferredCallbacks = [];
+			streak = 0;
 			
 			EventManager.bind('launchDude', launchDude);
 			EventManager.bind('wipeMonsters', wipeMonsters);
@@ -293,6 +295,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					thing.el().remove();
 				}
 			}
+		},
+		
+		gameOver: function() {
+			GameState.count('DRAGONS', 1);
+			GameState.save();
+			Graphics.notifySave();
+			EventManager.trigger('gameOver', [GameState.counts]);
 		}
 	};
 	
@@ -513,6 +522,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		if(hasteTick && World.hasEffect('haste')) {
 			runEntity(dude);
 		} else if(!hasteTick) {
+			var numEnemies = 0;
 			for(var i = 0; i < stuff.length; i++) {
 				var entity = stuff[i];
 				
@@ -530,12 +540,16 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					if(!entity.paused && !frozen) {
 						runEntity(entity);
 					}
+					if(entity.hostile) {
+						numEnemies++;
+					}
 				} else if(entity.hostile) {
 					if(isNight && !entity.wiped) {
 						dude.gainXp(entity.xp * _debugMultiplier);
 						advanceTime();
 					}
 					EventManager.trigger('monsterKilled', [entity]);
+					GameState.count('KILLED', 1);
 					stuff.splice(i, 1);
 					i--;
 				} else if(entity == dude) {
@@ -543,7 +557,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					stuff.splice(i, 1);
 					i--;
 					inTransition = true;
-					GameState.saveXp();
+					GameState.count('DEATHS', 1);
+					GameState.savePersistents();
 					Graphics.fadeOut(function() {
 						setTimeout(function() {
 							stuff.length = 0;
@@ -555,6 +570,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					});
 				}
 			}
+			GameState.setIfHigher('ATONCE', numEnemies);
 		}
 		
 		hasteTick = !hasteTick;
@@ -623,7 +639,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		Graphics.updateSword(0, 0);
 		
 		if(!isNight) {
+			streak++;
 			GameState.dayNumber++;
+			GameState.count('NIGHTS', 1);
+			GameState.setIfHigher('ROW', streak);
 			GameState.save();
 			Graphics.notifySave();
 			Analytics.trackEvent('world', 'morning');

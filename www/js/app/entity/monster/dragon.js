@@ -244,7 +244,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 					var explosion = require('app/graphics/graphics').make('dragonExplosion').appendTo(_this.el());
 					explosion.css('left');
 					explosion.addClass('exploded');
-					require('app/eventmanager').trigger('gameOver');
+					require('app/world').gameOver();
 					_this.el().addClass('gone');
 					setTimeout(function() {
 						explosion.remove();

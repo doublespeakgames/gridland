@@ -90,9 +90,21 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		}, 300);
 	}
 	
-	function gameOver() {
+	function gameOver(counts) {
 		var stats = Graphics.make().attr('id', 'endGame');
 		stats.append($('<h2>').text(textStore.get('CLEAR')));
+		stats.append($('<ul>').addClass('menu')
+			.append($('<li>').text(textStore.get('CONTINUE')))
+			.append($('<li>').text(textStore.get('NEWGAMEPLUS'))));
+		
+		var list = $('<ul>').addClass('counts');
+		for(var key in counts) {
+			list.append($('<li>')
+				.append($('<span>').text(textStore.get(key) || 0))
+				.append($('<span>').text(counts[key]))
+			);
+		}
+		stats.append(list);
 		
 		Graphics.get('body').addClass('bigExplosion').append(stats);
 		setTimeout(function() {

@@ -11,6 +11,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			this.items = {};
 			this.gem = 0;
 			this.mana = 0;
+			this.counts = {};
 			Analytics.trackEvent('game', 'create');
 		},
 		
@@ -32,6 +33,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 					this.dayNumber = savedState.dayNumber || 1;
 					this.gem = savedState.gem || 0;
 					this.mana = savedState.mana || 0;
+					this.counts = savedState.counts || {};
 				} else {
 					this.create();
 				}
@@ -51,7 +53,8 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 					dayNumber: this.dayNumber,
 					items: this.items,
 					gem: this.gem,
-					mana: this.mana
+					mana: this.mana,
+					counts: this.counts
 				};
 				for(b in this.buildings) {
 					var building = this.buildings[b];
@@ -66,11 +69,12 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			return this;
 		},
 		
-		saveXp: function() {
+		savePersistents: function() {
 			if(typeof Storage != 'undefined' && localStorage && localStorage.gameState) {
 				var savedState = JSON.parse(localStorage.gameState);
 				savedState.xp = this.xp;
 				savedState.level = this.level;
+				savedState.counts = this.counts;
 				localStorage.gameState = JSON.stringify(savedState);
 			}
 		},
@@ -151,6 +155,18 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 		
 		magicEnabled: function() {
 			return this.gem >= 4;
+		},
+		
+		count: function(key, num) {
+			var value = this.counts[key] || 0;
+			value += num;
+			this.counts[key] = value;
+		},
+		
+		setIfHigher: function(key, num) {
+			var value = this.counts[key] || 0;
+			value = num > value ? num : value;
+			this.counts[key] = value;
 		}
 	};
 });

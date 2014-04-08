@@ -42,6 +42,7 @@ define(['jquery', 'app/eventmanager', 'app/gamecontent', 'app/gamestate'],
 					}
 					// Add the resource
 					var remainder = quantity - block.spaceLeft();
+					GameState.count('GATHERED', quantity > block.spaceLeft() ? block.spaceLeft() : quantity);
 					block.quantity(block.quantity() + quantity);
 					// If there's some left over, collect the remainder
 					if(remainder > 0) {

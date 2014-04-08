@@ -17,6 +17,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	var NO_EFFECT = '!';
 	var moved = false;
 	var locked = false;
+	var chain = 0;
 	
 	var GameBoard = {
 		SEP: 'X',
@@ -30,6 +31,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			Resources.loaded = false;
 			tileString = '';
 			effectString = null;
+			chain = 0;
 			
 			detectMatches = new RegExp("([^" + GameBoard.SEP + "])\\1{2,}", "g");
 			findHoles = new RegExp(HOLE, "g");
@@ -41,7 +43,6 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		},
 		
 		switchTiles: function(pos1, pos2) {
-			
 			var cb = checkMatches;
 			if(!pos1 && !pos2 && lastSwitch) {
 				// We are reverting a switch
@@ -190,6 +191,10 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		var newTiles = [];
 		var resourcesGained = {};
 		if(matchDetected) {
+			chain++;
+			if(lastSwitch) {
+				State.count('SWAPPED', 1);
+			}
 			var perTile = {};
 			for(var i = 0, len = vMask.length; i < len; i++) {
 				if((vMask[i] == 1 || hMask[i] == 1) && getTile(i) != HOLE) {
@@ -302,6 +307,8 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			EventManager.trigger('tilesCleared', [resourcesGained, swapSide, moved]);
 		} else {
 			EventManager.trigger('tilesSwapped', [lastSwitch == null]);
+			State.setIfHigher('CHAIN', chain);
+			chain = 0;
 			if(lastSwitch) {
 				// Revert the switch
 				GameBoard.switchTiles();

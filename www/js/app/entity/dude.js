@@ -57,6 +57,7 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 		if(State.xp >= this.toLevel()) {
 			State.xp -= this.toLevel();
 			State.level++;
+			State.counts.LEVEL = State.level;
 			Graphics.levelUp(this);
 			State.health = State.maxHealth();
 			Graphics.updateHealth(State.health, State.maxHealth());

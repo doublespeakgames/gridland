@@ -91,7 +91,7 @@ body.night {
 }
 
 #playButton:hover {
-	box-shadow: 0 0 5px 5px #CCC;
+	box-shadow: 0 0 5px 2px #CCC;
 }
 
 /** Menu Bar **/
@@ -114,6 +114,12 @@ body.night {
 
 .night .menuBar {
 	background-color: black;
+}
+
+.bigExplosion .menuBar {
+	z-index: 101;
+	background-color: white;
+	border-color: black;
 }
 
 @media screen and (max-height: 700px) {
@@ -149,7 +155,7 @@ body.night {
 }
 
 .menuBar.open {
-	z-index: 100;
+	z-index: 102;
 	border-top: 2px solid;
 	height: 400px;
 	background-color: white;
@@ -162,6 +168,10 @@ body.night {
 
 .night .menuBar.open {
 	background-color: black;
+}
+
+.bigExplosion .menuBar.open {
+	background-color: white;
 }
 
 /** Day/Night Stuff **/
@@ -196,6 +206,10 @@ body.night {
 	opacity: 1;
 }
 
+.bigExplosion .nightSprite {
+	opacity: 0;
+}
+
 .daySprite {
 	opacity: 1;
 }
@@ -203,6 +217,11 @@ body.night {
 .night .daySprite {
 	opacity: 0;
 }
+
+.bigExplosion .daySprite {
+	opacity: 1;
+}
+
 
 .litBorder {
 	transition: all 700ms linear;
@@ -215,6 +234,10 @@ body.night {
 
 .night .litBorder {
 	border-color: #FFFFFF;
+}
+
+.bigExplosion .litBorder {
+	border-color: black;
 }
 
 /** Save Spinner **/
@@ -256,7 +279,11 @@ body.night {
 
 .night .saveSpinner div {
 	background-color: white;
-} 
+}
+
+.bigExplosion .saveSpinner div {
+	background-color: black;
+}
 
 .saveSpinner div:nth-child(1) {
 	top: 0px;
@@ -2314,6 +2341,7 @@ body:after {
     height: 100%;
     position: absolute;
     top: 0;
+    z-index: -1;
 }
 
 body.bigExplosion:after {
@@ -2343,12 +2371,12 @@ body.bigExplosion:after {
 	transition: transform 300ms ease-in;
 	transform: translate(-182px, 0px);
 	position: absolute;
-	top: -524px;
+	top: -530px;
 	left: 50%;
 	z-index: 101;
-	padding: 10px;
+	padding: 10px 0;
 	font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
-	box-shadow: 0 0 5px 5px #CCC;
+	box-shadow: 0 0 5px 2px #CCC;
 }
 
 #endGame.down {
@@ -2360,4 +2388,44 @@ body.bigExplosion:after {
 	font-size: 2em;
 	font-weight: bold;
 	margin: 10px 0;
+}
+
+#endGame ul.menu {
+	position: absolute;
+	width: 100%;
+	bottom: 0px;
+	padding: 0;
+	margin: 0;
+}
+
+#endGame ul.menu li {
+	list-style: none;
+	font-size: 1.5em;
+	text-align: center;
+	border-top: 2px solid black;
+	cursor: pointer;
+	line-height: 60px;
+}
+
+#endGame ul.menu li:hover {
+	box-shadow: inset 0 0 5px 2px #CCC;
+}
+
+#endGame ul.counts {
+	list-style: none;
+	margin: 0 20px;
+	padding: 0;
+}
+
+#endGame ul.counts li {
+	line-height: 25px;
+	clear: left;
+}
+
+#endGame ul.counts li span {
+	float: right;
+}
+
+#endGame ul.counts li span:first-child {
+	float: left;
 }
