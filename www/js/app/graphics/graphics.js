@@ -90,26 +90,52 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		}, 300);
 	}
 	
+	var getStats = (function() {
+		var _stats = null;
+		return function(counts) {
+			var list;
+			if(_stats == null) {
+				_stats = Graphics.make().attr('id', 'endGame');
+				_stats.append($('<h2>').text(textStore.get('CLEAR')));
+				_stats.append($('<ul>').addClass('menu')
+					.append($('<li>').text(textStore.get('CONTINUE')).click(continueGame))
+					.append($('<li>').text(textStore.get('NEWGAMEPLUS'))));
+				list = $('<ul>').addClass('counts').appendTo(_stats);
+				Graphics.get('body').append(_stats);
+				_stats.css('left');
+			} else {
+				list = $('ul.list', _stats).empty();
+			}
+			
+			for(var key in counts) {
+				list.append($('<li>')
+					.append($('<span>').text(textStore.get(key) || 0))
+					.append($('<span>').text(counts[key]))
+				);
+			}
+			
+			return _stats;
+		};
+	})();
+	
 	function gameOver(counts) {
-		var stats = Graphics.make().attr('id', 'endGame');
-		stats.append($('<h2>').text(textStore.get('CLEAR')));
-		stats.append($('<ul>').addClass('menu')
-			.append($('<li>').text(textStore.get('CONTINUE')))
-			.append($('<li>').text(textStore.get('NEWGAMEPLUS'))));
-		
-		var list = $('<ul>').addClass('counts');
-		for(var key in counts) {
-			list.append($('<li>')
-				.append($('<span>').text(textStore.get(key) || 0))
-				.append($('<span>').text(counts[key]))
-			);
-		}
-		stats.append(list);
-		
-		Graphics.get('body').addClass('bigExplosion').append(stats);
+		Graphics.get('body').addClass('bigExplosion');
 		setTimeout(function() {
-			stats.addClass('down');
+			getStats().addClass('down');
 		}, 2000);
+	}
+	
+	function continueGame() {
+		EventManager.trigger('phaseChange');
+		getStats().removeClass('down');
+		var b = Graphics.get('body');
+		setTimeout(function() {
+			b.addClass('fadeOut');
+		}, 700);
+		setTimeout(function() {
+			b.removeClass('bigExplosion fadeOut');
+			getStats().removeClass('down');
+		}, 1400);
 	}
 	
 	var Graphics = {
