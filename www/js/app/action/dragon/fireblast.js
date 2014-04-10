@@ -33,7 +33,6 @@ define(['app/action/action'], function(Action) {
 				if(!_this.terminated) { entity.action = null; }
 				
 				_this.target.takeDamage(entity.getFireBlastDamage());
-				var endTimeout;
 				var fireEffect = new (require('app/entity/worldeffect'))({ 
 					effectClass: 'fire',
 					row: 1,
@@ -42,8 +41,6 @@ define(['app/action/action'], function(Action) {
 						if(Math.abs(_this.target.p() - fireEffect.p()) < fireEffect.width() / 2 ) {
 							_this.target.takeDamage(BURN_DAMAGE);
 							if(require('app/world').hasEffect('frozen')) {
-								clearTimeout(endTimeout);
-								require('app/eventmanager').trigger('removeEntity', [fireEffect]);
 								require('app/eventmanager').trigger('endStateEffect', 
 										[require('app/gamecontent').StateEffects.frozen]);
 							}
@@ -52,7 +49,7 @@ define(['app/action/action'], function(Action) {
 				});
 				fireEffect.p(_this.target.p());
 				require('app/eventmanager').trigger('newEntity', [fireEffect]);
-				endTimeout = setTimeout(function() {
+				setTimeout(function() {
 					require('app/eventmanager').trigger('removeEntity', [fireEffect]);
 				}, DURATION);
 			}, 1000);

@@ -99,6 +99,9 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 	
 	dude.prototype.takeDamage = function(damage) {
 		if(State.health > 0) {
+			if(require('app/world').hasEffect('frozen')) {
+				damage /= 2;
+			}
 			if(this.shield > 0) {
 				var blocked = damage > this.shield ? this.shield : damage;
 				this.shield -= blocked;

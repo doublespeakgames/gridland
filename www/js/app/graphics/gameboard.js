@@ -38,7 +38,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		if(Options.get('showCosts')) {
 			el.addClass('showCosts');
 		};
-		tileContainer = G.make('<div tileContainer').attr('id', 'tileContainer').appendTo(el);
+		tileContainer = G.make('tileContainer').attr('id', 'tileContainer').appendTo(el);
 		// Determine the board dimensions based on the size of the tiles
 		var testTile = G.make('tile').hide().appendTo('body');
 		TILE_WIDTH = testTile.width();

@@ -73,7 +73,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	var Dragon = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		this.hp(this.maxHealth());
-		this.xp = 35;
+		this.xp = 5000;
 		this.headFrame = 0;
 		this.headState = 'close';
 		this.target = this.options.target;
@@ -217,15 +217,15 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Dragon.prototype.maxHealth = function() {
-		return 300; // TODO
+		return 600;
 	};
 	
 	Dragon.prototype.getDamage = function() {
-		return 10;
+		return 4;
 	};
 	
 	Dragon.prototype.getFireballDamage = function() {
-		return 0;//30;
+		return 2;
 	};
 	
 	Dragon.prototype.getFireBlastDamage = function() {

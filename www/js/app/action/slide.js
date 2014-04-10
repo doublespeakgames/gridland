@@ -7,13 +7,15 @@ define(['app/action/action'], function(Action) {
 	Slide.constructor = Slide;
 	
 	Slide.prototype.doAction = function(entity) {
-		var _entity = entity;
 		var G = require('app/graphics/graphics');
+		var newPos = entity.p() + (this.flipped ? 150 : -150);
+		if(newPos > G.worldWidth() - 10) newPos = G.worldWidth() - 10;
+		if(newPos < 10) newPos = 10;
 		G.animateMove(
 			entity,
-			this.flipped ? G.worldWidth() - 10 : 10,
+			newPos,
 			function() {
-				_entity.action = null;
+				entity.action = null;
 			},
 			null,
 			1
