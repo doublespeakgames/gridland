@@ -2367,17 +2367,6 @@ body.bigExplosion.fadeOut:after {
 	opacity: 0;
 }
 
-/** TEMPORARY **/
-.dragonTest {
-	display: none;
-	position: absolute;
-	height: 10px;
-	width: 10px;
-	border-radius: 50%;
-	background: red;
-	z-index: 100;
-}
-
 /** END DRAGON **/
 
 /** ENDGAME SCREEN **/

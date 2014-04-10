@@ -217,7 +217,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Dragon.prototype.maxHealth = function() {
-		return 600;
+		return 1;//600;
 	};
 	
 	Dragon.prototype.getDamage = function() {
@@ -327,10 +327,6 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 					}
 				}
 				
-				require('app/graphics/graphics').get('.dragonTest').css({ 
-					top: this.absHeadPos.y + 'px',
-					left: this.absHeadPos.x + 'px'
-				});
 				setTimeout(function() {
 					if(postureSpeedStylesheet.cssRules.length > 0) {
 						postureSpeedStylesheet.deleteRule(0);

@@ -104,14 +104,19 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				Graphics.get('body').append(_stats);
 				_stats.css('left');
 			} else {
-				list = $('ul.list', _stats).empty();
+				list = $('ul.list', _stats);
+				if(counts) {
+					list.empty();
+				}
 			}
 			
-			for(var key in counts) {
-				list.append($('<li>')
-					.append($('<span>').text(textStore.get(key) || 0))
-					.append($('<span>').text(counts[key]))
-				);
+			if(counts) {
+				for(var key in counts) {
+					list.append($('<li>')
+						.append($('<span>').text(textStore.get(key) || 0))
+						.append($('<span>').text(counts[key]))
+					);
+				}
 			}
 			
 			return _stats;
@@ -121,13 +126,14 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	function gameOver(counts) {
 		Graphics.get('body').addClass('bigExplosion');
 		setTimeout(function() {
-			getStats().addClass('down');
+			getStats(counts).addClass('down');
 		}, 2000);
 	}
 	
 	function continueGame() {
 		EventManager.trigger('phaseChange');
 		getStats().removeClass('down');
+		BoardGraphics.el().removeClass('dragonFight');
 		var b = Graphics.get('body');
 		setTimeout(function() {
 			b.addClass('fadeOut');

@@ -13,7 +13,7 @@ define({
 	GATHERED: 'Resources Gathered',
 	KILLED: 'Monsters Killed',
 	ATONCE: 'Most Monsters at Once',
-	LOOTED: 'Loot Looted',
+	LOOT: 'Loot Looted',
 	CAST: 'Spells Cast',
 	DRAGONS: 'Dragons Slain'
 });
