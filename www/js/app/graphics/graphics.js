@@ -456,32 +456,43 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		updateHealth: function(health, maxHealth) {
-			
+			var MAX_HEARTS = 15;
 			var HEALTH_PER_HEART = 10;
+			var numHearts = Math.ceil(maxHealth / HEALTH_PER_HEART);
+			var numBigHearts = 0;
+			if(numHearts > MAX_HEARTS) {
+				numBigHearts = numHearts - MAX_HEARTS;
+				numHearts = MAX_HEARTS;
+			}
 			var statusContainer = $('.hearts', this.getStatusContainer());
-			for(var i = 0, n = Math.ceil(maxHealth / HEALTH_PER_HEART) - statusContainer.children().length; i < n; i++) {
+			for(var i = 0, n = numHearts - statusContainer.children().length; i < n; i++) {
 				$('<div>').addClass('heart').addClass('hidden').append($('<div>')
 						.addClass('mask')).append($('<div>').addClass('mask')
 						.addClass('nightSprite')).append($('<div>')
 						.addClass('bar')).appendTo(statusContainer);
 			}
-			for(var i = Math.ceil(maxHealth / HEALTH_PER_HEART); i > 0; i--) {
-				var heart = statusContainer.children()[i - 1];
-				if(health >= HEALTH_PER_HEART) {
-					$(heart).removeClass('empty');
+			for(var i = numHearts; i > 0; i--) {
+				var heart = $(statusContainer.children()[i - 1]);
+				var heartHealth = HEALTH_PER_HEART;
+				if(i <= numBigHearts) {
+					heartHealth *= 2;
+					heart.removeClass('heart').addClass('bigheart');
+				}
+				if(health >= heartHealth) {
+					heart.removeClass('empty');
 					$('.bar', heart).css('width', '100%');
-					health -= HEALTH_PER_HEART;
+					health -= heartHealth;
 				} else if(health > 0) {
-					$(heart).removeClass('empty');
-					$('.bar', heart).css('width', (health / HEALTH_PER_HEART * 100) + '%');
+					heart.removeClass('empty');
+					$('.bar', heart).css('width', (health / heartHealth * 100) + '%');
 					health = 0;
 				} else {
-					$(heart).addClass('empty');
+					heart.addClass('empty');
 					$('.bar', heart).css('width', '0%');
 				}
 			}
 			setTimeout(function() {
-				$('.heart.hidden').removeClass('hidden');
+				$('.hidden', statusContainer).removeClass('hidden');
 			}, 100);
 		},
 		

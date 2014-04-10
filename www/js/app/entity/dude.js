@@ -1,6 +1,7 @@
 define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics', 
         'app/gamestate', 'app/action/actionfactory', 'app/gamecontent'], 
 		function(EventManager, WorldEntity, Graphics, State, ActionFactory, Content) {
+	var MAX_LEVEL = 28;
 	var dude = function() {
 		this._el = null;
 		this.carrying = null;
@@ -54,7 +55,7 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 		if(isNaN(State.xp)){
 			State.xp = 0;
 		}
-		if(State.xp >= this.toLevel()) {
+		if(State.xp >= this.toLevel() && State.level < MAX_LEVEL) {
 			State.xp -= this.toLevel();
 			State.level++;
 			State.counts.LEVEL = State.level;
@@ -65,6 +66,8 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 			if(this.action != null) {
 				this.action.terminateAction(this);
 			}
+		} else if(State.xp >= this.toLevel()) {
+			State.xp = this.toLevel() - 1;
 		}
 		Graphics.updateExperience(State.xp, this.toLevel());
 	};
