@@ -210,6 +210,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				}
 				EventManager.trigger('prioritizeBuilding', [$(e.target).closest('.resourceBars').data('building')]);
 			});
+			Graphics.attachHandler("World", "mousedown touchstart", '.building.upgrading', function(e) {
+				// Handle wacky touch event objects
+				if(e.originalEvent.changedTouches) {
+					e = e.originalEvent.changedTouches[0];
+				}
+				EventManager.trigger('prioritizeBuilding', [$(e.target).closest('.building').data('upgrade')]);
+			});
 			Graphics.attachHandler("World", "mousedown touchstart", function(e) {
 				// Handle wacky touch event objects
 				if(e.originalEvent.changedTouches) {

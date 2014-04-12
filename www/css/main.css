@@ -184,6 +184,7 @@ body.night {
 	top: 10px;
 	font-size: 2em;
 	color: black;
+	text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
 	transition: opacity 500ms linear;
 	-webkit-transition: opacity 500ms linear;
 	-moz-transition: opacity 500ms linear;
@@ -392,14 +393,26 @@ body.night {
 	padding: 2px;
 	opacity: 1;
 	transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, transform 600ms cubic-bezier(.06,.48,.53,1.53);
+	-webkit-transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, -webkit-transform 600ms cubic-bezier(.06,.48,.53,1.53);
+	-moz-transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, -moz-transform 600ms cubic-bezier(.06,.48,.53,1.53);
+	-ms-transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, -ms-transform 600ms cubic-bezier(.06,.48,.53,1.53);
+	-o-transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, -o-transform 600ms cubic-bezier(.06,.48,.53,1.53);
 }
 
 .gameBoard.tilted {
 	transform: rotate(5deg);
+	-webkit-transform: rotate(5deg);
+	-moz-transform: rotate(5deg);
+	-ms-transform: rotate(5deg);
+	-o-transform: rotate(5deg);
 }
 
 .gameBoard.flipTilted {
 	transform: rotate(-5deg);
+	-webkit-transform: rotate(-5deg);
+	-moz-transform: rotate(-5deg);
+	-ms-transform: rotate(-5deg);
+	-o-transform: rotate(-5deg);
 }
 
 .tileContainer {
@@ -639,6 +652,10 @@ body.night {
 
 .shaking {
 	animation: shake 100ms infinite;
+	-webkit-animation: shake 100ms infinite;
+	-moz-animation: shake 100ms infinite;
+	-ms-animation: shake 100ms infinite;
+	-o-animation: shake 100ms infinite;
 }
 
 @keyframes shake {
@@ -649,31 +666,31 @@ body.night {
 }
 
 @-webkit-keyframes shake {
-	0% { transform: translateX(0px) }
-	25% { transform: translateX(-10px) }
-	75% { transform: translateX(10px) }
-	100% { transform: translateX(0px) }
+	0% { -webkit-transform: translateX(0px) }
+	25% { -webkit-transform: translateX(-10px) }
+	75% { -webkit-transform: translateX(10px) }
+	100% { -webkit-transform: translateX(0px) }
 }
 
 @-moz-keyframes shake {
-	0% { transform: translateX(0px) }
-	25% { transform: translateX(-10px) }
-	75% { transform: translateX(10px) }
-	100% { transform: translateX(0px) }
+	0% { -moz-transform: translateX(0px) }
+	25% { -moz-transform: translateX(-10px) }
+	75% { -moz-transform: translateX(10px) }
+	100% { -moz-transform: translateX(0px) }
 }
 
 @-ms-keyframes shake {
-	0% { transform: translateX(0px) }
-	25% { transform: translateX(-10px) }
-	75% { transform: translateX(10px) }
-	100% { transform: translateX(0px) }
+	0% { -ms-transform: translateX(0px) }
+	25% { -ms-transform: translateX(-10px) }
+	75% { -ms-transform: translateX(10px) }
+	100% { -ms-transform: translateX(0px) }
 }
 
 @-o-keyframes shake {
-	0% { transform: translateX(0px) }
-	25% { transform: translateX(-10px) }
-	75% { transform: translateX(10px) }
-	100% { transform: translateX(0px) }
+	0% { -o-transform: translateX(0px) }
+	25% { -o-transform: translateX(-10px) }
+	75% { -o-transform: translateX(10px) }
+	100% { -o-transform: translateX(0px) }
 }
 
 /** World **/
@@ -702,7 +719,7 @@ body.night {
 	background: url(../img/star.png) no-repeat;
 	width: 14px;
 	height: 14px;
-	top: 35px;
+	top: 10px;
 	opacity: 1;
 	transition: opacity 700ms linear;
 	-webkit-transition: opacity 700ms linear;
@@ -751,10 +768,10 @@ body.night {
 	background-position: 0px bottom;
 	background-repeat: no-repeat;
 	transition: opacity 700ms linear, transform 500ms linear;
-	-webkit-transition: opacity 700ms linear, transform 500ms linear;
-	-moz-transition: opacity 700ms linear, transform 500ms linear;
-	-ms-transition: opacity 700ms linear, transform 500ms linear;
-	-o-transition: opacity 700ms linear, transform 500ms linear;
+	-webkit-transition: opacity 700ms linear, -webkit-transform 500ms linear;
+	-moz-transition: opacity 700ms linear, -moz-transform 500ms linear;
+	-ms-transition: opacity 700ms linear, -ms-transform 500ms linear;
+	-o-transition: opacity 700ms linear, -o-transform 500ms linear;
 }
 
 .night .building {
@@ -857,6 +874,10 @@ body.night {
 	border: 2px solid black;
 	height: 18px;
 	transition: opacity 700ms linear, transform 500ms linear;
+	-webkit-transition: opacity 700ms linear, -webkit-transform 500ms linear;
+	-moz-transition: opacity 700ms linear, -moz-transform 500ms linear;
+	-ms-transition: opacity 700ms linear, -ms-transform 500ms linear;
+	-o-transition: opacity 700ms linear, -o-transform 500ms linear;
 	opacity: 0;
 	cursor: pointer;
 }
@@ -864,11 +885,23 @@ body.night {
 .resourceBars.show {
 	opacity: 1;
 	transform: translateY(-20px);
+	-webkit-transform: translateY(-20px);
+	-moz-transform: translateY(-20px);
+	-ms-transform: translateY(-20px);
+	-o-transform: translateY(-20px);
 }
 
 .resourceBars.sunk {
 	transform: translateY(80px);
+	-webkit-transform: translateY(80px);
+	-moz-transform: translateY(80px);
+	-ms-transform: translateY(80px);
+	-o-transform: translateY(80px);
 	transition: transform 1800ms linear;
+	-webkit-transform: -webkit-translateY(80px);
+	-moz-transform: -moz-translateY(80px);
+	-ms-transform: -ms-translateY(80px);
+	-o-transform: -o-translateY(80px);
 }
 
 .resourceBar {
@@ -887,15 +920,36 @@ body.night {
 	height: 100%;
 	width: 0;
 	transition: width 200ms linear;
+	-webkit-transition: width 200ms linear;
+	-moz-transition: width 200ms linear;
+	-ms-transition: width 200ms linear;
+	-o-transition: width 200ms linear;
 }
 
 .building.upgrading {
 	transform: translateY(-20px);
+	-webkit-transform: translateY(-20px);
+	-moz-transform: translateY(-20px);
+	-ms-transform: translateY(-20px);
+	-o-transform: translateY(-20px);
+	cursor: pointer;
+}
+
+.night .building.upgrading {
+	cursor: default;
 }
 
 .building.sunk {
 	transform: translateY(80px);
+	-webkit-transform: translateY(80px);
+	-moz-transform: translateY(80px);
+	-ms-transform: translateY(80px);
+	-o-transform: translateY(80px);
 	transition: transform 2500ms linear;
+	-webkit-transition: -webkit-transform 2500ms linear;
+	-moz-transition: -moz-transform 2500ms linear;
+	-ms-transition: -ms-transform 2500ms linear;
+	-o-transition: -o-transform 2500ms linear;
 }
 
 .night .resourceBars, .night .resources {
@@ -1659,6 +1713,10 @@ body.night {
 	background-color: white;
 	opacity: 1;
 	transition: all 500ms ease-out, height 200ms ease-out;
+	-webkit-transition: all 500ms ease-out, height 200ms ease-out;
+	-moz-transition: all 500ms ease-out, height 200ms ease-out;
+	-ms-transition: all 500ms ease-out, height 200ms ease-out;
+	-o-transition: all 500ms ease-out, height 200ms ease-out;
 }
 
 /** Loot **/
@@ -2107,6 +2165,9 @@ body.night {
 	background-color: red;
 	transition: all 400ms ease-out;
 	-webkit-transition: all 400ms ease-out;
+	-moz-transition: all 400ms ease-out;
+	-ms-transition: all 400ms ease-out;
+	-o-transition: all 400ms ease-out;
 }
 
 .explosion.exploded {
@@ -2192,6 +2253,23 @@ body.night {
 	width: 204px;
 	background: url(../img/dragon.png) no-repeat;
 	transition: transform 1000ms ease-out;
+	-webkit-transition: -webkit-transform 1000ms ease-out;
+	-moz-transition: -moz-transform 1000ms ease-out;
+	-ms-transition: -ms-transform 1000ms ease-out;
+	-o-transition: -o-transform 1000ms ease-out;
+	transform: translateY(0px);
+	-webkit-transform: translateY(0px);
+	-moz-transform: translateY(0px);
+	-ms-transform: translateY(0px);
+	-o-transform: translateY(0px);
+}
+
+.dragon.flying {
+	transform: translateY(-100%);
+	-webkit-transform: translateY(-100%);
+	-moz-transform: translateY(-100%);
+	-ms-transform: translateY(-100%);
+	-o-transform: translateY(-100%);
 }
 
 .dragon .healthBar {
@@ -2204,6 +2282,18 @@ body.night {
 	transition-property: transform;
 	transition-timing-function: ease-out;
 	transform-origin: 50% 50%;
+	-webkit-transition-property: -webkit-transform;
+	-webkit-transition-timing-function: ease-out;
+	-webkit-transform-origin: 50% 50%;
+	-moz-transition-property: -moz-transform;
+	-moz-transition-timing-function: ease-out;
+	-moz-transform-origin: 50% 50%;
+	-ms-transition-property: -ms-transform;
+	-ms-transition-timing-function: ease-out;
+	-ms-transform-origin: 50% 50%;
+	-o-transition-property: -o-transform;
+	-o-transition-timing-function: ease-out;
+	-o-transform-origin: 50% 50%;
 }
 
 .dragon .neck {
@@ -2211,6 +2301,10 @@ body.night {
 	width: 24px;
 	background: url(../img/dragon-neck.png) no-repeat;
 	transform: rotate(0deg) translateX(-10px);
+	-webkit-transform: rotate(0deg) translateX(-10px);
+	-moz-transform: rotate(0deg) translateX(-10px);
+	-ms-transform: rotate(0deg) translateX(-10px);
+	-o-transform: rotate(0deg) translateX(-10px);
 }
 
 .dragon.flip .neck {
@@ -2222,6 +2316,10 @@ body.night {
 	width: 81px;
 	background: url(../img/dragon-head.png) no-repeat;
 	transform: rotate(0deg) translateX(-40px);
+	-webkit-transform: rotate(0deg) translateX(-40px);
+	-moz-transform: rotate(0deg) translateX(-40px);
+	-ms-transform: rotate(0deg) translateX(-40px);
+	-o-transform: rotate(0deg) translateX(-40px);
 	top: -6px;
 	left: -30px;
 }
@@ -2233,10 +2331,18 @@ body.night {
 
 .dragon .neck .neck {
 	transform: rotate(0deg) translateX(-10px);
+	-webkit-transform: rotate(0deg) translateX(-10px);
+	-moz-transform: rotate(0deg) translateX(-10px);
+	-ms-transform: rotate(0deg) translateX(-10px);
+	-o-transform: rotate(0deg) translateX(-10px);
 }
 
 .dragon .neck .neck .neck {
 	transform: rotate(0deg) translateX(-10px);
+	-webkit-transform: rotate(0deg) translateX(-10px);
+	-moz-transform: rotate(0deg) translateX(-10px);
+	-ms-transform: rotate(0deg) translateX(-10px);
+	-o-transform: rotate(0deg) translateX(-10px);
 }
 
 .dragon.gone,
@@ -2251,6 +2357,10 @@ body.night {
 	height: 7px;
 	background: url(../img/fireball.png) transparent;
 	transition: transform 300ms linear;
+	-webkit-transition: -webkit-transform 300ms linear;
+	-moz-transition: -moz-transform 300ms linear;
+	-ms-transition: -ms-transform 300ms linear;
+	-o-transition: -o-transform 300ms linear;
 }
 
 .fireBoom {
@@ -2263,6 +2373,9 @@ body.night {
 	background-color: white;
 	transition: all 400ms ease-out;
 	-webkit-transition: all 400ms ease-out;
+	-moz-transition: all 400ms ease-out;
+	-ms-transition: all 400ms ease-out;
+	-o-transition: all 400ms ease-out;
 }
 
 .fireBoom.exploded {
@@ -2298,6 +2411,102 @@ body.night {
 	100% { width: 30px; height: 10px; left: 100%; top: -5px; }
 }
 
+@-webkit-keyframes beam {
+	0%	{ width: 0px; height: 0px; margin-right: 0px; margin-top: 0px; }
+	75% { width: 30px; height: 30px; margin-right: -15px; margin-top: -15px; }
+	100% { width: 400px; height: 0px; margin-right: -15px; margin-top: 0px; }
+}
+
+@-webkit-keyframes beam-flip {
+	0%	{ width: 0px; height: 0px; margin-left: 0px; margin-top: 0px; }
+	75% { width: 30px; height: 30px; margin-left: -15px; margin-top: -15px; }
+	100% { width: 400px; height: 0px; margin-left: -15px; margin-top: 0px; }
+}
+
+@-webkit-keyframes blast {
+	0%	{ width: 0px; height: 0px; top: 0px; right: 0px; }
+	75% { width: 30px; height: 30px; top: -15px; right: -15px; }
+	100% { width: 30px; height: 10px; top: -5px; right: 100%; }
+}
+
+@-webkit-keyframes blast-flip {
+	0%	{ width: 0px; height: 0px; left: 0px; top: 0px; }
+	75% { width: 30px; height: 30px; left: -15px; top: -15px; }
+	100% { width: 30px; height: 10px; left: 100%; top: -5px; }
+}
+
+@-moz-keyframes beam {
+	0%	{ width: 0px; height: 0px; margin-right: 0px; margin-top: 0px; }
+	75% { width: 30px; height: 30px; margin-right: -15px; margin-top: -15px; }
+	100% { width: 400px; height: 0px; margin-right: -15px; margin-top: 0px; }
+}
+
+@-moz-keyframes beam-flip {
+	0%	{ width: 0px; height: 0px; margin-left: 0px; margin-top: 0px; }
+	75% { width: 30px; height: 30px; margin-left: -15px; margin-top: -15px; }
+	100% { width: 400px; height: 0px; margin-left: -15px; margin-top: 0px; }
+}
+
+@-moz-keyframes blast {
+	0%	{ width: 0px; height: 0px; top: 0px; right: 0px; }
+	75% { width: 30px; height: 30px; top: -15px; right: -15px; }
+	100% { width: 30px; height: 10px; top: -5px; right: 100%; }
+}
+
+@-moz-keyframes blast-flip {
+	0%	{ width: 0px; height: 0px; left: 0px; top: 0px; }
+	75% { width: 30px; height: 30px; left: -15px; top: -15px; }
+	100% { width: 30px; height: 10px; left: 100%; top: -5px; }
+}
+
+@-ms-keyframes beam {
+	0%	{ width: 0px; height: 0px; margin-right: 0px; margin-top: 0px; }
+	75% { width: 30px; height: 30px; margin-right: -15px; margin-top: -15px; }
+	100% { width: 400px; height: 0px; margin-right: -15px; margin-top: 0px; }
+}
+
+@-ms-keyframes beam-flip {
+	0%	{ width: 0px; height: 0px; margin-left: 0px; margin-top: 0px; }
+	75% { width: 30px; height: 30px; margin-left: -15px; margin-top: -15px; }
+	100% { width: 400px; height: 0px; margin-left: -15px; margin-top: 0px; }
+}
+
+@-ms-keyframes blast {
+	0%	{ width: 0px; height: 0px; top: 0px; right: 0px; }
+	75% { width: 30px; height: 30px; top: -15px; right: -15px; }
+	100% { width: 30px; height: 10px; top: -5px; right: 100%; }
+}
+
+@-ms-keyframes blast-flip {
+	0%	{ width: 0px; height: 0px; left: 0px; top: 0px; }
+	75% { width: 30px; height: 30px; left: -15px; top: -15px; }
+	100% { width: 30px; height: 10px; left: 100%; top: -5px; }
+}
+
+@-o-keyframes beam {
+	0%	{ width: 0px; height: 0px; margin-right: 0px; margin-top: 0px; }
+	75% { width: 30px; height: 30px; margin-right: -15px; margin-top: -15px; }
+	100% { width: 400px; height: 0px; margin-right: -15px; margin-top: 0px; }
+}
+
+@-o-keyframes beam-flip {
+	0%	{ width: 0px; height: 0px; margin-left: 0px; margin-top: 0px; }
+	75% { width: 30px; height: 30px; margin-left: -15px; margin-top: -15px; }
+	100% { width: 400px; height: 0px; margin-left: -15px; margin-top: 0px; }
+}
+
+@-o-keyframes blast {
+	0%	{ width: 0px; height: 0px; top: 0px; right: 0px; }
+	75% { width: 30px; height: 30px; top: -15px; right: -15px; }
+	100% { width: 30px; height: 10px; top: -5px; right: 100%; }
+}
+
+@-o-keyframes blast-flip {
+	0%	{ width: 0px; height: 0px; left: 0px; top: 0px; }
+	75% { width: 30px; height: 30px; left: -15px; top: -15px; }
+	100% { width: 30px; height: 10px; left: 100%; top: -5px; }
+}
+
 .dragon .head .iceBeam,
 .dragon .head .fireBlast {
 	position: absolute;
@@ -2317,6 +2526,10 @@ body.night {
 	border-radius: 50%;
 	background-color: white;
 	animation: beam 1000ms 1;
+	-webkit-animation: beam 1000ms 1;
+	-moz-animation: beam 1000ms 1;
+	-ms-animation: beam 1000ms 1;
+	-o-animation: beam 1000ms 1;
 }
 
 .fireBlast:before {
@@ -2327,11 +2540,19 @@ body.night {
 	right: 0px;
 	border-radius: 50%;
 	background-color: white;
-	animation: blast 1000ms infinite;
+	animation: blast 1000ms 1;
+	-webkit-animation: blast 1000ms 1;
+	-moz-animation: blast 1000ms 1;
+	-ms-animation: blast 1000ms 1;
+	-o-animation: blast 1000ms 1;
 }
 
 .flip .fireBlast:before {
-	animation: blast-flip 1000ms infinite;
+	animation: blast-flip 1000ms 1;
+	-webkit-animation: blast-flip 1000ms 1;
+	-moz-animation: blast-flip 1000ms 1;
+	-ms-animation: blast-flip 1000ms 1;
+	-o-animation: blast-flip 1000ms 1;
 }
 
 .bossHealth {
@@ -2347,6 +2568,10 @@ body.night {
 	height: 6px;
 	width: 400px;
 	transition: width 1s, opacity 200ms, margin-left 1s;
+	-webkit-transition: width 1s, opacity 200ms, margin-left 1s;
+	-moz-transition: width 1s, opacity 200ms, margin-left 1s;
+	-ms-transition: width 1s, opacity 200ms, margin-left 1s;
+	-o-transition: width 1s, opacity 200ms, margin-left 1s;
 }
 
 .bossHealth.noshow {
@@ -2360,6 +2585,10 @@ body.night {
 	width: 100%;
 	background-color: #BC4D4D;
 	transition: width 200ms linear;
+	-webkit-transition: width 200ms linear;
+	-moz-transition: width 200ms linear;
+	-ms-transition: width 200ms linear;
+	-o-transition: width 200ms linear;
 }
 
 .segmentExplosion {
@@ -2368,12 +2597,19 @@ body.night {
 	left: 50%;
 	top: 50%;
 	transform: translate(-5px, -5px);
+	-webkit-transform: translate(-5px, -5px);
+	-moz-transform: translate(-5px, -5px);
+	-ms-transform: translate(-5px, -5px);
+	-o-transform: translate(-5px, -5px);
 	height: 10px;
 	width: 10px;
 	border-radius: 5px;
 	background-color: white;
 	transition: all 400ms ease-out;
 	-webkit-transition: all 400ms ease-out;
+	-moz-transition: all 400ms ease-out;
+	-ms-transition: all 400ms ease-out;
+	-o-transition: all 400ms ease-out;
 }
 
 .segmentExplosion.exploded {
@@ -2382,6 +2618,10 @@ body.night {
 	border-radius: 40px;
 	opacity: 0;
 	transform: translate(-40px, -40px);
+	-webkit-transform: translate(-40px, -40px);
+	-moz-transform: translate(-40px, -40px);
+	-ms-transform: translate(-40px, -40px);
+	-o-transform: translate(-40px, -40px);
 }
 
 .dragonExplosion {
@@ -2389,12 +2629,19 @@ body.night {
 	top: 110px;
 	left: 70px;
 	transform: translate(-5px, -5px);
+	-webkit-transform: translate(-5px, -5px);
+	-moz-transform: translate(-5px, -5px);
+	-ms-transform: translate(-5px, -5px);
+	-o-transform: translate(-5px, -5px);
 	height: 10px;
 	width: 10px;
 	border-radius: 5px;
 	background-color: white;
 	transition: all 2000ms ease-out;
 	-webkit-transition: all 2000ms ease-out;
+	-moz-transition: all 2000ms ease-out;
+	-ms-transition: all 2000ms ease-out;
+	-o-transition: all 2000ms ease-out;
 }
 
 .flip .dragonExplosion {
@@ -2407,10 +2654,18 @@ body.night {
 	border-radius: 200px;
 	opacity: 0;
 	transform: translate(-200px, -200px);
+	-webkit-transform: translate(-200px, -200px);
+	-moz-transform: translate(-200px, -200px);
+	-ms-transform: translate(-200px, -200px);
+	-o-transform: translate(-200px, -200px);
 }
 
 body:after {
 	transition: opacity 700ms linear;
+	-webkit-transition: opacity 700ms linear;
+	-moz-transition: opacity 700ms linear;
+	-ms-transition: opacity 700ms linear;
+	-o-transition: opacity 700ms linear;
 	opacity: 0;
     display: block;
     background: white;
@@ -2441,7 +2696,15 @@ body.bigExplosion.fadeOut:after {
 	height: 500px;
 	border: 2px solid black;
 	transition: transform 300ms ease-in;
+	-webkit-transition: -webkit-transform 300ms ease-in;
+	-moz-transition: -moz-transform 300ms ease-in;
+	-ms-transition: -ms-transform 300ms ease-in;
+	-o-transition: -o-transform 300ms ease-in;
 	transform: translate(-182px, 0px);
+	-webkit-transform: translate(-182px, 0px);
+	-moz-transform: translate(-182px, 0px);
+	-ms-transform: translate(-182px, 0px);
+	-o-transform: translate(-182px, 0px);
 	position: absolute;
 	top: -530px;
 	left: 50%;
@@ -2453,6 +2716,10 @@ body.bigExplosion.fadeOut:after {
 
 #endGame.down {
 	transform: translate(-182px, 700px);
+	-webkit-transform: translate(-182px, 700px);
+	-moz-transform: translate(-182px, 700px);
+	-ms-transform: translate(-182px, 700px);
+	-o-transform: translate(-182px, 700px);
 }
 
 #endGame h2 {

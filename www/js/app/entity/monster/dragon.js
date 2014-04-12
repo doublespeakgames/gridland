@@ -25,7 +25,14 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	function setSegmentPosture(segment, pos, flip) {
 		var r = flip ? -pos[0] : pos[0];
 		var t = flip ? -pos[1] : pos[1];
-		segment.css('transform', 'rotate(' + r + 'deg) translateX(' + t + 'px)');
+		var cssValue = 'rotate(' + r + 'deg) translateX(' + t + 'px)';
+		segment.css({
+			'transform': cssValue,
+			'-webkit-transform': cssValue,
+			'-moz-transform': cssValue,
+			'-ms-transform': cssValue,
+			'-o-transform': cssValue
+		});
 	}
 	
 	function rad(deg) {
@@ -217,7 +224,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Dragon.prototype.maxHealth = function() {
-		return 1;//600;
+		return 600;
 	};
 	
 	Dragon.prototype.getDamage = function() {

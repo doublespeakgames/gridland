@@ -309,6 +309,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				building.el().find('.resourceBars').addClass('show');
 				var replaces = building.getReplaces(require('app/gamestate'));
 				if(replaces) {
+					replaces.el().data('upgrade', building);
 					Graphics.markUpgrading(replaces, true);
 				}
 			}
@@ -647,13 +648,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		landDragon: function(dragon, cb) {
 			dragon.setPosture('idle');
-			dragon.el().css('transform', 'translateY(-100%)');
+			dragon.el().addClass('flying');
 			dragon.p(dragon.options.flip ? 50 : this.worldWidth() - 50);
 			dragon.animation(1);
 			dragon.setNeckMount({ x: 50, y: 47 });
 			this.addToWorld(dragon);
 			dragon.el().css('left'); // force redraw
-			dragon.el().css('transform', 'translateY(0)');
+			dragon.el().removeClass('flying');
 			var tiltClass = dragon.options.flip ? 'flipTilted' : 'tilted';
 			setTimeout(function() {
 				EventManager.trigger('wipeMonsters');
