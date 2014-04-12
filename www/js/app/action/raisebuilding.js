@@ -27,7 +27,8 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 				}
 				// Remove replaced building, if necessary
 				if(_action.building.options.type.replaces != null) {
-					World.removeBuilding(Content.getBuildingType(_action.building.options.type.replaces));
+					replaces = _action.building.getReplaces(require('app/gamestate'));
+					World.removeBuilding(replaces);
 				}
 			});
 		});

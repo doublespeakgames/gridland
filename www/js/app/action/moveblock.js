@@ -23,10 +23,9 @@ define(['app/action/action', 'app/eventmanager'], function(Action, E) {
 			dude.carrying = _action.block;
 			S.removeBlock(_action.block);
 			dude.move(_action.destination.dudeSpot(), function(dude) {
-				G.dropBlock(_action.block, _action.destination);
-				E.trigger('blockDown', [_action.destination]);
 				dude.carrying = null;
 				_action.destination.requiredResources[_action.block.options.type.className]--;
+				E.trigger('blockDown', [_action.block, _action.destination]);
 				dude.action = null;
 			});
 		});

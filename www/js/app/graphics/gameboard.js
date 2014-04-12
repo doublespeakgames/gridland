@@ -35,9 +35,6 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	function createBoard(rows, cols) {
 		// Generate the board element
 		var el = G.make('gameBoard litBorder');
-		if(Options.get('showCosts')) {
-			el.addClass('showCosts');
-		};
 		tileContainer = G.make('tileContainer').attr('id', 'tileContainer').appendTo(el);
 		// Determine the board dimensions based on the size of the tiles
 		var testTile = G.make('tile').hide().appendTo('body');

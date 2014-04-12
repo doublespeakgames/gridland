@@ -110,17 +110,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				} else if(!building.obsolete && canBuild(building.options.type)) {
 					Graphics.addToWorld(building);
 					Graphics.setPosition(building, building.p());
-					for(var r in building.options.type.cost) {
-						var cost = building.options.type.cost[r];
-						var required = building.requiredResources[r];
-						for(var n = 0, has = cost - required; n < has; n++) {
-							var block = new Block({
-								type: Content.getResourceType(r)
-							});
-							Graphics.dropBlock(block, building);
-							block.quantity(block.max);
-						}
-					}
+					Graphics.updateCosts(building);
 				}
 			}
 			
@@ -242,8 +232,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			return null;
 		},
 		
-		removeBuilding: function(type) {
-			var building = GameState.getBuilding(type);
+		removeBuilding: function(building) {
 			building.obsolete = true;
 			stuff.splice(stuff.indexOf(building), 1);
 			building.el().remove();

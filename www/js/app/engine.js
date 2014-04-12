@@ -203,12 +203,12 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				EventManager.trigger('toggleMenu');
 				return false;
 			});
-			Graphics.attachHandler("World", "mousedown touchstart", '.blockPile', function(e) {
+			Graphics.attachHandler("World", "mousedown touchstart", '.resourceBars', function(e) {
 				// Handle wacky touch event objects
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];
 				}
-				EventManager.trigger('prioritizeBuilding', [$(e.target).closest('.blockPile').data('building')]);
+				EventManager.trigger('prioritizeBuilding', [$(e.target).closest('.resourceBars').data('building')]);
 			});
 			Graphics.attachHandler("World", "mousedown touchstart", function(e) {
 				// Handle wacky touch event objects
@@ -216,15 +216,6 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 					e = e.originalEvent.changedTouches[0];
 				}
 				EventManager.trigger('toggleMenu');
-				EventManager.trigger('toggleCosts', [true]);
-				return false;
-			});
-			Graphics.attachHandler("World", "mouseup touchend", function(e) {
-				// Handle wacky touch event objects
-				if(e.originalEvent.changedTouches) {
-					e = e.originalEvent.changedTouches[0];
-				}
-				EventManager.trigger('toggleCosts', [false]);
 				return false;
 			});
 		},

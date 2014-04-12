@@ -750,11 +750,11 @@ body.night {
 	height: 80px;
 	background-position: 0px bottom;
 	background-repeat: no-repeat;
-	transition: opacity 700ms linear;
-	-webkit-transition: opacity 700ms linear;
-	-moz-transition: opacity 700ms linear;
-	-ms-transition: opacity 700ms linear;
-	-o-transition: opacity 700ms linear;
+	transition: opacity 700ms linear, transform 500ms linear;
+	-webkit-transition: opacity 700ms linear, transform 500ms linear;
+	-moz-transition: opacity 700ms linear, transform 500ms linear;
+	-ms-transition: opacity 700ms linear, transform 500ms linear;
+	-o-transition: opacity 700ms linear, transform 500ms linear;
 }
 
 .night .building {
@@ -848,27 +848,56 @@ body.night {
 	bottom: 1px;
 }
 
-.blockPile {
+.resourceBars {
 	position: relative;
-	top: -60px;
-	cursor: pointer;
-	height: 60px;
-    width: 60px;
-    font-size: 0px;
-	transform: rotate(180deg);
-	-moz-transform: rotate(180deg);
-	-webkit-transform: rotate(180deg);
-	-ms-transform: rotate(180deg);
-	-o-transform: rotate(180deg);
-	transition: opacity 700ms linear;
-	-webkit-transition: opacity 700ms linear;
-	-moz-transition: opacity 700ms linear;
-	-ms-transition: opacity 700ms linear;
-	-o-transition: opacity 700ms linear;
-	opacity: 1;
+	top: 0px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border: 2px solid black;
+	height: 18px;
+	transition: opacity 700ms linear, transform 500ms linear;
+	opacity: 0;
 }
 
-.night .blockPile, .night .resources {
+.resourceBars.show {
+	opacity: 1;
+	transform: translateY(-20px);
+}
+
+.resourceBars.sunk {
+	transform: translateY(80px);
+	transition: transform 1800ms linear;
+}
+
+.resourceBar {
+	display: block;
+}
+
+.bars-2 .resourceBar {
+	height: 9px;
+}
+
+.bars-3 .resourceBar {
+	height: 6px;
+}
+
+.resourceBar-inner {
+	height: 100%;
+	width: 0;
+	transition: width 200ms linear;
+}
+
+.building.upgrading {
+	transform: translateY(-20px);
+}
+
+.building.sunk {
+	transform: translateY(80px);
+	transition: transform 2500ms linear;
+}
+
+.night .resourceBars, .night .resources {
 	opacity: 0;
 	cursor: default;
 }
@@ -939,15 +968,6 @@ body.night {
 	-o-transition: opacity 500ms linear;
 }
 
-.showCosts .ghost {
-	display: block;
-	opacity: 0.7;
-}
-
-.fadeCosts .ghost {
-	opacity: 0;
-}
-
 .block {
 	display: inline-block;
 	position: relative;
@@ -970,72 +990,116 @@ body.night {
 	-o-transition: width 300ms linear, background-color 200ms linear;
 }
 
-.block.grain div,
-.grain .ghost  {
+.block.grain div {
 	background-color: #FFE97F;
 }
 
 .block.wood div,
-.wood .ghost {
+.wood .resourceBar-inner {
 	background-color: #7C5840;
 }
 
+.resourceBar.wood {
+	background-color: rgba(124, 88, 64, 0.2);
+}
+
 .wood4 .block.wood div,
-.wood4 .wood .ghost,
+.wood4 .wood .resourceBar-inner,
 .wood5 .block.wood div,
-.wood5 .wood .ghost,
+.wood5 .wood .resourceBar-inner,
 .wood6 .block.wood div,
-.wood6 .wood .ghost {
+.wood6 .wood .resourceBar-inner {
 	background-color: #876C5B;
 }
 
+.wood4 .resourceBar.wood,
+.wood5 .resourceBar.wood,
+.wood6 .resourceBar.wood {
+	background-color: rgba(135, 108, 91, 0.2);
+}
+
 .wood7 .block.wood div,
-.wood7 .wood .ghost,
+.wood7 .wood .resourceBar-inner,
 .wood8 .block.wood div,
-.wood8 .wood .ghost,
+.wood8 .wood .resourceBar-inner,
 .wood9 .block.wood div,
-.wood9 .wood .ghost {
+.wood9 .wood .resourceBar-inner {
 	background-color: #FFD800;
 }
 
+.wood7 .resourceBar.wood,
+.wood8 .resourceBar.wood,
+.wood9 .resourceBar.wood {
+	background-color: rgba(255, 216, 0, 0.2);
+}
+
 .block.stone div,
-.stone .ghost {
+.stone .resourceBar-inner {
 	background-color: #C4C4C4;
 }
 
+.resourceBar.stone {
+	background-color: rgba(196, 196, 196, 0.2);
+}
+
 .stone4 .block.stone div,
-.stone4 .stone .ghost,
+.stone4 .stone .resourceBar-inner,
 .stone5 .block.stone div,
-.stone5 .stone .ghost,
+.stone5 .stone .resourceBar-inner,
 .stone6 .block.stone div,
-.stone6 .stone .ghost {
+.stone6 .stone .resourceBar-inner {
 	background-color: #135468;
 }
 
+.stone4 .resourceBar.stone,
+.stone5 .resourceBar.stone,
+.stone6 .resourceBar.stone {
+	background-color: rgba(19, 84, 104, 0.2);
+}
+
 .stone7 .block.stone div,
-.stone7 .stone .ghost,
+.stone7 .stone .resourceBar-inner,
 .stone8 .block.stone div,
-.stone8 .stone .ghost,
+.stone8 .stone .resourceBar-inner,
 .stone9 .block.stone div,
-.stone9 .stone .ghost {
+.stone9 .stone .resourceBar-inner {
 	background-color: #0097FE;
 }
 
+.stone7 .resourceBar.stone,
+.stone8 .resourceBar.stone,
+.stone9 .resourceBar.stone {
+	background-color: rgba(0, 151, 254, 0.2);
+}
+
 .block.clay div,
-.clay .ghost {
+.clay .resourceBar-inner {
 	background-color: #C65645;
 }
 
+.resourceBar.clay {
+	background-color: rgba(198, 86, 69, 0.2);
+}
+
 .block.cloth div,
-.cloth .ghost {
+.cloth .resourceBar-inner {
 	background-color: #EEDFA6;
 }
 
+.resourceBar.cloth {
+	background-color: rgba(238, 223, 166, 0.2);
+}
+
 .cloth3 .block.cloth div,
-.cloth3 .cloth .ghost,
+.cloth3 .cloth .resourceBar-inner,
 .cloth4 .block.cloth div,
-.cloth4 .cloth .ghost {
+.cloth4 .cloth .resourceBar-inner {
 	background-color: #853AFF;
+}
+
+.cloth3 .resourceBar.cloth,
+.cloth4 .resourceBar.cloth {
+	background-color: rgba(133, 58, 255, 0.2);
 }
 
 .celestial {

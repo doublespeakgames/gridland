@@ -45,38 +45,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		}, time);
 	}
 	
-	function showCosts(building) {
-		if(!Options.get('showCosts') && !costsOn) {
-			var pile;
-			if(building) {
-				if(building.el) building = building.el();
-				pile = building.find('.blockPile');
-			} else {
-				pile = $('.blockPile');
-			}
-			pile.addClass('showCosts');
-			setTimeout(function() {
-				pile.addClass('fadeCosts');
-			}, 10);
-			setTimeout(function() {
-				pile.removeClass('showCosts fadeCosts');
-			}, 510);
-		}
-	}
-	
-	function toggleCosts(visible) {
-		if(visible) {
-			costsOn = true;
-			$('.gameBoard').addClass('showCosts');
-		} else {
-			costsOn = false;
-			$('.gameBoard').addClass('fadeCosts');
-			setTimeout(function() {
-				$('.gameBoard').removeClass('showCosts fadeCosts');
-			}, 500);
-		}
-	}
-	
 	function changeTiles(tileTypes, classToAdd, classToRemove) {
 		var tileClasses = '';
 		tileTypes.forEach(function(type) {
@@ -144,6 +112,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		}, 1400);
 	}
 	
+	function dropBlock(block, building) {
+		block.el().remove();
+		Graphics.updateCosts(building);
+	}
+	
 	var Graphics = {
 		init: function() {
 			$('body').removeClass('night');
@@ -157,9 +130,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			EventManager.bind('removeEntity', this.removeFromWorld);
 			EventManager.bind('healthChanged', this.updateHealthBar);
 			EventManager.bind('dayBreak', this.handleDayBreak);
-			EventManager.bind('blockDown', showCosts);
-			EventManager.bind('toggleCosts', toggleCosts);
 			EventManager.bind('gameOver', gameOver);
+			EventManager.bind('blockDown', dropBlock);
 			
 			BoardGraphics.init();
 			WorldGraphics.init();
@@ -197,21 +169,15 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			thing.remove();
 		},
 		
-		createResourceContainer: function(resource, number) {
-			var cols = 1;
-			if(number > 5) {
-				cols = 2;
-				number = Math.ceil(number / 2);
-			}
-			var el = $('<div>').addClass('container')
-				.addClass(resource).addClass('width' + cols)
-				.addClass('height' + number);
-			$('<div>').addClass('ghost').appendTo(el);
+		createResourceBar: function(resource, number) {
+			var el = $('<li>').addClass('resourceBar').addClass(resource);
+			$('<div>').addClass('resourceBar-inner').appendTo(el);
 			return el;
 		},
 		
-		make: function(className) {
-			return $('<div>').addClass(className);
+		make: function(className, tagName) {
+			tagName = tagName || 'div';
+			return $('<' + tagName + '>').addClass(className);
 		},
 		
 		addToWorld: function(entity) {
@@ -331,6 +297,23 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			this.moveCelestial(celestial, celestial.p());
 		},
 		
+		updateCosts: function(building) {
+			var show = false;
+			for(var r in building.requiredResources) {
+				var total = building.options.type.cost[r];
+				var has = total - building.requiredResources[r];
+				if(has > 0) show = true;
+				building.el().find('.resourceBar.' + r + ' .resourceBar-inner').css('width', (has / total * 100) + '%');
+			}
+			if(show) {
+				building.el().find('.resourceBars').addClass('show');
+				var replaces = building.getReplaces(require('app/gamestate'));
+				if(replaces) {
+					Graphics.markUpgrading(replaces, true);
+				}
+			}
+		},
+		
 		updateSprite: function(entity) {
 			// TODO: Cache the entity width. Calling el.width() this often can't be good for performance.
 			var el = entity.el();
@@ -390,22 +373,28 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			});
 		},
 		
+		markUpgrading: function(building, upgrading) {
+			if(upgrading) {
+				building.el().addClass('upgrading');
+			} else {
+				building.el().removeClass('upgrading');
+			}
+		},
+		
 		raiseBuilding: function(building, callback) {
 			var el = building.el();
-			$('.blockPile', el).animate({
-				'top': '120px'
-			}, {
-				duration: 5000,
-				easing: 'linear'
-			});
-			
+			var replaces = building.getReplaces(require('app/gamestate'));
+			if(replaces) {
+				replaces.el().addClass('sunk');
+			}
+			$('.resourceBars', el).addClass('sunk');
 			el.animate({
 				'bottom': 0
 			}, {
 				duration: 5000,
 				easing: 'linear',
 				complete: function() {
-					el.find('.blockPile').remove();
+					el.find('.resourceBars').remove();
 					if(building.options.type.tileMod) {
 						changeTiles(
 							[building.options.type.tileMod], 
@@ -420,19 +409,16 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		sinkBuilding: function(building) {
 			var el = building.el();
-			$('.blockPile', el).stop().css('top', '-60px');
+			$('.resourceBars', el).removeClass('sunk');
 			el.stop().css('bottom', '-80px');
+			var replaces = building.getReplaces(require('app/gamestate'));
+			if(replaces) {
+				replaces.el().removeClass('sunk');
+			}
 		},
 		
 		pickUpBlock: function(block) {
 			block.el().appendTo('.heldBlock');
-		},
-		
-		dropBlock: function(block, destinationBuilding) {
-			var container = $('.blockPile', destinationBuilding.el())
-				.find('.container.' + block.options.type.className);
-			block.el().appendTo(container);
-			block.el().css('top', '0px');
 		},
 		
 		updateBlock: function(block) {

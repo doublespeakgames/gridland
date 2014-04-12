@@ -1,7 +1,6 @@
 define(['jquery'], function($) {
 	
 	var gameOptions = {
-		showCosts: false,
 		musicVolume: 1,
 		effectsVolume: 1
 	};

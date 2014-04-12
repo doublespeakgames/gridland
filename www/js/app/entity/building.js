@@ -43,12 +43,15 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent'], functi
 			this._el = WorldEntity.prototype.el.call(this).addClass(this.options.type.className);
 			
 			if(!this.built) {
-				var blockPile = G.make("blockPile");
-				blockPile.data('building', this);
+				var resourceBars = G.make("resourceBars", "ul");
+				resourceBars.data('building', this);
+				var numTypes = 0;
 				for(var r in this.options.type.cost) {
-					blockPile.append(G.createResourceContainer(r, this.options.type.cost[r]));
+					numTypes++;
+					resourceBars.append(G.createResourceBar(r, this.options.type.cost[r]));
 				}
-				this._el.append(blockPile);
+				resourceBars.addClass('bars-' + numTypes);
+				this._el.append(resourceBars);
 			}
 		}
 		return this._el;
@@ -68,6 +71,13 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent'], functi
 	
 	Building.prototype.dudeSpot = function() {
 		return this.p() + this.el().width() / 2;
+	};
+	
+	Building.prototype.getReplaces = function(State) {
+		if(this.options.type.replaces) {
+			return State.getBuilding(Content.getBuildingType(this.options.type.replaces));
+		}
+		return null;
 	};
 	
 	return Building;
