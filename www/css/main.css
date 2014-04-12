@@ -858,6 +858,7 @@ body.night {
 	height: 18px;
 	transition: opacity 700ms linear, transform 500ms linear;
 	opacity: 0;
+	cursor: pointer;
 }
 
 .resourceBars.show {
