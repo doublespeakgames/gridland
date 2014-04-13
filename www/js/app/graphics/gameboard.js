@@ -121,18 +121,18 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			var dest = type.effectDest[isNight ? 'night' : 'day'];
 			if(dest == 'side') {
 				// TODO
-				dest = [10, 10];
+				dest = [ side == 'left' ? -10 : 500, -20];
 			} else if(dest == 'sword') {
 				// TODO
 				dest = [10, 10];
 			}
 			e.css({
 				left: dest[0] + 'px',
-				top: dest[1] + 'px'
-			});
+				top: dest[1] + 'px',
+			}).addClass('shrunk');
 			setTimeout(function() {
 				removeEffectEl(e);
-			}, 500);
+			}, 700);
 		}
 	}
 	
