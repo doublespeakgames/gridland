@@ -97,13 +97,53 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		return mTime + 200;
 	}
 	
+	function getEffectEl(pos, type) {
+		// TODO: Pool these
+		var e = G.make('resourceEffect').addClass(type.className).css({
+			left: (pos.col * TILE_WIDTH) + (TILE_WIDTH / 2) + 'px',
+			top: (pos.row * TILE_HEIGHT) + (TILE_HEIGHT / 2) + 'px'
+		});
+		e.appendTo(el());
+		return e;
+	}
+	
+	function removeEffectEl(el) {
+		// TODO: Pool these
+		el.remove();
+	}
+	
+	function drawMatchEffect(pos, type, isNight, side) {
+		if(type != null) {
+			// Create the effect at the tile position
+			var e = getEffectEl(pos, type);
+			// Move it to the destination
+			e.css('left');
+			var dest = type.effectDest[isNight ? 'night' : 'day'];
+			if(dest == 'side') {
+				// TODO
+				dest = [10, 10];
+			} else if(dest == 'sword') {
+				// TODO
+				dest = [10, 10];
+			}
+			e.css({
+				left: dest[0] + 'px',
+				top: dest[1] + 'px'
+			});
+			setTimeout(function() {
+				removeEffectEl(e);
+			}, 500);
+		}
+	}
+	
 	function drawMatch(opts) {
 		var tilesToUpdate = [];
 		// Remove matched tiles
 		if(opts.removed) {
 			for(var i in opts.removed) {
-				var pos = opts.removed[i];
+				var pos = opts.removed[i].position;
 				removeTile(pos.row, pos.col);
+				drawMatchEffect(pos, opts.removed[i].type, opts.isNight, opts.side);
 				// Drop each tile above this tile one space
 				for(var r = pos.row - 1; r >= 0; r--) {
 					var t = getTile(r, pos.col);

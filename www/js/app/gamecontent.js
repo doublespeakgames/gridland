@@ -14,6 +14,10 @@ define({
 			multipliers: {
 				house: 2,
 				fort: 3
+			},
+			effectDest: {
+				day: [-20, 10],
+				night: 'side'
 			}
 		},
 		Wood: {
@@ -31,6 +35,10 @@ define({
 				sawmill6: 3,
 				sawmill7: 3,
 				sawmill8: 3
+			},
+			effectDest: {
+				day: [32, -20],
+				night: [-20, -15]
 			}
 		},
 		Stone: {
@@ -48,6 +56,10 @@ define({
 				blacksmith6: 3,
 				blacksmith7: 3,
 				blacksmith8: 3
+			},
+			effectDest: {
+				day: [32, -20],
+				night: 'sword'
 			}
 		},
 		Clay: {
@@ -65,6 +77,10 @@ define({
 				bricklayer2: 2,
 				bricklayer3: 3,
 				bricklayer4: 4
+			},
+			effectDest: {
+				day: [32, -20],
+				night: 'side'
 			}
 		},
 		Cloth: {
@@ -82,6 +98,10 @@ define({
 				weaver2: 2,
 				weaver3: 3,
 				weaver4: 4
+			},
+			effectDest: {
+				day: [32, -20],
+				night: 'side'
 			}
 		},
 		Mana: {
@@ -90,7 +110,11 @@ define({
 			nightEffect: {
 				'default': 'spawn:lich',
 			},
-			multipliers: {}
+			multipliers: {},
+			effectDest: {
+				day: [490, -5],
+				night: 'side'
+			}
 		}
 	},
 	

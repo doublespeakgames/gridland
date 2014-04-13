@@ -198,12 +198,15 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			var perTile = {};
 			for(var i = 0, len = vMask.length; i < len; i++) {
 				if((vMask[i] == 1 || hMask[i] == 1) && getTile(i) != HOLE) {
-					var c = Content.getResourceType(getTile(i)).className;
+					var type = Content.getResourceType(getTile(i));
+					var c = type.className;
 					resourcesGained[c] = resourcesGained[c] ? resourcesGained[c] + 1 : 1;
 					perTile[i] = c;
 					setTile(i, HOLE);
-					toRemove.push(getPosition(i));
-					
+					toRemove.push({
+						position: getPosition(i),
+						type: type
+					});
 					// Remove entries in the effectString, if necessary
 					if(effectString) {
 						var effectChar = effectString.charAt(i);
@@ -224,8 +227,11 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 									} else if(!retro) {
 										perTile[idx] = '-';
 										toRemove.push({
-											row: tileMod.row,
-											col: tileMod.column
+											position: {
+												row: tileMod.row,
+												col: tileMod.column	
+											},
+											type: null
 										});
 									}
 									break;
@@ -302,7 +308,9 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			require('app/engine').setGraphicsCallback(checkMatches);
 			EventManager.trigger('draw', ['board.match', {
 				removed: toRemove,
-				added: newTiles
+				added: newTiles,
+				isNight: require('app/engine').isNight(),
+				side: swapSide
 			}]);
 			EventManager.trigger('tilesCleared', [resourcesGained, swapSide, moved]);
 		} else {
