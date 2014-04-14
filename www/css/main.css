@@ -1090,11 +1090,11 @@ body.night {
 
 .block.stone div,
 .stone .resourceBar-inner {
-	background-color: #C4C4C4;
+	background-color: #999999;
 }
 
 .resourceBar.stone {
-	background-color: rgba(196, 196, 196, 0.2);
+	background-color: rgba(153, 153, 153, 0.2);
 }
 
 .stone4 .block.stone div,
@@ -2828,7 +2828,7 @@ body.bigExplosion.fadeOut:after {
 }
 
 .resourceEffect.stone {
-	background-color: rgba(196, 196, 196, 0.8);
+	background-color: rgba(153, 153, 153, 0.8);
 }
 
 .stone4 .resourceEffect.stone,
@@ -2857,6 +2857,20 @@ body.bigExplosion.fadeOut:after {
 	background-color: rgba(133, 58, 255, 0.8);
 }
 
+.resourceEffect.mana {
+	background-color: rgba(252, 92, 221, 0.8);
+}
+
 .night .resourceEffect {
+	background-color: rgba(0, 0, 0, 0.8);
+	border-color: white;
+}
+
+.night .resourceEffect.stone,
+.night .resourceEffect.wood {
 	background-color: rgba(255, 255, 255, 0.8);
+}
+
+.resourceEffect.pooled {
+	display: none;
 }

@@ -112,7 +112,7 @@ define({
 			},
 			multipliers: {},
 			effectDest: {
-				day: [490, -5],
+				day: [30, 505],
 				night: 'side'
 			}
 		}

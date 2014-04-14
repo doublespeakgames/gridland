@@ -97,19 +97,26 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		return mTime + 200;
 	}
 	
+	
+	var effectPool = [];
 	function getEffectEl(pos, type) {
-		// TODO: Pool these
-		var e = G.make('resourceEffect').addClass(type.className).css({
+		var e;
+		if(effectPool.length == 0) {
+			e = G.make('resourceEffect').appendTo(el());	
+		} else {
+			e = effectPool.pop();
+		}
+		e.addClass(type.className).css({
 			left: (pos.col * TILE_WIDTH) + (TILE_WIDTH / 2) + 'px',
 			top: (pos.row * TILE_HEIGHT) + (TILE_HEIGHT / 2) + 'px'
-		});
-		e.appendTo(el());
+		}).removeClass('pooled');
 		return e;
 	}
 	
 	function removeEffectEl(el) {
-		// TODO: Pool these
-		el.remove();
+		el.attr('class', 'resourceEffect pooled');
+		effectPool.push(el);
+		console.log('effect pool size: ' + effectPool.length);
 	}
 	
 	function drawMatchEffect(pos, type, isNight, side) {
@@ -120,11 +127,9 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			e.css('left');
 			var dest = type.effectDest[isNight ? 'night' : 'day'];
 			if(dest == 'side') {
-				// TODO
 				dest = [ side == 'left' ? -10 : 500, -20];
 			} else if(dest == 'sword') {
-				// TODO
-				dest = [10, 10];
+				dest = [-20, G.numHearts() * 28 + 14];
 			}
 			e.css({
 				left: dest[0] + 'px',

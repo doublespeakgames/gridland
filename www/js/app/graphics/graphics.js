@@ -8,6 +8,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	var costsOn = false;
 	var _ww = null, _wh = null;
 	var _bossHealth = null;
+	var _numHearts = 0;
 	
 	function handleDrawRequest(requestString, options) {
 		var moduleString = requestString.substring(0, requestString.indexOf('.'));
@@ -448,6 +449,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			}, 100);
 		},
 		
+		numHearts: function() {
+			return _numHearts;
+		},
+		
 		updateHealth: function(health, maxHealth) {
 			var MAX_HEARTS = 15;
 			var HEALTH_PER_HEART = 10;
@@ -457,6 +462,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				numBigHearts = numHearts - MAX_HEARTS;
 				numHearts = MAX_HEARTS;
 			}
+			_numHearts = numHearts;
 			var statusContainer = $('.hearts', this.getStatusContainer());
 			for(var i = 0, n = numHearts - statusContainer.children().length; i < n; i++) {
 				$('<div>').addClass('heart').addClass('hidden').append($('<div>')
