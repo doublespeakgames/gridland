@@ -106,9 +106,14 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		} else {
 			e = effectPool.pop();
 		}
+		var left = (pos.col * TILE_WIDTH) + (TILE_WIDTH / 2),
+			top = (pos.row * TILE_HEIGHT) + (TILE_HEIGHT / 2);
 		e.addClass(type.className).css({
-			left: (pos.col * TILE_WIDTH) + (TILE_WIDTH / 2) + 'px',
-			top: (pos.row * TILE_HEIGHT) + (TILE_HEIGHT / 2) + 'px'
+			'transform': 'translate3d(' + left + 'px, ' + top + 'px, 0px) scale(1)',
+			'-webkit-transform': 'translate3d(' + left + 'px, ' + top + 'px, 0px) scale(1)',
+			'-moz-transform': 'translate3d(' + left + 'px, ' + top + 'px, 0px) scale(1)',
+			'-ms-transform': 'translate3d(' + left + 'px, ' + top + 'px, 0px) scale(1)',
+			'-o-transform': 'translate3d(' + left + 'px, ' + top + 'px, 0px) scale(1)'
 		}).removeClass('pooled');
 		return e;
 	}
@@ -132,9 +137,12 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 				dest = [-20, G.numHearts() * 28 + 14];
 			}
 			e.css({
-				left: dest[0] + 'px',
-				top: dest[1] + 'px',
-			}).addClass('shrunk');
+				'transform': 'translate3d(' + dest[0] + 'px, ' + dest[1] + 'px, 0px) scale(0.2)', 
+				'-webkit-transform': 'translate3d(' + dest[0] + 'px, ' + dest[1] + 'px, 0px) scale(0.2)',
+				'-moz-transform': 'translate3d(' + dest[0] + 'px, ' + dest[1] + 'px, 0px) scale(0.2)',
+				'-ms-transform': 'translate3d(' + dest[0] + 'px, ' + dest[1] + 'px, 0px) scale(0.2)',
+				'-o-transform': 'translate3d(' + dest[0] + 'px, ' + dest[1] + 'px, 0px) scale(0.2)'
+			});
 			setTimeout(function() {
 				removeEffectEl(e);
 			}, 700);

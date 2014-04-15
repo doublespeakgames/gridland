@@ -1138,11 +1138,11 @@ body.night {
 
 .block.cloth div,
 .cloth .resourceBar-inner {
-	background-color: #EEDFA6;
+	background-color: #EDC842;
 }
 
 .resourceBar.cloth {
-	background-color: rgba(238, 223, 166, 0.2);
+	background-color: rgba(237, 200, 66, 0.2);
 }
 
 .cloth3 .block.cloth div,
@@ -2772,6 +2772,8 @@ body.bigExplosion.fadeOut:after {
 /** Resource effects **/
 .resourceEffect {
 	position: absolute;
+	top: 0px;
+	left: 0px;
 	height: 14px;
 	width: 14px;
 	margin: -8px 0 0 -8px;
@@ -2789,14 +2791,7 @@ body.bigExplosion.fadeOut:after {
 	border-width: 2px;
 	border-style: solid;
 	border-color: black;
-}
-
-.resourceEffect.shrunk {
-	width: 8px;
-	height: 8px;
-	margin: -5px 0 0 -5px;
-	opacity: 0.5;
-	border-width: 1px;
+	transform: translate3d(0px, 0px, 0px) scale(1);
 }
 
 .resourceEffect.grain {
