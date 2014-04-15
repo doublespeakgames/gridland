@@ -132,7 +132,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			e.css('left');
 			var dest = type.effectDest[isNight ? 'night' : 'day'];
 			if(dest == 'side') {
-				dest = [ side == 'left' ? -10 : 500, -20];
+				dest = [ side == 'left' ? 0 : G.worldWidth(), -20];
 			} else if(dest == 'sword') {
 				dest = [-20, G.numHearts() * 28 + 14];
 			}
