@@ -613,7 +613,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		handleDayBreak: function(dayNumber) {
 			require(['app/graphics/graphics'], function(Graphics) {
 				var txt = Graphics.getText('DAY');
-				var notifier = $('<div>').addClass('dayNotifier').text(txt + " " + dayNumber).appendTo('.world');
+				var notifier;
+				setTimeout(function() {
+					notifier = $('<div>').addClass('dayNotifier').text(txt + " " + dayNumber).appendTo('.world');
+				}, 700);
 				setTimeout(function() {
 					$('.monster, .treasureChest').remove();
 					notifier.addClass('hidden');

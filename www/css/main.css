@@ -772,6 +772,7 @@ body.night {
 	-moz-transition: opacity 700ms linear, -moz-transform 500ms linear;
 	-ms-transition: opacity 700ms linear, -ms-transform 500ms linear;
 	-o-transition: opacity 700ms linear, -o-transform 500ms linear;
+	z-index: 1;
 }
 
 .night .building {
