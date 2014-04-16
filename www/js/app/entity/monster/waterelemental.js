@@ -5,8 +5,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		this.options = $.extend({}, this.options, {}, options);
 		this.hostile = true;
 		this.action = null;
-		this.hp(this.maxHealth());
+		
+		this.maxHealth = 8; // 2 hits with a sword, 4 without
+		this.damage = 2; // Between 4 and 12
 		this.xp = 34;
+		
+		this.hp(this.getMaxHealth());
 	};
 	WaterElemental.prototype = new Monster({
 		monsterClass: 'waterElemental',
@@ -33,15 +37,6 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 			}
 		}
 		return false;
-	};
-	
-	WaterElemental.prototype.maxHealth = function() {
-		return 8; // 2 hits with a sword, 4 without
-	};
-	
-	WaterElemental.prototype.getDamage = function() {
-		// Between 4 and 12
-		return 2;
 	};
 	
 	return WaterElemental;

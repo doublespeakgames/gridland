@@ -68,7 +68,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				_stats.append($('<h2>').text(textStore.get('CLEAR')));
 				_stats.append($('<ul>').addClass('menu')
 					.append($('<li>').text(textStore.get('CONTINUE')).click(continueGame))
-					.append($('<li>').text(textStore.get('NEWGAMEPLUS'))));
+					.append($('<li>').text(textStore.get('NEWGAMEPLUS')).click(newGamePlus)));
 				list = $('<ul>').addClass('counts').appendTo(_stats);
 				Graphics.get('body').append(_stats);
 				_stats.css('left');
@@ -109,7 +109,20 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		}, 700);
 		setTimeout(function() {
 			b.removeClass('bigExplosion fadeOut');
-			getStats().removeClass('down');
+		}, 1400);
+	}
+	
+	function newGamePlus() {
+		getStats().removeClass('down');
+		BoardGraphics.el().removeClass('dragonFight');
+		var b = Graphics.get('body');
+		b.removeClass('night');
+		setTimeout(function() {
+			b.addClass('fadeOut');
+			EventManager.trigger('prestige');
+		}, 700);
+		setTimeout(function() {
+			b.removeClass('bigExplosion fadeOut');
 		}, 1400);
 	}
 	
@@ -600,11 +613,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		updateHealthBar: function(entity) {
 			if(entity.isBoss) {
-				Graphics.setBossHealth(entity.hp(), entity.maxHealth());
+				Graphics.setBossHealth(entity.hp(), entity.getMaxHealth());
 			} else {
 				var bar = entity.el().find('.healthBar div');
 				if(bar.length > 0) {
-					var healthPercent = Math.floor(entity.hp() / entity.maxHealth() * 100);
+					var healthPercent = Math.floor(entity.hp() / entity.getMaxHealth() * 100);
 					bar.css('width', healthPercent + '%');
 				}
 			}
@@ -687,7 +700,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				changeTiles(['clay', 'cloth', 'grain'], 'dragonFight', '');
 			}, 1000);
 			setTimeout(function() {
-				Graphics.setBossHealth(dragon.hp(), dragon.maxHealth());
+				Graphics.setBossHealth(dragon.hp(), dragon.getMaxHealth());
 				BoardGraphics.el().removeClass(tiltClass);
 				dragon.setPosture('windup', 500);
 			}, 1500);

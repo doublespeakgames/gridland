@@ -5,8 +5,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		this.options = $.extend({}, this.options, {}, options);
 		this.hostile = true;
 		this.action = null;
-		this.hp(this.maxHealth());
+		
+		this.maxHealth = 4; // 2 hits with a sword, 4 without
+		this.damage = 1; // Between 2 and 6 (doublestrike)
 		this.xp = 16;
+		
+		this.hp(this.getMaxHealth());
 	};
 	Spider.prototype = new Monster({
 		monsterClass: 'spider',
@@ -33,15 +37,6 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 			}
 		}
 		return false;
-	};
-	
-	Spider.prototype.maxHealth = function() {
-		return 4; // 2 hits with a sword, 4 without
-	};
-	
-	Spider.prototype.getDamage = function() {
-		// Between 2 and 6 (doublestrike)
-		return 1;
 	};
 	
 	return Spider;

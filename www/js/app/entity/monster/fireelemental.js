@@ -3,8 +3,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	
 	var FireElemental = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
-		this.hp(this.maxHealth());
+		
+		this.damage = 6; // Between 0 and 12 damage
+		this.maxHealth = 6; // 1 hit with sword, 3 without
 		this.xp = 27;
+		
+		this.hp(this.getMaxHealth());
 	};
 	FireElemental.prototype = new Monster({
 		monsterClass: 'fireElemental',
@@ -39,15 +43,6 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		// Fire Elementals are ranged
 		return this.p() > 10 && this.p() < Graphics.worldWidth() - 10 && 
 			Math.abs(this.p() - target.p()) <= 200;
-	};
-	
-	FireElemental.prototype.maxHealth = function() {
-		return 6; // 1 hit with sword, 3 without
-	};
-	
-	FireElemental.prototype.getDamage = function() {
-		// Between 0 and 12 damage
-		return 6;
 	};
 	
 	return FireElemental;

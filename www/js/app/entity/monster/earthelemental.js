@@ -3,8 +3,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	
 	var EarthElemental = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
-		this.hp(this.maxHealth());
+		
+		this.maxHealth = 14; // 3 hits with a sword, 7 hits without
+		this.damage = 2; // between 4 and 12 damage
 		this.xp = 20;
+		
+		this.hp(this.getMaxHealth());
 	};
 	EarthElemental.prototype = new Monster({
 		monsterClass: 'earthElemental',
@@ -31,15 +35,6 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 			}
 		}
 		return false;
-	};
-	
-	EarthElemental.prototype.maxHealth = function() {
-		return 14; // 3 hits with a sword, 7 hits without
-	};
-	
-	EarthElemental.prototype.getDamage = function() {
-		// between 4 and 12 damage
-		return 2;
 	};
 	
 	return EarthElemental;

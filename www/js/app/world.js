@@ -6,6 +6,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				ActionFactory, MonsterFactory, Block, Gem, Resources, Celestial, Dude,
 				Star, WorldEffect) {
 	
+	var PRESTIGE_MULTIPLIER = 0.5;
+	
 	var hasteTick = false;
 	var dude = null;
 	var celestial = null;
@@ -331,7 +333,11 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	}
 	
 	function canBuild(buildingType) {
-		if(buildingType.requiredLevel != null && 
+		if(GameState.prestige && buildingType.prestigeDependency && 
+				!GameState.hasBuilding(Content.getBuildingType(buildingType.prestigeDependency))) {
+			// This building has a building dependency instead of a level dependency for New Game +
+			return false;
+		} else if(buildingType.requiredLevel != null && 
 				GameState.level < buildingType.requiredLevel) {
 			return false;
 		}
@@ -366,7 +372,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	}
 	
 	function spawnMonster(monsterType, tiles, side) {
-		var monster = MonsterFactory.getMonster(monsterType, {tiles: tiles});
+		var monster = MonsterFactory.getMonster(monsterType, {
+			tiles: tiles,
+			multiplier: (GameState.prestige + 1) * PRESTIGE_MULTIPLIER
+		});
 		Graphics.addMonster(monster, side);
 		stuff.push(monster);
 		return monster;
@@ -534,7 +543,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					}
 				} else if(entity.hostile) {
 					if(isNight && !entity.wiped) {
-						dude.gainXp(entity.xp * _debugMultiplier);
+						dude.gainXp(entity.getXp() * _debugMultiplier);
 						advanceTime();
 					}
 					EventManager.trigger('monsterKilled', [entity]);
@@ -679,7 +688,11 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	}
 	
 	function callDragon() {
-		theDragon = MonsterFactory.getMonster("dragon", { flip: dude.p() >= Graphics.worldWidth() / 2, target: dude });
+		theDragon = MonsterFactory.getMonster("dragon", { 
+			flip: dude.p() >= Graphics.worldWidth() / 2, 
+			target: dude ,
+			multiplier: (GameState.prestige + 1) * PRESTIGE_MULTIPLIER
+		});
 		stuff.push(theDragon);
 		theDragon.action = ActionFactory.getAction('Land');
 		theDragon.action.doAction(theDragon);

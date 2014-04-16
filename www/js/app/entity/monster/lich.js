@@ -3,8 +3,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	
 	var Lich = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
-		this.hp(this.maxHealth());
+		
+		this.maxHealth = 120; // 15 hits with sword, 40 without
+		this.damage = 5; // Between 40 and 120
 		this.xp = 1000;
+		
+		this.hp(this.getMaxHealth());
 		this.spellCooldown = 16;
 		this.teleportCooldown = 52;
 	};
@@ -59,16 +63,6 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	Lich.prototype.getLoot = function() {
 		// Lich always drops dragons. How does it carry them all?!
 		return "callDragon";
-	};
-	
-	Lich.prototype.maxHealth = function() {
-		// 15 hits with sword, 40 without
-		return 120;
-	};
-	
-	Lich.prototype.getDamage = function() {
-		// Between 40 and 120
-		return 5;
 	};
 	
 	Lich.prototype.getHitboxWidth = function() {

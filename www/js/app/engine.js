@@ -153,6 +153,12 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				}
 			});
 			
+			EventManager.bind("prestige", function() {
+				GameState.count('PRESTIGE', 1);
+				GameState.doPrestige();
+				Engine.init();
+			});
+			
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", '.tile', function(e) {
 				if(!dragging) {
 					// Handle wacky touch event objects

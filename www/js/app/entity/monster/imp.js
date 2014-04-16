@@ -5,8 +5,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		this.options = $.extend({}, this.options, {}, options);
 		this.hostile = true;
 		this.action = null;
-		this.hp(this.maxHealth());
+		
+		this.maxHealth = 18; // 2 hits with sword, 6 without
+		this.damage = 3; // Between 3 and 30
 		this.xp = 52;
+		
+		this.hp(this.getMaxHealth());
 	};
 	Imp.prototype = new Monster({
 		monsterClass: 'imp',
@@ -33,15 +37,6 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 			}
 		}
 		return false;
-	};
-	
-	Imp.prototype.maxHealth = function() {
-		return 18; // 2 hits with sword, 6 without
-	};
-	
-	Imp.prototype.getDamage = function() {
-		// Between 3 and 30
-		return 3;
 	};
 	
 	return Imp;

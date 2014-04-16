@@ -2,7 +2,7 @@ define(['app/entity/worldentity', 'app/graphics/graphics'],
 		function(WorldEntity, Graphics) {
 	
 	var Monster = function(options) {
-		this.options = $.extend({}, this.options, options);
+		this.options = $.extend({ multiplier: 1 }, this.options, options);
 		this.hostile = true;
 		this.action = null;
 		this.noIdle = true;
@@ -29,6 +29,18 @@ define(['app/entity/worldentity', 'app/graphics/graphics'],
 	Monster.prototype.getLoot = function() {
 		// Trigger default loot rolls in most cases
 		return null;
+	};
+	
+	Monster.prototype.getMaxHealth = function() {
+		return this.maxHealth * this.options.multiplier;
+	};
+	
+	Monster.prototype.getDamage = function() {
+		return this.damage * this.options.multiplier;
+	};
+	
+	Monster.prototype.getXp = function() {
+		return this.xp;
 	};
 	
 	Monster.constructor = Monster;

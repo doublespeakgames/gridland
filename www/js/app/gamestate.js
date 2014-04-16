@@ -12,6 +12,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			this.gem = 0;
 			this.mana = 0;
 			this.counts = {};
+			this.prestige = 0;
 			Analytics.trackEvent('game', 'create');
 		},
 		
@@ -34,6 +35,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 					this.gem = savedState.gem || 0;
 					this.mana = savedState.mana || 0;
 					this.counts = savedState.counts || {};
+					this.prestige = savedState.prestige || 0;
 				} else {
 					this.create();
 				}
@@ -54,7 +56,8 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 					items: this.items,
 					gem: this.gem,
 					mana: this.mana,
-					counts: this.counts
+					counts: this.counts,
+					prestige: this.prestige
 				};
 				for(b in this.buildings) {
 					var building = this.buildings[b];
@@ -67,6 +70,13 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 				localStorage.gameState = JSON.stringify(state);
 			}
 			return this;
+		},
+		
+		doPrestige: function() {
+			this.buildings.length = 0;
+			this.stores.length = 0;
+			this.prestige = this.prestige ? this.prestige + 1 : 1;
+			this.save();
 		},
 		
 		savePersistents: function() {

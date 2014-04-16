@@ -3,8 +3,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	
 	var HauntedArmour = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
-		this.hp(this.maxHealth());
+		
+		this.maxHealth = 7; // 3 hits with a sword, 7 hits without
+		this.damage = 1; // between 2 and 6 damage
 		this.xp = 10;
+		
+		this.hp(this.getMaxHealth());
 	};
 	HauntedArmour.prototype = new Monster({
 		monsterClass: 'hauntedArmour',
@@ -31,15 +35,6 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 			}
 		}
 		return false;
-	};
-	
-	HauntedArmour.prototype.maxHealth = function() {
-		return 7; // 3 hits with a sword, 7 hits without
-	};
-	
-	HauntedArmour.prototype.getDamage = function() {
-		// between 2 and 6 damage
-		return 1;
 	};
 	
 	HauntedArmour.prototype.getHitboxWidth = function() {

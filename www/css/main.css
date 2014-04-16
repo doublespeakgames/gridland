@@ -2716,11 +2716,11 @@ body.bigExplosion.fadeOut:after {
 }
 
 #endGame.down {
-	transform: translate(-182px, 700px);
-	-webkit-transform: translate(-182px, 700px);
-	-moz-transform: translate(-182px, 700px);
-	-ms-transform: translate(-182px, 700px);
-	-o-transform: translate(-182px, 700px);
+	transform: translate(-182px, 627px);
+	-webkit-transform: translate(-182px, 627px);
+	-moz-transform: translate(-182px, 627px);
+	-ms-transform: translate(-182px, 627px);
+	-o-transform: translate(-182px, 627px);
 }
 
 #endGame h2 {

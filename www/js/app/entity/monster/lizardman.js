@@ -3,8 +3,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	
 	var Lizardman = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
-		this.hp(this.maxHealth());
+		
+		this.maxHealth = 3; // 1 hit with sword, 3 without
+		this.damage = 4; // Between 0 and 8 damage
 		this.xp = 13;
+		
+		this.hp(this.getMaxHealth());
 	};
 	Lizardman.prototype = new Monster({
 		monsterClass: 'lizardman',
@@ -39,15 +43,6 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		// Lizardmen are ranged
 		return this.p() > 10 && this.p() < Graphics.worldWidth() - 10 && 
 			Math.abs(this.p() - target.p()) <= 200;
-	};
-	
-	Lizardman.prototype.maxHealth = function() {
-		return 3; // 1 hit with sword, 3 without
-	};
-	
-	Lizardman.prototype.getDamage = function() {
-		// Between 0 and 8 damage
-		return 4;
 	};
 	
 	return Lizardman;

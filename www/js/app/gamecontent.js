@@ -160,6 +160,7 @@ define({
 			position: 30,
 			cost: {},
 			requiredLevel: 4,
+			prestigeDependency: 'blacksmith',
 			animationFrames: 4,
 			tileMod: 'grain',
 			tileLevel: 2,
@@ -173,6 +174,7 @@ define({
 			position: 30,
 			cost: {},
 			requiredLevel: 7,
+			prestigeDependency: 'blacksmith3',
 			animationFrames: 4,
 			tileMod: 'grain',
 			tileLevel: 3,
@@ -186,6 +188,7 @@ define({
 			position: 30,
 			cost: {},
 			requiredLevel: 10,
+			prestigeDependency: 'blacksmith6',
 			animationFrames: 4,
 			tileMod: 'grain',
 			tileLevel: 4,
@@ -579,7 +582,7 @@ define({
 			onUse: function() {
 				var E = require('app/eventmanager'),
 					S = require('app/gamestate');
-				E.trigger('healDude', [Math.floor(S.maxHealth() / 2)]);
+				E.trigger('healDude', [Math.floor(S.getMaxHealth() / 2)]);
 			}
 		},
 		manaPotion: {

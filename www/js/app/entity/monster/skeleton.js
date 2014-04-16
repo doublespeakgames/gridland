@@ -3,8 +3,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	
 	var Skeleton = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
-		this.hp(this.maxHealth());
+		
+		this.maxHealth = 1;
+		this.damage = 2;
 		this.xp = 3;
+		
+		this.hp(this.getMaxHealth());
 	};
 	Skeleton.prototype = new Monster({
 		monsterClass: 'skeleton',
@@ -39,14 +43,6 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		// Skeletons are ranged
 		return this.p() > 10 && this.p() < Graphics.worldWidth() - 10 && 
 			Math.abs(this.p() - target.p()) <= 200;
-	};
-	
-	Skeleton.prototype.maxHealth = function() {
-		return 1;
-	};
-	
-	Skeleton.prototype.getDamage = function() {
-		return 2;
 	};
 	
 	return Skeleton;

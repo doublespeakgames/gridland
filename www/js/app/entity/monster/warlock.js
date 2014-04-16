@@ -3,8 +3,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	
 	var Warlock = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
-		this.hp(this.maxHealth());
+		
+		this.maxHealth = 9; // 1 hit with sword, 3 without
+		this.damage = 15; // Between 0 and 30 
 		this.xp = 43;
+		
+		this.hp(this.getMaxHealth());
 	};
 	Warlock.prototype = new Monster({
 		monsterClass: 'warlock',
@@ -39,15 +43,6 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		// Warlocks are ranged
 		return this.p() > 10 && this.p() < Graphics.worldWidth() - 10 && 
 			Math.abs(this.p() - target.p()) <= 200;
-	};
-	
-	Warlock.prototype.maxHealth = function() {
-		return 9; // 1 hit with sword, 3 without
-	};
-	
-	Warlock.prototype.getDamage = function() {
-		// Between 0 and 30 
-		return 15;
 	};
 	
 	return Warlock;

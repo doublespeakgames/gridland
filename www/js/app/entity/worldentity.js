@@ -13,7 +13,7 @@ define(['app/entity/entity', 'app/eventmanager'],
 		this.options = $.extend({}, this.options, {
 			// Nuthin'
 		}, options);
-		this.hp(this.maxHealth());
+		this.hp(this.getMaxHealth());
 		this.gone = false;
 	};
 	worldEntity.prototype = new Entity();
@@ -119,7 +119,7 @@ define(['app/entity/entity', 'app/eventmanager'],
 		return Math.abs(Math.abs(this.p() - target.p()) - this.getHitboxWidth() / 2 - target.getHitboxWidth() / 2);
 	};
 	
-	worldEntity.prototype.maxHealth = function() {
+	worldEntity.prototype.getMaxHealth = function() {
 		return 0;
 	};
 	
