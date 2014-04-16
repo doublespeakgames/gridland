@@ -36,6 +36,11 @@ body.night {
 .hidden {
 	opacity: 0 !important;
 	cursor: default !important;
+	transition: opacity 200ms linear !important;
+	-webkit-transition: opacity 200ms linear !important;
+	-moz-transition: opacity 200ms linear !important;
+	-ms-transition: opacity 200ms linear !important;
+	-o-transition: opacity 200ms linear !important;
 }
 
 /** Loading Screen **/

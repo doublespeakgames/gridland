@@ -152,7 +152,8 @@ define({
 			cost: {},
 			requiredLevel: 1,
 			animationFrames: 1,
-			priority: 1
+			priority: 1,
+			isBase: true
 		},
 		
 		House: {
@@ -166,7 +167,8 @@ define({
 			tileLevel: 2,
 			replaces: 'shack',
 			defaultAnimation: 1,
-			priority: 1
+			priority: 1,
+			isBase: true
 		},
 		
 		Fort: {
@@ -180,7 +182,8 @@ define({
 			tileLevel: 3,
 			replaces: 'house',
 			defaultAnimation: 2,
-			priority: 1
+			priority: 1,
+			isBase: true
 		},
 		
 		Castle: {
@@ -194,7 +197,8 @@ define({
 			tileLevel: 4,
 			replaces: 'fort',
 			defaultAnimation: 3,
-			priority: 1
+			priority: 1,
+			isBase: true
 		},
 		
 		BrickLayer: {

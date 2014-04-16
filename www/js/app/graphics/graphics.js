@@ -397,6 +397,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		raiseBuilding: function(building, callback) {
+			if(building.options.type.isBase) {
+				$('.resources').addClass('hidden');
+			}
 			var el = building.el();
 			var replaces = building.getReplaces(require('app/gamestate'));
 			if(replaces) {
@@ -409,6 +412,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				duration: 5000,
 				easing: 'linear',
 				complete: function() {
+					if(building.options.type.isBase) {
+						$('.resources').removeClass('hidden');
+					}
 					el.find('.resourceBars').remove();
 					if(building.options.type.tileMod) {
 						changeTiles(
