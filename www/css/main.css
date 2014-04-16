@@ -722,8 +722,8 @@ body.night {
 .star {
 	position: absolute;
 	background: url(../img/star.png) no-repeat;
-	width: 14px;
-	height: 14px;
+	width: 16px;
+	height: 16px;
 	top: 10px;
 	opacity: 1;
 	transition: opacity 700ms linear;
