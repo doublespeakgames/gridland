@@ -6,8 +6,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		this.hostile = true;
 		this.action = null;
 		
-		this.maxHealth = 20; // 4 hits with sword, 7 without
-		this.damage = 2; // Between 14 and 26
+		this.maxHealth = 36; // 4 hits with sword, 12 without
+		this.damage = 2; // Between 14 and 46
 		this.xp = 52;
 		
 		this.hp(this.getMaxHealth());

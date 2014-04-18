@@ -4,8 +4,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	var EarthElemental = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		
-		this.maxHealth = 14; // 3 hits with a sword, 7 hits without
-		this.damage = 2; // between 4 and 12 damage
+		this.maxHealth = 24; // 4 hits with a sword, 12 hits without
+		this.damage = 1; // between 4 and 12 damage
 		this.xp = 20;
 		
 		this.hp(this.getMaxHealth());

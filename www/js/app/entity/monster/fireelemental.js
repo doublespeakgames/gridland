@@ -4,8 +4,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	var FireElemental = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		
-		this.damage = 6; // Between 0 and 12 damage
-		this.maxHealth = 6; // 1 hit with sword, 3 without
+		this.damage = 4; // Between 4 and 24 damage
+		this.maxHealth = 12; // 2 hits with sword, 6 without
 		this.xp = 27;
 		
 		this.hp(this.getMaxHealth());
