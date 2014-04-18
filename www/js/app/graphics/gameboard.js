@@ -121,11 +121,10 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	function removeEffectEl(el) {
 		el.attr('class', 'resourceEffect pooled');
 		effectPool.push(el);
-		console.log('effect pool size: ' + effectPool.length);
 	}
 	
 	function drawMatchEffect(pos, type, isNight, side) {
-		if(type != null) {
+		if(type != null && GameBoard.shouldDrawResourceEffect(type)) {
 			// Create the effect at the tile position
 			var e = getEffectEl(pos, type);
 			// Move it to the destination

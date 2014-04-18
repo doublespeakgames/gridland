@@ -89,6 +89,10 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 		
 		canMove: function() {
 			return dropCount == 0 && removals == 0 && !locked;
+		},
+		
+		shouldDrawResourceEffect: function(resourceType) {
+			return resourceType == Content.ResourceType.Grain || State.hasBase();
 		}
 	};
 	

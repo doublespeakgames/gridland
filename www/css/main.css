@@ -2784,11 +2784,11 @@ body.bigExplosion.fadeOut:after {
 	width: 14px;
 	margin: -8px 0 0 -8px;
 	z-index: 10;
-	transition: all 700ms ease-in;
-	-webkit-transition: all 700ms ease-in;
-	-moz-transition: all 700ms ease-in;
-	-ms-transition: all 700ms ease-in;
-	-o-transition: all 700ms ease-in;
+	transition: transform 700ms ease-in;
+	-webkit-transition: transform 700ms ease-in;
+	-moz-transition: transform 700ms ease-in;
+	-ms-transition: transform 700ms ease-in;
+	-o-transition: transform 700ms ease-in;
 	transition-timing-function: cubic-bezier(.61,-0.22,.71,.67);
 	-webkit-transition-timing-function: cubic-bezier(.610,.71,.67); /* Supid Webkit */
 	-moz-transition-timing-function: cubic-bezier(.61,-0.22,.71,.67);

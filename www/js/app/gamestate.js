@@ -1,7 +1,7 @@
 define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecontent'], 
 		function(Building, Block, Analytics, Content) {
 	
-	return {
+	var GameState = {
 		create: function() {
 			this.buildings = [];
 			this.stores = [];
@@ -93,6 +93,21 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			this.stores.splice(this.stores.indexOf(block), 1);
 		},
 		
+		hasBase: (function() {
+			var _hasBase = false;
+			return function() {
+				return _hasBase || (function() {
+					for(var b in GameState.buildings) {
+						var building = GameState.buildings[b];
+						if(building.options.type.isBase && building.built) {
+							return _hasBase = true;
+						}
+					}
+					return false;
+				})();
+			};
+		})(),
+		
 		hasBuilding: function(type, ignoreObsolete) {
 			for(var i in this.buildings) {
 				var building = this.buildings[i];
@@ -179,4 +194,6 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			this.counts[key] = value;
 		}
 	};
+	
+	return GameState;
 });
