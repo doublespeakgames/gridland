@@ -4,7 +4,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	var Zombie = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		
-		this.maxHealth = 3;
+		this.maxHealth = 4;
 		this.damage = 1;
 		this.xp = 2;
 		

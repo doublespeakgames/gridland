@@ -13,7 +13,7 @@ define(['app/action/action', 'app/eventmanager'], function(Action, EventManager)
 	
 	GetLoot.prototype.doFrameAction = function(frame) {
 		if(frame == 3) {
-			EventManager.trigger('pickupLoot', [this.target]);
+			EventManager.trigger('pickupLoot', [this.target, require('app/world').getDebugMultiplier()]);
 			this.target.gone = true;
 			this._entity.action = null;
 			this._entity.paused = true;

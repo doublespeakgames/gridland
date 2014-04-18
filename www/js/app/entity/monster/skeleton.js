@@ -5,7 +5,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		this.options = $.extend({}, this.options, {}, options);
 		
 		this.maxHealth = 1;
-		this.damage = 2;
+		this.damage = 3;
 		this.xp = 3;
 		
 		this.hp(this.getMaxHealth());

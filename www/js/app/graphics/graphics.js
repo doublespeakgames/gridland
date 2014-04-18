@@ -263,13 +263,18 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			monster.p(el.position().left + el.width() / 2);
 		},
 		
-		moveCelestial: function(entity, pos) {
+		moveCelestial: function(entity) {
 			var el = entity.el();
-			var worldWidth = $('.world').width();
-			var height = (Math.abs(pos - worldWidth / 2) / (worldWidth / 2)) * 30;
+			var pos = entity.p();
+			var height = (Math.abs(pos - Graphics.worldWidth() / 2) / (Graphics.worldWidth() / 2)) * 30;
+			var left = (pos - (el.width() / 2)),
+				top = Math.floor(height);
 			el.css({
-				left: (pos - (el.width() / 2)) + 'px',
-				top: Math.floor(height) + 'px'
+				'transform': 'translate3d(' + left + 'px, ' + top + 'px, 0)',
+				'-webkit-transform': 'translate3d(' + left + 'px, ' + top + 'px, 0)',
+				'-moz-transform': 'translate3d(' + left + 'px, ' + top + 'px, 0)',
+				'-ms-transform': 'translate3d(' + left + 'px, ' + top + 'px, 0)',
+				'-o-transform': 'translate3d(' + left + 'px, ' + top + 'px, 0)'
 			});
 		},
 		
@@ -282,7 +287,14 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		phaseTransition: function(celestial, callback) {
-			celestial.el().css('top', '100%');
+			var left = celestial.p() - (celestial.el().width() / 2);
+			celestial.el().css({
+				'transform': 'translate3d(' + left + 'px, ' + Graphics.worldHeight() + 'px, 0)',
+				'-webkit-transform': 'translate3d(' + left + 'px, ' + Graphics.worldHeight() + 'px, 0)',
+				'-moz-transform': 'translate3d(' + left + 'px, ' + Graphics.worldHeight() + 'px, 0)',
+				'-ms-transform': 'translate3d(' + left + 'px, ' + Graphics.worldHeight() + 'px, 0)',
+				'-o-transform': 'translate3d(' + left + 'px, ' + Graphics.worldHeight() + 'px, 0)'
+			});
 			$('body').toggleClass('night');
 			var _g = this;
 			setTimeout(function() {
@@ -291,7 +303,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				} else {
 					celestial.animation(0);
 				}
-				celestial.el().css('left', '0px');
+				celestial.el().css({
+					'transform': 'translate3d(0px, ' + Graphics.worldHeight() + 'px, 0)',
+					'-webkit-transform': 'translate3d(0px, ' + Graphics.worldHeight() + 'px, 0)',
+					'-moz-transform': 'translate3d(0px, ' + Graphics.worldHeight() + 'px, 0)',
+					'-ms-transform': 'translate3d(0px, ' + Graphics.worldHeight() + 'px, 0)',
+					'-o-transform': 'translate3d(0px, ' + Graphics.worldHeight() + 'px, 0)'
+				});
 				
 				setTimeout(function() {
 					_g.raiseCelestial(celestial);
@@ -303,12 +321,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		raiseCelestial: function(celestial) {
-			celestial.el().css({
-				top: '100%',
-				left: '0px'
-			});
 			celestial.p(15);
-			this.moveCelestial(celestial, celestial.p());
+			this.moveCelestial(celestial);
 		},
 		
 		updateCosts: function(building) {

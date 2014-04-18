@@ -1167,14 +1167,20 @@ body.night {
 	z-index: -1;
 	width: 30px;
 	height: 30px;
-	top: 100%;
+	top: 0px;
+	left: 0px;
 	background: url(../img/sun.png) no-repeat;
 	position: absolute;
-	transition: top 300ms linear, left 300ms linear;
-	-webkit-transition: top 300ms linear, left 300ms linear;
-	-moz-transition: top 300ms linear, left 300ms linear;
-	-ms-transition: top 300ms linear, left 300ms linear;
-	-o-transition: top 300ms linear, left 300ms linear;
+	transform: translate3d(0px, 110px, 0px);
+	-webkit-transform: translate3d(0px, 110px, 0px);
+	-moz-transform: translate3d(0px, 110px, 0px);
+	-ms-transform: translate3d(0px, 110px, 0px);
+	-o-transform: translate3d(0px, 110px, 0px);
+	transition: transform 300ms linear;
+	-webkit-transition: -webkit-transform 300ms linear;
+	-moz-transition: -moz-transform 300ms linear;
+	-ms-transition: -ms-transform 300ms linear;
+	-o-transition: -o-transform 300ms linear;
 }
 
 .healthBar {

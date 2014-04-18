@@ -293,6 +293,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			GameState.save();
 			Graphics.notifySave();
 			EventManager.trigger('gameOver', [GameState.counts]);
+		},
+		
+		getDebugMultiplier: function() {
+			return _debugMultiplier;
 		}
 	};
 	
@@ -616,7 +620,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			} else {
 				var worldWidth = Graphics.worldWidth();
 				celestial.p(Math.floor(worldWidth / numSteps) * celestialPosition);
-				Graphics.moveCelestial(celestial, celestial.p());
+				Graphics.moveCelestial(celestial);
 			}
 		}
 	}
