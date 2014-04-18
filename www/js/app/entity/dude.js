@@ -61,6 +61,7 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 			State.counts.LEVEL = State.level;
 			Graphics.levelUp(this);
 			State.health = State.maxHealth();
+			Graphics.updateHealth(State.health, State.maxHealth());
 			EventManager.trigger('levelUp');
 			if(this.action != null) {
 				this.action.terminateAction(this);

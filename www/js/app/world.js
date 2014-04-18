@@ -28,7 +28,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	window.multiplier = function(n) {
 		_debugMultiplier = n > 0 ? n : 1;
 		if(_debugMultiplier > 1) {
-			World.getDude().options.speed = 20;
+			World.getDude().options.speed = 40 / _debugMultiplier;
 		} else {
 			World.getDude().options.speed = 40;
 		}

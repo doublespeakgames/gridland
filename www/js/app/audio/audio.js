@@ -29,6 +29,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		TileClick: {
 			file: 'tileclick'
 		},
+		/* ARRRGG! I HATE THESE MATCH SOUNDS!!! AAAAAAARGH!
 		Match1: {
 			file: 'match1'
 		},
@@ -43,7 +44,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		Match5: {
 			file: 'match5'
-		},
+		}, */
 		Hammer: {
 			file: 'hammer'
 		},
