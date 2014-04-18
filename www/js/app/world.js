@@ -378,7 +378,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	function spawnMonster(monsterType, tiles, side) {
 		var monster = MonsterFactory.getMonster(monsterType, {
 			tiles: tiles,
-			multiplier: (GameState.prestige + 1) * PRESTIGE_MULTIPLIER
+			multiplier: (GameState.prestige * PRESTIGE_MULTIPLIER) + 1
 		});
 		Graphics.addMonster(monster, side);
 		stuff.push(monster);
