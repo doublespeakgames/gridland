@@ -586,7 +586,7 @@ define({
 			onUse: function() {
 				var E = require('app/eventmanager'),
 					S = require('app/gamestate');
-				E.trigger('healDude', [Math.floor(S.getMaxHealth() / 2)]);
+				E.trigger('healDude', [Math.floor(S.maxHealth() / 2)]);
 			}
 		},
 		manaPotion: {

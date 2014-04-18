@@ -21,9 +21,12 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 	
 	function getLoot(treasure, debugMultiplier) {
 		var lootName = null;
+		var gemDropRate = 0.05;
+		if(GameState.dayNumber > (20 / debugMultiplier)) gemDropRate *= 2;
+		if(GameState.dayNumber > (40 / debugMultiplier)) gemDropRate *= 4;
 		if(treasure.options.forceLoot) {
 			lootName = treasure.options.forceLoot;
-		} else if(GameState.gem < 4 && Math.random() < 0.05 * debugMultiplier) {
+		} else if(GameState.gem < 4 && Math.random() < gemDropRate * debugMultiplier) {
 			lootName = "shard";
 		} else {
 			var r = Math.random();

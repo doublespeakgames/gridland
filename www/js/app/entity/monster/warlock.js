@@ -4,8 +4,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	var Warlock = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		
-		this.maxHealth = 9; // 1 hit with sword, 3 without
-		this.damage = 15; // Between 0 and 30 
+		this.maxHealth = 18; // 2 hits with sword, 6 without
+		this.damage = 5; // Between 5 and 30
 		this.xp = 43;
 		
 		this.hp(this.getMaxHealth());

@@ -4,8 +4,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	var Demon = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		
-		this.maxHealth = 27; // 3 hits with sword, 9 without
-		this.damage = 3; // Between 6 and 24
+		this.maxHealth = 45; // 5 hits with sword, 15 without
+		this.damage = 3; // Between 15 and 45
 		this.xp = 35;
 		
 		this.hp(this.getMaxHealth());
