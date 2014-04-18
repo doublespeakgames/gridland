@@ -21,7 +21,6 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 	
 	function getLoot(treasure, debugMultiplier) {
 		var lootName = null;
-		console.log(debugMultiplier);
 		if(treasure.options.forceLoot) {
 			lootName = treasure.options.forceLoot;
 		} else if(GameState.gem < 4 && Math.random() < 0.05 * debugMultiplier) {
