@@ -289,11 +289,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		phaseTransition: function(celestial, callback) {
 			var left = celestial.p() - (celestial.el().width() / 2);
 			celestial.el().css({
-				'transform': 'translate3d(' + left + 'px, ' + Graphics.worldHeight() + 'px, 0)',
-				'-webkit-transform': 'translate3d(' + left + 'px, ' + Graphics.worldHeight() + 'px, 0)',
-				'-moz-transform': 'translate3d(' + left + 'px, ' + Graphics.worldHeight() + 'px, 0)',
-				'-ms-transform': 'translate3d(' + left + 'px, ' + Graphics.worldHeight() + 'px, 0)',
-				'-o-transform': 'translate3d(' + left + 'px, ' + Graphics.worldHeight() + 'px, 0)'
+				'transform': 'translate3d(' + left + 'px, ' + (Graphics.worldHeight() + 10) + 'px, 0)',
+				'-webkit-transform': 'translate3d(' + left + 'px, ' + (Graphics.worldHeight() + 10) + 'px, 0)',
+				'-moz-transform': 'translate3d(' + left + 'px, ' + (Graphics.worldHeight() + 10) + 'px, 0)',
+				'-ms-transform': 'translate3d(' + left + 'px, ' + (Graphics.worldHeight() + 10) + 'px, 0)',
+				'-o-transform': 'translate3d(' + left + 'px, ' + (Graphics.worldHeight() + 10) + 'px, 0)'
 			});
 			$('body').toggleClass('night');
 			var _g = this;
@@ -304,11 +304,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					celestial.animation(0);
 				}
 				celestial.el().css({
-					'transform': 'translate3d(0px, ' + Graphics.worldHeight() + 'px, 0)',
-					'-webkit-transform': 'translate3d(0px, ' + Graphics.worldHeight() + 'px, 0)',
-					'-moz-transform': 'translate3d(0px, ' + Graphics.worldHeight() + 'px, 0)',
-					'-ms-transform': 'translate3d(0px, ' + Graphics.worldHeight() + 'px, 0)',
-					'-o-transform': 'translate3d(0px, ' + Graphics.worldHeight() + 'px, 0)'
+					'transform': 'translate3d(0px, ' + (Graphics.worldHeight() + 10) + 'px, 0)',
+					'-webkit-transform': 'translate3d(0px, ' + (Graphics.worldHeight() + 10) + 'px, 0)',
+					'-moz-transform': 'translate3d(0px, ' + (Graphics.worldHeight() + 10) + 'px, 0)',
+					'-ms-transform': 'translate3d(0px, ' + (Graphics.worldHeight() + 10) + 'px, 0)',
+					'-o-transform': 'translate3d(0px, ' + (Graphics.worldHeight() + 10) + 'px, 0)'
 				});
 				
 				setTimeout(function() {
