@@ -263,6 +263,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			_el = null;
 			el();
 			
+			effectPool.length = 0;
 			E.bind('drawEffect', drawTileEffect);
 			E.bind('drawRemoveEffect', removeTileEffect);
 			E.bind('drawExplode', explode);
