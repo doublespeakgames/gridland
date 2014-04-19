@@ -7,14 +7,14 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 		common: 1
 	};
 	
-	function rollForLoot(Monster) {
+	function rollForLoot(monster) {
 		// %15 chance for normal monster, %5 for every tile after that.
-		var chance = (monster.dropChance || 0.05) * Monster.options.tiles;
+		var chance = (monster.dropChance || 0.05) * monster.options.tiles;
 		var roll = Math.random();
-		if(Monster.forceLoot || roll < chance) {
+		if(monster.forceLoot || roll < chance) {
 			// Drop loot!
-			var treasure = new TreasureChest({forceLoot: Monster.getLoot()});
-			treasure.p(Monster.p());
+			var treasure = new TreasureChest({forceLoot: monster.getLoot()});
+			treasure.p(monster.p());
 			E.trigger('newEntity', [treasure]);
 		}
 	}
