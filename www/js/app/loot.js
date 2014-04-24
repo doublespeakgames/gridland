@@ -63,7 +63,7 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 			var max = Content.LootType[lootName].large ? 1 : 3;
 			num = num < max ? num : max;
 			GameState.items[lootName] = num;
-			E.trigger("updateLoot", [lootName, num]);
+			E.trigger("lootFound", [lootName, num]);
 		}
 	}
 	
@@ -78,7 +78,7 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 			if(num > 0 && require('app/world').canMove()) {
 				num--;
 				GameState.items[lootName] = num;
-				E.trigger('updateLoot', [lootName, num]);
+				E.trigger('lootUsed', [lootName, num]);
 				Content.LootType[lootName].onUse();
 			}
 		}

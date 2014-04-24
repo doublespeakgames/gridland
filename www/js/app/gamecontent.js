@@ -599,7 +599,7 @@ define({
 		bomb: {
 			onUse: function() {
 				var E = require('app/eventmanager');
-				E.trigger('wipeMonsters');
+				E.trigger('damageAll', [50]);
 			}
 		},
 		equipment: {

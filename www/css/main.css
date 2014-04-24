@@ -1347,10 +1347,10 @@ body.night {
 	width: 8px;
 	bottom: 20px;
 	transition: transform 500ms linear;
-	-webkit-transition: transform 500ms linear;
-	-moz-transition: transform 500ms linear;
-	-ms-transition: transform 500ms linear;
-	-o-transition: transform 500ms linear;
+	-webkit-transition: -webkit-transform 500ms linear;
+	-moz-transition: -moz-transform 500ms linear;
+	-ms-transition: -ms-transform 500ms linear;
+	-o-transition: -o-transform 500ms linear;
 }
 
 .projectileInner {
@@ -1360,10 +1360,10 @@ body.night {
 	height: 1px;
 	background-color: white;
 	transition: transform 500ms linear;
-	-webkit-transition: transform 500ms linear;
-	-moz-transition: transform 500ms linear;
-	-ms-transition: transform 500ms linear;
-	-o-transition: transform 500ms linear;
+	-webkit-transition: -webkit-transform 500ms linear;
+	-moz-transition: -moz-transform 500ms linear;
+	-ms-transition: -ms-transform 500ms linear;
+	-o-transition: -o-transform 500ms linear;
 }
 
 .left .projectileInner {
@@ -1388,19 +1388,19 @@ body.night {
 	-moz-transform: translate3d(0, -75px, 0) rotate(0deg);
 	-ms-transform: translate3d(0, -75px, 0) rotate(0deg);
 	-o-transform: translate3d(0, -75px, 0) rotate(0deg);
-	transition-timing-function: ease-out, linear;
-	-webkit-transition-timing-function: ease-out, linear;
-	-moz-transition-timing-function: ease-out, linear;
-	-ms-transition-timing-function: ease-out, linear;
-	-o-transition-timing-function: ease-out, linear;
+	transition-timing-function: ease-out;
+	-webkit-transition-timing-function: ease-out;
+	-moz-transition-timing-function: ease-out;
+	-ms-transition-timing-function: ease-out;
+	-o-transition-timing-function: ease-out;
 }
 
 .bottom .projectileInner {
-	transition-timing-function: ease-in, linear;
-	-webkit-transition-timing-function: ease-in, linear;
-	-moz-transition-timing-function: ease-in, linear;
-	-ms-transition-timing-function: ease-in, linear;
-	-o-transition-timing-function: ease-in, linear;
+	transition-timing-function: ease-in;
+	-webkit-transition-timing-function: ease-in;
+	-moz-transition-timing-function: ease-in;
+	-ms-transition-timing-function: ease-in;
+	-o-transition-timing-function: ease-in;
 }
 
 .bottom.left .projectileInner {
@@ -2880,4 +2880,21 @@ body.bigExplosion.fadeOut:after {
 
 .resourceEffect.pooled {
 	display: none;
+}
+
+/** Bomb **/
+@keyframes bombsplosion {
+	0% { transform: scale(0); opacity: 1; }
+	100% { transform: scale(1); opacity: 0; }
+}
+
+.bombsplosion {
+	position: absolute;
+	animation: bombsplosion 800ms ease-out 1;
+	width: 700px;
+	height: 700px;
+	border-radius: 50%;
+	margin: 0 0 -350px -350px;
+	background-color: white;
+	bottom: 0px;
 }

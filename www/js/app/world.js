@@ -43,7 +43,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		dragonAttack: function(attackName) {
 			doDragonAttack(attackName);
 		},
-		
+		spawnMonster: spawnMonster,
 		// END TEMPORARY
 			
 		options: {
@@ -66,6 +66,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			
 			EventManager.bind('launchDude', launchDude);
 			EventManager.bind('wipeMonsters', wipeMonsters);
+			EventManager.bind('damageAll', damageAllMonsters);
 			EventManager.bind('healDude', healDude);
 			EventManager.bind('hurtDude', hurtDude);
 			EventManager.bind('newEntity', handleNewEntity);
@@ -651,6 +652,18 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			EventManager.trigger('dayBreak', [GameState.dayNumber]);
 		} else {
 			Analytics.trackEvent('world', 'nightfall');
+		}
+	}
+	
+	function damageAllMonsters(damage) {
+		for(var i in stuff) {
+			var entity = stuff[i];
+			if(entity.hostile && entity.isAlive()) {
+				entity.takeDamage(damage);
+				if(!entity.isAlive() && !entity.isBoss) {
+					entity.wiped = true;
+				}
+			}
 		}
 	}
 	
