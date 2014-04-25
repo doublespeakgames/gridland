@@ -569,7 +569,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 						}, 500);
 						setTimeout(function() {
 							require('app/engine').init();
-						}, 1000);
+						}, 1900);
 					});
 				}
 			}
