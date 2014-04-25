@@ -8,11 +8,11 @@ body {
 	margin: -1px 0 0 0;
 	padding: 0px;
 	background-color: white;
-	transition: background-color 700ms linear;
-	-webkit-transition: background-color 700ms linear;
-	-moz-transition: background-color 700ms linear;
-	-ms-transition: background-color 700ms linear;
-	-o-transition: background-color 700ms linear;
+	transition: background-color 1400ms linear;
+	-webkit-transition: background-color 1400ms linear;
+	-moz-transition: background-color 1400ms linear;
+	-ms-transition: background-color 1400ms linear;
+	-o-transition: background-color 1400ms linear;
 }
 
 body.night {
@@ -110,11 +110,11 @@ body.night {
 	bottom: 0px;
 	border-top: 2px solid;
 	background-color: white;
-	transition: background-color 700ms linear, border-color 700ms linear, opacity 200ms linear, height 200ms linear !important;
-	-webkit-transition: background-color 700ms linear, border-color 700ms linear, opacity 200ms linear, height 200ms linear !important;
-	-moz-transition: background-color 700ms linear, border-color 700ms linear, opacity 200ms linear, height 200ms linear !important;
-	-ms-transition: background-color 700ms linear, border-color 700ms linear, opacity 200ms linear, height 200ms linear !important;
-	-o-transition: background-color 700ms linear, border-color 700ms linear, opacity 200ms linear, height 200ms linear !important;
+	transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
+	-webkit-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
+	-moz-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
+	-ms-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
+	-o-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
 }
 
 .night .menuBar {
@@ -147,11 +147,11 @@ body.night {
 	right: 3px;
 	top: 3px;
 	cursor: pointer;
-	transition: border-color 700ms linear !important;
-	-webkit-transition: border-color 700ms linear !important;
-	-moz-transition: border-color 700ms linear !important;
-	-ms-transition: border-color 700ms linear !important;
-	-o-transition: border-color 700ms linear !important;
+	transition: border-color 1400ms linear !important;
+	-webkit-transition: border-color 1400ms linear !important;
+	-moz-transition: border-color 1400ms linear !important;
+	-ms-transition: border-color 1400ms linear !important;
+	-o-transition: border-color 1400ms linear !important;
 }
 
 .menuBtn .nightSprite {
@@ -198,11 +198,11 @@ body.night {
 }
 
 .nightSprite, .daySprite {
-	transition: opacity 700ms linear;
-	-webkit-transition: opacity 700ms linear;
-	-moz-transition: opacity 700ms linear;
-	-ms-transition: opacity 700ms linear;
-	-o-transition: opacity 700ms linear;
+	transition: opacity 1400ms linear;
+	-webkit-transition: opacity 1400ms linear;
+	-moz-transition: opacity 1400ms linear;
+	-ms-transition: opacity 1400ms linear;
+	-o-transition: opacity 1400ms linear;
 }
 
 .nightSprite {
@@ -231,11 +231,11 @@ body.night {
 
 
 .litBorder {
-	transition: all 700ms linear;
-	-webkit-transition: all 700ms linear;
-	-moz-transition: all 700ms linear;
-	-ms-transition: all 700ms linear;
-	-o-transition: all 700ms linear;
+	transition: all 1400ms linear;
+	-webkit-transition: all 1400ms linear;
+	-moz-transition: all 1400ms linear;
+	-ms-transition: all 1400ms linear;
+	-o-transition: all 1400ms linear;
 	border-color: #000000;
 }
 
@@ -272,11 +272,11 @@ body.night {
 	width: 15%;
 	height: 15%;
 	background-color: black;
-	transition: background-color 700ms linear;
-	-webkit-transition: background-color 700ms linear;
-	-moz-transition: background-color 700ms linear;
-	-ms-transition: background-color 700ms linear;
-	-o-transition: background-color 700ms linear;
+	transition: background-color 1400ms linear;
+	-webkit-transition: background-color 1400ms linear;
+	-moz-transition: background-color 1400ms linear;
+	-ms-transition: background-color 1400ms linear;
+	-o-transition: background-color 1400ms linear;
 	animation: pulse 1s infinite;
 	-webkit-animation: pulse 1s infinite;
 	-moz-animation: pulse 1s infinite;
@@ -397,11 +397,11 @@ body.night {
 	border: 2px solid;
 	padding: 2px;
 	opacity: 1;
-	transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, transform 600ms cubic-bezier(.06,.48,.53,1.53);
-	-webkit-transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, -webkit-transform 600ms cubic-bezier(.06,.48,.53,1.53);
-	-moz-transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, -moz-transform 600ms cubic-bezier(.06,.48,.53,1.53);
-	-ms-transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, -ms-transform 600ms cubic-bezier(.06,.48,.53,1.53);
-	-o-transition: border-color 700ms linear, background-color 700ms linear, opacity 1s linear, -o-transform 600ms cubic-bezier(.06,.48,.53,1.53);
+	transition: border-color 1400ms linear, background-color 1400ms linear, opacity 1s linear, transform 600ms cubic-bezier(.06,.48,.53,1.53);
+	-webkit-transition: border-color 1400ms linear, background-color 1400ms linear, opacity 1s linear, -webkit-transform 600ms cubic-bezier(.06,.48,.53,1.53);
+	-moz-transition: border-color 1400ms linear, background-color 1400ms linear, opacity 1s linear, -moz-transform 600ms cubic-bezier(.06,.48,.53,1.53);
+	-ms-transition: border-color 1400ms linear, background-color 1400ms linear, opacity 1s linear, -ms-transform 600ms cubic-bezier(.06,.48,.53,1.53);
+	-o-transition: border-color 1400ms linear, background-color 1400ms linear, opacity 1s linear, -o-transform 600ms cubic-bezier(.06,.48,.53,1.53);
 }
 
 .gameBoard.tilted {
@@ -433,11 +433,11 @@ body.night {
 	-webkit-perspective: 600px;
 	-ms-perspective: 600px;
 	-o-perspective: 600px;
-	transition: background-color 700ms linear;
-	-webkit-transition: background-color 700ms linear;
-	-moz-transition: background-color 700ms linear;
-	-ms-transition: background-color 700ms linear;
-	-o-transition: background-color 700ms linear;
+	transition: background-color 1400ms linear;
+	-webkit-transition: background-color 1400ms linear;
+	-moz-transition: background-color 1400ms linear;
+	-ms-transition: background-color 1400ms linear;
+	-o-transition: background-color 1400ms linear;
 }
 
 .night .tileContainer {
@@ -474,11 +474,11 @@ body.night {
 	left: 2px;
 	right: 2px;
 	bottom: 2px;
-	transition: transform 700ms linear, border-color 700ms linear;
-	-webkit-transition: -webkit-transform 700ms linear, border-color 700ms linear;
-	-moz-transition: -moz-transform 700ms linear, border-color 700ms linear;
-	-ms-transition: -ms-transform 700ms linear, border-color 700ms linear;
-	-o-transition: -o-transform 700ms linear, border-color 700ms linear;
+	transition: transform 500ms linear, border-color 1400ms linear;
+	-webkit-transition: -webkit-transform 500ms linear, border-color 1400ms linear;
+	-moz-transition: -moz-transform 500ms linear, border-color 1400ms linear;
+	-ms-transition: -ms-transform 500ms linear, border-color 1400ms linear;
+	-o-transition: -o-transform 500ms linear, border-color 1400ms linear;
 }
 
 .tile .nightSide {
@@ -537,6 +537,7 @@ body.night {
 
 .tile.stone > div {
 	background-position: -52px 0;
+	transition-delay: 300ms, 0ms;
 }
 
 .stone2 .tile.stone > div {
@@ -573,6 +574,7 @@ body.night {
 
 .tile.wood > div {
 	background-position: -104px 0;
+	transition-delay: 600ms, 0ms;
 }
 
 .wood2 .tile.wood > div {
@@ -609,6 +611,7 @@ body.night {
 
 .tile.clay > div {
 	background-position: -156px 0px;
+	transition-delay: 900ms, 0ms;
 }
 
 .clay2 .tile.clay > div {
@@ -629,6 +632,7 @@ body.night {
 
 .tile.cloth > div {
 	background-position: -208px 0px;
+	transition-delay: 1200ms, 0ms;
 }
 
 .cloth2 .tile.cloth > div {
@@ -649,6 +653,7 @@ body.night {
 
 .tile.mana > div {
 	background-position: -260px 0px;
+	transition-delay: 1200ms, 0ms;
 }
 
 .selected {
@@ -708,11 +713,11 @@ body.night {
 	height: 110px;
 	overflow: hidden;
 	background-color: white;
-	transition: background-color 700ms linear;
-	-webkit-transition: background-color 700ms linear;
-	-moz-transition: background-color 700ms linear;
-	-ms-transition: background-color 700ms linear;
-	-o-transition: background-color 700ms linear;
+	transition: background-color 1400ms linear;
+	-webkit-transition: background-color 1400ms linear;
+	-moz-transition: background-color 1400ms linear;
+	-ms-transition: background-color 1400ms linear;
+	-o-transition: background-color 1400ms linear;
 }
 
 .night .world {
@@ -726,11 +731,11 @@ body.night {
 	height: 16px;
 	top: 10px;
 	opacity: 1;
-	transition: opacity 700ms linear;
-	-webkit-transition: opacity 700ms linear;
-	-moz-transition: opacity 700ms linear;
-	-ms-transition: opacity 700ms linear;
-	-o-transition: opacity 700ms linear;
+	transition: opacity 1400ms linear;
+	-webkit-transition: opacity 1400ms linear;
+	-moz-transition: opacity 1400ms linear;
+	-ms-transition: opacity 1400ms linear;
+	-o-transition: opacity 1400ms linear;
 }
 
 .night .star {
@@ -772,11 +777,11 @@ body.night {
 	height: 80px;
 	background-position: 0px bottom;
 	background-repeat: no-repeat;
-	transition: opacity 700ms linear, transform 500ms linear;
-	-webkit-transition: opacity 700ms linear, -webkit-transform 500ms linear;
-	-moz-transition: opacity 700ms linear, -moz-transform 500ms linear;
-	-ms-transition: opacity 700ms linear, -ms-transform 500ms linear;
-	-o-transition: opacity 700ms linear, -o-transform 500ms linear;
+	transition: opacity 1400ms linear, transform 500ms linear;
+	-webkit-transition: opacity 1400ms linear, -webkit-transform 500ms linear;
+	-moz-transition: opacity 1400ms linear, -moz-transform 500ms linear;
+	-ms-transition: opacity 1400ms linear, -ms-transform 500ms linear;
+	-o-transition: opacity 1400ms linear, -o-transform 500ms linear;
 	z-index: 1;
 }
 
@@ -846,11 +851,11 @@ body.night {
 	-webkit-transform: rotate(180deg);
 	-o-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
-	transition: opacity 700ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
-	-webkit-transition: opacity 700ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
-	-moz-transition: opacity 700ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
-	-ms-transition: opacity 700ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
-	-o-transition: opacity 700ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
+	transition: opacity 1400ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
+	-webkit-transition: opacity 1400ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
+	-moz-transition: opacity 1400ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
+	-ms-transition: opacity 1400ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
+	-o-transition: opacity 1400ms linear, height 200ms linear, width 200ms linear, left 200ms linear, bottom 200ms linear;
 	opacity: 1;
 }
 
@@ -879,11 +884,11 @@ body.night {
 	list-style: none;
 	border: 2px solid black;
 	height: 18px;
-	transition: opacity 700ms linear, transform 500ms linear;
-	-webkit-transition: opacity 700ms linear, -webkit-transform 500ms linear;
-	-moz-transition: opacity 700ms linear, -moz-transform 500ms linear;
-	-ms-transition: opacity 700ms linear, -ms-transform 500ms linear;
-	-o-transition: opacity 700ms linear, -o-transform 500ms linear;
+	transition: opacity 1400ms linear, transform 500ms linear;
+	-webkit-transition: opacity 1400ms linear, -webkit-transform 500ms linear;
+	-moz-transition: opacity 1400ms linear, -moz-transform 500ms linear;
+	-ms-transition: opacity 1400ms linear, -ms-transform 500ms linear;
+	-o-transition: opacity 1400ms linear, -o-transform 500ms linear;
 	opacity: 0;
 	cursor: pointer;
 }
@@ -1176,11 +1181,11 @@ body.night {
 	-moz-transform: translate3d(0px, 110px, 0px);
 	-ms-transform: translate3d(0px, 110px, 0px);
 	-o-transform: translate3d(0px, 110px, 0px);
-	transition: transform 300ms linear;
-	-webkit-transition: -webkit-transform 300ms linear;
-	-moz-transition: -moz-transform 300ms linear;
-	-ms-transition: -ms-transform 300ms linear;
-	-o-transition: -o-transform 300ms linear;
+	transition: transform 500ms linear;
+	-webkit-transition: -webkit-transform 500ms linear;
+	-moz-transition: -moz-transform 500ms linear;
+	-ms-transition: -ms-transform 500ms linear;
+	-o-transition: -o-transform 500ms linear;
 }
 
 .healthBar {
@@ -1772,11 +1777,11 @@ body.night {
 	border-radius: 22px;
 	float: right;
 	margin: 0 8px;
-	transition: opacity 200ms linear, border-color 700ms linear, background-color 700ms linear;
-	-webkit-transition: opacity 200ms linear, border-color 700ms linear, background-color 700ms linear;
-	-moz-transition: opacity 200ms linear, border-color 700ms linear, background-color 700ms linear;
-	-ms-transition: opacity 200ms linear, border-color 700ms linear, background-color 700ms linear;
-	-o-transition: opacity 200ms linear, border-color 700ms linear, background-color 700ms linear;
+	transition: opacity 200ms linear, border-color 1400ms linear, background-color 1400ms linear;
+	-webkit-transition: opacity 200ms linear, border-color 1400ms linear, background-color 1400ms linear;
+	-moz-transition: opacity 200ms linear, border-color 1400ms linear, background-color 1400ms linear;
+	-ms-transition: opacity 200ms linear, border-color 1400ms linear, background-color 1400ms linear;
+	-o-transition: opacity 200ms linear, border-color 1400ms linear, background-color 1400ms linear;
 }
 
 .inventory .button {
@@ -1905,11 +1910,11 @@ body.night {
 .magic .button {
 	position: absolute;
 	bottom: 0px;
-	transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
-	-webkit-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
-	-moz-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
-	-ms-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
-	-o-transition: all 200ms linear, border-color 700ms linear, background-color 700ms linear;
+	transition: all 200ms linear, border-color 1400ms linear, background-color 1400ms linear;
+	-webkit-transition: all 200ms linear, border-color 1400ms linear, background-color 1400ms linear;
+	-moz-transition: all 200ms linear, border-color 1400ms linear, background-color 1400ms linear;
+	-ms-transition: all 200ms linear, border-color 1400ms linear, background-color 1400ms linear;
+	-o-transition: all 200ms linear, border-color 1400ms linear, background-color 1400ms linear;
 }
 
 .magic .button:after {
@@ -2246,11 +2251,11 @@ body.night {
 	background-color: white;
 	cursor: pointer;
 	margin-left: -30px;
-	transition: border-color 700ms linear, background-color 700ms linear;
-	-webkit-transition: border-color 700ms linear, background-color 700ms linear;
-	-moz-transition: border-color 700ms linear, background-color 700ms linear;
-	-ms-transition: border-color 700ms linear, background-color 700ms linear;
-	-o-transition: border-color 700ms linear, background-color 700ms linear;
+	transition: border-color 1400ms linear, background-color 1400ms linear;
+	-webkit-transition: border-color 1400ms linear, background-color 1400ms linear;
+	-moz-transition: border-color 1400ms linear, background-color 1400ms linear;
+	-ms-transition: border-color 1400ms linear, background-color 1400ms linear;
+	-o-transition: border-color 1400ms linear, background-color 1400ms linear;
 }
 
 .night .sliderHandle {
@@ -2673,11 +2678,11 @@ body.night {
 }
 
 body:after {
-	transition: opacity 700ms linear;
-	-webkit-transition: opacity 700ms linear;
-	-moz-transition: opacity 700ms linear;
-	-ms-transition: opacity 700ms linear;
-	-o-transition: opacity 700ms linear;
+	transition: opacity 1400ms linear;
+	-webkit-transition: opacity 1400ms linear;
+	-moz-transition: opacity 1400ms linear;
+	-ms-transition: opacity 1400ms linear;
+	-o-transition: opacity 1400ms linear;
 	opacity: 0;
     display: block;
     background: white;
@@ -2887,10 +2892,30 @@ body.bigExplosion.fadeOut:after {
 	0% { transform: scale(0); opacity: 1; }
 	100% { transform: scale(1); opacity: 0; }
 }
+@-webkit-keyframes bombsplosion {
+	0% { -webkit-transform: scale(0); opacity: 1; }
+	100% { -webkit-transform: scale(1); opacity: 0; }
+}
+@-moz-keyframes bombsplosion {
+	0% { -moz-transform: scale(0); opacity: 1; }
+	100% { -moz-transform: scale(1); opacity: 0; }
+}
+@-ms-keyframes bombsplosion {
+	0% { -ms-transform: scale(0); opacity: 1; }
+	100% { -ms-transform: scale(1); opacity: 0; }
+}
+@-o-keyframes bombsplosion {
+	0% { -o-transform: scale(0); opacity: 1; }
+	100% { -o-transform: scale(1); opacity: 0; }
+}
 
 .bombsplosion {
 	position: absolute;
 	animation: bombsplosion 800ms ease-out 1;
+	-webkit-animation: bombsplosion 800ms ease-out 1;
+	-moz-animation: bombsplosion 800ms ease-out 1;
+	-ms-animation: bombsplosion 800ms ease-out 1;
+	-o-animation: bombsplosion 800ms ease-out 1;
 	width: 700px;
 	height: 700px;
 	border-radius: 50%;

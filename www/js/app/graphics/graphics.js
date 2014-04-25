@@ -106,10 +106,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		var b = Graphics.get('body');
 		setTimeout(function() {
 			b.addClass('fadeOut');
-		}, 700);
+		}, 1400);
 		setTimeout(function() {
 			b.removeClass('bigExplosion fadeOut');
-		}, 1400);
+		}, 2800);
 	}
 	
 	function newGamePlus() {
@@ -120,10 +120,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		setTimeout(function() {
 			b.addClass('fadeOut');
 			EventManager.trigger('prestige');
-		}, 700);
+		}, 1400);
 		setTimeout(function() {
 			b.removeClass('bigExplosion fadeOut');
-		}, 1400);
+		}, 2800);
 	}
 	
 	function dropBlock(block, building) {
@@ -316,8 +316,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					if(callback != null) {
 						callback();
 					}
-				}, 400);
-			}, 300);
+				}, 500);
+			}, 900);
 		},
 		
 		raiseCelestial: function(celestial) {
