@@ -37,6 +37,10 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		return false;
 	};
 	
+	HauntedArmour.prototype.hasSword = function() {
+		return true;
+	};
+	
 	HauntedArmour.prototype.getHitboxWidth = function() {
 		return 20;
 	};

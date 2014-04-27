@@ -29,30 +29,32 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		TileClick: {
 			file: 'tileclick'
 		},
-		/* ARRRGG! I HATE THESE MATCH SOUNDS!!! AAAAAAARGH!
-		Match1: {
-			file: 'match1'
+		Match: {
+			file: 'match'
 		},
-		Match2: {
-			file: 'match2'
+		Blunt: {
+			file: 'blunt'
 		},
-		Match3: {
-			file: 'match3'
-		},
-		Match4: {
-			file: 'match4'
-		},
-		Match5: {
-			file: 'match5'
-		}, */
-		Hammer: {
-			file: 'hammer'
+		Slash: {
+			file: 'slash'
 		},
 		BlockUp: {
 			file: 'blockup'
 		},
 		BlockDown: {
 			file: 'blockdown'
+		},
+		Die: {
+			file: 'die'
+		},
+		Shoot: {
+			file: 'shoot'
+		},
+		Open: {
+			file: 'open'
+		},
+		Heal: {
+			file: 'heal'
 		}
 	};
 	
@@ -110,12 +112,6 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		}
 	}
 	
-	function matchSound(r, s, restart) {
-		matchNum = restart ? 1 : matchNum + 1;
-		matchNum = matchNum > 5 ? 5 : matchNum;
-		GameAudio.play('Match' + matchNum);
-	}
-	
 	var GameAudio = {
 		init: function(options) {
 			if(!provider) { 
@@ -136,10 +132,15 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('setMusicVolume', GameAudio.setMusicVolume);
 			E.bind('setEffectsVolume', GameAudio.setEffectsVolume);
 			E.bind('phaseChange', changeMusic);
-			E.bind('tilesCleared', matchSound);
-			E.bind('hammer', GameAudio.play.bind(this, 'Hammer'));
+			E.bind('tilesCleared', GameAudio.play.bind(this, 'Match'));
+			E.bind('bluntHit', GameAudio.play.bind(this, 'Blunt'));
+			E.bind('sharpHit', GameAudio.play.bind(this, 'Slash'));
 			E.bind('blockDown', GameAudio.play.bind(this, 'BlockDown'));
 			E.bind('blockUp', GameAudio.play.bind(this, 'BlockUp'));
+			E.bind('death', GameAudio.play.bind(this, 'Die'));
+			E.bind('shoot', GameAudio.play.bind(this, 'Shoot'));
+			E.bind('pickupLoot', GameAudio.play.bind(this, 'Open'));
+			E.bind('heal', GameAudio.play.bind(this, 'Heal'));
 
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));

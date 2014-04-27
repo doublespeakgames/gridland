@@ -143,5 +143,9 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 		return !W.hasEffect('haste') ? this.options.speed : this.options.speed / 4;
 	};
 	
+	dude.prototype.hasSword = function() {
+		return this.sword > 0;
+	};
+	
 	return dude;
 });

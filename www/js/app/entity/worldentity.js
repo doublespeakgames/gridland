@@ -152,5 +152,9 @@ define(['app/entity/entity', 'app/eventmanager'],
 		return this.width();
 	};
 	
+	worldEntity.prototype.hasSword = function() {
+		return false;
+	};
+	
 	return worldEntity;
 });

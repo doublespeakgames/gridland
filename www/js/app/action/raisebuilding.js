@@ -36,7 +36,7 @@ define(['app/action/action', 'app/gamecontent'], function(Action, Content) {
 	
 	RaiseBuilding.prototype.doFrameAction = function(frame) {
 		if(this.hammering && frame == 3) {
-			require('app/eventmanager').trigger('hammer');
+			require('app/eventmanager').trigger('bluntHit');
 		}
 	};
 

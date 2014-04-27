@@ -7,6 +7,7 @@ define(['app/action/action'], function(Action) {
 	Die.prototype.doAction = function(entity) {
 		this._entity = entity;
 		entity.animation(entity.lastDir == "left" ? 6 : 5, true);
+		require('app/eventmanager').trigger('death');
 	};
 	
 	Die.prototype.doFrameAction = function(frame) {
