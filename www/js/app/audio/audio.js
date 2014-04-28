@@ -30,7 +30,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			file: 'tileclick'
 		},
 		Match: {
-			file: 'match'
+			file: 'match-test'
 		},
 		Blunt: {
 			file: 'blunt'
@@ -55,6 +55,12 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		Heal: {
 			file: 'heal'
+		},
+		Priority: {
+			file: 'priority'
+		},
+		Depriority: {
+			file: 'depriority'
 		}
 	};
 	
@@ -141,6 +147,8 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('shoot', GameAudio.play.bind(this, 'Shoot'));
 			E.bind('pickupLoot', GameAudio.play.bind(this, 'Open'));
 			E.bind('heal', GameAudio.play.bind(this, 'Heal'));
+			E.bind('prioritize', GameAudio.play.bind(this, 'Priority'));
+			E.bind('deprioritize', GameAudio.play.bind(this, 'Depriority'));
 
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));

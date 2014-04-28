@@ -306,11 +306,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		if(prioritizedBuilding && prioritizedBuilding == building) {
 			// Clear on a second click
 			clearPriorityIfNeeded(building);
+			EventManager.trigger('deprioritize');
 		} else {
 			if(!star) {
 				star = new Star();
 				EventManager.trigger('newEntity', [star]);
 			}
+			EventManager.trigger('prioritize');
 			prioritizedBuilding = building;
 			star.p(building.options.type.position);
 			Graphics.setPosition(star, star.p());
