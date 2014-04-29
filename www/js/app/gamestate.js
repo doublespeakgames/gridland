@@ -146,7 +146,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			return 3 * highestMod;
 		},
 		
-		maxSword: function() {
+		maxSword: function(t) {
 			var highestMod = 1;
 			for(var i in this.buildings) {
 				var building = this.buildings[i];
@@ -156,11 +156,12 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 					highestMod = building.options.type.tileLevel;
 				}
 			}
-			// 3, 6, 9, 3, 6, 9, 3, 6, 9...
-			return 3 * (((highestMod - 1) % 3) + 1);
+			highestMod = t;
+			// 3, 3, 3, 5, 5, 5, 7, 7, 7...
+			return 3 + (Math.floor((highestMod - 1) / 3) * 2);
 		},
 		
-		swordDamage: function() {
+		swordDamage: function(t) {
 			var highestMod = 1;
 			for(var i in this.buildings) {
 				var building = this.buildings[i];
@@ -170,8 +171,9 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 					highestMod = building.options.type.tileLevel;
 				}
 			}
-			// 3, 3, 3, 6, 6, 6, 9, 9, 9...
-			return 3 + Math.floor((highestMod - 1) / 3) * 3;
+			highestMod = t;
+			// 3, 4, 5, 5, 6, 7, 7, 8, 9...
+			return 3 + (highestMod - 1) - Math.floor((highestMod - 1) / 3);
 		},
 		
 		maxMana: function() {

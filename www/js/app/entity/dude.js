@@ -55,19 +55,21 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 		if(isNaN(State.xp)){
 			State.xp = 0;
 		}
-		if(State.xp >= this.toLevel() && State.level < MAX_LEVEL) {
-			State.xp -= this.toLevel();
-			State.level++;
-			State.counts.LEVEL = State.level;
-			Graphics.levelUp(this);
-			State.health = State.maxHealth();
-			Graphics.updateHealth(State.health, State.maxHealth());
-			EventManager.trigger('levelUp');
-			if(this.action != null) {
-				this.action.terminateAction(this);
+		while(State.xp >= this.toLevel()) {
+			if(State.level >= MAX_LEVEL) {
+				State.xp = this.toLevel() - 1;
+			} else {
+				State.xp -= this.toLevel();
+				State.level++;
+				State.counts.LEVEL = State.level;
+				Graphics.levelUp(this);
+				State.health = State.maxHealth();
+				Graphics.updateHealth(State.health, State.maxHealth());
+				EventManager.trigger('levelUp');
+				if(this.action != null) {
+					this.action.terminateAction(this);
+				}
 			}
-		} else if(State.xp >= this.toLevel()) {
-			State.xp = this.toLevel() - 1;
 		}
 		Graphics.updateExperience(State.xp, this.toLevel());
 	};

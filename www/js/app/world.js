@@ -55,6 +55,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			_el = null;
 			dude = null;
 			celestial = null;
+			star = null;
 			gem = null;
 			stuff.length = 0;
 			effects = {};

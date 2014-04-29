@@ -6,7 +6,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		
 		this.maxHealth = 120; // 15 hits with sword, 40 without
 		this.damage = 5; // Between 40 and 120
-		this.xp = 1000;
+		this.xp = 500;
 		
 		this.dropChance = 0.2; // 60%!
 		this.hp(this.getMaxHealth());
