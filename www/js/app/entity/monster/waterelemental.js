@@ -39,5 +39,9 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		return false;
 	};
 	
+	WaterElemental.prototype.hasSword = function() {
+		return true;
+	};
+	
 	return WaterElemental;
 });
