@@ -56,12 +56,6 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		Heal: {
 			file: 'heal'
 		},
-		Priority: {
-			file: 'priority'
-		},
-		Depriority: {
-			file: 'depriority'
-		},
 		Bomb: {
 			file: 'bomb'
 		},
@@ -170,8 +164,8 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('death', GameAudio.play.bind(this, 'Die'));
 			E.bind('shoot', GameAudio.play.bind(this, 'Shoot'));
 			E.bind('pickupLoot', GameAudio.play.bind(this, 'Open'));
-			E.bind('prioritize', GameAudio.play.bind(this, 'Priority'));
-			E.bind('deprioritize', GameAudio.play.bind(this, 'Depriority'));
+			E.bind('prioritize', GameAudio.play.bind(this, 'BlockUp'));
+			E.bind('deprioritize', GameAudio.play.bind(this, 'BlockDown'));
 			E.bind('teleport', GameAudio.play.bind(this, 'Teleport'));
 			E.bind('lootUsed', playLootSound);
 

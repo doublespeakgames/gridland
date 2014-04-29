@@ -23,7 +23,7 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 		var lootName = null;
 		var gemDropRate = 0.05;
 		if(GameState.dayNumber > (20 / debugMultiplier)) gemDropRate *= 2;
-		if(GameState.dayNumber > (40 / debugMultiplier)) gemDropRate *= 4;
+		if(GameState.dayNumber > (40 / debugMultiplier)) gemDropRate *= 2;
 		if(treasure.options.forceLoot) {
 			lootName = treasure.options.forceLoot;
 		} else if(GameState.gem < 4 && Math.random() < gemDropRate * debugMultiplier) {
