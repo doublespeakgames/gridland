@@ -61,6 +61,15 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		Depriority: {
 			file: 'depriority'
+		},
+		Bomb: {
+			file: 'bomb'
+		},
+		Equip: {
+			file: 'equip'
+		},
+		Teleport: {
+			file: 'teleport'
 		}
 	};
 	
@@ -118,6 +127,21 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		}
 	}
 	
+	function getLootSound(loot) {
+		switch(loot) {
+		case 'healthPotion':
+			return 'Heal';
+		case 'bomb':
+			return 'Bomb';
+		case 'equipment':
+			return 'Equip';
+		}
+	}
+		
+	function playLootSound(loot) {
+		GameAudio.play(getLootSound(loot));
+	} 
+	
 	var GameAudio = {
 		init: function(options) {
 			if(!provider) { 
@@ -146,9 +170,10 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('death', GameAudio.play.bind(this, 'Die'));
 			E.bind('shoot', GameAudio.play.bind(this, 'Shoot'));
 			E.bind('pickupLoot', GameAudio.play.bind(this, 'Open'));
-			E.bind('heal', GameAudio.play.bind(this, 'Heal'));
 			E.bind('prioritize', GameAudio.play.bind(this, 'Priority'));
 			E.bind('deprioritize', GameAudio.play.bind(this, 'Depriority'));
+			E.bind('teleport', GameAudio.play.bind(this, 'Teleport'));
+			E.bind('lootUsed', playLootSound);
 
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));

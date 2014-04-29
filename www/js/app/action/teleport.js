@@ -19,6 +19,7 @@ define(['app/action/action'], function(Action) {
 			// vanish
 			this._entity.el().addClass('hidden');
 			this._entity.hidden = true;
+			require('app/eventmanager').trigger('teleport');
 			break;
 		case 2:
 			// move

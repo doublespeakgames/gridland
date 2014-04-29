@@ -601,6 +601,7 @@ define({
 			onUse: function() {
 				var E = require('app/eventmanager');
 				E.trigger('damageAll', [50]);
+				E.trigger('bomb');
 			}
 		},
 		equipment: {

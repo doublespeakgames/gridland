@@ -39,7 +39,7 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 			G.addToWorld(effect);
 			setTimeout(function() {
 				effect.remove();
-			}, 800);
+			}, 790);
 		}
 	}
 	
