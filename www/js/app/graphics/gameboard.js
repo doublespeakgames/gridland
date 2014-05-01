@@ -266,7 +266,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			effectPool.length = 0;
 			E.bind('drawEffect', drawTileEffect);
 			E.bind('drawRemoveEffect', removeTileEffect);
-			E.bind('drawExplode', explode);
+			E.bind('tileExplode', explode);
 			E.bind('gameLoaded', function() {
 				el().removeClass('hidden');
 			});

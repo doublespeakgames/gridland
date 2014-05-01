@@ -664,6 +664,7 @@ define({
 				var E = require('app/eventmanager'),
 					C = require('app/gamecontent');
 				E.trigger('newStateEffect', [C.StateEffects.haste]);
+				E.trigger('haste');
 			}
 		},
 		phaseChange: {
@@ -701,7 +702,7 @@ define({
 					}
 				}
 				E.trigger("hurtDude", [30]);
-				E.trigger("drawExplode", [{row: row, column: column}]);
+				E.trigger("tileExplode", [{row: row, column: column}]);
 				
 				return tileMods;
 			}

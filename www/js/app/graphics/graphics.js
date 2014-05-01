@@ -692,7 +692,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			dragon.setPosture('idle');
 			dragon.el().addClass('flying');
 			dragon.p(dragon.options.flip ? 50 : this.worldWidth() - 50);
-			dragon.animation(1);
+			dragon.animation(1, true, function(frame) {
+				if(frame == 2) {
+					EventManager.trigger('flap');
+				}
+			});
 			dragon.setNeckMount({ x: 50, y: 47 });
 			this.addToWorld(dragon);
 			dragon.el().css('left'); // force redraw

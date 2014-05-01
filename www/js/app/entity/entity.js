@@ -66,10 +66,13 @@ define([ 'jquery' ], function($) {
 		G.updateSprite(this);
 	};
 	
-	entity.prototype.animation = function(row, stopTempAnimations) {
+	entity.prototype.animation = function(row, stopTempAnimations, stepFunction) {
 		if(stopTempAnimations) {
 			this.tempAnimation = null;
 			this.stepFunction = null;
+		}
+		if(stepFunction) {
+			this.stepFunction = stepFunction;
 		}
 		this.animationRow = row;
 		this.frame = 0;

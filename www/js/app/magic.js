@@ -6,7 +6,7 @@ define(['app/eventmanager', 'app/gamestate', 'app/gamecontent'], function(E, Sta
 		State.mana -= MANA_COST;
 		E.trigger('updateMana', [State.mana, State.maxMana()]);
 		Content.Spells[spellName].onUse();
-		GameState.count('CAST', 1);
+		State.count('CAST', 1);
 	}
 	
 	return {

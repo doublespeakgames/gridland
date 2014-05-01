@@ -25,6 +25,7 @@ define(['app/action/action'], function(Action) {
 				this.state = 3;
 			}
 		} else if(frame == 3 && this.state == 1) {
+			require('app/eventmanager').trigger('flap');
 			if(!require('app/world').hasEffect('frozen')) {
 				this.target.action && this.target.action.terminateAction(this.target);
 				this.target.action = require('app/action/actionfactory')
@@ -37,7 +38,6 @@ define(['app/action/action'], function(Action) {
 	};
 	
 	function adjustHead(e, state, frame) {
-		console.log(state + ', ' + frame);
 		if(state == 1) {
 			switch(frame) {
 			case 0:

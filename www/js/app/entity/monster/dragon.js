@@ -178,9 +178,9 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		}
 	};
 	
-	Dragon.prototype.animation = function(row, stopTempAnimations) {
+	Dragon.prototype.animation = function(row, stopTempAnimations, stepFunction) {
 		row += this.options.flip ? ANIMATION_ROWS : 0;
-		Monster.prototype.animation.call(this, row, stopTempAnimations);
+		Monster.prototype.animation.call(this, row, stopTempAnimations, stepFunction);
 	};
 	
 	Dragon.prototype.animationOnce = function(row, stepFunction) {

@@ -64,6 +64,15 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		Teleport: {
 			file: 'teleport'
+		},
+		TileExplode: {
+			file: 'tilexplode'
+		},
+		Wing: {
+			file: 'wing'
+		},
+		Haste: {
+			file: 'haste'
 		}
 	};
 	
@@ -168,6 +177,9 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('deprioritize', GameAudio.play.bind(this, 'BlockDown'));
 			E.bind('teleport', GameAudio.play.bind(this, 'Teleport'));
 			E.bind('lootUsed', playLootSound);
+			E.bind('tileExplode', GameAudio.play.bind(this, 'TileExplode'));
+			E.bind('flap', GameAudio.play.bind(this, 'Wing'));
+			E.bind('haste', GameAudio.play.bind(this, 'Haste'));
 
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));
