@@ -73,6 +73,18 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		Haste: {
 			file: 'haste'
+		},
+		RefreshBoard: {
+			file: 'reset'
+		},
+		PhaseChange: {
+			file: 'phaseChange'
+		},
+		FreezeTime: {
+			file: 'freeze'
+		},
+		LevelUp: {
+			file: 'levelUp'
 		}
 	};
 	
@@ -180,6 +192,10 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('tileExplode', GameAudio.play.bind(this, 'TileExplode'));
 			E.bind('flap', GameAudio.play.bind(this, 'Wing'));
 			E.bind('haste', GameAudio.play.bind(this, 'Haste'));
+			E.bind('refreshBoardSpell', GameAudio.play.bind(this, 'RefreshBoard'));
+			E.bind('phaseChangeSpell', GameAudio.play.bind(this, 'PhaseChange'));
+			E.bind('freezeTime', GameAudio.play.bind(this, 'FreezeTime'));
+			E.bind('levelUp', GameAudio.play.bind(this, 'LevelUp'));
 
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));

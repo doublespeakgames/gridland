@@ -657,6 +657,7 @@ define({
 			onUse: function() {
 				var E = require('app/eventmanager');
 				E.trigger('refreshBoard');
+				E.trigger('refreshBoardSpell');
 			}
 		},
 		haste: {
@@ -671,6 +672,7 @@ define({
 			onUse: function() {
 				var E = require('app/eventmanager');
 				E.trigger('phaseChange');
+				E.trigger('phaseChangeSpell');
 			}
 		},
 		freezeTime: {
@@ -678,6 +680,7 @@ define({
 				var E = require('app/eventmanager'),
 					C = require('app/gamecontent');
 				E.trigger('newStateEffect', [C.StateEffects.freezeTime]);
+				E.trigger('freezeTime');
 			}
 		}
 	},
