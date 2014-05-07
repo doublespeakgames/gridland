@@ -589,18 +589,36 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			var ARROW_TIME = 1000;
 			var arrow = arrowEntity.el();
 			arrow.addClass(dist > 0 ? 'right' : 'left');
-			arrow.attr('style', 'transform: translateX(' + start + 'px);');
+			arrow.attr('style', 
+				'transform: translateX(' + start + 'px);' +
+				'-webkit-transform: translateX(' + start + 'px);' +
+				'-moz-transform: translateX(' + start + 'px);' +
+				'-ms-transform: translateX(' + start + 'px);' +
+				'-o-transform: translateX(' + start + 'px);'
+			);
 			$('.world').append(arrow);
 			
 			arrow.css('left'); // Force a redraw before animation
 			
 			// Move arrow to top of arc
-			arrow.attr('style', 'transform: translateX(' + (start + dist/2) + 'px);');
+			arrow.attr('style', 
+				'transform: translateX(' + (start + dist/2) + 'px);' +
+				'-webkit-transform: translateX(' + (start + dist/2) + 'px);' + 
+				'-moz-transform: translateX(' + (start + dist/2) + 'px);' + 
+				'-ms-transform: translateX(' + (start + dist/2) + 'px);' + 
+				'-o-transform: translateX(' + (start + dist/2) + 'px);'
+			);
 			arrow.addClass('top');
 			
 			// Move arrow to end of arc
 			setTimeout(function() {
-				arrow.attr('style', 'transform: translateX(' + (start + dist) + 'px);');
+				arrow.attr('style', 
+					'transform: translateX(' + (start + dist) + 'px);' +
+					'-webkit-transform: translateX(' + (start + dist) + 'px);' +
+					'-moz-transform: translateX(' + (start + dist) + 'px);' +
+					'-ms-transform: translateX(' + (start + dist) + 'px);' +
+					'-o-transform: translateX(' + (start + dist) + 'px);'
+				);
 				arrow.removeClass('top').addClass('bottom');
 				setTimeout(function() {
 					// Remove arrow
