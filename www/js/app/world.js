@@ -67,6 +67,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			
 			EventManager.bind('launchDude', launchDude);
 			EventManager.bind('wipeMonsters', wipeMonsters);
+			EventManager.bind('landDragon', wipeMonsters);
 			EventManager.bind('damageAll', damageAllMonsters);
 			EventManager.bind('healDude', healDude);
 			EventManager.bind('hurtDude', hurtDude);

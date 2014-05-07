@@ -85,6 +85,12 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		LevelUp: {
 			file: 'levelUp'
+		},
+		DragonLand: {
+			file: 'land'
+		},
+		DragonRoar: {
+			file: 'roar'
 		}
 	};
 	
@@ -196,6 +202,8 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('phaseChangeSpell', GameAudio.play.bind(this, 'PhaseChange'));
 			E.bind('freezeTime', GameAudio.play.bind(this, 'FreezeTime'));
 			E.bind('levelUp', GameAudio.play.bind(this, 'LevelUp'));
+			E.bind('landDragon', GameAudio.play.bind(this, 'DragonLand'));
+			E.bind('roar', GameAudio.play.bind(this, 'DragonRoar'));
 
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));
