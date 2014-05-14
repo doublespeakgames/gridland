@@ -91,6 +91,21 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		DragonRoar: {
 			file: 'roar'
+		},
+		ShootFire: {
+			file: 'dshoot'
+		},
+		ExplodeFire: {
+			file: 'fireexplode'
+		},
+		Charge: {
+			file: 'charge'
+		},
+		Ice: {
+			file: 'ice'
+		},
+		Fire: {
+			file: 'fire'
 		}
 	};
 	
@@ -204,6 +219,11 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('levelUp', GameAudio.play.bind(this, 'LevelUp'));
 			E.bind('landDragon', GameAudio.play.bind(this, 'DragonLand'));
 			E.bind('roar', GameAudio.play.bind(this, 'DragonRoar'));
+			E.bind('shootFire', GameAudio.play.bind(this, 'ShootFire'));
+			E.bind('explodeFire', GameAudio.play.bind(this, 'ExplodeFire'));
+			E.bind('charge', GameAudio.play.bind(this, 'Charge'));
+			E.bind('ice', GameAudio.play.bind(this, 'Ice'));
+			E.bind('burn', GameAudio.play.bind(this, 'Fire'));
 
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));

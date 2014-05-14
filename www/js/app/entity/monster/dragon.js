@@ -80,7 +80,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	var Dragon = function(options) {
 		this.options = $.extend({}, this.options, {}, options);
 		
-		this.maxHealth = 600;
+		this.maxHealth = 1000;
 		this.damage = 4;
 		this.xp = 5000;
 		

@@ -24,7 +24,7 @@ define(['app/action/action', 'app/entity/projectile'], function(Action, Projecti
 	
 	Shoot.prototype.doFrameAction = function(frame) {
 		if(frame == 3) {
-			require('app/eventmanager').trigger('shoot');
+			require('app/eventmanager').trigger(this._entity.options.fire ? 'shootFire' : 'shoot');
 			var Graphics = require('app/graphics/graphics');
 			var start = this._entity.p();
 			var end = this.target.p();
@@ -38,7 +38,7 @@ define(['app/action/action', 'app/entity/projectile'], function(Action, Projecti
 			Graphics.fireArrow(projectile, function() {
 				// Check for hit, deal damage
 				if(Math.abs(end - _action.target.p()) <= 5) {
-					require('app/eventmanager').trigger('bluntHit');
+					require('app/eventmanager').trigger(_action._entity.options.fire ? 'explodeFire' :'sharpHit');
 					_action.target.takeDamage(_action._entity.getDamage());
 				}
 			});

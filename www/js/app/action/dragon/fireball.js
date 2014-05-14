@@ -25,10 +25,11 @@ define(['app/action/action'], function(Action) {
 			G.addToWorld(_this.projectile);
 			_this.projectile.css('left'); // Force redraw before animation
 			_this.projectile.css('transform', 'rotate(' + angle + 'deg) translateX(' + delta + 'px)');
-			
+			require('app/eventmanager').trigger('shootFire');
 			setTimeout(function() {
 				_this.projectile.remove();
 				var explosion = G.make('fireBoom').css('transform', 'translateX(' + _this.target.p() + 'px)');
+				require('app/eventmanager').trigger('explodeFire');
 				G.addToWorld(explosion);
 				explosion.css('left');
 				explosion.addClass('exploded');

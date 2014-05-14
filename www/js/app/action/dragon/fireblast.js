@@ -1,7 +1,8 @@
 define(['app/action/action'], function(Action) {
 	
 	var DURATION = 10000;
-	var BURN_DAMAGE = 1;
+	var BURN_DAMAGE = 3;
+	var BURN_DELAY = 200;
 	
 	var FireBlast = function(options) {
 		if(options) {
@@ -20,6 +21,7 @@ define(['app/action/action'], function(Action) {
 			var blast = G.make('fireBlast').css('width', (delta - 60) + 'px');
 			entity.setPosture('aimOpen', 500);
 			entity.getHead().append(blast);
+			require('app/eventmanager').trigger('charge');
 			setTimeout(function() {
 				var explosion = G.make('fireBoom').css('transform', 'translateX(' + _this.target.p() + 'px)');
 				G.addToWorld(explosion);
@@ -38,7 +40,10 @@ define(['app/action/action'], function(Action) {
 					row: 1,
 					animationFrames: 4,
 					effect: function() {
-						if(Math.abs(_this.target.p() - fireEffect.p()) < fireEffect.width() / 2 ) {
+						fireEffect.lastBurn = fireEffect.lastBurn || 0;
+						if(Math.abs(_this.target.p() - fireEffect.p()) < fireEffect.width() / 2 && fireEffect.lastBurn <  Date.now() - BURN_DELAY) {
+							fireEffect.lastBurn = Date.now();
+							require('app/eventmanager').trigger('burn');
 							_this.target.takeDamage(BURN_DAMAGE);
 							if(require('app/world').hasEffect('frozen')) {
 								require('app/eventmanager').trigger('endStateEffect', 

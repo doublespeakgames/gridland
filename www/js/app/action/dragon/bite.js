@@ -18,6 +18,7 @@ define(['app/action/action'], function(Action) {
 		this.timeouts.push(setTimeout(function() {
 			if(entity.distanceFrom(target) < 5) {
 				target.takeDamage(entity.getDamage());
+				require('app/eventmanager').trigger('sharpHit');
 			}
 			entity.action = null;
 		}, 800));

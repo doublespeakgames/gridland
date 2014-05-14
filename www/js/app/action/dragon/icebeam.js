@@ -13,12 +13,14 @@ define(['app/action/action'], function(Action) {
 		entity.setPosture('aimClose', 100);
 		var _this = this;
 		this.timeout = setTimeout(function() {
+			var E = require('app/eventmanager');
 			entity.setPosture('aimOpen', 500);
 			entity.getHead().append(beam);
+			E.trigger('charge');
 			setTimeout(function() {
-				var E = require('app/eventmanager'),
-				C = require('app/gamecontent');
+				var C = require('app/gamecontent');
 				E.trigger('newStateEffect', [C.StateEffects.frozen]);
+				E.trigger('ice');
 			}, 800);
 			setTimeout(function() {
 				beam.remove();
