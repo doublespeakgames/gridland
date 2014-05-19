@@ -106,6 +106,12 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		Fire: {
 			file: 'fire'
+		},
+		SegmentExplode: {
+			file: 'dexplode'
+		},
+		DragonExplode: {
+			file: 'dannihilate'
 		}
 	};
 	
@@ -224,6 +230,8 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('charge', GameAudio.play.bind(this, 'Charge'));
 			E.bind('ice', GameAudio.play.bind(this, 'Ice'));
 			E.bind('burn', GameAudio.play.bind(this, 'Fire'));
+			E.bind('segmentExplode', GameAudio.play.bind(this, 'SegmentExplode'));
+			E.bind('dragonExplode', GameAudio.play.bind(this, 'DragonExplode'));
 
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));

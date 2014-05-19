@@ -240,10 +240,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		var segmentNum = _this._segments.length - 1;
 		(function doExplode() {
 			explodeSegment(_this._segments[segmentNum]);
+			require('app/eventmanager').trigger('segmentExplode');
 			if(segmentNum-- > 0) {
 				setTimeout(doExplode, delay);
 			} else {
 				setTimeout(function() {
+					require('app/eventmanager').trigger('dragonExplode');
 					var explosion = require('app/graphics/graphics').make('dragonExplosion').appendTo(_this.el());
 					explosion.css('left');
 					explosion.addClass('exploded');
