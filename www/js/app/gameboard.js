@@ -40,6 +40,11 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			EventManager.bind("refreshBoard", refreshBoard);
 			EventManager.bind("createTileEffect", createEffect);
 			EventManager.bind("tilesSwapped", expireEffects);
+			
+			window.tiles = function() {
+				console.log(tileString);
+				console.log(rowString);
+			}
 		},
 		
 		switchTiles: function(pos1, pos2) {
@@ -338,14 +343,21 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	}
 	
 	function getColumn(index, rowOriented) {
-		if(rowOriented) return getRow(index);
-		var c = index / (GameBoard.options.rows + 1);
-		return c|c; // Faster than Math.floor
+		if(rowOriented) {
+			return index % (GameBoard.options.columns + 1);
+		} else {
+			var c = index / (GameBoard.options.rows + 1);
+			return c|c; // Faster than Math.floor
+		}
 	}
 	
 	function getRow(index, rowOriented) {
-		if(rowOriented) return getColumn(index);
-		return index % (GameBoard.options.rows + 1);
+		if(rowOriented) {
+			var c = index / (GameBoard.options.columns + 1);
+			return c|c; // Faster than Math.floor
+		} else {
+			return index % (GameBoard.options.rows + 1);
+		}
 	}
 	
 	function getPosition(index) {
@@ -460,9 +472,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	}
 	
 	function indexFromRowString(idx) {
-		var c = idx / (GameBoard.options.columns + 1);
-		c = c|c;
-		return (idx % (GameBoard.options.rows + 1))*(GameBoard.options.rows + 1) + c;
+		return getIndex(getRow(idx, true), getColumn(idx, true));
 	}
 	
 	function getTotal(pCounts) {
