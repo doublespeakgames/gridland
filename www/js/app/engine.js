@@ -21,7 +21,12 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 					return callback();
 				} else {
 					module = modules.shift();
-					module.init();
+					if(typeof module.init != 'function' && module.length && module.length == 2) {
+						// array was passed
+						module[0].init(module[1]);
+					} else {
+						module.init();
+					}
 				}
 			}
 			if(isReady(module)) {
@@ -129,9 +134,18 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				}
 			});
 			
+			var gOptions = null;
+			if (window.screen.width < 590 ) {
+				gOptions = {
+					rows: 9,
+					columns: 7,
+					mobile: true
+				};
+			}
+			
 			var modules = [EventManager,
 							Analytics,
-							GameBoard,
+							[GameBoard, gOptions],
 							Graphics,
 							World,
 							Loot,

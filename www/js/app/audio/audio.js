@@ -78,13 +78,13 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			file: 'reset'
 		},
 		PhaseChange: {
-			file: 'phaseChange'
+			file: 'phasechange'
 		},
 		FreezeTime: {
 			file: 'freeze'
 		},
 		LevelUp: {
-			file: 'levelUp'
+			file: 'levelup'
 		},
 		DragonLand: {
 			file: 'land'
