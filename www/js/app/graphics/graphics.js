@@ -9,6 +9,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	var _ww = null, _wh = null;
 	var _bossHealth = null;
 	var _numHearts = 0;
+	var styleSheet = null;
 	
 	function handleDrawRequest(requestString, options) {
 		var moduleString = requestString.substring(0, requestString.indexOf('.'));
@@ -137,6 +138,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			
 			textStore = new TextStore();
 			
+			var style = document.createElement('style');
+			style.appendChild(document.createTextNode("")); // Stupid Webkit
+			document.head.appendChild(style);
+			styleSheet = style.sheet;
+			
 			EventManager.bind('draw', handleDrawRequest);
 			
 			EventManager.bind('monsterKilled', this.monsterKilled);
@@ -176,6 +182,14 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				return ret;
 			}
 			return null;
+		},
+		
+		addStyleRule: function(selector, rules) {
+			if(styleSheet.addRule) {
+				styleSheet.addRule(selector, rules, -1);
+			} else {
+				styleSheet.insertRule(selector + '{' + rules + '}', 0);
+			}
 		},
 		
 		remove: function(thing) {
@@ -234,7 +248,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		addToMenu: function(entity) {
-			$('.menuBar').prepend(entity.el ? entity.el() : entity);
+			$('.menuBar').append(entity.el ? entity.el() : entity);
 		},
 		
 		hide: function(entity) {

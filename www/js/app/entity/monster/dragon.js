@@ -274,12 +274,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 				if(postureSpeedStylesheet.addRule) {
 					postureSpeedStylesheet.addRule(
 						'.dragon .neck, .dragon .head', 
-						'transition-duration: ' + speed + 'ms', 
+						'transition-duration: ' + speed + 'ms',
 					0);
 				} else {
 					postureSpeedStylesheet.insertRule(
 						'.dragon .neck, .dragon .head {' +
-						'transition-duration: ' + speed + 'ms; }', 
+						'transition-duration: ' + speed + 'ms; }',
 					0);
 				}
 				

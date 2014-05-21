@@ -15,5 +15,7 @@ define({
 	ATONCE: 'Most Monsters at Once',
 	LOOT: 'Loot Looted',
 	CAST: 'Spells Cast',
-	DRAGONS: 'Dragons Slain'
+	DRAGONS: 'Dragons Slain',
+	SHARE: 'Share',
+	DONATE: 'Donate'
 });

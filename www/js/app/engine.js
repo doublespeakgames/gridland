@@ -1,8 +1,10 @@
 define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
         'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot', 
-        'app/magic', 'app/gameoptions', 'app/audio/audio'], 
+        'app/magic', 'app/gameoptions', 'app/audio/audio', 'app/graphics/share',
+        'app/graphics/donate'], 
 		function($, EventManager, Analytics, Graphics, Content, GameBoard, 
-				 GameState, World, Loot, Magic, GameOptions, GameAudio) {
+				 GameState, World, Loot, Magic, GameOptions, GameAudio, Share,
+				 Donate) {
 
 	var DRAG_THRESHOLD = 30; // in pixels
 	var activeTile = null;
@@ -154,6 +156,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				modules.push(GameAudio);
 				silent = false;
 			}
+			
+			modules.push(Share);
+			modules.push(Donate);
 			
 			// Start the game
 			GameState.load();

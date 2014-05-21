@@ -2201,7 +2201,7 @@ body.night {
 .volumeControls {
 	position: relative;
 	width: 90%;
-	top: 20px;
+	top: 10px;
 	left: 5%;
 	margin-left: -21px;
 }
@@ -2265,15 +2265,33 @@ body.night {
 	border-color: white;
 }
 
-/** Social buttons **/
-#social {
+/** Submenus **/
+.submenu {
 	padding: 0;
 	margin: 0;
 	list-style: none;
 	text-align: center;
+	position: relative;
+	top: -15px;
 }
 
-#social li {
+.submenu:before {
+	color: #000;
+	display: block;
+	font-size: 1.5em;
+	margin: 10px 0;
+	transition: color 1400ms linear;
+	-webkit-transition: color 1400ms linear;
+	-moz-transition: color 1400ms linear;
+	-ms-transition: color 1400ms linear;
+	-o-transition: color 1400ms linear;
+}
+
+.night .submenu:before {
+	color: #FFF;
+}
+
+.submenu li {
 	display: inline-block;
 	margin: 0 10px;
 	border-width: 2px;
@@ -2282,14 +2300,16 @@ body.night {
 	position: relative;
 }
 
-#social a, #social div {
+/** Social buttons **/
+
+.social a, .social div {
 	display: block;
 	width: 48px;
 	height: 48px;
 	background-image: url(../img/social.png);
 }
 
-#social .nightSprite {
+.social .nightSprite {
 	position:absolute;
 	top: 0;
 	left: 0;
