@@ -2200,14 +2200,15 @@ body.night {
 /** Volume sliders **/
 .volumeControls {
 	position: relative;
-	width: 80%;
-	top: 20%;
-	left: 10%;
+	width: 90%;
+	top: 20px;
+	left: 5%;
 	margin-left: -21px;
 }
 .volumeSlider {
 	position: relative;
-	width: 100%;
+	left: 0px;
+	right: 0px;
 	height: 64px;
 	padding-left: 42px;
 	background: url(../img/music.png) no-repeat;
@@ -2262,6 +2263,84 @@ body.night {
 .night .sliderHandle {
 	background-color: #000;
 	border-color: white;
+}
+
+/** Social buttons **/
+#social {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	text-align: center;
+}
+
+#social li {
+	display: inline-block;
+	margin: 0 10px;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 4px;
+	position: relative;
+}
+
+#social a, #social div {
+	display: block;
+	width: 48px;
+	height: 48px;
+	background-image: url(../img/social.png);
+}
+
+#social .nightSprite {
+	position:absolute;
+	top: 0;
+	left: 0;
+}
+
+.twitter {
+	background-position: 0 0;
+}
+
+.twitter.nightSprite {
+	background-position: 0 -48px;
+}
+
+.reddit {
+	background-position: -48px 0;
+}
+
+.reddit.nightSprite {
+	background-position: -48px -48px;
+}
+
+.gplus {
+	background-position: -96px 0;
+}
+
+.gplus.nightSprite {
+	background-position: -96px -48px;
+}
+
+.tumblr {
+	background-position: -144px 0;
+}
+
+.tumblr.nightSprite {
+	background-position: -144px -48px;
+}
+
+.stumbleupon {
+	background-position: -192px 0;
+}
+
+.stumbleupon.nightSprite {
+	background-position: -192px -48px;
+}
+
+.facebook {
+	background-position: -240px 0;
+}
+
+.facebook.nightSprite {
+	background-position: -240px -48px;
 }
 
 /** DRAGON **/

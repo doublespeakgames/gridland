@@ -234,7 +234,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		addToMenu: function(entity) {
-			$('.menuBar').append(entity.el ? entity.el() : entity);
+			$('.menuBar').prepend(entity.el ? entity.el() : entity);
 		},
 		
 		hide: function(entity) {
