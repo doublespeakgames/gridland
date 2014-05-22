@@ -2212,7 +2212,7 @@ body.night {
 	height: 64px;
 	padding-left: 42px;
 	background: url(../img/music.png) no-repeat;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 }
 
 .volumeSlider .nightSprite {
@@ -2272,7 +2272,6 @@ body.night {
 	list-style: none;
 	text-align: center;
 	position: relative;
-	top: -15px;
 }
 
 .submenu:before {
@@ -2361,6 +2360,75 @@ body.night {
 
 .facebook.nightSprite {
 	background-position: -240px -48px;
+}
+
+/** Donate buttons **/
+
+.donate a, .donate input[type="image"] {
+	display: block;
+	width: 48px;
+	height: 48px;
+	background-image: url(../img/social.png);
+}
+
+.donate .nightSprite {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.paypal {
+	background-position: -288px 0;
+}
+
+.paypal.nightSprite {
+	background-position: -288px -48px;
+}
+
+.bitcoin-button {
+	background-position: -336px 0;
+}
+
+.bitcoin-button.nightSprite {
+	background-position: -336px -48px;
+}
+
+
+.flattr {
+	background-position: -384px 0;
+}
+
+.flattr.nightSprite {
+	background-position: -384px -48px;
+}
+
+
+.gittip {
+	background-position: -432px 0;
+}
+
+.gittip.nightSprite {
+	background-position: -432px -48px;
+}
+
+.bitcoin-bubble {
+    background-color: #FFFFFF;
+    border: 2px solid #000;
+    border-radius: 4px;
+    bottom: 52px;
+    color: #000000;
+    display: none;
+    font-family: "Helvetica",sans-serif;
+    font-size: 9pt;
+    left: -2px;
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    z-index: 1000;
+}
+
+.bitcoin:hover .bitcoin-bubble {
+	display: block;
 }
 
 /** DRAGON **/
