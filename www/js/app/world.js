@@ -94,36 +94,34 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				while(deferredCallbacks.length > 0) {
 					(deferredCallbacks.pop())();
 				}
-			});
-			
-			updateGem();
-			
-			for(var i in GameState.buildings) {
-				var building = GameState.buildings[i];
-				if(building.built && !building.obsolete) {
-					Graphics.addToWorld(building);
-					Graphics.setPosition(building, building.p());
-					if(building.options.type.tileMod) {
-						$('.gameBoard').addClass(building.options.type.tileMod + building.options.type.tileLevel);
+				updateGem();
+				for(var i in GameState.buildings) {
+					var building = GameState.buildings[i];
+					if(building.built && !building.obsolete) {
+						Graphics.addToWorld(building);
+						Graphics.setPosition(building, building.p());
+						if(building.options.type.tileMod) {
+							$('.gameBoard').addClass(building.options.type.tileMod + building.options.type.tileLevel);
+						}
+						building.el().css('bottom', '0px');
+						building.el().find('.blockPile').css('top', '100%');
+						var cb = Content.BuildingCallbacks[building.options.type.className];
+						if(cb) {
+							deferredCallbacks.push(cb);
+						}
+					} else if(!building.obsolete && canBuild(building.options.type)) {
+						Graphics.addToWorld(building);
+						Graphics.setPosition(building, building.p());
+						Graphics.updateCosts(building);
 					}
-					building.el().css('bottom', '0px');
-					building.el().find('.blockPile').css('top', '100%');
-					var cb = Content.BuildingCallbacks[building.options.type.className];
-					if(cb) {
-						deferredCallbacks.push(cb);
-					}
-				} else if(!building.obsolete && canBuild(building.options.type)) {
-					Graphics.addToWorld(building);
-					Graphics.setPosition(building, building.p());
-					Graphics.updateCosts(building);
 				}
-			}
-			
-			if(gameLoop != null) {
-				clearInterval(gameLoop);
-			}
-			gameLoop = setInterval(makeStuffHappen, 100);
-			inTransition = false;
+				
+				if(gameLoop != null) {
+					clearInterval(gameLoop);
+				}
+				gameLoop = setInterval(makeStuffHappen, 100);
+				inTransition = false;
+			});
 		},
 		
 		/**

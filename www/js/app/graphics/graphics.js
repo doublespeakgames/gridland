@@ -787,7 +787,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		drawSaveSlots: function() {
 			for(var i = 0; i < 3; i++) {
 				var slot = Graphics.make('saveSlot');
-				var slotNum = i;
 				var slotInfo = require('app/gamestate').getSlotInfo(i);
 				if(slotInfo === 'empty') {
 					slot.addClass('empty').text(Graphics.getText('NEWGAME'));
@@ -800,11 +799,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 							.appendTo(slot);
 					}
 				}
-				slot.on("click touchstart", function() {
-					require('app/audio/audio').play('Click');
-					EventManager.trigger('slotChosen', [slotNum]);
-					$('#loadingScreen').addClass('hidden');
-				});
+				(function(slotNum){
+					slot.on("click touchstart", function() {
+						require('app/audio/audio').play('Click');
+						EventManager.trigger('slotChosen', [slotNum]);
+						$('#loadingScreen').addClass('hidden');
+					});
+				})(i);
 				Graphics.get('#loadingScreen').append(slot);
 			}
 		}

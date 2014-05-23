@@ -58,6 +58,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			} catch(e) {
 				this.create(slot);
 			}
+			loadedSlot = slot;
 			return this;
 		},
 		
