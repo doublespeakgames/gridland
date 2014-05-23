@@ -17,5 +17,6 @@ define({
 	CAST: 'Spells Cast',
 	DRAGONS: 'Dragons Slain',
 	SHARE: 'Share',
-	DONATE: 'Donate'
+	DONATE: 'Donate',
+	NEWGAME: 'New Game'
 });

@@ -5,7 +5,6 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	var format = null;
 	var provider = null;
 	var playingMusic = false;
-	var matchNum = 1;
 	
 	var sounds = {
 		DayMusic: {
@@ -232,6 +231,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('burn', GameAudio.play.bind(this, 'Fire'));
 			E.bind('segmentExplode', GameAudio.play.bind(this, 'SegmentExplode'));
 			E.bind('dragonExplode', GameAudio.play.bind(this, 'DragonExplode'));
+			E.bind('slowChosen', GameAudio.play.bind(this, 'Click'));
 
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));
@@ -253,14 +253,14 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		
 		play: function(sound, silent) {
 			var s = sounds[sound];
-			if(s) {
+			if(s && provider) {
 				provider.play(s, silent);
 			}
 		},
 		
 		stop: function(sound) {
 			var s = sounds[sound];
-			if(s) {
+			if(s && provider) {
 				provider.stop(sounds[sound]);
 			}
 		}

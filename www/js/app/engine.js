@@ -106,7 +106,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		}
 	}
 	
-	function startGame() {
+	function startGame(slot) {
+		GameState.load(slot);
 		EventManager.bind('graphicsActionComplete', handleGraphicsComplete);
 		EventManager.trigger('gameLoaded');
 		EventManager.trigger('refreshBoard');
@@ -124,16 +125,6 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			
 			$('.menuBtn').off().on("click touchstart", function() {
 				$('.menuBar').toggleClass('open');
-			});
-			
-			$('#playButton').off().on("click touchstart", function() {
-				if(loaded) {
-					if(!silent) {
-						GameAudio.play('Click');
-					}
-					startGame();
-					$('#loadingScreen').addClass('hidden');
-				}
 			});
 			
 			var gOptions = null;
@@ -161,7 +152,6 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			modules.push(Donate);
 			
 			// Start the game
-			GameState.load();
 			GameOptions.load();
 			initializeModules(modules, function() {
 				if(loaded) {
@@ -177,6 +167,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				GameState.doPrestige();
 				Engine.init();
 			});
+			
+			EventManager.bind('slotChosen', startGame);
 			
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", '.tile', function(e) {
 				if(!dragging) {

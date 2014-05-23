@@ -74,6 +74,24 @@ body.night {
     margin-left: -40px;
 }
 
+.saveSlot {
+	cursor: pointer;
+	border: 2px solid #000;
+	border-radius: 4px;
+	margin-bottom: 10px;
+    position: relative;
+    top: 200px;
+    padding: 10px;
+}
+
+.saveSlot .heart {
+	display: inline-block;
+}
+
+.saveSlot:hover {
+	box-shadow: 0 0 5px 2px #CCC;
+}
+
 #playButton {
 	border: 2px solid #000000;
 	border-radius: 8px;
@@ -1515,6 +1533,11 @@ body.night {
 	-ms-transition: width 300ms linear;
 	-moz-transition: width 300ms linear;
 	-o-transition: width 300ms linear;
+}
+
+.heart.full,
+.bigheart.full {
+	background-color: #BC4D4D;
 }
 
 .shield {

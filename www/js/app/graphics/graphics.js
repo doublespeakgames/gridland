@@ -4,6 +4,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		function($, EventManager, TextStore, Options, BoardGraphics, WorldGraphics, ResourceGraphics,
 				LootGraphics, MagicGraphics, AudioGraphics) {
 	
+	var MAX_HEARTS = 15;
+	var HEALTH_PER_HEART = 10;
+	
 	var textStore;
 	var costsOn = false;
 	var _ww = null, _wh = null;
@@ -130,6 +133,20 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	function dropBlock(block, building) {
 		block.el().remove();
 		Graphics.updateCosts(building);
+	}
+	
+	function getNumHearts(health) {
+		var numHearts = Math.ceil(health / HEALTH_PER_HEART);
+		var numBigHearts = 0;
+		if(numHearts > MAX_HEARTS) {
+			numBigHearts = numHearts - MAX_HEARTS;
+			numHearts = MAX_HEARTS;
+		}
+		
+		return {
+			total: numHearts,
+			big: numBigHearts
+		};
 	}
 	
 	var Graphics = {
@@ -501,26 +518,25 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		updateHealth: function(health, maxHealth) {
-			var MAX_HEARTS = 15;
-			var HEALTH_PER_HEART = 10;
 			var numHearts = Math.ceil(maxHealth / HEALTH_PER_HEART);
 			var numBigHearts = 0;
 			if(numHearts > MAX_HEARTS) {
 				numBigHearts = numHearts - MAX_HEARTS;
 				numHearts = MAX_HEARTS;
 			}
-			_numHearts = numHearts;
+			var heartInfo = getNumHearts(maxHealth);
+			
 			var statusContainer = $('.hearts', this.getStatusContainer());
-			for(var i = 0, n = numHearts - statusContainer.children().length; i < n; i++) {
+			for(var i = 0, n = heartInfo.total - statusContainer.children().length; i < n; i++) {
 				$('<div>').addClass('heart').addClass('hidden').append($('<div>')
 						.addClass('mask')).append($('<div>').addClass('mask')
 						.addClass('nightSprite')).append($('<div>')
 						.addClass('bar')).appendTo(statusContainer);
 			}
-			for(var i = numHearts; i > 0; i--) {
+			for(var i = heartInfo.total; i > 0; i--) {
 				var heart = $(statusContainer.children()[i - 1]);
 				var heartHealth = HEALTH_PER_HEART;
-				if(i <= numBigHearts) {
+				if(i <= heartInfo.big) {
 					heartHealth *= 2;
 					heart.removeClass('heart').addClass('bigheart');
 				}
@@ -698,7 +714,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		enablePlayButton: function() {
 			$('#loadingScreen .saveSpinner').addClass('hidden');
-			$('#playButton').removeClass('hidden').text(Graphics.getText('PLAY'));
+			Graphics.drawSaveSlots();
 		},
 		
 		setBossHealth: function(hp, max) {
@@ -765,6 +781,30 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			setTimeout(function() { BoardGraphics.el().removeClass('shaking'); dragon.setPosture('idle', 500); }, 3500);
 			if(cb) {
 				setTimeout(cb, 4000);
+			}
+		},
+		
+		drawSaveSlots: function() {
+			for(var i = 0; i < 3; i++) {
+				var slot = Graphics.make('saveSlot');
+				var slotNum = i;
+				var slotInfo = require('app/gamestate').getSlotInfo(i);
+				if(slotInfo === 'empty') {
+					slot.addClass('empty').text(Graphics.getText('NEWGAME'));
+				} else { 
+					slot.text(Graphics.getText('DAY') + ' ' + slotInfo.day);
+					var heartInfo = getNumHearts(slotInfo.maxHealth);
+					for(var heartNum = 0; heartNum < heartInfo.total; heartNum++) {
+						Graphics.make('full ' + (heartNum < heartInfo.big ? 'bigheart' : 'heart'))
+							.append(Graphics.make('mask'))
+							.appendTo(slot);
+					}
+				}
+				slot.on("click touchstart", function() {
+					EventManager.trigger('slotChosen', [slotNum]);
+					$('#loadingScreen').addClass('hidden');
+				});
+				Graphics.get('#loadingScreen').append(slot);
 			}
 		}
 	};

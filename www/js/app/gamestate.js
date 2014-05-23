@@ -1,6 +1,7 @@
 define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecontent'], 
 		function(Building, Block, Analytics, Content) {
 	
+	var loadedSlot = 0;
 	var GameState = {
 		create: function() {
 			this.buildings = [];
@@ -16,9 +17,24 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			Analytics.trackEvent('game', 'create');
 		},
 		
-		load: function() {
+		getSlotInfo: function(slot) {
 			try {
-				var savedState = JSON.parse(localStorage.gameState);
+				var savedState = JSON.parse(localStorage["slot" + slot]);
+				if(savedState) {
+					return {
+						maxHealth: GameState.maxHealth(savedState.level),
+						day: savedState.dayNumber
+					};
+				}
+			} catch(e) {
+				return 'empty';
+			}
+		},
+		
+		load: function(slot) {
+			slot = slot || loadedSlot;
+			try {
+				var savedState = JSON.parse(localStorage["slot" + slot]);
 				if(savedState) {
 					this.buildings = [];
 					for(var i in savedState.buildings) {
@@ -37,10 +53,10 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 					this.counts = savedState.counts || {};
 					this.prestige = savedState.prestige || 0;
 				} else {
-					this.create();
+					this.create(slot);
 				}
 			} catch(e) {
-				this.create();
+				this.create(slot);
 			}
 			return this;
 		},
@@ -67,7 +83,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 					var store = this.stores[s];
 					state.stores.push(Block.makeBlock(store));
 				}
-				localStorage.gameState = JSON.stringify(state);
+				localStorage["slot" + loadedSlot] = JSON.stringify(state);
 			}
 			return this;
 		},
@@ -85,7 +101,7 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 				savedState.xp = this.xp;
 				savedState.level = this.level;
 				savedState.counts = this.counts;
-				localStorage.gameState = JSON.stringify(savedState);
+				localStorage["slot" + loadedSlot] = JSON.stringify(savedState);
 			}
 		},
 		
@@ -129,8 +145,9 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			return null;
 		},
 		
-		maxHealth: function() {
-			return 20 + 10 * this.level;
+		maxHealth: function(lvl) {
+			lvl = lvl || this.level;
+			return 20 + 10 * lvl;
 		},
 		
 		maxShield: function() {
@@ -189,6 +206,8 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 		},
 		
 		setIfHigher: function(key, num) {
+			if(typeof this.counts == 'undefined') return;
+			
 			var value = this.counts[key] || 0;
 			value = num > value ? num : value;
 			this.counts[key] = value;
