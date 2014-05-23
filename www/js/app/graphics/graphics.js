@@ -801,6 +801,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					}
 				}
 				slot.on("click touchstart", function() {
+					require('app/audio/audio').play('Click');
 					EventManager.trigger('slotChosen', [slotNum]);
 					$('#loadingScreen').addClass('hidden');
 				});
