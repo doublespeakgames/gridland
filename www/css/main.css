@@ -47,7 +47,6 @@ body.night {
 #loadingScreen {
 	z-index: 100;
 	position: absolute;
-	top: 5%;
 	left: 50%;
 	margin-left: -300px;
     width: 600px;
@@ -72,6 +71,24 @@ body.night {
     bottom: 0px;
     left: 50%;
     margin-left: -40px;
+}
+
+@media screen and (min-height: 860px) {
+	#loadingScreen {
+		top:20%
+	}
+}
+
+@media screen and (min-height: 630px) and (max-height: 860px) {
+	#loadingScreen {
+		top: 5%;
+	}
+}
+
+@media screen and (max-height: 630px) {
+	#loadingScreen {
+		bottom: 305px;
+	}
 }
 
 .saveSlot {
