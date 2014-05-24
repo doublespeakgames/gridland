@@ -91,9 +91,6 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 				fillAttack();
 			});
 			EventManager.bind('gameLoaded', function() {
-				while(deferredCallbacks.length > 0) {
-					(deferredCallbacks.pop())();
-				}
 				updateGem();
 				for(var i in GameState.buildings) {
 					var building = GameState.buildings[i];
@@ -114,6 +111,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 						Graphics.setPosition(building, building.p());
 						Graphics.updateCosts(building);
 					}
+				}
+				
+				while(deferredCallbacks.length > 0) {
+					(deferredCallbacks.pop())();
 				}
 				
 				if(gameLoop != null) {

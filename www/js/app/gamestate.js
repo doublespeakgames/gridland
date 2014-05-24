@@ -97,8 +97,8 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 		},
 		
 		savePersistents: function() {
-			if(typeof Storage != 'undefined' && localStorage && localStorage.gameState) {
-				var savedState = JSON.parse(localStorage.gameState);
+			if(typeof Storage != 'undefined' && localStorage && localStorage["slot" + loadedSlot]) {
+				var savedState = JSON.parse(localStorage["slot" + loadedSlot]);
 				savedState.xp = this.xp;
 				savedState.level = this.level;
 				savedState.counts = this.counts;

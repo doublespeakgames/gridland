@@ -203,7 +203,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		addStyleRule: function(selector, rules) {
 			if(styleSheet.addRule) {
-				styleSheet.addRule(selector, rules, -1);
+				styleSheet.addRule(selector, rules);
 			} else {
 				styleSheet.insertRule(selector + '{' + rules + '}', 0);
 			}
@@ -692,20 +692,18 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		handleDayBreak: function(dayNumber) {
-			require(['app/graphics/graphics'], function(Graphics) {
-				var txt = Graphics.getText('DAY');
-				var notifier;
-				setTimeout(function() {
-					notifier = $('<div>').addClass('dayNotifier').text(txt + " " + dayNumber).appendTo('.world');
-				}, 700);
-				setTimeout(function() {
-					$('.monster, .treasureChest').remove();
-					notifier.addClass('hidden');
-				}, 3000);
-				setTimeout(function() {
-					notifier.remove();
-				}, 3500);
-			});
+			var txt = Graphics.getText('DAY');
+			var notifier;
+			setTimeout(function() {
+				notifier = $('<div>').addClass('dayNotifier').text(txt + " " + dayNumber).appendTo('.world');
+			}, 700);
+			setTimeout(function() {
+				$('.monster, .treasureChest').remove();
+				notifier.addClass('hidden');
+			}, 3000);
+			setTimeout(function() {
+				notifier.remove();
+			}, 3500);
 		},
 		
 		monsterKilled: function(monster) {
