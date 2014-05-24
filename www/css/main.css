@@ -47,7 +47,7 @@ body.night {
 #loadingScreen {
 	z-index: 100;
 	position: absolute;
-	top: 30%;
+	top: 5%;
 	left: 50%;
 	margin-left: -300px;
     width: 600px;
@@ -82,14 +82,30 @@ body.night {
     position: relative;
     top: 200px;
     padding: 10px;
+    font-size: 1.5em;
+    width: 210px;
+    margin: 0 auto 10px auto;
+    height: 100px;
 }
 
-.saveSlot .heart {
+.saveSlot.empty {
+	text-align: center;
+	height: 30px;
+}
+
+.saveSlot .heart,
+.saveSlot .bigheart {
 	display: inline-block;
 }
 
 .saveSlot:hover {
 	box-shadow: 0 0 5px 2px #CCC;
+}
+
+.saveSlot .day {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
 }
 
 #playButton {

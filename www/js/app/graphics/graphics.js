@@ -4,11 +4,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		function($, EventManager, TextStore, Options, BoardGraphics, WorldGraphics, ResourceGraphics,
 				LootGraphics, MagicGraphics, AudioGraphics) {
 	
-	var MAX_HEARTS = 15;
+	var MAX_HEARTS = 14;
 	var HEALTH_PER_HEART = 10;
 	
 	var textStore;
-	var costsOn = false;
 	var _ww = null, _wh = null;
 	var _bossHealth = null;
 	var _numHearts = 0;
@@ -789,13 +788,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				if(slotInfo === 'empty') {
 					slot.addClass('empty').text(Graphics.getText('NEWGAME'));
 				} else { 
-					slot.text(Graphics.getText('DAY') + ' ' + slotInfo.day);
 					var heartInfo = getNumHearts(slotInfo.maxHealth);
 					for(var heartNum = 0; heartNum < heartInfo.total; heartNum++) {
 						Graphics.make('full ' + (heartNum < heartInfo.big ? 'bigheart' : 'heart'))
 							.append(Graphics.make('mask'))
 							.appendTo(slot);
 					}
+					slot.append(Graphics.make('day').text(Graphics.getText('DAY') + ' ' + slotInfo.day));
 				}
 				(function(slotNum){
 					slot.on("click touchstart", function() {

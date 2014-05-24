@@ -1,7 +1,7 @@
 define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics', 
         'app/gamestate', 'app/action/actionfactory', 'app/gamecontent'], 
 		function(EventManager, WorldEntity, Graphics, State, ActionFactory, Content) {
-	var MAX_LEVEL = 28;
+	var MAX_LEVEL = 26;
 	var dude = function() {
 		this._el = null;
 		this.carrying = null;
