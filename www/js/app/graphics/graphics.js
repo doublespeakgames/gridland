@@ -148,6 +148,50 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		};
 	}
 	
+	function drawSlot(slotInfo, slotIndex) {
+		var slot = Graphics.make('saveSlot').data('slotIndex', slotIndex);
+		var buttons = [];
+		var slotSide = Graphics.make('slotSide').appendTo(slot);
+		if(slotInfo === 'empty') {
+			slot.addClass('empty');
+			slotSide.text(Graphics.getText('NEWGAME'));
+			buttons.push({
+				className: 'import',
+				text: 'IMPORT',
+				click: drawImport.bind(slot, slot)
+			});
+		} else { 
+			var heartInfo = getNumHearts(slotInfo.maxHealth);
+			for(var heartNum = 0; heartNum < heartInfo.total; heartNum++) {
+				Graphics.make('full ' + (heartNum < heartInfo.big ? 'bigheart' : 'heart'))
+					.append(Graphics.make('mask'))
+					.appendTo(slotSide);
+			}
+			buttons = buttons.concat([
+				{
+					className: 'export',
+					text: 'EXPORT',
+					click: drawExport.bind(slot, slot)
+				}, {
+					className: 'delete',
+					text: 'DELETE',
+					click: drawDelete.bind(slot, slot)
+				}
+			]);
+			slotSide.append(Graphics.make('day').text(Graphics.getText('DAY') + ' ' + slotInfo.day));
+		}
+		slot.append(Graphics.make('infoSide').click(function() {return false;}));
+		drawSlotButtons(slotSide, buttons);
+		
+		slot.on("click touchstart", function() {
+			require('app/audio/audio').play('Click');
+			EventManager.trigger('slotChosen', [slotIndex]);
+			$('#loadingScreen').addClass('hidden');
+		});
+		
+		return slot;
+	}
+	
 	function drawSlotButtons(slot, buttons) {
 		var buttonList = Graphics.make('buttons', 'ul');
 		for(var i in buttons) {
@@ -158,7 +202,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		buttonList.appendTo(slot);
 	}
 	
-	function drawimport(slot) {
+	function drawImport(slot) {
 		// TODO
 		return false;
 	}
@@ -168,8 +212,36 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		return false;
 	}
 	
+	function doDelete(slot) {
+		var slotIndex = slot.data('slotIndex');
+		EventManager.trigger('deleteSlot', [slotIndex]);
+		Graphics.get('.saveSlot:nth-child(' + (slotIndex + 1) + ')').before(drawSlot('empty', slotIndex));
+		slot.remove();
+		return false;
+	}
+	
+	function cancelSlotAction(slot) {
+		slot.removeClass('flipped');
+		setTimeout(function() {
+			slot.find('.infoSide').empty();
+			slot.attr('class', 'saveSlot');
+		}, 500);
+		return false;
+	}
+	
 	function drawDelete(slot) {
-		// TODO
+		slot.addClass('confirmDelete flipped');
+		var infoSide = slot.find('.infoSide');
+		infoSide.append(Graphics.make('confirmText').text(Graphics.getText('ARE_YOU_SURE')));
+		drawSlotButtons(infoSide, [{
+			className: 'confirm',
+			text: 'CONFIRM',
+			click: doDelete.bind(slot, slot)
+		}, {
+			className: 'cancel',
+			text: 'CANCEL',
+			click: cancelSlotAction.bind(slot, slot)
+		}]);
 		return false;
 	}
 	
@@ -807,48 +879,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		drawSaveSlots: function() {
+			var saveSlots = Graphics.make('saveSlots', 'ul');
 			for(var i = 0; i < 3; i++) {
-				var slot = Graphics.make('saveSlot');
 				var slotInfo = require('app/gamestate').getSlotInfo(i);
-				var buttons = [];
-				if(slotInfo === 'empty') {
-					slot.addClass('empty').text(Graphics.getText('NEWGAME'));
-					buttons.push({
-						className: 'import',
-						text: 'IMPORT',
-						click: drawImport.bind(slot, slot)
-					});
-				} else { 
-					var heartInfo = getNumHearts(slotInfo.maxHealth);
-					for(var heartNum = 0; heartNum < heartInfo.total; heartNum++) {
-						Graphics.make('full ' + (heartNum < heartInfo.big ? 'bigheart' : 'heart'))
-							.append(Graphics.make('mask'))
-							.appendTo(slot);
-					}
-					buttons = buttons.concat([
-						{
-							className: 'export',
-							text: 'EXPORT',
-							click: drawExport.bind(slot, slot)
-						}, {
-							className: 'delete',
-							text: 'DELETE',
-							click: drawDelete.bind(slot, slot)
-						}
-					]);
-					slot.append(Graphics.make('day').text(Graphics.getText('DAY') + ' ' + slotInfo.day));
-				}
-				slot.append(Graphics.make('infoSide'));
-				drawSlotButtons(slot, buttons);
-				(function(slotNum){
-					slot.on("click touchstart", function() {
-						require('app/audio/audio').play('Click');
-						EventManager.trigger('slotChosen', [slotNum]);
-						$('#loadingScreen').addClass('hidden');
-					});
-				})(i);
-				Graphics.get('#loadingScreen').append(slot);
+				var slot = drawSlot(slotInfo, i);
+				saveSlots.append(slot);
 			}
+			Graphics.get('#loadingScreen').append(saveSlots);
 		}
 	};
 	

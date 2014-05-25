@@ -169,6 +169,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			});
 			
 			EventManager.bind('slotChosen', startGame);
+			EventManager.bind('deleteSlot', GameState.deleteSlot);
 			
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", '.tile', function(e) {
 				if(!dragging) {

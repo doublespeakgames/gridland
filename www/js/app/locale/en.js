@@ -23,5 +23,6 @@ define({
 	CANCEL: 'Cancel',
 	IMPORT: 'Import',
 	EXPORT: 'Export',
-	DELETE: 'Delete'
+	DELETE: 'Delete',
+	ARE_YOU_SURE: 'Are you sure?'
 });

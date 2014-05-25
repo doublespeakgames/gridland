@@ -91,18 +91,22 @@ body.night {
 	}
 }
 
-.saveSlot {
-	cursor: pointer;
-	border: 2px solid #000;
-	border-radius: 4px;
-	margin-bottom: 10px;
-    position: relative;
+.saveSlots {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	position: relative;
     top: 200px;
-    padding: 10px;
+}
+
+.saveSlot {
+	position: relative;
+	cursor: pointer;
+	margin-bottom: 10px;
     font-size: 1.5em;
-    width: 210px;
+    width: 235px;
     margin: 0 auto 10px auto;
-    height: 100px;
+    height: 120px;
     transform-style: preserve-3d;
     transition: transform 500ms linear, height 500ms linear, width 500ms linear;
     -webkit-transition: transform 500ms linear, height 500ms linear, width 500ms linear;
@@ -113,7 +117,7 @@ body.night {
 
 .saveSlot.empty {
 	text-align: center;
-	height: 30px;
+	height: 50px;
 }
 
 .saveSlot .heart,
@@ -121,7 +125,7 @@ body.night {
 	display: inline-block;
 }
 
-.saveSlot:hover {
+.saveSlot:hover .slotSide {
 	box-shadow: 0 0 5px 2px #CCC;
 }
 
@@ -131,16 +135,50 @@ body.night {
 	left: 10px;
 }
 
-.saveSlot .infoSide {
+.saveSlot .infoSide,
+.saveSlot .slotSide {
+	border: 2px solid #000;
+	border-radius: 4px;
 	position: absolute;
+	padding: 10px;
 	top: 0;
 	left: 0;
-	height: 100%;
-	width: 100%;
-	transform: rotateY(180deg);
-	background: blue;
+	bottom: 0;
+	right: 0;
 	backface-visibility: hidden;
+	transition: transform 500ms linear;
+	-webkit-transition: transform 500ms linear;
+	-moz-transition: transform 500ms linear;
+	-ms-transition: transform 500ms linear;
+	-o-transition: transform 500ms linear;
+}
+
+.saveSlot .infoSide {
+	cursor: default;
+	transform: rotateX(180deg);
 	z-index: 1;
+}
+
+.saveSlot.flipped {
+	box-shadow: none !important;
+}
+
+.saveSlot.flipped .infoSide {
+	transform: rotateX(0deg);
+}
+
+.saveSlot.flipped .slotSide {
+	transform: rotateX(180deg);
+}
+
+.confirmText {
+	margin-top: 20px;
+}
+
+.confirmDelete .infoSide {
+	background-color: red;
+	text-align: center;
+	font-size: 1.3em;
 }
 
 .buttons {
@@ -159,6 +197,7 @@ body.night {
 	display: inline-block;
 	background-image: url(../img/buttonicons.png);
 	margin-left: 5px;
+	cursor: pointer;
 }
 
 .confirm {

@@ -89,6 +89,12 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			return this;
 		},
 		
+		deleteSlot: function(slotNum) {
+			if(typeof Storage != 'undefined' && localStorage) {
+				localStorage.removeItem('slot' + slotNum);
+			}
+		},
+		
 		doPrestige: function() {
 			this.buildings.length = 0;
 			this.stores.length = 0;
