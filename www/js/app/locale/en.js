@@ -24,5 +24,7 @@ define({
 	IMPORT: 'Import',
 	EXPORT: 'Export',
 	DELETE: 'Delete',
-	ARE_YOU_SURE: 'Are you sure?'
+	ARE_YOU_SURE: 'Are you sure?',
+	EXPORT_CODE: 'Export code:',
+	IMPORT_CODE: 'Import code:'
 });

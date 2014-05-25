@@ -1,5 +1,5 @@
-define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecontent'], 
-		function(Building, Block, Analytics, Content) {
+define(['base64', 'app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecontent'], 
+		function(Base64, Building, Block, Analytics, Content) {
 	
 	var loadedSlot = 0;
 	var GameState = {
@@ -15,6 +15,15 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 			this.counts = {};
 			this.prestige = 0;
 			Analytics.trackEvent('game', 'create');
+		},
+		
+		getExportCode: function(slot) {
+			try {
+				var savedState = localStorage["slot" + slot];
+				return savedState ? Base64.encode(savedState) : null;
+			} catch(e) {
+				return null;
+			}
 		},
 		
 		getSlotInfo: function(slot) {
@@ -87,6 +96,14 @@ define(['app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecon
 				localStorage["slot" + loadedSlot] = JSON.stringify(state);
 			}
 			return this;
+		},
+		
+		import: function(slotNum, importCode) {
+			try {
+				localStorage["slot" + slotNum] = Base64.decode(importCode);
+			} catch(e) {
+				return null;
+			}
 		},
 		
 		deleteSlot: function(slotNum) {

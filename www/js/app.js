@@ -3,6 +3,9 @@ requirejs.config({
 	shim: {
 		"google-analytics": {
 			exports: "ga"
+		},
+		"base64": {
+			exports: "Base64"
 		}
 	},
 	paths: {

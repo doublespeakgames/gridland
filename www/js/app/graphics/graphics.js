@@ -203,12 +203,34 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	}
 	
 	function drawImport(slot) {
-		// TODO
+		slot.addClass('bigView flipped');
+		var infoSide = slot.find('.infoSide');
+		infoSide.append(Graphics.make('labelText').text(Graphics.getText('IMPORT_CODE')));
+		infoSide.append(Graphics.make('exportCode', 'textarea'));
+		drawSlotButtons(infoSide, [{
+			className: 'confirm',
+			text: 'CONFIRM',
+			click: doImport.bind(slot, slot)
+		}, {
+			className: 'cancel',
+			text: 'CANCEL',
+			click: cancelSlotAction.bind(slot, slot)
+		}]);
 		return false;
 	}
 	
 	function drawExport(slot) {
-		// TODO
+		slot.addClass('bigView flipped');
+		var infoSide = slot.find('.infoSide');
+		infoSide.append(Graphics.make('labelText').text(Graphics.getText('EXPORT_CODE')));
+		infoSide.append(Graphics.make('exportCode', 'textarea').text(
+			require('app/gamestate').getExportCode(slot.data('slotIndex'))
+		).attr('readonly', true));
+		drawSlotButtons(infoSide, [{
+			className: 'confirm',
+			text: 'CONFIRM',
+			click: cancelSlotAction.bind(slot, slot)
+		}]);
 		return false;
 	}
 	
@@ -220,11 +242,19 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		return false;
 	}
 	
+	function doImport(slot) {
+		var slotIndex = slot.data('slotIndex');
+		var importCode = slot.find('textarea').val();
+		EventManager.trigger('importSlot', [slotIndex, importCode]);
+		return false;
+	}
+	
 	function cancelSlotAction(slot) {
+		var wasEmpty = slot.hasClass('empty');
 		slot.removeClass('flipped');
 		setTimeout(function() {
 			slot.find('.infoSide').empty();
-			slot.attr('class', 'saveSlot');
+			slot.attr('class', 'saveSlot' + (wasEmpty ? ' empty' : ''));
 		}, 500);
 		return false;
 	}
@@ -886,7 +916,16 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				saveSlots.append(slot);
 			}
 			Graphics.get('#loadingScreen').append(saveSlots);
-		}
+		},
+		
+		replaceSlot: function(slotIndex, slotInfo) {
+			var newSlot = drawSlot(slotInfo, slotIndex);
+			var oldSlot = Graphics.get('.saveSlot:nth-child(' + (slotIndex + 1) + ')');
+			oldSlot.before(newSlot);
+			oldSlot.remove();
+		},
+		
+		drawSlot: drawSlot
 	};
 	
 	return Graphics;

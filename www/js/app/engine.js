@@ -114,6 +114,11 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		EventManager.trigger('launchDude');
 	}
 	
+	function importSlot(slotNum, importCode) {
+		GameState.import(slotNum, importCode);
+		Graphics.replaceSlot(slotNum, GameState.getSlotInfo(slotNum));
+	}
+	
 	var Engine = {
 		options: {},
 		init: function(opts) {
@@ -170,6 +175,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			
 			EventManager.bind('slotChosen', startGame);
 			EventManager.bind('deleteSlot', GameState.deleteSlot);
+			EventManager.bind('importSlot', importSlot);
 			
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", '.tile', function(e) {
 				if(!dragging) {
@@ -219,7 +225,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			});
 			$('body').off().on('mousedown touchstart', function(e) {
 				EventManager.trigger('toggleMenu');
-				return false;
+				return e.target.tagName == 'TEXTAREA';
 			});
 			Graphics.attachHandler("World", "mousedown touchstart", '.resourceBars', function(e) {
 				// Handle wacky touch event objects

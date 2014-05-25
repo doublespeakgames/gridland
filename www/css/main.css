@@ -100,19 +100,40 @@ body.night {
 }
 
 .saveSlot {
-	position: relative;
+	position: absolute;
 	cursor: pointer;
 	margin-bottom: 10px;
     font-size: 1.5em;
-    width: 235px;
-    margin: 0 auto 10px auto;
+    width: 236px;
+    left: 50%;
+    margin-left: -118px;
     height: 120px;
-    transform-style: preserve-3d;
-    transition: transform 500ms linear, height 500ms linear, width 500ms linear;
-    -webkit-transition: transform 500ms linear, height 500ms linear, width 500ms linear;
-    -moz-transition: transform 500ms linear, height 500ms linear, width 500ms linear;
-    -ms-transition: transform 500ms linear, height 500ms linear, width 500ms linear;
-    -o-transition: transform 500ms linear, height 500ms linear, width 500ms linear;
+    transition: margin 500ms linear, height 500ms linear, width 500ms linear;
+    -webkit-transition: margin 500ms linear, height 500ms linear, width 500ms linear;
+    -moz-transition: margin 500ms linear, height 500ms linear, width 500ms linear;
+    -ms-transition: margin 500ms linear, height 500ms linear, width 500ms linear;
+    -o-transition: margin 500ms linear, height 500ms linear, width 500ms linear;
+}
+
+.saveSlot:nth-child(1) {
+	top: 0px;
+}
+
+.saveSlot:nth-child(2) {
+	top: 130px;
+}
+
+.saveSlot:nth-child(3) {
+	top: 260px;
+}
+
+.saveSlot.empty + .saveSlot,
+.saveSlot.empty + .saveSlot + .saveSlot {
+	margin-top: -70px;
+}
+
+.saveSlot.empty + .saveSlot.empty + .saveSlot {
+	margin-top: -140px;
 }
 
 .saveSlot.empty {
@@ -137,6 +158,7 @@ body.night {
 
 .saveSlot .infoSide,
 .saveSlot .slotSide {
+	background: white;
 	border: 2px solid #000;
 	border-radius: 4px;
 	position: absolute;
@@ -159,8 +181,30 @@ body.night {
 	z-index: 1;
 }
 
+.infoSide .labelText {
+	text-align: left;
+}
+
 .saveSlot.flipped {
 	box-shadow: none !important;
+}
+
+.saveSlot.bigView {
+	z-index: 2;
+}
+
+.saveSlot.flipped.bigView {
+	height: 300px;
+	width: 400px;
+	margin-left: -200px;
+}
+
+.saveSlot.flipped.bigView:nth-child(2) {
+	margin-top: -125px;
+}
+
+.saveSlot.flipped.bigView:nth-child(3) {
+	margin-top: -255px;
 }
 
 .saveSlot.flipped .infoSide {
@@ -169,6 +213,15 @@ body.night {
 
 .saveSlot.flipped .slotSide {
 	transform: rotateX(180deg);
+}
+
+.saveSlot textarea {
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	height: 75%;
+	width: 100%;
+	padding: 5px;
+	resize: none;
 }
 
 .confirmText {
