@@ -197,7 +197,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		for(var i in buttons) {
 			var buttonInfo = buttons[i];
 			buttonList.append(Graphics.make(buttonInfo.className, 'li')
-					.click(buttonInfo.click).attr('title', Graphics.getText(buttonInfo.text)));
+				.on('click touchstart', buttonInfo.click).attr('title', Graphics.getText(buttonInfo.text)));
 		}
 		buttonList.appendTo(slot);
 	}

@@ -168,16 +168,24 @@ body.night {
 	bottom: 0;
 	right: 0;
 	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
 	transition: transform 500ms linear;
-	-webkit-transition: transform 500ms linear;
-	-moz-transition: transform 500ms linear;
-	-ms-transition: transform 500ms linear;
-	-o-transition: transform 500ms linear;
+	-webkit-transition: -webkit-transform 500ms linear;
+	-moz-transition: -moz-transform 500ms linear;
+	-ms-transition: -ms-transform 500ms linear;
+	-o-transition: -o-transform 500ms linear;
 }
 
 .saveSlot .infoSide {
 	cursor: default;
 	transform: rotateX(180deg);
+	-webkit-transform: rotateX(180deg);
+	-moz-transform: rotateX(180deg);
+	-ms-transform: rotateX(180deg);
+	-o-transform: rotateX(180deg);
 	z-index: 1;
 }
 
@@ -209,10 +217,18 @@ body.night {
 
 .saveSlot.flipped .infoSide {
 	transform: rotateX(0deg);
+	-webkit-transform: rotateX(0deg);
+	-moz-transform: rotateX(0deg);
+	-ms-transform: rotateX(0deg);
+	-o-transform: rotateX(0deg);
 }
 
 .saveSlot.flipped .slotSide {
 	transform: rotateX(180deg);
+	-webkit-transform: rotateX(180deg);
+	-moz-transform: rotateX(180deg);
+	-ms-transform: rotateX(180deg);
+	-o-transform: rotateX(180deg);
 }
 
 .saveSlot textarea {
