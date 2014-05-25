@@ -148,6 +148,31 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		};
 	}
 	
+	function drawSlotButtons(slot, buttons) {
+		var buttonList = Graphics.make('buttons', 'ul');
+		for(var i in buttons) {
+			var buttonInfo = buttons[i];
+			buttonList.append(Graphics.make(buttonInfo.className, 'li')
+					.click(buttonInfo.click).attr('title', Graphics.getText(buttonInfo.text)));
+		}
+		buttonList.appendTo(slot);
+	}
+	
+	function drawimport(slot) {
+		// TODO
+		return false;
+	}
+	
+	function drawExport(slot) {
+		// TODO
+		return false;
+	}
+	
+	function drawDelete(slot) {
+		// TODO
+		return false;
+	}
+	
 	var Graphics = {
 		init: function() {
 			$('body').removeClass('night');
@@ -785,8 +810,14 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			for(var i = 0; i < 3; i++) {
 				var slot = Graphics.make('saveSlot');
 				var slotInfo = require('app/gamestate').getSlotInfo(i);
+				var buttons = [];
 				if(slotInfo === 'empty') {
 					slot.addClass('empty').text(Graphics.getText('NEWGAME'));
+					buttons.push({
+						className: 'import',
+						text: 'IMPORT',
+						click: drawImport.bind(slot, slot)
+					});
 				} else { 
 					var heartInfo = getNumHearts(slotInfo.maxHealth);
 					for(var heartNum = 0; heartNum < heartInfo.total; heartNum++) {
@@ -794,8 +825,21 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 							.append(Graphics.make('mask'))
 							.appendTo(slot);
 					}
+					buttons = buttons.concat([
+						{
+							className: 'export',
+							text: 'EXPORT',
+							click: drawExport.bind(slot, slot)
+						}, {
+							className: 'delete',
+							text: 'DELETE',
+							click: drawDelete.bind(slot, slot)
+						}
+					]);
 					slot.append(Graphics.make('day').text(Graphics.getText('DAY') + ' ' + slotInfo.day));
 				}
+				slot.append(Graphics.make('infoSide'));
+				drawSlotButtons(slot, buttons);
 				(function(slotNum){
 					slot.on("click touchstart", function() {
 						require('app/audio/audio').play('Click');

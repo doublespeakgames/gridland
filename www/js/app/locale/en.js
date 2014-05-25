@@ -18,5 +18,10 @@ define({
 	DRAGONS: 'Dragons Slain',
 	SHARE: 'Share',
 	DONATE: 'Donate',
-	NEWGAME: 'New Game'
+	NEWGAME: 'New Game',
+	CONFIRM: 'Confirm',
+	CANCEL: 'Cancel',
+	IMPORT: 'Import',
+	EXPORT: 'Export',
+	DELETE: 'Delete'
 });
