@@ -183,10 +183,12 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		slot.append(Graphics.make('infoSide').click(function() {return false;}));
 		drawSlotButtons(slotSide, buttons);
 		
-		slot.on("click touchstart", function() {
-			require('app/audio/audio').play('Click');
-			EventManager.trigger('slotChosen', [slotIndex]);
-			$('#loadingScreen').addClass('hidden');
+		slot.on("click touchstart", function(e) {
+			if(e.target.tagName != 'TEXTAREA') {
+				require('app/audio/audio').play('Click');
+				EventManager.trigger('slotChosen', [slotIndex]);
+				$('#loadingScreen').addClass('hidden');
+			}
 		});
 		
 		return slot;
