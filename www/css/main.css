@@ -68,7 +68,7 @@ body.night {
 	height: 80px;
 	opacity: 1;
 	width: 80px;
-    bottom: 0px;
+    top: 210px;
     left: 50%;
     margin-left: -40px;
 }
@@ -440,24 +440,33 @@ body.night {
 /** Save Spinner **/
 
 .saveSpinner {
-	width: 40px;
-	height: 40px;
+	display: block;
+	width: 48px;
+	height: 48px;
 	position: absolute;
-	left: 3px;
-	bottom: 4px;
-	opacity: 0;
+	left: 5px;
+	top: 1px;
 	transition: opacity 200ms linear;
 	-webkit-transition: opacity 200ms linear;
 	-moz-transition: opacity 200ms linear;
 	-ms-transition: opacity 200ms linear;
 	-o-transition: opacity 200ms linear;
+	background: url(../img/social.png) -480px 0;
+}
+
+.saveSpinner span {
+	display: none;
 }
 
 .saveSpinner.active {
-	opacity: 1;
+	background: none;
 }
 
-.saveSpinner div {
+.saveSpinner.active span {
+	display: block;
+}
+
+.saveSpinner span {
 	position: absolute;
 	width: 15%;
 	height: 15%;
@@ -474,19 +483,19 @@ body.night {
 	-o-animation: pulse 1s infinite;
 }
 
-.night .saveSpinner div {
+.night .saveSpinner span {
 	background-color: white;
 }
 
-.bigExplosion .saveSpinner div {
+.bigExplosion .saveSpinner span {
 	background-color: black;
 }
 
-.saveSpinner div:nth-child(1) {
+.saveSpinner span:nth-child(1) {
 	top: 0px;
 	left: 42.5%;
 }
-.saveSpinner div:nth-child(2) {
+.saveSpinner span:nth-child(2) {
 	top: 10%;
 	right: 10%;
 	animation-delay: -875ms;
@@ -495,7 +504,7 @@ body.night {
 	-ms-animation-delay: -875ms;
 	-o-animation-delay: -875ms;
 }
-.saveSpinner div:nth-child(3) {
+.saveSpinner span:nth-child(3) {
 	top: 42.5%;
 	right: 0px;
 	animation-delay: -750ms;
@@ -504,7 +513,7 @@ body.night {
 	-ms-animation-delay: -750ms;
 	-o-animation-delay: -750ms;
 }
-.saveSpinner div:nth-child(4) {
+.saveSpinner span:nth-child(4) {
 	bottom: 10%;
 	right: 10%;
 	animation-delay: -625ms;
@@ -513,7 +522,7 @@ body.night {
 	-ms-animation-delay: -625ms;
 	-o-animation-delay: -625ms;
 }
-.saveSpinner div:nth-child(5) {
+.saveSpinner span:nth-child(5) {
 	bottom: 0;
 	left: 42.5%;
 	animation-delay: -500ms;
@@ -522,7 +531,7 @@ body.night {
 	-ms-animation-delay: -500ms;
 	-o-animation-delay: -500ms;
 }
-.saveSpinner div:nth-child(6) {
+.saveSpinner span:nth-child(6) {
 	bottom: 10%;
 	left: 10%;
 	animation-delay: -375ms;
@@ -531,7 +540,7 @@ body.night {
 	-ms-animation-delay: -375ms;
 	-o-animation-delay: -375ms;
 }
-.saveSpinner div:nth-child(7) {
+.saveSpinner span:nth-child(7) {
 	top: 42.5%;
 	left: 0px;
 	animation-delay: -250ms;
@@ -540,7 +549,7 @@ body.night {
 	-ms-animation-delay: -250ms;
 	-o-animation-delay: -250ms;
 }
-.saveSpinner div:nth-child(8) {
+.saveSpinner span:nth-child(8) {
 	top: 10%;
 	left: 10%;
 	animation-delay: -125ms;
