@@ -439,11 +439,34 @@ body.night {
 
 /** Save Spinner **/
 
+.logo {
+	position: absolute;
+	left: 5px;
+	top: 1px;
+	background-position: -480px 0;
+}
+
+.logo,
+.logo span {
+	display: block;
+	height: 48px;
+	width: 48px;
+	background-image: url(../img/social.png);
+}
+
+.logo .nightSprite {
+	background-position: -480px -48px;
+}
+
+.saveSpinner.active + .logo {
+	display: none;
+}
+
 .saveSpinner {
 	width: 40px;
 	height: 40px;
 	position: absolute;
-	left: 3px;
+	left: 9px;
 	bottom: 4px;
 	opacity: 0;
 	transition: opacity 200ms linear;
