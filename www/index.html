@@ -8,7 +8,7 @@
 			A weird little time-waster from doublespeak games.
 			I'm still in development. You shouldn't be playing me.
 		 -->
-		<meta name="viewport" content="width=600, user-scalable=no, maximum-scale=1">
+		<meta name="viewport" content="width=600">
 		<title>Gridland</title>
 		<meta itemprop="description" name="description" property="og:description" content="Match. Build. Survive.">
 		<meta itemprop="image" property="og:image" content="img/badge.png" />
@@ -17,6 +17,28 @@
 		<link rel="image_src" href="img/badge.png" />
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
 		<script type="text/javascript" data-main="js/app" src="js/lib/require.js"></script>
+		<style>
+		@media screen and (max-width: 600) {
+			@viewport {
+				width: 600px;
+				max-zoom: 1;
+				orientation: portrait;
+				user-zoom: fixed;
+			}
+			@-ms-viewport {
+				width: 600px;
+				max-zoom: 1;
+				orientation: portrait;
+				user-zoom: fixed;
+			}
+			@-o-viewport {
+				width: 600px;
+				max-zoom: 1;
+				orientation: portrait;
+				user-zoom: fixed;
+			}
+		}
+		</style>
 	</head>
 	<body>
 		<div id="test" nodeploy></div>
