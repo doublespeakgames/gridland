@@ -43,6 +43,13 @@ body.night {
 	-o-transition: opacity 200ms linear !important;
 }
 
+#gameContainer {
+	position: absolute;
+	top: 0px;
+	left: 50%;
+	margin-left: -244px;
+}
+
 /** Loading Screen **/
 #loadingScreen {
 	z-index: 100;
@@ -79,15 +86,9 @@ body.night {
 	}
 }
 
-@media screen and (min-height: 630px) and (max-height: 860px) {
+@media screen and (max-height: 860px) {
 	#loadingScreen {
 		top: 5%;
-	}
-}
-
-@media screen and (max-height: 630px) {
-	#loadingScreen {
-		bottom: 305px;
 	}
 }
 
@@ -2418,10 +2419,10 @@ body.night {
 /** Volume sliders **/
 .volumeControls {
 	position: relative;
-	width: 90%;
+	width: 80%;
 	top: 10px;
-	left: 5%;
-	margin-left: -21px;
+	left: 10%;
+	margin-left: -7px;
 }
 .volumeSlider {
 	position: relative;

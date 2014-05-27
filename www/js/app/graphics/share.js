@@ -51,7 +51,10 @@ define(function() {
 	
 	return {
 		init: function() {
-			require('app/graphics/graphics').addToMenu(el());
+			var G = require('app/graphics/graphics');
+			if(!G.isScaled()) {
+				G.addToMenu(el());
+			}
 		}
 	};
 });

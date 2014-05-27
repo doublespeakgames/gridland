@@ -6,12 +6,14 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	
 	var MAX_HEARTS = 14;
 	var HEALTH_PER_HEART = 10;
+	var MIN_SCREEN_WIDTH = 600;
 	
 	var textStore;
 	var _ww = null, _wh = null;
 	var _bossHealth = null;
 	var _numHearts = 0;
 	var styleSheet = null;
+	var scaled = false;
 	
 	function handleDrawRequest(requestString, options) {
 		var moduleString = requestString.substring(0, requestString.indexOf('.'));
@@ -277,16 +279,45 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		return false;
 	}
 	
+	function scaleToViewport() {
+		var screenWidth = document.documentElement.clientWidth;//window.screen.width;
+		if(screenWidth < MIN_SCREEN_WIDTH) {
+			scaled = true;
+			var scale = screenWidth / MIN_SCREEN_WIDTH;
+			Graphics.addStyleRule('#loadingScreen, #gameContainer', 
+				'transform-origin: 50% 0 0;' +
+				'-webkit-transform-origin: 50% 0 0;' +
+				'-moz-transform-origin: 50% 0 0;' +
+				'-ms-transform-origin: 50% 0 0;' +
+				'-o-transform-origin: 50% 0 0;' +
+				'transform: scale(' + scale +');' +
+				'-webkit-transform: scale(' + scale +');' +
+				'-moz-transform: scale(' + scale +');' +
+				'-ms-transform: scale(' + scale +');' +
+				'-o-transform: scale(' + scale +');'
+			);
+		}
+	}
+	
+	function initStylesheet() {
+		var style = $('#styleSheet');
+		if(style.length > 0) {
+			$(style).remove();
+		}
+		style = document.createElement('style');
+		style.appendChild(document.createTextNode("")); // Stupid Webkit
+		document.head.appendChild(style);
+		styleSheet = style.sheet;
+	}
+	
 	var Graphics = {
 		init: function() {
 			$('body').removeClass('night');
 			
 			textStore = new TextStore();
 			
-			var style = document.createElement('style');
-			style.appendChild(document.createTextNode("")); // Stupid Webkit
-			document.head.appendChild(style);
-			styleSheet = style.sheet;
+			initStylesheet();
+			scaleToViewport();
 			
 			EventManager.bind('draw', handleDrawRequest);
 			
@@ -306,6 +337,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			if(!require('app/engine').isSilent()) {
 				AudioGraphics.init();
 			}
+		},
+		
+		isScaled: function() {
+			return scaled;
 		},
 		
 		isReady: function() {
@@ -384,8 +419,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			return _wh;
 		},
 		
-		addToScreen: function(entity) {
-			$('body').append(entity.el ? entity.el() : entity);
+		addToGame: function(entity) {
+			$('#gameContainer').append(entity.el ? entity.el() : entity);
 		},
 		
 		addToBoard: function(entity) {

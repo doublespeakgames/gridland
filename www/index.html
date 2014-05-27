@@ -8,7 +8,7 @@
 			A weird little time-waster from doublespeak games.
 			I'm still in development. You shouldn't be playing me.
 		 -->
-		<meta name="viewport" content="width=600">
+		<meta name="viewport" content="width=device-width">
 		<title>Gridland</title>
 		<meta itemprop="description" name="description" property="og:description" content="Match. Build. Survive.">
 		<meta itemprop="image" property="og:image" content="img/badge.png" />
@@ -18,26 +18,24 @@
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
 		<script type="text/javascript" data-main="js/app" src="js/lib/require.js"></script>
 		<style>
-		@media screen and (max-width: 600) {
 			@viewport {
-				width: 600px;
+				width: device-width;
 				max-zoom: 1;
 				orientation: portrait;
 				user-zoom: fixed;
 			}
 			@-ms-viewport {
-				width: 600px;
+				width: device-width;
 				max-zoom: 1;
 				orientation: portrait;
 				user-zoom: fixed;
 			}
 			@-o-viewport {
-				width: 600px;
+				width: device-width;
 				max-zoom: 1;
 				orientation: portrait;
 				user-zoom: fixed;
 			}
-		}
 		</style>
 	</head>
 	<body>
@@ -54,6 +52,7 @@
 				<div></div>
 			</div>
 		</div>
+		<div id="gameContainer"></div>
 		<div class="menuBar litBorder">
 			<div id="debug" style="position:absolute;top:5px;left:100px;" nodeploy></div>
 			<div class="saveSpinner">

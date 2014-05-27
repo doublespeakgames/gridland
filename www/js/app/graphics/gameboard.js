@@ -14,7 +14,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			clearBoard();
 			_el = createBoard(GameBoard.options.rows, GameBoard.options.columns);
 			_el.addClass('hidden');
-			G.addToScreen(_el);
+			G.addToGame(_el);
 		}
 		return _el;
 	}
