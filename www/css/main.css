@@ -90,6 +90,14 @@ body.night {
 	#loadingScreen {
 		top: 5%;
 	}
+	.saveSlots {
+		transform: scale(1.5);
+		-webkit-transform: scale(1.5);
+		-moz-transform: scale(1.5);
+		-ms-transform: scale(1.5);
+		-o-transform: scale(1.5);
+		top: 175px;
+	}
 }
 
 .saveSlots {
@@ -98,6 +106,8 @@ body.night {
 	margin: 0;
 	position: relative;
     top: 200px;
+    width: 236px;
+    margin: auto;
 }
 
 .saveSlot {
@@ -209,11 +219,11 @@ body.night {
 }
 
 .saveSlot.flipped.bigView:nth-child(2) {
-	margin-top: -125px;
+	margin-top: -125px !important;
 }
 
 .saveSlot.flipped.bigView:nth-child(3) {
-	margin-top: -255px;
+	margin-top: -255px !important;
 }
 
 .saveSlot.flipped .infoSide {
