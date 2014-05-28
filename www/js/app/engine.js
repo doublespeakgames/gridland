@@ -135,7 +135,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			var gOptions = null;
 			if (window.screen.width < 590 ) {
 				gOptions = {
-					rows: 9,
+					rows: 8,
 					columns: 7,
 					mobile: true
 				};
