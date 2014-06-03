@@ -854,7 +854,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			var notifier;
 			setTimeout(function() {
 				notifier = $('<div>').addClass('dayNotifier').text(txt + " " + dayNumber).appendTo('.world');
-			}, 700);
+			}, 1400);
 			setTimeout(function() {
 				$('.monster, .treasureChest').remove();
 				notifier.addClass('hidden');
