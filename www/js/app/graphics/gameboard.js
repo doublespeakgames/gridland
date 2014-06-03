@@ -133,7 +133,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			if(dest == 'side') {
 				dest = [ side == 'left' ? 0 : G.worldWidth(), -20];
 			} else if(dest == 'sword') {
-				dest = [-20, G.numHearts() * 28 + 14];
+				dest = [-20, 28 * G.numHearts() + 14];
 			}
 			e.css({
 				'transform': 'translate3d(' + dest[0] + 'px, ' + dest[1] + 'px, 0px) scale(0.2)', 

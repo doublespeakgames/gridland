@@ -11,9 +11,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	var textStore;
 	var _ww = null, _wh = null;
 	var _bossHealth = null;
-	var _numHearts = 0;
 	var styleSheet = null;
 	var scaled = false;
+	var heartInfo = { total: 0, big: 0 };
 	
 	function handleDrawRequest(requestString, options) {
 		var moduleString = requestString.substring(0, requestString.indexOf('.'));
@@ -677,17 +677,12 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		numHearts: function() {
-			return _numHearts;
+			return heartInfo.total;
 		},
 		
 		updateHealth: function(health, maxHealth) {
-			var numHearts = Math.ceil(maxHealth / HEALTH_PER_HEART);
-			var numBigHearts = 0;
-			if(numHearts > MAX_HEARTS) {
-				numBigHearts = numHearts - MAX_HEARTS;
-				numHearts = MAX_HEARTS;
-			}
-			var heartInfo = getNumHearts(maxHealth);
+
+			heartInfo = getNumHearts(maxHealth);
 			
 			var statusContainer = $('.hearts', this.getStatusContainer());
 			for(var i = 0, n = heartInfo.total - statusContainer.children().length; i < n; i++) {
