@@ -207,6 +207,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	}
 	
 	function drawImport(slot) {
+		EventManager.trigger('click', ['import']);
 		slot.addClass('bigView flipped');
 		var infoSide = slot.find('.infoSide');
 		infoSide.append(Graphics.make('labelText').text(Graphics.getText('IMPORT_CODE')));
@@ -224,6 +225,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	}
 	
 	function drawExport(slot) {
+		EventManager.trigger('click', ['export']);
 		slot.addClass('bigView flipped');
 		var infoSide = slot.find('.infoSide');
 		infoSide.append(Graphics.make('labelText').text(Graphics.getText('EXPORT_CODE')));
@@ -233,6 +235,23 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		drawSlotButtons(infoSide, [{
 			className: 'confirm',
 			text: 'CONFIRM',
+			click: cancelSlotAction.bind(slot, slot)
+		}]);
+		return false;
+	}
+	
+	function drawDelete(slot) {
+		EventManager.trigger('click', ['delete']);
+		slot.addClass('confirmDelete flipped');
+		var infoSide = slot.find('.infoSide');
+		infoSide.append(Graphics.make('confirmText').text(Graphics.getText('ARE_YOU_SURE')));
+		drawSlotButtons(infoSide, [{
+			className: 'confirm',
+			text: 'CONFIRM',
+			click: doDelete.bind(slot, slot)
+		}, {
+			className: 'cancel',
+			text: 'CANCEL',
 			click: cancelSlotAction.bind(slot, slot)
 		}]);
 		return false;
@@ -260,22 +279,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			slot.find('.infoSide').empty();
 			slot.attr('class', 'saveSlot' + (wasEmpty ? ' empty' : ''));
 		}, 500);
-		return false;
-	}
-	
-	function drawDelete(slot) {
-		slot.addClass('confirmDelete flipped');
-		var infoSide = slot.find('.infoSide');
-		infoSide.append(Graphics.make('confirmText').text(Graphics.getText('ARE_YOU_SURE')));
-		drawSlotButtons(infoSide, [{
-			className: 'confirm',
-			text: 'CONFIRM',
-			click: doDelete.bind(slot, slot)
-		}, {
-			className: 'cancel',
-			text: 'CANCEL',
-			click: cancelSlotAction.bind(slot, slot)
-		}]);
 		return false;
 	}
 	

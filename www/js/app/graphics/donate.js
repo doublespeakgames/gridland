@@ -7,13 +7,13 @@ define(function() {
 			'<input type="hidden" value="Donation to doublespeak games" name="item_name">' +
 			'<input type="hidden" value="0" name="rm">' +
 			'<input type="hidden" value="CAD" name="currency_code">' +
-	        '<input type="image" alt=" " title="PayPal" name="submit" class="paypal nightSprite">' +
+	        '<input onclick="require(\'app/eventmanager\').trigger(\'click\', [\'paypal\']);" type="image" alt=" " title="PayPal" name="submit" class="paypal nightSprite">' +
 	        '<input type="image" alt=" " class="paypal"></input>' + 
 		'</form>',
-		'<a class="flattr nightSprite" title="Flattr" target="_blank" href="https://flattr.com/thing/1570114/doublespeak-games"></a>' + 
+		'<a  onclick="require(\'app/eventmanager\').trigger(\'click\', [\'flattr\']);" class="flattr nightSprite" title="Flattr" target="_blank" href="https://flattr.com/thing/1570114/doublespeak-games"></a>' + 
 		'<input type="image" alt=" " class="flattr"></input>',
 		'<div class="bitcoin">' +
-			'<a href="bitcoin:151Ch7PwzMtiVEHMYth5F9REmySvxKJBDN" ' +
+			'<a onclick="require(\'app/eventmanager\').trigger(\'click\', [\'bitcoin\']);" href="bitcoin:151Ch7PwzMtiVEHMYth5F9REmySvxKJBDN" ' +
 				'data-info="none" data-address="151Ch7PwzMtiVEHMYth5F9REmySvxKJBDN" ' +
 				'class="bitcoin-button nightSprite" target="_blank"></a>' +
 			'<input type="image" alt=" " class="bitcoin-button"></input>' + 
@@ -23,7 +23,7 @@ define(function() {
 				'151Ch7PwzMtiVEHMYth5F9REmySvxKJBDN' + 
 			'</div>' +
 		'</div>',
-		'<a class="gittip nightSprite" title="Gittip" target="_blank" href="https://www.gittip.com/Continuities/"></a>' +
+		'<a onclick="require(\'app/eventmanager\').trigger(\'click\', [\'gittip\']);" class="gittip nightSprite" title="Gittip" target="_blank" href="https://www.gittip.com/Continuities/"></a>' +
 		'<input type="image" alt=" " class="gittip"></input>'
 	];
 	

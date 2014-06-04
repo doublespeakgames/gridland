@@ -130,6 +130,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			
 			$('.menuBtn').off().on("click touchstart", function() {
 				$('.menuBar').toggleClass('open');
+				EventManager.trigger('click', ['menubutton']);
 			});
 			
 			var gOptions = null;
@@ -211,8 +212,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				if(e.originalEvent.changedTouches) {
 					e = e.originalEvent.changedTouches[0];
 				}
+				var loot = $(e.target).closest('.button').data('lootName');
 				EventManager.trigger('toggleMenu');
-				Loot.useItem($(e.target).closest('.button').data('lootName'));
+				Loot.useItem(loot);
+				EventManager.trigger('click', [loot]);
 				return false;
 			});
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", ".magic .button", function(e) {
@@ -221,6 +224,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 					e = e.originalEvent.changedTouches[0];
 				}
 				EventManager.trigger('magicClick', [$(e.target)]);
+				EventManager.trigger('click', ['magic']);
 				return false;
 			});
 			$('body').off().on('mousedown touchstart', function(e) {
@@ -233,6 +237,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 					e = e.originalEvent.changedTouches[0];
 				}
 				EventManager.trigger('prioritizeBuilding', [$(e.target).closest('.resourceBars').data('building')]);
+				EventManager.trigger('click', ['building']);
 			});
 			Graphics.attachHandler("World", "mousedown touchstart", '.building.upgrading', function(e) {
 				// Handle wacky touch event objects
@@ -240,6 +245,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 					e = e.originalEvent.changedTouches[0];
 				}
 				EventManager.trigger('prioritizeBuilding', [$(e.target).closest('.building').data('upgrade')]);
+				EventManager.trigger('click', ['building']);
 			});
 			Graphics.attachHandler("World", "mousedown touchstart", function(e) {
 				// Handle wacky touch event objects

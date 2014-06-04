@@ -65,7 +65,7 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 				Graphics.levelUp(this);
 				State.health = State.maxHealth();
 				Graphics.updateHealth(State.health, State.maxHealth());
-				EventManager.trigger('levelUp');
+				EventManager.trigger('levelUp', [State.level]);
 				if(this.action != null) {
 					this.action.terminateAction(this);
 				}
@@ -99,7 +99,7 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 		return Math.floor((State.level - 1) / 3);
 	};
 	
-	dude.prototype.takeDamage = function(damage) {
+	dude.prototype.takeDamage = function(damage, damager) {
 		if(State.health > 0) {
 			if(require('app/world').hasEffect('frozen')) {
 				damage /= 2;
@@ -114,6 +114,9 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 			State.health = State.health < 0 ? 0 : State.health;
 			if(State.health == 0 && this.action) {
 				this.action.terminateAction(this);
+			}
+			if(State.health == 0) {
+				EventManager.trigger('dudeDeath', [damager.options.monsterClass]);
 			}
 			Graphics.updateHealth(State.health, State.maxHealth());
 		}

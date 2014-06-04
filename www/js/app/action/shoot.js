@@ -39,7 +39,7 @@ define(['app/action/action', 'app/entity/projectile'], function(Action, Projecti
 				// Check for hit, deal damage
 				if(Math.abs(end - _action.target.p()) <= 5) {
 					require('app/eventmanager').trigger(_action._entity.options.fire ? 'explodeFire' :'sharpHit');
-					_action.target.takeDamage(_action._entity.getDamage());
+					_action.target.takeDamage(_action._entity.getDamage(), _action._entity);
 				}
 			});
 			this._entity.action = null;

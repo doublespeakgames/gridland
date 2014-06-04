@@ -1,5 +1,5 @@
-define(['base64', 'app/entity/building', 'app/entity/block', 'app/analytics', 'app/gamecontent'], 
-		function(Base64, Building, Block, Analytics, Content) {
+define(['base64', 'app/entity/building', 'app/entity/block', 'app/eventmanager', 'app/gamecontent'], 
+		function(Base64, Building, Block, E, Content) {
 	
 	var loadedSlot = 0;
 	var GameState = {
@@ -14,7 +14,7 @@ define(['base64', 'app/entity/building', 'app/entity/block', 'app/analytics', 'a
 			this.mana = 0;
 			this.counts = {};
 			this.prestige = 0;
-			Analytics.trackEvent('game', 'create');
+			E.trigger('newGame');
 		},
 		
 		getExportCode: function(slot) {

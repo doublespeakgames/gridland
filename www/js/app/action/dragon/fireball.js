@@ -37,7 +37,7 @@ define(['app/action/action'], function(Action) {
 					explosion.remove();
 				}, 400);
 				if(!_this.terminated) { entity.action = null; }
-				_this.target.takeDamage(entity.getFireballDamage());
+				_this.target.takeDamage(entity.getFireballDamage(), entity);
 			}, 300);
 		}, 500);
 	};

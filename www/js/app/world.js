@@ -651,10 +651,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			GameState.setIfHigher('ROW', streak);
 			GameState.save();
 			Graphics.notifySave();
-			Analytics.trackEvent('world', 'morning');
 			EventManager.trigger('dayBreak', [GameState.dayNumber]);
-		} else {
-			Analytics.trackEvent('world', 'nightfall');
 		}
 	}
 	

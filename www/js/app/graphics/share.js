@@ -42,6 +42,8 @@ define(function() {
 					href: link.url,
 					target: '_blank',
 					title: link.name
+				}).click(function() {
+					require('app/eventmanager').trigger('click', [link.className]);
 				}).appendTo(l);
 			});
 		}

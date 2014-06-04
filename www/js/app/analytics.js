@@ -1,34 +1,47 @@
-define(["google-analytics"], function(ga) {
+define(["google-analytics", "app/eventmanager"], function(ga, E) {
+	
+	function trackPageView(uri) {
+		if(initialized) {
+			ga('send', 'event', 'pageView', uri);
+		}
+	}
+	
+	function trackTiming(category, indentifier, time) {
+		if(initialized) {
+			time = time || new Date().getTime() - window.performance.timing.domComplete;
+	        ga('send', 'timing', category, identifier, time);
+		}
+	}
+	
+	function trackEvent(type, desc, val) {
+		if(initialized) {
+			console.log('track: ' + type + ', ' + desc + ', ' + val);
+			ga('send', 'event', type, desc, val);
+		}
+	}
+	
+	var initialized = false;
 	return {
-		
 		init: function() {
-			if(!this.initialized) {
+			if(!initialized) {
 				try {
 					ga('create', 'UA-41314886-2', 'doublespeakgames.com');
 					ga('send', 'pageview');
-					this.initialized = true;
+					initialized = true;
 				} catch(e) {
 					console.log("Failed to initialize Google Analytics: " + e.message);
 				}
 			}
-		},
-		
-		trackPageView: function(uri) {
-			if(this.initialized) {
-				ga('send', 'event', 'pageView', uri);
-			}
-		},
-		
-		trackTiming: function(category, indentifier, time) {
-			if(this.initialized) {
-				time = time || new Date().getTime() - window.performance.timing.domComplete;
-		        ga('send', 'timing', category, identifier, time);
-			}
-		},
-		
-		trackEvent: function(type, desc, val) {
-			if(this.initialized) {
-				ga('send', 'event', type, desc, val);
+			
+			if(initialized) {
+				E.bind('newGame', function() { trackEvent('game', 'newgame'); });
+				E.bind('dayBreak', function(num) { trackEvent('game', 'daybreak', num); });
+				E.bind('dudeDeath', function(monster) { trackEvent('game', 'death', monster); });
+				E.bind('buildingComplete', function(building) { trackEvent('game', 'build', building.options.type.className); });
+				E.bind('gameOver', function() { trackEvent('game', 'complete'); });
+				E.bind('levelUp', function(level) { trackEvent('game', 'levelup', level); });
+				E.bind('click', function(thing) { trackEvent('click', thing); });
+				E.bind('prestige', function() { trackEvent('game', 'prestige'); });
 			}
 		}
 	};

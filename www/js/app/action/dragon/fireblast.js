@@ -34,7 +34,7 @@ define(['app/action/action'], function(Action) {
 				
 				if(!_this.terminated) { entity.action = null; }
 				
-				_this.target.takeDamage(entity.getFireBlastDamage());
+				_this.target.takeDamage(entity.getFireBlastDamage(), entity);
 				var fireEffect = new (require('app/entity/worldeffect'))({ 
 					effectClass: 'fire',
 					row: 1,
@@ -44,7 +44,7 @@ define(['app/action/action'], function(Action) {
 						if(Math.abs(_this.target.p() - fireEffect.p()) < fireEffect.width() / 2 && fireEffect.lastBurn <  Date.now() - BURN_DELAY) {
 							fireEffect.lastBurn = Date.now();
 							require('app/eventmanager').trigger('burn');
-							_this.target.takeDamage(BURN_DAMAGE);
+							_this.target.takeDamage(BURN_DAMAGE, entity);
 							if(require('app/world').hasEffect('frozen')) {
 								require('app/eventmanager').trigger('endStateEffect', 
 										[require('app/gamecontent').StateEffects.frozen]);
