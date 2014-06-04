@@ -52,9 +52,7 @@ define(function() {
 	return {
 		init: function() {
 			var G = require('app/graphics/graphics');
-			if(!G.isScaled()) {
-				G.addToMenu(el());
-			}
+			G.addToMenu(el());
 		}
 	};
 });

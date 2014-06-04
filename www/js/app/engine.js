@@ -225,7 +225,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			});
 			$('body').off().on('mousedown touchstart', function(e) {
 				EventManager.trigger('toggleMenu');
-				return e.target.tagName == 'TEXTAREA';
+				return e.target.tagName == 'TEXTAREA' || e.target.tagName == 'A' || e.target.tagName == 'INPUT' || e.target.hasAttribute('data-clickable');
 			});
 			Graphics.attachHandler("World", "mousedown touchstart", '.resourceBars', function(e) {
 				// Handle wacky touch event objects
