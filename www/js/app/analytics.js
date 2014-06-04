@@ -15,7 +15,6 @@ define(["google-analytics", "app/eventmanager"], function(ga, E) {
 	
 	function trackEvent(type, desc, val) {
 		if(initialized) {
-			console.log('track: ' + type + ', ' + desc + ', ' + val);
 			ga('send', 'event', type, desc, val);
 		}
 	}
