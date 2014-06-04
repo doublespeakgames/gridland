@@ -180,7 +180,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					click: drawDelete.bind(slot, slot)
 				}
 			]);
-			slotSide.append(Graphics.make('day').text(Graphics.getText('DAY') + ' ' + slotInfo.day));
+			var day = Graphics.make('day').text(Graphics.getText('DAY') + ' ' + slotInfo.day);
+			if(slotInfo.prestiged) {
+				day.prepend(Graphics.make('star'));
+			}
+			slotSide.append(day);
 		}
 		slot.append(Graphics.make('infoSide').click(function() {return false;}));
 		drawSlotButtons(slotSide, buttons);

@@ -167,6 +167,13 @@ body.night {
 	left: 10px;
 }
 
+.saveSlot .star {
+	position: relative;
+	display: inline-block;
+	top: 0px;
+	margin-right: 5px;
+}
+
 .saveSlot .infoSide,
 .saveSlot .slotSide {
 	background: white;

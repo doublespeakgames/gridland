@@ -32,7 +32,8 @@ define(['base64', 'app/entity/building', 'app/entity/block', 'app/eventmanager',
 				if(savedState) {
 					return {
 						maxHealth: GameState.maxHealth(savedState.level),
-						day: savedState.dayNumber
+						day: savedState.dayNumber,
+						prestiged: savedState.prestige > 0
 					};
 				}
 			} catch(e) {
