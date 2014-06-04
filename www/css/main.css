@@ -888,8 +888,16 @@ body.night {
 	transition-delay: 1200ms, 0ms;
 }
 
-.selected {
-	background-color: red;
+.selected:after {
+	display: block;
+	position: absolute;
+	content: ' ';
+	background-image: url(../img/select-border.png);
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-size: 100%;
 }
 
 .shaking {
