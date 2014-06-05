@@ -94,7 +94,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 						{row: active.options.row + dy, col: active.options.column + dx}
 					);
 				}
+				return true;
 			}
+			return false;
 		}
 	}
 	
@@ -194,19 +196,25 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				return false;
 			});
 			Graphics.attachHandler("GameBoard", "mouseup touchend", function(e) {
+				dragging = false;
+				return false;
+			});
+			Graphics.attachHandler("GameBoard", "mousemove touchmove", function(e) {
 				if(dragging) {
-					dragging = false;
 					// Handle wacky touch event objects
 					if(e.originalEvent.changedTouches) {
 						e = e.originalEvent.changedTouches[0];
 					}
-					endDrag({ 
+					if(endDrag({ 
 						x: e.clientX - dragStart.x,
 						y: e.clientY - dragStart.y
-					});
+					})) {
+						dragging = false;
+					}
 				}
 				return false;
 			});
+			
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", ".inventory .button", function(e) {
 				// Handle wacky touch event objects
 				if(e.originalEvent.changedTouches) {
