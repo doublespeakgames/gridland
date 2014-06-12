@@ -30,7 +30,7 @@ define(function() {
 			
 			play: function(sound, silent) {
 				if(sound.data) {
-					if(silent) {
+					if(sound.silentIf && sound.silentIf()) {
 						sound.data.fadedOut = true;
 						sound.data.volume = 0;
 					}

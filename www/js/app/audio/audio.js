@@ -1,5 +1,5 @@
-define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudioprovider'], 
-		function(E, WebAudioProvider, HtmlAudioProvider) {
+define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudioprovider', 'app/audio/htmlwebaudioprovider'], 
+		function(E, WebAudioProvider, HtmlAudioProvider, HtmlWebAudioProvider) {
 	
 	var toLoad = 0;
 	var format = null;
