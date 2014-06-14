@@ -142,7 +142,7 @@ define(function() {
 		},
 		
 		crossFade: function(outSound, inSound, time) {
-			if(outSound.buffer && inSound.buffer) {
+			if(isSoundReady(outSound) && isSoundReady(inSound)) {
 				(function fade() {
 					outSound.volume.gain.value -= 0.1;
 					outSound.volume.gain.value = outSound.volume.gain.value < 0 ? 0 : outSound.volume.gain.value;
