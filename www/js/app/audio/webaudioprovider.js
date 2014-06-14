@@ -4,11 +4,31 @@ define(function() {
 	var musicVolume = null;
 	var effectsVolume = null;
 	
-	function createSoundSource(sound) {
+	function createSoundSource(sound, partNum) {
 		var source = context.createBufferSource();
-		source.buffer = sound.buffer;
+		if(sound.partsBuffer) {
+			sound.playingPart = partNum;
+			source.buffer = sound.partsBuffer[sound.playingPart];
+			if(partNum < sound.parts - 1) {
+				// Play the next part
+				source.onended = function() {
+					WebAudioProvider.play(sound, partNum + 1);
+				};
+			} else {
+				if(sound.music) {
+					// Loop
+					source.onended = function() {
+						WebAudioProvider.play(sound, 0);
+					};
+				}
+			}
+		} else {
+			source.buffer = sound.buffer;
+		}
 		if(sound.music) {
-			source.loop = true;
+			if(!sound.partsBuffer) {
+				source.loop = true;
+			}
 			sound.volume = context.createGain();
 			sound.volume.gain.value = 1;
 			sound.volume.connect(musicVolume);
@@ -17,6 +37,49 @@ define(function() {
 			source.connect(effectsVolume);
 		}
 		return source;
+	}
+	
+	function isSoundReady(sound) {
+		return (sound.parts && sound.partsBuffer && sound.partsBuffer[0]) || sound.buffer;
+	}
+	
+	function soundLoaded(sound, callback) {
+		if(!sound.deferred) {
+			callback(sound.file);
+		} else if(sound.deferred) {
+			sound.deferred = false;
+			if(sound.playRequested) {
+				WebAudioProvider.play(sound);
+			}
+		}
+	}
+	
+	function loadSound(sound, format, callback, partNum) {
+		var request = new XMLHttpRequest();
+		var isPart = partNum != null;
+		if(isPart) {
+			sound.partsBuffer = [];
+		}
+		request.open("GET", "audio/" + sound.file + (isPart ? "-" + partNum : "") + "." + format, true);
+		request.responseType = "arraybuffer";
+		request.onload = function() {
+			if(sound.music && !sound.required) {
+				sound.deferred = true;
+				callback(sound.file);
+			}
+			context.decodeAudioData(request.response, function(buffer) {
+				if(isPart) {
+					sound.partsBuffer[partNum] = buffer;
+					if(partNum == 0) {
+						soundLoaded(sound, callback);
+					}
+				} else {
+					sound.buffer = buffer;
+					soundLoaded(sound, callback);
+				}
+			});
+		};
+		request.send();
 	}
 	
 	var WebAudioProvider = {
@@ -37,35 +100,20 @@ define(function() {
 		},
 		
 		load: function(sound, format, callback) {
-			var request = new XMLHttpRequest();
-			request.open("GET", "audio/" + sound.file + "." + format, true);
-			request.responseType = "arraybuffer";
 			
-			request.onload = function() {
-				if(sound.music && !sound.required) {
-					sound.deferred = true;
-					callback(sound.file);
+			if(sound.parts != null) {
+				for(var i = 0; i < sound.parts; i++) {
+					loadSound(sound, format, callback, i);
 				}
-				context.decodeAudioData(request.response, function(buffer) {
-					sound.buffer = buffer;
-					if(!sound.deferred) {
-						callback(sound.file);
-					} else if(sound.deferred) {
-						sound.deferred = false;
-						if(sound.playRequested) {
-							WebAudioProvider.play(sound);
-						}
-					}
-				}, function() {
-					callback(sound.file, true);
-				});
-			};
-			request.send();
+			} else {
+				loadSound(sound, format, callback);
+			}
 		},
 		
-		play: function(sound) {
-			if(sound.buffer) {
-				var source = sound.currentSource = createSoundSource(sound);
+		play: function(sound, partNum) {
+			partNum = partNum || 0;
+			if(isSoundReady(sound)) {
+				var source = sound.currentSource = createSoundSource(sound, partNum);
 				if(sound.silentIf && sound.silentIf() && sound.volume != null) {
 					sound.volume.gain.value = 0;
 				}

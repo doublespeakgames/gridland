@@ -9,6 +9,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	var sounds = {
 		DayMusic: {
 			file: 'theme-day',
+			parts: 4,
 			music: true,
 			silentIf: function() {
 				return require('app/engine').isNight();
