@@ -17,9 +17,11 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 	function initializeModules(modules, callback) {
 		// init all modules passed to me
 		var module = null;
+//		var start = Date.now();
 		(function initModule() {
 			if(module == null) {
 				if(modules.length == 0) {
+//					console.log('init took: ' + (Date.now() - start) + ' millis');
 					return callback();
 				} else {
 					module = modules.shift();
