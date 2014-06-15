@@ -671,7 +671,7 @@ define({
 		phaseChange: {
 			onUse: function() {
 				var E = require('app/eventmanager');
-				E.trigger('phaseChange');
+				E.trigger('phaseChange', [!require('app/engine').isNight()]);
 				E.trigger('phaseChangeSpell');
 			}
 		},

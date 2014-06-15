@@ -15,6 +15,12 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 		}, 1500);
 	}
 	
+	function updateLootButtons() {
+		for(var lootName in State.items) {
+			updateLootButton(lootName, State.items[lootName]);
+		}
+	}
+	
 	function updateLootButton(loot, num) {
 		var btn = G.get("." + loot, el());
 		if(btn == null) {
@@ -66,10 +72,9 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 			E.bind('lootFound', updateLootButton);
 			E.bind('lootUsed', updateLootButton);
 			E.bind('lootUsed', drawLootEffect);
+			E.bind('gameLoaded', updateLootButtons);
 			
-			for(var lootName in State.items) {
-				updateLootButton(lootName, State.items[lootName]);
-			}
+			updateLootButtons();
 		}
 	};
 });
