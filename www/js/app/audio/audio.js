@@ -157,7 +157,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		if(!playingMusic) {
 			playingMusic = true;
 			GameAudio.play('DayMusic');
-			GameAudio.play('NightMusic', true);
+			GameAudio.play('NightMusic');
 		}
 	}
 	

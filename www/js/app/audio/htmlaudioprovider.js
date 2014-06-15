@@ -28,7 +28,7 @@ define(function() {
                 });
 			},
 			
-			play: function(sound, silent) {
+			play: function(sound) {
 				if(sound.data) {
 					if(sound.silentIf && sound.silentIf()) {
 						sound.data.fadedOut = true;

@@ -40,17 +40,19 @@ define(function() {
 	}
 	
 	function isSoundReady(sound) {
-		return (sound.parts && sound.partsBuffer && sound.partsBuffer[0]) || sound.buffer;
+		return (sound.parts && sound.partsBuffer && sound.partsBuffer[sound.playingPart || 0]) || sound.buffer;
 	}
 	
-	function soundLoaded(sound, callback) {
-		if(!sound.deferred) {
-			callback(sound.file);
+	function soundLoaded(sound, callback, partNum) {
+		if(sound.playingPart != null && partNum != null && sound.playingPart == partNum) {
+			WebAudioProvider.play(sound, partNum);
 		} else if(sound.deferred) {
 			sound.deferred = false;
 			if(sound.playRequested) {
 				WebAudioProvider.play(sound);
 			}
+		} else {
+			callback(sound.file);
 		}
 	}
 	
@@ -58,7 +60,7 @@ define(function() {
 		var request = new XMLHttpRequest();
 		var isPart = partNum != null;
 		if(isPart) {
-			sound.partsBuffer = [];
+			sound.partsBuffer = sound.partsBuffer || [];
 		}
 		request.open("GET", "audio/" + sound.file + (isPart ? "-" + partNum : "") + "." + format, true);
 		request.responseType = "arraybuffer";
@@ -70,9 +72,7 @@ define(function() {
 			context.decodeAudioData(request.response, function(buffer) {
 				if(isPart) {
 					sound.partsBuffer[partNum] = buffer;
-					if(partNum == 0) {
-						soundLoaded(sound, callback);
-					}
+					soundLoaded(sound, callback, partNum);
 				} else {
 					sound.buffer = buffer;
 					soundLoaded(sound, callback);
@@ -103,7 +103,12 @@ define(function() {
 			
 			if(sound.parts != null) {
 				for(var i = 0; i < sound.parts; i++) {
-					loadSound(sound, format, callback, i);
+					(function(partNum) {
+						setTimeout(function() {
+//							console.log('loading part ' + partNum);
+							loadSound(sound, format, callback, partNum);
+						}, i * 3000);
+					})(i);
 				}
 			} else {
 				loadSound(sound, format, callback);
@@ -111,14 +116,15 @@ define(function() {
 		},
 		
 		play: function(sound, partNum) {
-			partNum = partNum || 0;
+			sound.playingPart = partNum || 0;
 			if(isSoundReady(sound)) {
-				var source = sound.currentSource = createSoundSource(sound, partNum);
+				var source = sound.currentSource = createSoundSource(sound, sound.playingPart);
 				if(sound.silentIf && sound.silentIf() && sound.volume != null) {
 					sound.volume.gain.value = 0;
 				}
 				source.start(0);
-			} else if(sound.deferred) {
+			} else {
+//				console.log('play requested for ' + sound.file + ' part ' + partNum);
 				sound.playRequested = true;
 			}
 		},
