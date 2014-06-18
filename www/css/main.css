@@ -80,6 +80,19 @@ body.night {
     margin-left: -40px;
 }
 
+.longload {
+	position: absolute;
+    bottom: -100px;
+    font-size: 1.5em;
+    line-height: 40px;
+    text-align: center;
+    width: 100%;
+}
+
+.longload a {
+	display: block;
+}
+
 @media screen and (min-height: 860px) {
 	#loadingScreen {
 		top:20%
@@ -90,6 +103,9 @@ body.night {
 	#loadingScreen {
 		top: 5%;
 	}
+}
+
+@media screen and (max-width: 590px) {
 	.saveSlots {
 		transform: scale(1.5);
 		-webkit-transform: scale(1.5);

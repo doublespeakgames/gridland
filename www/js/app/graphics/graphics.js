@@ -194,6 +194,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				require('app/audio/audio').play('Click');
 				EventManager.trigger('slotChosen', [slotIndex]);
 				$('#loadingScreen').addClass('hidden');
+				setTimeout(function() {
+					$('#loadingScreen').remove();
+				}, 1000);
 			}
 		});
 		
@@ -335,6 +338,16 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			EventManager.bind('dayBreak', this.handleDayBreak);
 			EventManager.bind('gameOver', gameOver);
 			EventManager.bind('blockDown', dropBlock);
+			EventManager.bind('longLoad', function() {
+				Graphics.get('#loadingScreen').append(
+					Graphics.make('longload').text(Graphics.getText('LONG_LOAD')).append
+					(
+						Graphics.make('nomusic', 'a')
+							.text(Graphics.getText('NO_MUSIC'))
+							.attr('href', '?nomusic=true')
+					)
+				);
+			});
 			
 			BoardGraphics.init();
 			WorldGraphics.init();

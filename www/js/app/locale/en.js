@@ -26,5 +26,7 @@ define({
 	DELETE: 'Delete',
 	ARE_YOU_SURE: 'Are you sure?',
 	EXPORT_CODE: 'Export code:',
-	IMPORT_CODE: 'Import code:'
+	IMPORT_CODE: 'Import code:',
+	LONG_LOAD: 'Man, this is taking a long time.',
+	NO_MUSIC: 'Play without music?'
 });

@@ -25,12 +25,12 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 					return callback();
 				} else {
 					module = modules.shift();
+					var args = null;
 					if(typeof module.init != 'function' && module.length && module.length == 2) {
 						// array was passed
-						module[0].init(module[1]);
-					} else {
-						module.init();
+						args = module[1], module = module[0];
 					}
+					module.init(args);
 				}
 			}
 			if(isReady(module)) {
@@ -153,7 +153,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 							World,
 							Loot,
 							Magic];
-			if(window.location.search.indexOf('silent') < 0) {
+			if(window.location.search.indexOf('nomusic') >= 0) {
+				modules.push([GameAudio, { nomusic: true }]);
+				silent = false;
+			} else if(window.location.search.indexOf('silent') < 0) {
 				modules.push(GameAudio);
 				silent = false;
 			}

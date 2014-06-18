@@ -1,10 +1,13 @@
 define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudioprovider', 'app/audio/htmlwebaudioprovider'], 
 		function(E, WebAudioProvider, HtmlAudioProvider, HtmlWebAudioProvider) {
 	
+	var MUSIC_TIMEOUT = 30000;
+	
 	var toLoad = 0;
 	var format = null;
 	var provider = null;
 	var playingMusic = false;
+	var longloadTimer = false;
 	
 	var sounds = {
 		DayMusic: {
@@ -186,13 +189,16 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	
 	var GameAudio = {
 		init: function(options) {
+			options = options || {};
 			if(!provider) { 
 				provider = getProvider();
 				format = chooseFormat();
 				if(provider != null && format != null) {
 					toLoad = 0;
 					for(s in sounds) {
-						loadSound(sounds[s]);
+						if(!options.nomusic || !sounds[s].music) {
+							loadSound(sounds[s]);
+						}
 					}
 					E.bind('dayBreak', startMusic);
 				}
@@ -235,10 +241,18 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));
+			
+			longloadTimer = setTimeout(function() {
+				E.trigger('longLoad');
+			}, MUSIC_TIMEOUT);
 		},
 		
 		isReady: function() {
-			return toLoad <= 0;
+			if(toLoad <= 0) { 
+				clearTimeout(longloadTimer);
+				return true;
+			}
+			return false;
 		},
 		
 		setMusicVolume: function(volume) {
