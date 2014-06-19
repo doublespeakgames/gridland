@@ -106,7 +106,7 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 	
 	return {
 		init: function() {
-			_el = null;
+			_el = null, _spells = null, _states = null;
 			E.bind("updateMana", updateMana);
 			E.bind("magicClick", handleClick);
 			E.bind("toggleMenu", toggleMenu);
