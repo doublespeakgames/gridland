@@ -37,8 +37,8 @@ define(["google-analytics", "app/eventmanager"], function(ga, E) {
 				var S = require('app/gamestate');
 				
 				E.bind('newGame', function() { trackEvent('game', 'new'); });
-				E.bind('dayBreak', function(num) { trackEvent('daybreak', null, num); });
-				E.bind('dudeDeath', function(monster) { trackEvent('death', null, monster); });
+				E.bind('dayBreak', function(num) { trackEvent('daybreak', num, num); });
+				E.bind('dudeDeath', function(monster) { trackEvent('death', monster, S.dayNumber); });
 				E.bind('buildingComplete', function(building) { trackEvent('build', building.options.type.className, S.dayNumber); });
 				E.bind('gameOver', function() { trackEvent('game', 'complete', S.dayNumber); });
 				E.bind('levelUp', function(level) { trackEvent('levelup', level, S.dayNumber); });
