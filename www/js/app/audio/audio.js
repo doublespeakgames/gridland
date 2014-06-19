@@ -185,7 +185,12 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		
 	function playLootSound(loot) {
 		GameAudio.play(getLootSound(loot));
-	} 
+	}
+	
+	function toggleMute(mute) {
+		GameAudio.setMusicVolume( mute ? 0 : require('app/gameoptions').get('musicVolume'), true);
+		GameAudio.setEffectsVolume( mute ? 0 : require('app/gameoptions').get('effectsVolume'), true);
+	}
 	
 	var GameAudio = {
 		init: function(options) {
@@ -205,6 +210,9 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			} else {
 				crossFade('NightMusic', 'DayMusic', 700);
 			}
+			
+			E.bind('pageHidden', function() { toggleMute(true); });
+			E.bind('pageShown', function() { toggleMute(false); });
 			
 			E.bind('tileDrop', GameAudio.play.bind(this, 'TileClick'));
 			E.bind('setMusicVolume', GameAudio.setMusicVolume);
@@ -238,7 +246,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('burn', GameAudio.play.bind(this, 'Fire'));
 			E.bind('segmentExplode', GameAudio.play.bind(this, 'SegmentExplode'));
 			E.bind('dragonExplode', GameAudio.play.bind(this, 'DragonExplode'));
-
+			
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));
 			
@@ -255,13 +263,13 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			return false;
 		},
 		
-		setMusicVolume: function(volume) {
-			require('app/gameoptions').set('musicVolume', volume);
+		setMusicVolume: function(volume, noSave) {
+			!noSave && require('app/gameoptions').set('musicVolume', volume);
 			provider.setMusicVolume(volume);
 		},
 		
-		setEffectsVolume: function(volume) {
-			require('app/gameoptions').set('effectsVolume', volume);
+		setEffectsVolume: function(volume, noSave) {
+			!noSave && require('app/gameoptions').set('effectsVolume', volume);
 			provider.setEffectsVolume(volume);
 		},
 		
