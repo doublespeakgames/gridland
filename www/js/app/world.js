@@ -700,6 +700,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		if(!Resources.loaded) {
 			Resources.init();
 			launchCelestial();
+			GameState.save();
+			Graphics.notifySave();
 		}
 		Resources.setSize(rows, cols);
 	}
