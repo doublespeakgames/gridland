@@ -13,7 +13,8 @@ define({
 			},
 			multipliers: {
 				house: 2,
-				fort: 3
+				fort: 3,
+				castle: 4
 			},
 			effectDest: {
 				day: [-20, 10],
