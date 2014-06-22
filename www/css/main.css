@@ -1954,10 +1954,17 @@ body.night {
 	width: 16px;
 	position: absolute;
 	top: -2px;
-	right: -16px;
-	background: url(../img/expbar.png) repeat-y 0 0;
+	right: 0px;
 	border-top: 1px solid;
 	border-bottom: 1px solid;
+}
+
+.night .xpBar {
+	transform: translateX(16px);
+	-webkit-transform: translateX(16px);
+	-moz-transform: translateX(16px);
+	-ms-transform: translateX(16px);
+	-o-transform: translateX(16px);
 }
 
 .xpBar .fill {
@@ -1974,13 +1981,18 @@ body.night {
 	-o-transition: all 300ms linear;
 }
 
-.xpBar .nightSprite {
+.xpBar .nightSprite,
+.xpBar .mask {
 	width: 100%;
 	height: 100%;
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	background: url(../img/expbar.png) repeat-y -16px 0;
+	background: url(../img/expbar.png) repeat-y;
+}
+
+.xpBar .nightSprite {
+	background-position: -16px 0;
 }
 
 .levelEffect {

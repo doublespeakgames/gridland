@@ -687,7 +687,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			var xpBar = $('.xpBar');
 			if(xpBar.length == 0) {
 				xpBar = $('<div>').addClass('xpBar').addClass('litBorder')
-					.addClass('hidden').append($('<div>').addClass('nightSprite'))
+					.addClass('hidden').append($('<div>').addClass('mask'))
+					.append($('<div>').addClass('nightSprite'))
 					.append($('<div>').addClass('fill').addClass('hidden')).appendTo('.gameBoard');
 			}
 			xpBar.find('.fill').css('height', (xp / toLevel * 100) + "%");
