@@ -19,9 +19,7 @@ define(['app/action/action'], function(Action) {
 	};
 	
 	Die.prototype.terminateAction = function(entity, force) {
-		if(force) {
-			Action.prototype.terminateAction.call(this);
-		}
+		return false;
 	};
 	
 	return Die;

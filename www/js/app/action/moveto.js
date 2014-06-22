@@ -11,12 +11,12 @@ define(['app/action/action'], function(Action) {
 		var _action = this;
 		this._entity = entity;
 		var func = this.useMove ? "move" : "moveTo";
-		entity[func](this.useMove ? _action.target.p() : _action.target, function(entity) {
-			require(['app/graphics/graphics'], function(Graphics) {
-				entity.makeIdle();
+		entity[func](this.useMove ? _action.target.p() : _action.target, (function(entity) {
+			entity.makeIdle();
+			if(entity.action == this) {
 				entity.action = null;
-			});
-		});
+			}
+		}).bind(this));
 	};
 	
 	MoveTo.prototype.doFrameAction = function(frame) {
