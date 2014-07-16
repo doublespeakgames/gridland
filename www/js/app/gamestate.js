@@ -212,8 +212,8 @@ define(['base64', 'app/entity/building', 'app/entity/block', 'app/eventmanager',
 					highestMod = building.options.type.tileLevel;
 				}
 			}
-			// 3, 4, 5, 5, 6, 7, 7, 8, 9...
-			return 3 + (highestMod - 1) - Math.floor((highestMod - 1) / 3);
+			// 2, 3, 4, 4, 5, 6, 6, 7, 8... ( + punch damage )
+			return 2 + (highestMod - 1) - Math.floor((highestMod - 1) / 3);
 		},
 		
 		maxMana: function() {

@@ -86,17 +86,17 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 	};
 	
 	dude.prototype.getDamage = function() {
+		
+		// 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3...
+		var strengthDamage = State.level < 7 ? 1 : Math.floor((State.level - 1) / 3);
+		
 		if(this.sword > 0) {
 			this.sword--;
 			Graphics.updateSword(this.sword, State.maxSword());
-			return State.swordDamage();
+			return State.swordDamage() + strengthDamage;
 		}
 		
-		// 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3...
-		if(State.level < 7) {
-			return 1;
-		}
-		return Math.floor((State.level - 1) / 3);
+		return strengthDamage;
 	};
 	
 	dude.prototype.takeDamage = function(damage, damager) {
