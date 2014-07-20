@@ -12,6 +12,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	EarthElemental.prototype = new Monster({
 		monsterClass: 'earthElemental',
+		spriteName: 'earthelemental',
 		speed: 80
 	});
 	EarthElemental.constructor = EarthElemental;

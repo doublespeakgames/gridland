@@ -12,6 +12,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	Zombie.prototype = new Monster({
 		monsterClass: 'zombie',
+		spriteName: 'zombie',
 		speed: 80
 	});
 	Zombie.constructor = Zombie;

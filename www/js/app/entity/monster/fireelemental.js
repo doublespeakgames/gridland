@@ -12,6 +12,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	};
 	FireElemental.prototype = new Monster({
 		monsterClass: 'fireElemental',
+		spriteName: 'fireelemental',
 		arrowClass: 'arrow fireball',
 		speed: 50,
 		arrowSpeed: 7,

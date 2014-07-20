@@ -18,6 +18,8 @@ define(['app/entity/worldentity', 'app/entity/block', 'app/gamecontent'], functi
 			this.animationRow = this.options.type.defaultAnimation;
 		}
 		
+		this.options.spriteName = this.options.type.spriteName;
+		
 		this.built = false;
 		
 		this.p(this.options.type.position);

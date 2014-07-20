@@ -13,7 +13,9 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 		this.sword = 0;
 	};
 	dude.prototype = new WorldEntity({
-		className: 'dude'
+		className: 'dude',
+		spriteName: 'dude',
+		nightSpriteName: 'dudenight'
 	});
 	dude.constructor = dude;
 	

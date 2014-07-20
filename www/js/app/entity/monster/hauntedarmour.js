@@ -12,6 +12,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	HauntedArmour.prototype = new Monster({
 		monsterClass: 'hauntedArmour',
+		spriteName: 'harmour',
 		speed: 80
 	});
 	HauntedArmour.constructor = HauntedArmour;

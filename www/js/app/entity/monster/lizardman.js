@@ -12,6 +12,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	};
 	Lizardman.prototype = new Monster({
 		monsterClass: 'lizardman',
+		spriteName: 'lizardman',
 		arrowClass: 'arrow',
 		speed: 50,
 		arrowSpeed: 7

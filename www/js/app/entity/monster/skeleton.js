@@ -12,6 +12,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	};
 	Skeleton.prototype = new Monster({
 		monsterClass: 'skeleton',
+		spriteName: 'skeleton',
 		arrowClass: 'arrow',
 		speed: 50,
 		arrowSpeed: 7

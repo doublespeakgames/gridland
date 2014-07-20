@@ -3,7 +3,8 @@ define(['app/entity/worldentity'],
 	
 	var celestial = function() { };
 	celestial.prototype = new WorldEntity({
-		className: 'celestial'
+		className: 'celestial',
+		spriteName: 'sun'
 	});
 	celestial.constructor = celestial;
 	

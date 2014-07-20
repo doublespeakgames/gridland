@@ -6,6 +6,7 @@ define(['app/entity/worldentity'], function(WorldEntity) {
 	};
 	TreasureChest.prototype = new WorldEntity({
 		className: 'treasureChest nightSprite',
+		spriteName: 'treasurechest',
 		animationFrames: 0
 	});
 	TreasureChest.constructor = TreasureChest;

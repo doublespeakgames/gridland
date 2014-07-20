@@ -298,29 +298,29 @@ body.night {
 	width: 28px;
 	height: 28px;
 	display: inline-block;
-	background-image: url(../img/buttonicons.png);
+	background-image: url(../img/fullsprite.png);
 	margin-left: 5px;
 	cursor: pointer;
 }
 
 .confirm {
-	background-position: 0 0;
+	background-position: 0 -1020px;
 }
 
 .cancel {
-	background-position: -28px 0;
+	background-position: -28px -1020px;
 }
 
 .export {
-	background-position: -56px 0;
+	background-position: -56px -1020px;
 }
 
 .import {
-	background-position: -84px 0;
+	background-position: -84px -1020px;
 }
 
 .delete {
-	background-position: -112px 0;
+	background-position: -112px -1020px;
 }
 
 /** Menu Bar **/
@@ -365,7 +365,7 @@ body.night {
 .menuBtn {
 	height: 40px;
 	width: 40px;
-	background: url(../img/menu.png) no-repeat;
+	background: url(../img/fullsprite.png) 0 -6806px no-repeat;
 	border-radius: 4px;
 	position: absolute;
 	right: 3px;
@@ -381,7 +381,7 @@ body.night {
 .menuBtn .nightSprite {
 	height: 40px;
 	width: 40px;
-	background: url(../img/menu.png) 0px -40px no-repeat;
+	background: url(../img/fullsprite.png) 0px -6846px no-repeat;
 }
 
 .menuBar.open {
@@ -477,7 +477,7 @@ body.night {
 	position: absolute;
 	left: 5px;
 	top: 1px;
-	background-position: -480px 0;
+	background-position: -480px -8477px;
 }
 
 .logo,
@@ -485,11 +485,11 @@ body.night {
 	display: block;
 	height: 48px;
 	width: 48px;
-	background-image: url(../img/social.png);
+	background-image: url(../img/fullsprite.png);
 }
 
 .logo .nightSprite {
-	background-position: -480px -48px;
+	background-position: -480px -8525px;
 }
 
 .saveSpinner.active + .logo {
@@ -753,154 +753,248 @@ body.night {
 	-o-transform: rotateY(0deg);
 }
 
-.tile .daySide {
-	background-image: url(../img/tiles_day.png);
-	background-repeat: no-repeat;
-}
-
+.tile .daySide,
 .tile .nightSide {
-	background-image: url(../img/tiles_night.png);
+	background-image: url(../img/fullsprite.png);
 	background-repeat: no-repeat;
 }
 
-.tile.grain > div {
-	background-position: 0 0;
+.tile.grain .daySide {
+	background-position: 0 -9055px;
+}
+.tile.grain .nightSide {
+	background-position: 0 -9523px;
 }
 
-.grain2 .tile.grain > div {
-	background-position: 0 -52px;
+.grain2 .tile.grain .daySide {
+	background-position: 0 -9107px;
+}
+.grain2 .tile.grain .nightSide {
+	background-position: 0 -9575px;
 }
 
-.grain3 .tile.grain > div {
-	background-position: 0 -104px;
+.grain3 .tile.grain .daySide {
+	background-position: 0 -9159px;
+}
+.grain3 .tile.grain .nightSide {
+	background-position: 0 -9627px;
 }
 
-.grain4 .tile.grain > div {
-	background-position: 0 -156px;
+.grain4 .tile.grain .daySide {
+	background-position: 0 -9211px;
+}
+.grain4 .tile.grain .nightSide {
+	background-position: 0 -9679px;
 }
 
-.dragonFight .tile.grain > div {
-	background-position: 0 -468px;
+.dragonFight .tile.grain .nightSide {
+	background-position: 0 -9991px;
 }
 
-.tile.stone > div {
-	background-position: -52px 0;
+.tile.stone .daySide {
+	background-position: -52px -9055px;
+	transition-delay: 300ms, 0ms;
+}
+.tile.stone .nightSide {
+	background-position: -52px -9523px;
 	transition-delay: 300ms, 0ms;
 }
 
-.stone2 .tile.stone > div {
-	background-position: -52px -52px;
+.stone2 .tile.stone .daySide {
+	background-position: -52px -9107px;
+}
+.stone2 .tile.stone .nightSide {
+	background-position: -52px -9575px;
 }
 
-.stone3 .tile.stone > div {
-	background-position: -52px -104px;
+.stone3 .tile.stone .daySide {
+	background-position: -52px -9159px;
+}
+.stone3 .tile.stone .nightSide {
+	background-position: -52px -9627px;
 }
 
-.stone4 .tile.stone > div {
-	background-position: -52px -156px;
+.stone4 .tile.stone .daySide {
+	background-position: -52px -9211px;
+}
+.stone4 .tile.stone .nightSide {
+	background-position: -52px -9679px;
 }
 
-.stone5 .tile.stone > div {
-	background-position: -52px -208px;
+.stone5 .tile.stone .daySide {
+	background-position: -52px -9263px;
+}
+.stone5 .tile.stone .nightSide {
+	background-position: -52px -9731px;
 }
 
-.stone6 .tile.stone > div {
-	background-position: -52px -260px;
+.stone6 .tile.stone .daySide {
+	background-position: -52px -9315px;
+}
+.stone6 .tile.stone .nightSide {
+	background-position: -52px -9783px;
 }
 
-.stone7 .tile.stone > div {
-	background-position: -52px -312px;
+.stone7 .tile.stone .daySide {
+	background-position: -52px -9367px;
+}
+.stone7 .tile.stone .nightSide {
+	background-position: -52px -9835px;
 }
 
-.stone8 .tile.stone > div {
-	background-position: -52px -364px;
+.stone8 .tile.stone .daySide {
+	background-position: -52px -9419px;
+}
+.stone8 .tile.stone .nightSide {
+	background-position: -52px -9887px;
 }
 
-.stone9 .tile.stone > div {
-	background-position: -52px -416px;
+.stone9 .tile.stone .daySide {
+	background-position: -52px -9471px;
+}
+.stone9 .tile.stone .nightSide {
+	background-position: -52px -9939px;
 }
 
-.tile.wood > div {
-	background-position: -104px 0;
+.tile.wood .daySide {
+	background-position: -104px -9055px;
+	transition-delay: 600ms, 0ms;
+}
+.tile.wood .nightSide {
+	background-position: -104px -9523px;
 	transition-delay: 600ms, 0ms;
 }
 
-.wood2 .tile.wood > div {
-	background-position: -104px -52px;
+.wood2 .tile.wood .daySide {
+	background-position: -104px -9107px;
+}
+.wood2 .tile.wood .nightSide {
+	background-position: -104px -9575px;
 }
 
-.wood3 .tile.wood > div {
-	background-position: -104px -104px;
+.wood3 .tile.wood .daySide {
+	background-position: -104px -9159px;
+}
+.wood3 .tile.wood .nightSide {
+	background-position: -104px -9627px;
 }
 
-.wood4 .tile.wood > div {
-	background-position: -104px -156px;
+.wood4 .tile.wood .daySide {
+	background-position: -104px -9211px;
+}
+.wood4 .tile.wood .nightSide {
+	background-position: -104px -9679px;
 }
 
-.wood5 .tile.wood > div {
-	background-position: -104px -208px;
+.wood5 .tile.wood .daySide {
+	background-position: -104px -9263px;
+}
+.wood5 .tile.wood .nightSide {
+	background-position: -104px -9731px;
 }
 
-.wood6 .tile.wood > div {
-	background-position: -104px -260px;
+.wood6 .tile.wood .daySide {
+	background-position: -104px -9315px;
+}
+.wood6 .tile.wood .nightSide {
+	background-position: -104px -9783px;
 }
 
+.wood7 .tile.wood .daySide {
+	background-position: -104px -9367px;
+}
 .wood7 .tile.wood > div {
-	background-position: -104px -312px;
+	background-position: -104px -9835px;
 }
 
-.wood8 .tile.wood > div {
-	background-position: -104px -364px;
+.wood8 .tile.wood .daySide {
+	background-position: -104px -9419px;
+}
+.wood8 .tile.wood .nightSide {
+	background-position: -104px -9887px;
 }
 
-.wood9 .tile.wood > div {
-	background-position: -104px -416px;
+.wood9 .tile.wood .daySide {
+	background-position: -104px -9471px;
+}
+.wood9 .tile.wood .nightSide {
+	background-position: -104px -9939px;
 }
 
-.tile.clay > div {
-	background-position: -156px 0px;
+.tile.clay .daySide {
+	background-position: -156px -9055px;
+	transition-delay: 900ms, 0ms;
+}
+.tile.clay .nightSide {
+	background-position: -156px -9523px;
 	transition-delay: 900ms, 0ms;
 }
 
-.clay2 .tile.clay > div {
-	background-position: -156px -52px;
+.clay2 .tile.clay .daySide {
+	background-position: -156px -9107px;
+}
+.clay2 .tile.clay .nightSide {
+	background-position: -156px -9575px;
 }
 
+.clay3 .tile.clay .daySide {
+	background-position: -156px -9159px;
+}
 .clay3 .tile.clay > div {
-	background-position: -156px -104px;
+	background-position: -156px -9627px;
 }
 
-.clay4 .tile.clay > div {
-	background-position: -156px -156px;
+.clay4 .tile.clay .daySide {
+	background-position: -156px -9211px;
+}
+.clay4 .tile.clay .nightSide {
+	background-position: -156px -9679px;
 }
 
-.dragonFight .tile.clay > div {
-	background-position: -156px -468px;
+.dragonFight .tile.clay .nightSide {
+	background-position: -156px -9991px;
 }
 
-.tile.cloth > div {
-	background-position: -208px 0px;
+.tile.cloth .daySide {
+	background-position: -208px -9055px;
+	transition-delay: 1200ms, 0ms;
+}
+.tile.cloth .nightSide {
+	background-position: -208px -9523px;
 	transition-delay: 1200ms, 0ms;
 }
 
-.cloth2 .tile.cloth > div {
-	background-position: -208px -52px;
+.cloth2 .tile.cloth .daySide {
+	background-position: -208px -9107px;
+}
+.cloth2 .tile.cloth .nightSide {
+	background-position: -208px -9575px;
 }
 
-.cloth3 .tile.cloth > div {
-	background-position: -208px -104px;
+.cloth3 .tile.cloth .daySide {
+	background-position: -208px -9159px;
+}
+.cloth3 .tile.cloth .nightSide {
+	background-position: -208px -9627px;
 }
 
-.cloth4 .tile.cloth > div {
-	background-position: -208px -156px;
+.cloth4 .tile.cloth .daySide {
+	background-position: -208px -9211px;
+}
+.cloth4 .tile.cloth .nightSide {
+	background-position: -208px -9679px;
 }
 
-.dragonFight .tile.cloth > div {
-	background-position: -208px -468px;
+.dragonFight .tile.cloth .nightSide {
+	background-position: -208px -9991px;
 }
 
-.tile.mana > div {
-	background-position: -260px 0px;
+.tile.mana .daySide {
+	background-position: -260px -9055px;
+	transition-delay: 1200ms, 0ms;
+}
+.tile.mana .nightSide {
+	background-position: -260px -9523px;
 	transition-delay: 1200ms, 0ms;
 }
 
@@ -908,7 +1002,7 @@ body.night {
 	display: block;
 	position: absolute;
 	content: ' ';
-	background-image: url(../img/select-border.png);
+	background: url(../img/select-border.png);
 	top: 0;
 	bottom: 0;
 	left: 0;
@@ -982,7 +1076,7 @@ body.night {
 
 .star {
 	position: absolute;
-	background: url(../img/star.png) no-repeat;
+	background: url(../img/fullsprite.png) no-repeat;
 	width: 16px;
 	height: 16px;
 	top: 10px;
@@ -999,7 +1093,7 @@ body.night {
 }
 
 .dude {
-	background-image: url(../img/dude.png);
+	background-image: url(../img/fullsprite.png);
 	background-repeat: no-repeat;
 	position: absolute;
 	bottom: 0px;
@@ -1009,7 +1103,7 @@ body.night {
 }
 
 .dude .animationLayer.nightSprite {
-	background-image: url(../img/dude_night.png);
+	background-image: url(../img/fullsprite.png);
 }
 
 .animationLayer {
@@ -1045,51 +1139,8 @@ body.night {
 	opacity: 0;
 }
 
-.shack,
-.house,
-.fort,
-.castle {
-	background-image: url(../img/shack.png);
-}
-
-.bricklayer,
-.bricklayer2,
-.bricklayer3,
-.bricklayer4 {
-	background-image: url(../img/bricklayer.png);
-}
-
-.weaver,
-.weaver2,
-.weaver3,
-.weaver4 {
-	background-image: url(../img/weaver.png);
-}
-
-.blacksmith, 
-.blacksmith2,
-.blacksmith3,
-.blacksmith4,
-.blacksmith5,
-.blacksmith6,
-.blacksmith7,
-.blacksmith8 {
-	background-image: url(../img/blacksmith.png);
-}
-
-.sawmill,
-.sawmill2,
-.sawmill3,
-.sawmill4,
-.sawmill5,
-.sawmill6,
-.sawmill7,
-.sawmill8 {
-	background-image: url(../img/sawmill.png);
-}
-
-.tower {
-	background-image: url(../img/tower.png);
+.building {
+	background-image: url(../img/fullsprite.png);
 }
 
 .resources {
@@ -1430,7 +1481,7 @@ body.night {
 	height: 30px;
 	top: 0px;
 	left: 0px;
-	background: url(../img/sun.png) no-repeat;
+	background: url(../img/fullsprite.png) no-repeat;
 	position: absolute;
 	transform: translate3d(0px, 110px, 0px);
 	-webkit-transform: translate3d(0px, 110px, 0px);
@@ -1469,12 +1520,12 @@ body.night {
 .monster {
 	position: absolute;
 	bottom: 0px;
+	background: url(../img/fullsprite.png) no-repeat;
 }
 
 .zombie {
 	height: 32px;
 	width: 16px;
-	background: url(../img/zombie.png) no-repeat;
 }
 
 .zombie .healthBar {
@@ -1484,7 +1535,6 @@ body.night {
 .hauntedArmour {
 	height: 49px;
 	width: 70px;
-	background: url(../img/h_armour.png) no-repeat;
 }
 
 .hauntedArmour .healthBar {
@@ -1494,7 +1544,6 @@ body.night {
 .earthElemental {
 	height: 74px;
 	width: 58px;
-	background: url(../img/earth_elemental.png) no-repeat;
 }
 
 .earthElemental .healthBar {
@@ -1504,7 +1553,6 @@ body.night {
 .demon {
 	height: 86px;
 	width: 72px;
-	background: url(../img/demon.png) no-repeat;
 }
 
 .demon .healthBar {
@@ -1514,7 +1562,6 @@ body.night {
 .rat {
 	height: 13px;
 	width: 40px;
-	background: url(../img/rat.png) no-repeat;
 }
 
 .rat .healthBar {
@@ -1524,7 +1571,6 @@ body.night {
 .spider {
 	height: 38px;
 	width: 60px;
-	background: url(../img/spider.png) no-repeat;
 }
 
 .spider .healthBar {
@@ -1534,7 +1580,6 @@ body.night {
 .waterElemental {
 	height: 39px;
 	width: 53px;
-	background: url(../img/water_elemental.png) no-repeat;
 }
 
 .waterElemental .healthBar {
@@ -1544,7 +1589,6 @@ body.night {
 .imp {
 	height: 60px;
 	width: 30px;
-	background: url(../img/imp.png) no-repeat;
 }
 
 .imp .healthBar {
@@ -1554,7 +1598,6 @@ body.night {
 .skeleton {
 	height: 32px;
 	width: 27px;
-	background: url(../img/skeleton.png) no-repeat;
 }
 
 .skeleton .healthBar {
@@ -1564,7 +1607,6 @@ body.night {
 .lizardman {
 	height: 35px;
 	width: 32px;
-	background: url(../img/lizardman.png) no-repeat;
 }
 
 .lizardman .healthBar {
@@ -1574,7 +1616,6 @@ body.night {
 .fireElemental {
 	height: 41px;
 	width: 30px;
-	background: url(../img/fire_elemental.png) no-repeat;
 }
 
 .fireElemental .healthBar {
@@ -1584,7 +1625,6 @@ body.night {
 .warlock {
 	height: 37px;
 	width: 24px;
-	background: url(../img/warlock.png) no-repeat;
 }
 
 .warlock .healthBar {
@@ -1594,7 +1634,6 @@ body.night {
 .lich {
 	height: 60px;
 	width: 41px;
-	background: url(../img/lich.png) no-repeat;
 	transition: opacity 300ms linear;
 	-webkit-transition: opacity 300ms linear;
 	-moz-transition: opacity 300ms linear;
@@ -1685,13 +1724,13 @@ body.night {
 }
 
 .fireball .projectileInner {
-	background: url(../img/fireball.png) transparent;
+	background: url(../img/fullsprite.png) 0 -5057px transparent;
 	width: 16px;
 	height: 7px;
 }
 
 .fireball.right .projectileInner {
-	background-position: -16px;
+	background-position: -16px -5057px;
 }
 
 .worldEffect {
@@ -1699,16 +1738,11 @@ body.night {
 	bottom: 0px;
 }
 
-.worldEffect.iceBlock {
-	width: 30px;
-	height: 44px;
-	background: url(../img/dragoneffects.png) transparent no-repeat;
-}
-
+.worldEffect.iceBlock,
 .worldEffect.fire {
 	width: 30px;
 	height: 44px;
-	background: url(../img/dragoneffects.png) transparent no-repeat;
+	background: url(../img/fullsprite.png) transparent no-repeat;
 }
 
 /** Status **/
@@ -1744,20 +1778,20 @@ body.night {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	background: url(../img/heart.png) no-repeat;
+	background: url(../img/fullsprite.png) 0 -5503px no-repeat;
 	z-index: 1;
 }
 
 .bigheart .mask {
-	background-position: -30px 0;
+	background-position: -30px -5503px;
 }
 
 .heart .mask.nightSprite {
-	background-position: left -28px;
+	background-position: left -5531px;
 }
 
 .bigheart .mask.nightSprite {
-	background-position: -30px -28px;
+	background-position: -30px -5531px;
 }
 
 .heart .bar,
@@ -1782,7 +1816,7 @@ body.night {
 	top: -35px;
 	width: 30px;
 	height: 30px;
-	background: url(../img/buckler-icon.png) no-repeat 0px -30px;
+	background: url(../img/fullsprite.png) no-repeat 0px -990px;
 	transition: opacity 300ms linear;
 	-webkit-transition: opacity 300ms linear;
 	-ms-transition: opacity 300ms linear;
@@ -1792,7 +1826,7 @@ body.night {
 
 .shield > div {
 	height: 100%;
-	background: url(../img/buckler-icon.png) no-repeat;
+	background: url(../img/fullsprite.png) 0 -960px no-repeat;
 	transition: width 300ms linear;
 	-webkit-transition: width 300ms linear;
 	-ms-transition: width 300ms linear;
@@ -1801,73 +1835,73 @@ body.night {
 }
 
 .wood2 .shield {
-	background-position: -30px -30px;
+	background-position: -30px -990px;
 }
 
 .wood2 .shield > div {
-	background-position: -30px 0;
+	background-position: -30px -960px;
 }
 
 .wood3 .shield {
-	background-position: -60px -30px;
+	background-position: -60px -990px;
 }
 
 .wood3 .shield > div {
-	background-position: -60px 0;
+	background-position: -60px -960px;
 }
 
 .wood4 .shield {
-	background-position: -90px -30px;
+	background-position: -90px -990px;
 }
 
 .wood4 .shield > div {
-	background-position: -90px 0;
+	background-position: -90px -960px;
 }
 
 .wood5 .shield {
-	background-position: -120px -30px;
+	background-position: -120px -990px;
 }
 
 .wood5 .shield > div {
-	background-position: -120px 0;
+	background-position: -120px -960px;
 }
 
 .wood6 .shield {
-	background-position: -150px -30px;
+	background-position: -150px -990px;
 }
 
 .wood6 .shield > div {
-	background-position: -150px 0;
+	background-position: -150px -960px;
 }
 
 .wood7 .shield {
-	background-position: -180px -30px;
+	background-position: -180px -990px;
 }
 
 .wood7 .shield > div {
-	background-position: -180px 0;
+	background-position: -180px -960px;
 }
 
 .wood8 .shield {
-	background-position: -210px -30px;
+	background-position: -210px -990px;
 }
 
 .wood8 .shield > div {
-	background-position: -210px 0;
+	background-position: -210px -960px;
 }
 
 .wood9 .shield {
-	background-position: -240px -30px;
+	background-position: -240px -990px;
 }
 
 .wood9 .shield > div {
-	background-position: -240px 0;
+	background-position: -240px -960px;
 }
 
 .sword {
 	width: 30px;
 	height: 30px;
-	background: url(../img/sword-icon.png) no-repeat 0px -30px;
+	background: url(../img/fullsprite.png) no-repeat 0px -9025px;
 	transition: opacity 300ms linear;
 	-webkit-transition: opacity 300ms linear;
 	-ms-transition: opacity 300ms linear;
@@ -1877,7 +1911,7 @@ body.night {
 
 .sword > div {
 	height: 100%;
-	background: url(../img/sword-icon.png) no-repeat;
+	background: url(../img/fullsprite.png) no-repeat 0 -8995px;
 	transition: width 300ms linear;
 	-webkit-transition: width 300ms linear;
 	-ms-transition: width 300ms linear;
@@ -1886,67 +1920,67 @@ body.night {
 }
 
 .stone2 .sword {
-	background-position: -30px -30px;
+	background-position: -30px -9025px;
 }
 
 .stone2 .sword > div {
-	background-position: -30px 0;
+	background-position: -30px -8995px;
 }
 
 .stone3 .sword {
-	background-position: -60px -30px;
+	background-position: -60px -9025px;
 }
 
 .stone3 .sword > div {
-	background-position: -60px 0;
+	background-position: -60px -8995px;
 }
 
 .stone4 .sword {
-	background-position: -90px -30px;
+	background-position: -90px -9025px;
 }
 
 .stone4 .sword > div {
-	background-position: -90px 0;
+	background-position: -90px -8995px;
 }
 
 .stone5 .sword {
-	background-position: -120px -30px;
+	background-position: -120px -9025px;
 }
 
 .stone5 .sword > div {
-	background-position: -120px 0;
+	background-position: -120px -8995px;
 }
 
 .stone6 .sword {
-	background-position: -150px -30px;
+	background-position: -150px -9025px;
 }
 
 .stone6 .sword > div {
-	background-position: -150px 0;
+	background-position: -150px -8995px;
 }
 
 .stone7 .sword {
-	background-position: -180px -30px;
+	background-position: -180px -9025px;
 }
 
 .stone7 .sword > div {
-	background-position: -180px 0;
+	background-position: -180px -8995px;
 }
 
 .stone8 .sword {
-	background-position: -210px -30px;
+	background-position: -210px -9025px;
 }
 
 .stone8 .sword > div {
-	background-position: -210px 0;
+	background-position: -210px -8995px;
 }
 
 .stone9 .sword {
-	background-position: -240px -30px;
+	background-position: -240px -9025px;
 }
 
 .stone9 .sword > div {
-	background-position: -240px 0;
+	background-position: -240px -8995px;
 }
 
 .xpBar {
@@ -2037,7 +2071,7 @@ body.night {
 	bottom: 0px;
 	width: 26px;
 	height: 26px;
-	background-image: url(../img/treasureChest.png);
+	background-image: url(../img/fullsprite.png);
 }
 
 .button {
@@ -2115,7 +2149,7 @@ body.night {
 	position: absolute;
 	width: 28px;
 	height: 28px;
-	background-image: url(../img/items.png);
+	background-image: url(../img/fullsprite.png);
 }
 
 .inventory .button div:nth-child(1) {
@@ -2130,37 +2164,37 @@ body.night {
 
 .loot.healthPotion
 .itemButton.healthPotion div:nth-child(1) {
-	background-position: 0 0;
+	background-position: 0 -5979px;
 }
 
 .loot.manaPotion,
 .button.manaPotion div:nth-child(1) {
-	background-position: -28px 0;
+	background-position: -28px -5979px;
 }
 
 .loot.bomb,
 .button.bomb div:nth-child(1) {
-	background-position: -56px 0;
+	background-position: -56px -5979px;
 }
 
 .loot.equipment,
 .button.equipment div:nth-child(1) {
-	background-position: -84px 0;
+	background-position: -84px -5979px;
 }
 
 .loot.shard {
-	background-position: -112px 0;
+	background-position: -112px -5979px;
 }
 
 .loot.callDragon,
 .button.callDragon div:nth-child(1) {
-	background-position: -140px 0;
+	background-position: -140px -5979px;
 }
 
 /** Magic **/
 .gem {
 	position: absolute;
-	background: url(../img/gem.png) no-repeat;
+	background: url(../img/fullsprite.png) no-repeat;
 	width: 12px;
 	height: 24px;
 	top: 35px;
@@ -2342,48 +2376,48 @@ body.night {
 
 .spell,
 .states > div {
-	background-image: url(../img/spells.png);
+	background-image: url(../img/fullsprite.png);
 	background-repeat: no-repeat;
 }
 
 .resetBoard {
-	background-position: 0 0;
+	background-position: 0 -8573px;
 }
 
 .night .resetBoard {
-	background-position: 0 -40px;
+	background-position: 0 -8613px;
 }
 
 .haste {
-	background-position: -40px 0;
+	background-position: -40px -8573px;
 }
 
 .night .haste {
-	background-position: -40px -40px;
+	background-position: -40px -8613px;
 }
 
 .freezeTime {
-	background-position: -80px 0;
+	background-position: -80px -8573px;
 }
 
 .night .freezeTime {
-	background-position: -80px -40px;
+	background-position: -80px -8613px;
 }
 
 .phaseChange {
-	background-position: -120px 0;
+	background-position: -120px -8573px;
 }
 
 .night .phaseChange {
-	background-position: -120px -40px;
+	background-position: -120px -8613px;
 }
 
 .frozen {
-	background-position: -160px 0;
+	background-position: -160px -8573px;
 }
 
 .night .frozen {
-	background-position: -160px -40px;
+	background-position: -160px -8613px;
 }
 
 .states {
@@ -2483,7 +2517,7 @@ body.night {
 	right: 0px;
 	height: 64px;
 	padding-left: 42px;
-	background: url(../img/music.png) no-repeat;
+	background: url(../img/fullsprite.png) 0 -6886px no-repeat;
 	margin-bottom: 20px;
 }
 
@@ -2493,16 +2527,15 @@ body.night {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	background: url(../img/music.png) no-repeat;
-	background-position: 0 -64px;
+	background: url(../img/fullsprite.png) 0 -6950px no-repeat;
 }
 
 .effectsVolume.volumeSlider {
-	background-position: 0 -128px;
+	background-position: 0 -7014px;
 }
 
 .effectsVolume.volumeSlider .nightSprite {
-	background-position: 0 -192px;
+	background-position: 0 -7078px;
 }
 
 .sliderTrack {
@@ -2577,7 +2610,7 @@ body.night {
 	display: block;
 	width: 48px;
 	height: 48px;
-	background-image: url(../img/social.png);
+	background-image: url(../img/fullsprite.png);
 }
 
 .social .nightSprite {
@@ -2587,51 +2620,51 @@ body.night {
 }
 
 .twitter {
-	background-position: 0 0;
+	background-position: 0 -8477px;
 }
 
 .twitter.nightSprite {
-	background-position: 0 -48px;
+	background-position: 0 -8525px;
 }
 
 .reddit {
-	background-position: -48px 0;
+	background-position: -48px -8477px;
 }
 
 .reddit.nightSprite {
-	background-position: -48px -48px;
+	background-position: -48px -8525px;
 }
 
 .gplus {
-	background-position: -96px 0;
+	background-position: -96px -8477px;
 }
 
 .gplus.nightSprite {
-	background-position: -96px -48px;
+	background-position: -96px -8525px;
 }
 
 .tumblr {
-	background-position: -144px 0;
+	background-position: -144px -8477px;
 }
 
 .tumblr.nightSprite {
-	background-position: -144px -48px;
+	background-position: -144px -8525px;
 }
 
 .stumbleupon {
-	background-position: -192px 0;
+	background-position: -192px -8477px;
 }
 
 .stumbleupon.nightSprite {
-	background-position: -192px -48px;
+	background-position: -192px -8525px;
 }
 
 .facebook {
-	background-position: -240px 0;
+	background-position: -240px -8477px;
 }
 
 .facebook.nightSprite {
-	background-position: -240px -48px;
+	background-position: -240px -8525px;
 }
 
 /** Donate buttons **/
@@ -2640,7 +2673,7 @@ body.night {
 	display: block;
 	width: 48px;
 	height: 48px;
-	background-image: url(../img/social.png);
+	background-image: url(../img/fullsprite.png);
 }
 
 .donate .nightSprite {
@@ -2650,37 +2683,37 @@ body.night {
 }
 
 .paypal {
-	background-position: -288px 0;
+	background-position: -288px -8477px;
 }
 
 .paypal.nightSprite {
-	background-position: -288px -48px;
+	background-position: -288px -8525px;
 }
 
 .bitcoin-button {
-	background-position: -336px 0;
+	background-position: -336px -8477px;
 }
 
 .bitcoin-button.nightSprite {
-	background-position: -336px -48px;
+	background-position: -336px -8525px;
 }
 
 
 .flattr {
-	background-position: -384px 0;
+	background-position: -384px -8477px;
 }
 
 .flattr.nightSprite {
-	background-position: -384px -48px;
+	background-position: -384px -8525px;
 }
 
 
 .gittip {
-	background-position: -432px 0;
+	background-position: -432px -8477px;
 }
 
 .gittip.nightSprite {
-	background-position: -432px -48px;
+	background-position: -432px -8525px;
 }
 
 .bitcoin-bubble {
@@ -2708,7 +2741,6 @@ body.night {
 .dragon {
 	height: 164px;
 	width: 204px;
-	background: url(../img/dragon.png) no-repeat;
 	transition: transform 1000ms ease-out;
 	-webkit-transition: -webkit-transform 1000ms ease-out;
 	-moz-transition: -moz-transform 1000ms ease-out;
@@ -2756,7 +2788,7 @@ body.night {
 .dragon .neck {
 	height: 24px;
 	width: 24px;
-	background: url(../img/dragon-neck.png) no-repeat;
+	background: url(../img/fullsprite.png) 0 -3438px no-repeat;
 	transform: rotate(0deg) translateX(-10px);
 	-webkit-transform: rotate(0deg) translateX(-10px);
 	-moz-transform: rotate(0deg) translateX(-10px);
@@ -2765,13 +2797,13 @@ body.night {
 }
 
 .dragon.flip .neck {
-	background-position: 0 -24px;
+	background-position: 0 -3462px;
 }
 
 .dragon .head {
 	height: 30px;
 	width: 81px;
-	background: url(../img/dragon-head.png) no-repeat;
+	background: url(../img/fullsprite.png) 0 -3378px no-repeat;
 	transform: rotate(0deg) translateX(-40px);
 	-webkit-transform: rotate(0deg) translateX(-40px);
 	-moz-transform: rotate(0deg) translateX(-40px);
@@ -2783,7 +2815,7 @@ body.night {
 
 .dragon.flip .head {
 	left: -29px;
-	background-position: 0 -30px;
+	background-position: 0 -3408px;
 }
 
 .dragon .neck .neck {
@@ -2812,7 +2844,7 @@ body.night {
 	position: absolute;
 	width: 16px;
 	height: 7px;
-	background: url(../img/fireball.png) transparent;
+	background: url(../img/fullsprite.png) 0 -5057px transparent;
 	transition: transform 300ms linear;
 	-webkit-transition: -webkit-transform 300ms linear;
 	-moz-transition: -moz-transform 300ms linear;

@@ -14,6 +14,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	WaterElemental.prototype = new Monster({
 		monsterClass: 'waterElemental',
+		spriteName: 'waterelemental',
 		speed: 15
 	});
 	WaterElemental.constructor = WaterElemental;

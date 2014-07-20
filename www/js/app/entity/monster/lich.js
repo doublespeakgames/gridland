@@ -15,6 +15,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 	};
 	Lich.prototype = new Monster({
 		monsterClass: 'lich',
+		spriteName: 'lich',
 		speed: 100
 	});
 	Lich.constructor = Lich;

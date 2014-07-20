@@ -14,6 +14,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	Imp.prototype = new Monster({
 		monsterClass: 'imp',
+		spriteName: 'imp',
 		speed: 15
 	});
 	Imp.constructor = Imp;

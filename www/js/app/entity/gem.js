@@ -3,7 +3,8 @@ define(['app/entity/worldentity'],
 	
 	var Gem = function() { };
 	Gem.prototype = new WorldEntity({
-		className: 'gem'
+		className: 'gem',
+		spriteName: 'gem'
 	});
 	Gem.constructor = Gem;
 	

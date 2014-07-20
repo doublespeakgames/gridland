@@ -1,8 +1,8 @@
 define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
         'app/graphics/gameboard', 'app/graphics/world', 'app/graphics/resources', 
-        'app/graphics/loot', 'app/graphics/magic', 'app/graphics/audio'], 
+        'app/graphics/loot', 'app/graphics/magic', 'app/graphics/audio', 'app/graphics/sprites'], 
 		function($, EventManager, TextStore, Options, BoardGraphics, WorldGraphics, ResourceGraphics,
-				LootGraphics, MagicGraphics, AudioGraphics) {
+				LootGraphics, MagicGraphics, AudioGraphics, Sprites) {
 	
 	var MAX_HEARTS = 14;
 	var HEALTH_PER_HEART = 10;
@@ -14,6 +14,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	var styleSheet = null;
 	var scaled = false;
 	var heartInfo = { total: 0, big: 0 };
+	var imageLoaded = false;
 	
 	function handleDrawRequest(requestString, options) {
 		var moduleString = requestString.substring(0, requestString.indexOf('.'));
@@ -322,6 +323,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	
 	var Graphics = {
 		init: function() {
+			loaded = false;
 			$('body').removeClass('night');
 			
 			textStore = new TextStore();
@@ -349,6 +351,12 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				);
 			});
 			
+			var spriteImage = new Image();
+			spriteImage.onload = function() {
+				loaded = true;
+			};
+			spriteImage.src = "img/fullsprite.png";
+			
 			BoardGraphics.init();
 			WorldGraphics.init();
 			ResourceGraphics.init();
@@ -364,7 +372,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		isReady: function() {
-			return textStore && textStore.isReady();
+			return loaded && textStore && textStore.isReady();
 		},
 		
 		getText: function(key) {
@@ -560,8 +568,16 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		updateSprite: function(entity) {
 			// TODO: Cache the entity width. Calling el.width() this often can't be good for performance.
 			var el = entity.el();
-			var spriteRow = entity.tempAnimation == null ? entity.animationRow : entity.tempAnimation;
-			Graphics.updateSpritePos(el, entity.frame * el.width(), spriteRow * el.height());
+			var spriteRow = (entity.tempAnimation == null ? entity.animationRow : entity.tempAnimation) || 0;
+			// This is a terrible hack, but I don't want to fix it for real
+			// Dude's day sprite has fewer rows than his nightsprite, causing sprite buffer overflows
+			if(!entity.options.className == 'dude' || spriteRow <= 9) {
+				Graphics.updateSpritePos(el, entity.frame * el.width(), spriteRow * el.height() + Sprites.getOffset(entity.options.spriteName));
+			}
+			var nightSprite = $('.animationLayer', el);
+			if(nightSprite) {
+				Graphics.updateSpritePos(nightSprite, entity.frame * el.width(), spriteRow * el.height() + Sprites.getOffset(entity.options.nightSpriteName));
+			}
 			if(entity.stepFunction) {
 				entity.stepFunction(entity.frame);
 			}
@@ -569,7 +585,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		updateSpritePos: function(el, x, y) {
 			el.css('background-position', -(x) + "px " + -(y) + 'px');
-			$('.animationLayer', el).css('background-position', -(x) + "px " + -(y) + 'px');
 		},
 		
 		setPosition: function(entity, pos) {

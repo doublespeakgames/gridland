@@ -37,6 +37,7 @@ define(['app/action/action'], function(Action) {
 				_this.target.takeDamage(entity.getFireBlastDamage(), entity);
 				var fireEffect = new (require('app/entity/worldeffect'))({ 
 					effectClass: 'fire',
+					spriteName: 'dragoneffects',
 					row: 1,
 					animationFrames: 4,
 					effect: function() {

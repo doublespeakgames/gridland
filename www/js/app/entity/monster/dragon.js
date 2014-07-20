@@ -101,6 +101,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	Dragon.prototype = new Monster({
 		monsterClass: 'dragon',
+		spriteName: 'dragon',
 		speed: 80,
 		animationFrames: 4
 	});
@@ -170,10 +171,12 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 				this.headState = this.animateHead;
 				this.headFrame = 0;
 			}
+			var y = this.options.flip ? this.headHeight() : 0;
+			y += require('app/graphics/sprites').getOffset('dragonhead');
 			require('app/graphics/graphics').updateSpritePos(
 				this._segments[3], 
 				this.headWidth() * this.headFrame, 
-				this.options.flip ? this.headHeight() : 0
+				y
 			);
 		}
 	};

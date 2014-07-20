@@ -149,6 +149,7 @@ define({
 	BuildingType: {
 		Shack: {
 			className: 'shack',
+			spriteName: 'shack',
 			position: 30,
 			cost: {},
 			requiredLevel: 1,
@@ -159,6 +160,7 @@ define({
 		
 		House: {
 			className: 'house',
+			spriteName: 'shack',
 			position: 30,
 			cost: {},
 			requiredLevel: 4,
@@ -174,6 +176,7 @@ define({
 		
 		Fort: {
 			className: 'fort',
+			spriteName: 'shack',
 			position: 30,
 			cost: {},
 			requiredLevel: 7,
@@ -189,6 +192,7 @@ define({
 		
 		Castle: {
 			className: 'castle',
+			spriteName: 'shack',
 			position: 30,
 			cost: {},
 			requiredLevel: 10,
@@ -204,6 +208,7 @@ define({
 		
 		BrickLayer: {
 			className: 'bricklayer',
+			spriteName: 'bricklayer',
 			position: 90,
 			cost: {
 				stone: 5,
@@ -215,6 +220,7 @@ define({
 		
 		Bricklayer2: {
 			className: 'bricklayer2',
+			spriteName: 'bricklayer',
 			position: 90,
 			cost: {
 				stone: 3,
@@ -231,6 +237,7 @@ define({
 		
 		Bricklayer3: {
 			className: 'bricklayer3',
+			spriteName: 'bricklayer',
 			position: 90,
 			cost: {
 				stone: 5,
@@ -247,6 +254,7 @@ define({
 		
 		Bricklayer4: {
 			className: 'bricklayer4',
+			spriteName: 'bricklayer',
 			position: 90,
 			cost: {
 				stone: 8,
@@ -263,6 +271,7 @@ define({
 		
 		Weaver: {
 			className: 'weaver',
+			spriteName: 'weaver',
 			position: 150,
 			cost: { 
 				stone: 5,
@@ -274,6 +283,7 @@ define({
 		
 		Weaver2: {
 			className: 'weaver2',
+			spriteName: 'weaver',
 			position: 150,
 			cost: {
 				wood: 3,
@@ -290,6 +300,7 @@ define({
 		
 		Weaver3: {
 			className: 'weaver3',
+			spriteName: 'weaver',
 			position: 150,
 			cost: {
 				wood: 5,
@@ -306,6 +317,7 @@ define({
 		
 		Weaver4: {
 			className: 'weaver4',
+			spriteName: 'weaver',
 			position: 150,
 			cost: {
 				wood: 8,
@@ -322,6 +334,7 @@ define({
 		
 		Blacksmith: {
 			className: 'blacksmith',
+			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
 				stone: 2,
@@ -335,6 +348,7 @@ define({
 		
 		Blacksmith2: {
 			className: 'blacksmith2',
+			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
 				stone: 2,
@@ -351,6 +365,7 @@ define({
 		
 		Blacksmith3: {
 			className: 'blacksmith3',
+			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
 				stone: 2,
@@ -367,6 +382,7 @@ define({
 		
 		Blacksmith4: {
 			className: 'blacksmith4',
+			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
 				stone: 4,
@@ -383,6 +399,7 @@ define({
 		
 		Blacksmith5: {
 			className: 'blacksmith5',
+			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
 				stone: 6,
@@ -399,6 +416,7 @@ define({
 		
 		Blacksmith6: {
 			className: 'blacksmith6',
+			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
 				stone: 6,
@@ -415,6 +433,7 @@ define({
 		
 		Blacksmith7: {
 			className: 'blacksmith7',
+			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
 				stone: 8,
@@ -431,6 +450,7 @@ define({
 		
 		Blacksmith8: {
 			className: 'blacksmith8',
+			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
 				stone: 10,
@@ -447,6 +467,7 @@ define({
 		
 		Sawmill: {
 			className: 'sawmill',
+			spriteName: 'sawmill',
 			position: 270,
 			cost: {
 				wood: 2,
@@ -460,6 +481,7 @@ define({
 		
 		Sawmill2: {
 			className: 'sawmill2',
+			spriteName: 'sawmill',
 			position: 270,
 			cost: {
 				wood: 2,
@@ -476,6 +498,7 @@ define({
 		
 		Sawmill3: {
 			className: 'sawmill3',
+			spriteName: 'sawmill',
 			position: 270,
 			cost: {
 				wood: 2,
@@ -492,6 +515,7 @@ define({
 		
 		Sawmill4: {
 			className: 'sawmill4',
+			spriteName: 'sawmill',
 			position: 270,
 			cost: {
 				wood: 4,
@@ -508,6 +532,7 @@ define({
 		
 		Sawmill5: {
 			className: 'sawmill5',
+			spriteName: 'sawmill',
 			position: 270,
 			cost: {
 				wood: 6,
@@ -524,6 +549,7 @@ define({
 		
 		Sawmill6: {
 			className: 'sawmill6',
+			spriteName: 'sawmill',
 			position: 270,
 			cost: {
 				wood: 6,
@@ -540,6 +566,7 @@ define({
 		
 		Sawmill7: {
 			className: 'sawmill7',
+			spriteName: 'sawmill',
 			position: 270,
 			cost: {
 				wood: 8,
@@ -556,6 +583,7 @@ define({
 		
 		Sawmill8: {
 			className: 'sawmill8',
+			spriteName: 'sawmill',
 			position: 270,
 			cost: {
 				wood: 10,
@@ -572,6 +600,7 @@ define({
 		
 		Tower: {
 			className: 'tower',
+			spriteName: 'tower',
 			position: 330,
 			cost: {},
 			requiredLevel: 1,
@@ -640,7 +669,7 @@ define({
 			start: function(entity) {
 				entity.paused = true;
 				if(this._worldEffect == null) {
-					this._worldEffect = new (require('app/entity/worldeffect'))({effectClass: 'iceBlock'});
+					this._worldEffect = new (require('app/entity/worldeffect'))({effectClass: 'iceBlock', spriteName: 'dragoneffects'});
 					this._worldEffect.p(entity.p());
 					require('app/eventmanager').trigger('newEntity', [this._worldEffect]);
 				}
