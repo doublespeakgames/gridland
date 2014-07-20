@@ -3,7 +3,8 @@ define(['app/entity/worldentity'],
 	
 	var Star = function() { };
 	Star.prototype = new WorldEntity({
-		className: 'star'
+		className: 'star',
+		spriteName: 'star'
 	});
 	Star.constructor = Star;
 	

@@ -36,6 +36,7 @@
 				<include name="**/*.*" />
 				<exclude name="**/thumbs.db" />
 				<exclude name="img/src/*.*" />
+				<exclude name="img/nodeploy/*.*" />
 			</fileset>
 		</copy>
 		<replaceregexp 	file="${deploy.path}/index.html" 
