@@ -8,6 +8,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	var provider = null;
 	var playingMusic = false;
 	var longloadTimer = false;
+	var playingBossMusic = false;
 	
 	var sounds = {
 		DayMusic: {
@@ -25,6 +26,11 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			silentIf: function() {
 				return !require('app/engine').isNight();
 			}
+		},
+		BossMusic: {
+			file: 'theme-boss',
+			music: true,
+			noPlay: true
 		},
 		Click: {
 			file: 'click'
@@ -164,7 +170,15 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		}
 	}
 	
+	function startBossMusic() {
+		GameAudio.play('BossMusic');
+		// If it's not night time, something is horribly wrong...
+		crossFade('NightMusic', 'BossMusic', 500);
+		playingBossMusic = true;
+	}
+	
 	function changeMusic(isNight) {
+		GameAudio.stop('BossMusic');
 		if(isNight) {
 			crossFade('DayMusic', 'NightMusic', 700);
 		} else {
@@ -208,8 +222,9 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 					E.bind('dayBreak', startMusic);
 				}
 			} else {
-				crossFade('NightMusic', 'DayMusic', 700);
+				crossFade(playingBossMusic ? 'BossMusic' : 'NightMusic', 'DayMusic', 700);
 			}
+			playingBossMusic = false;
 			
 			E.bind('pageHidden', function() { toggleMute(true); });
 			E.bind('pageShown', function() { toggleMute(false); });
@@ -246,6 +261,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('burn', GameAudio.play.bind(this, 'Fire'));
 			E.bind('segmentExplode', GameAudio.play.bind(this, 'SegmentExplode'));
 			E.bind('dragonExplode', GameAudio.play.bind(this, 'DragonExplode'));
+			E.bind('callDragon', startBossMusic.bind(this));
 			
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));

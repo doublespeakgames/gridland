@@ -130,7 +130,7 @@ define(function() {
 		},
 		
 		stop: function(sound) {
-			if(sound.buffer) {
+			if(sound.currentSource) {
 				sound.currentSource.stop(0);
 			}
 		},
