@@ -62,13 +62,6 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	}
 	
 	function drawBoardClear() {
-		// var t = G.get('.tile', null, true);
-		// t.addClass('hidden');
-		// setTimeout(function() {
-		// 	t.remove();
-		// 	tiles.length = 0;
-		// }, 200);
-
 		for(var row in tiles) {
 			for(var col in tiles[row]) {
 				removeTile(row, col);
@@ -217,7 +210,6 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	
 	var tilePool = [];
 	function preloadTiles() {
-		console.log("preloading tiles");
 		for(var i = 0; i < GameBoard.options.rows * GameBoard.options.columns; i++) {
 			var tile = new Tile({
 				row: -1,
@@ -230,7 +222,6 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			tileContainer.append(tile.el());
 			tilePool.push(tile);
 		}
-		console.log("tiles preloaded");
 	}
 	function newTile(row, col, tileChar) {
 		var tile;
