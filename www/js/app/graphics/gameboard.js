@@ -62,13 +62,20 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	}
 	
 	function drawBoardClear() {
-		var t = G.get('.tile', null, true);
-		t.addClass('hidden');
-		setTimeout(function() {
-			t.remove();
-			tiles.length = 0;
-		}, 200);
-		return 200;
+		// var t = G.get('.tile', null, true);
+		// t.addClass('hidden');
+		// setTimeout(function() {
+		// 	t.remove();
+		// 	tiles.length = 0;
+		// }, 200);
+
+		for(var row in tiles) {
+			for(var col in tiles[row]) {
+				removeTile(row, col);
+			}
+		}
+
+		return 300;
 	}
 	
 	function drawFillBoard(tileString) {
@@ -168,7 +175,6 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		}
 		
 		// Add new tiles to the top
-		// TODO: As expected, this is the heaviest thing. Optimize it.
 		if(opts.added) {
 			for(var i in opts.added) {
 				var a = opts.added[i];
@@ -189,7 +195,6 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		setTimeout(function() {
 			E.trigger('tileDrop');
 		}, 300);
-		
 		return 400;
 	}
 	
@@ -210,26 +215,53 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 		};
 	}
 	
+	var tilePool = [];
+	function preloadTiles() {
+		console.log("preloading tiles");
+		for(var i = 0; i < GameBoard.options.rows * GameBoard.options.columns; i++) {
+			var tile = new Tile({
+				row: -1,
+				column: 0,
+				type: Content.ResourceType.Grain
+			});
+
+			tile.el().addClass('hidden pooled');
+			updatePositionInBoard(tile, tile.options.row, tile.options.column);
+			tileContainer.append(tile.el());
+			tilePool.push(tile);
+		}
+		console.log("tiles preloaded");
+	}
 	function newTile(row, col, tileChar) {
-		var tile = new Tile({
+		var tile;
+		var opts = {
 			type: Content.getResourceType(tileChar),
 			row: row,
 			column: col
-		});
+		};
+		if(tilePool.length == 0) {
+			console.log("Need a new tile!");
+			var tile = new Tile(opts);
+			tileContainer.append(tile.el());
+		} else {
+			tile = tilePool.pop().repurpose(opts);
+		}
+
 		setTile(row, col, tile);
-		updatePositionInBoard(tile, tile.options.row - GameBoard.options.rows);
-		tileContainer.append(tile.el());
+		updatePositionInBoard(tile, tile.options.row - GameBoard.options.rows, tile.options.column);
+		tile.el().removeClass('hidden pooled');
 		
 		return tile;
 	}
-	
+
 	function removeTile(row, col) {
 		var t = getTile(row, col);
 		setTile(row, col, null);
 		t.el().addClass('hidden');
 		setTimeout(function() {
-			t.el().remove();
-			t._el = null;
+			t.el().addClass('pooled');
+			updatePositionInBoard(t, -1);
+			tilePool.push(t);
 		}, 200);
 	}
 	
@@ -262,6 +294,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			tiles.length = 0;
 			_el = null;
 			el();
+			preloadTiles();
 			
 			effectPool.length = 0;
 			E.bind('drawEffect', drawTileEffect);
@@ -293,6 +326,10 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 				case 'match':
 					return drawMatch(options);
 			}
+		},
+
+		checkTilePool: function() {
+			return tilePool.length;
 		}
 	};
 });

@@ -29,6 +29,15 @@ define(['app/entity/entity', 'app/gamecontent'], function(Entity, Content) {
 		return Math.abs(this.options.row - other.options.row) + 
 			Math.abs(this.options.column - other.options.column) == 1;
 	};
+
+	tile.prototype.repurpose = function(options) {
+		this.el().removeClass(this.options.type.className);
+		this.options.type = options.type;
+		this.options.row = options.row;
+		this.options.column = options.column;
+		this.el().addClass(this.options.type.className);
+		return this;
+	};
 	
 	return tile;
 });

@@ -705,7 +705,12 @@ body.night {
 	-webkit-transition: -webkit-transform 200ms linear, opacity 200ms linear;;
 	-moz-transition: -moz-transform 200ms linear, opacity 200ms linear;
 	-ms-transition: -ms-transform 200ms linear, opacity 200ms linear;
-	-o-transition: -o-transform 200ms linear, opacity 200ms linear;
+	-o-transition:
+	 -o-transform 200ms linear, opacity 200ms linear;
+}
+
+.tile.pooled {
+	transition: none !important;
 }
 
 .tile > div {
