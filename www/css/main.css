@@ -1500,6 +1500,10 @@ body.night {
 	-o-transition: -o-transform 500ms linear;
 }
 
+.celestial.noTransition {
+	transition: none;
+}
+
 .healthBar {
 	width: 30px;
 	margin-top: -15px;
@@ -2167,8 +2171,8 @@ body.night {
 	bottom: 35px;
 }
 
-.loot.healthPotion
-.itemButton.healthPotion div:nth-child(1) {
+.loot.healthPotion,
+.button.healthPotion div:nth-child(1) {
 	background-position: 0 -5979px;
 }
 

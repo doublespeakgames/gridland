@@ -525,6 +525,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				} else {
 					celestial.animation(0);
 				}
+				celestial.el().addClass('noTransition');
 				celestial.el().css({
 					'transform': 'translate3d(0px, ' + (Graphics.worldHeight() + 10) + 'px, 0)',
 					'-webkit-transform': 'translate3d(0px, ' + (Graphics.worldHeight() + 10) + 'px, 0)',
@@ -534,6 +535,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				});
 				
 				setTimeout(function() {
+					celestial.el().removeClass('noTransition');
 					_g.raiseCelestial(celestial);
 					if(callback != null) {
 						callback();
