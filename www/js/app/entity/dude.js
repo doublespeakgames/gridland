@@ -6,7 +6,6 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 		this._el = null;
 		this.carrying = null;
 		this.action = null;
-		// State.health = State.maxHealth();
 		Graphics.updateHealth(State.health, State.maxHealth());
 		Graphics.updateExperience(State.xp, this.toLevel());
 		this.shield = 0;
