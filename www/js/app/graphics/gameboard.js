@@ -8,6 +8,7 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	var TILE_WIDTH = 0, TILE_HEIGHT = 0;
 	var BOARD_PAD = 2;
 	var FILL_DELAY = 100;
+	var PRELOAD_BUFFER = 10;
 	
 	function el() {
 		if (_el == null) {
@@ -210,7 +211,8 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	
 	var tilePool = [];
 	function preloadTiles() {
-		for(var i = 0; i < GameBoard.options.rows * GameBoard.options.columns; i++) {
+		// Preload the tiles necessary to fill the board, plus a buffer for matches.
+		for(var i = 0; i < GameBoard.options.rows * GameBoard.options.columns + PRELOAD_BUFFER; i++) {
 			var tile = new Tile({
 				row: -1,
 				column: 0,
@@ -231,7 +233,6 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 			column: col
 		};
 		if(tilePool.length == 0) {
-			console.log("Need a new tile!");
 			var tile = new Tile(opts);
 			tileContainer.append(tile.el());
 		} else {
