@@ -14,6 +14,8 @@ define(['base64', 'app/entity/building', 'app/entity/block', 'app/eventmanager',
 			this.mana = 0;
 			this.counts = {};
 			this.prestige = 0;
+			this.prioritizedBuilding = null;
+			this.health = this.maxHealth();
 			E.trigger('newGame');
 		},
 		
@@ -62,6 +64,8 @@ define(['base64', 'app/entity/building', 'app/entity/block', 'app/eventmanager',
 					this.mana = savedState.mana || 0;
 					this.counts = savedState.counts || {};
 					this.prestige = savedState.prestige || 0;
+					this.health = savedState.health || this.maxHealth();
+					this.prioritizedBuilding = savedState.prioritizedBuilding;
 				} else {
 					this.create(slot);
 				}
@@ -84,7 +88,9 @@ define(['base64', 'app/entity/building', 'app/entity/block', 'app/eventmanager',
 					gem: this.gem,
 					mana: this.mana,
 					counts: this.counts,
-					prestige: this.prestige
+					prestige: this.prestige,
+					health: this.health,
+					prioritizedBuilding: this.prioritizedBuilding
 				};
 				for(b in this.buildings) {
 					var building = this.buildings[b];
@@ -126,6 +132,7 @@ define(['base64', 'app/entity/building', 'app/entity/block', 'app/eventmanager',
 				savedState.xp = this.xp;
 				savedState.level = this.level;
 				savedState.counts = this.counts;
+				savedState.health = this.health;
 				localStorage["slot" + loadedSlot] = JSON.stringify(savedState);
 			}
 		},

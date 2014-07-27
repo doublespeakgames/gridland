@@ -111,6 +111,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 						Graphics.setPosition(building, building.p());
 						Graphics.updateCosts(building);
 					}
+
+					if(building.options.type.className == GameState.prioritizedBuilding) {
+						prioritizeBuilding(building);
+					}
 				}
 				
 				while(deferredCallbacks.length > 0) {
@@ -315,6 +319,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			}
 			EventManager.trigger('prioritize');
 			prioritizedBuilding = building;
+			GameState.prioritizedBuilding = building.options.type.className;
 			star.p(building.options.type.position);
 			Graphics.setPosition(star, star.p());
 			star.el().css('display', 'block');
@@ -324,6 +329,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	function clearPriorityIfNeeded(building) {
 		if(prioritizedBuilding == building) {
 			prioritizedBuilding = null;
+			GameState.prioritizedBuilding = null;
 			star.el().css('display', 'none');
 		}
 	}
