@@ -263,7 +263,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		},
 		
 		canMove: function() {
-			return !inTransition;
+			return !inTransition && dude.isAlive();
 		},
 		
 		isNight: function() {

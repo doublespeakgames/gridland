@@ -222,14 +222,16 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			});
 			
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", ".inventory .button", function(e) {
-				// Handle wacky touch event objects
-				if(e.originalEvent.changedTouches) {
-					e = e.originalEvent.changedTouches[0];
+				if(World.canMove()) {
+					// Handle wacky touch event objects
+					if(e.originalEvent.changedTouches) {
+						e = e.originalEvent.changedTouches[0];
+					}
+					var loot = $(e.target).closest('.button').data('lootName');
+					EventManager.trigger('toggleMenu');
+					Loot.useItem(loot);
+					EventManager.trigger('click', [loot]);
 				}
-				var loot = $(e.target).closest('.button').data('lootName');
-				EventManager.trigger('toggleMenu');
-				Loot.useItem(loot);
-				EventManager.trigger('click', [loot]);
 				return false;
 			});
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", ".magic .button", function(e) {
