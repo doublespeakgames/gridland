@@ -7,6 +7,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				 Donate, Visibility) {
 
 	var DRAG_THRESHOLD = 30; // in pixels
+	var MOBILE_RATIO = 16/10; // height/width
 	var activeTile = null;
 	var dragging = false;
 	var dragStart = {x: 0, y: 0};
@@ -138,7 +139,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			});
 			
 			var gOptions = null;
-			if (window.screen.width < 590 ) {
+			// Change the aspect ratio of the gameboard on mobile devices with 16:10 or :9 ratio
+			if (window.screen.height / window.screen.width >= MOBILE_RATIO) {
 				gOptions = {
 					rows: 8,
 					columns: 7,
