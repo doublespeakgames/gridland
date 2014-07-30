@@ -129,8 +129,6 @@ define(['base64', 'app/entity/building', 'app/entity/block', 'app/eventmanager',
 		savePersistents: function() {
 			if(typeof Storage != 'undefined' && localStorage && localStorage["slot" + loadedSlot]) {
 				var savedState = JSON.parse(localStorage["slot" + loadedSlot]);
-				savedState.xp = this.xp;
-				savedState.level = this.level;
 				savedState.counts = this.counts;
 				savedState.health = this.health;
 				localStorage["slot" + loadedSlot] = JSON.stringify(savedState);
@@ -219,8 +217,8 @@ define(['base64', 'app/entity/building', 'app/entity/block', 'app/eventmanager',
 					highestMod = building.options.type.tileLevel;
 				}
 			}
-			// 2, 3, 4, 4, 5, 6, 6, 7, 8... ( + punch damage )
-			return 2 + (highestMod - 1) - Math.floor((highestMod - 1) / 3);
+			// 1, 2, 3, 3, 4, 5, 5, 6, 7... ( + punch damage )
+			return 1 + (highestMod - 1) - Math.floor((highestMod - 1) / 3);
 		},
 		
 		maxMana: function() {

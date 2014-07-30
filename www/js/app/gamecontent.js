@@ -337,7 +337,7 @@ define({
 			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
-				stone: 2,
+				wood: 2,
 				clay: 2
 			},
 			requiredLevel: 1,
@@ -351,7 +351,7 @@ define({
 			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
-				stone: 2,
+				wood: 2,
 				clay: 5,
 				cloth: 5
 			},
@@ -368,7 +368,7 @@ define({
 			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
-				stone: 2,
+				wood: 2,
 				clay: 8,
 				cloth: 8
 			},
@@ -385,7 +385,7 @@ define({
 			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
-				stone: 4,
+				wood: 4,
 				clay: 8,
 				cloth: 8
 			},
@@ -402,7 +402,7 @@ define({
 			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
-				stone: 6,
+				wood: 6,
 				clay: 8,
 				cloth: 8
 			},
@@ -419,7 +419,7 @@ define({
 			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
-				stone: 6,
+				wood: 6,
 				clay: 10,
 				cloth: 10
 			},
@@ -436,7 +436,7 @@ define({
 			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
-				stone: 8,
+				wood: 8,
 				clay: 10,
 				cloth: 10
 			},
@@ -453,7 +453,7 @@ define({
 			spriteName: 'blacksmith',
 			position: 210,
 			cost: {
-				stone: 10,
+				wood: 10,
 				clay: 10,
 				cloth: 10
 			},
@@ -470,7 +470,7 @@ define({
 			spriteName: 'sawmill',
 			position: 270,
 			cost: {
-				wood: 2,
+				stone: 2,
 				cloth: 2
 			},
 			requiredLevel: 1,
@@ -484,7 +484,7 @@ define({
 			spriteName: 'sawmill',
 			position: 270,
 			cost: {
-				wood: 2,
+				stone: 2,
 				clay: 5,
 				cloth: 5
 			},
@@ -501,7 +501,7 @@ define({
 			spriteName: 'sawmill',
 			position: 270,
 			cost: {
-				wood: 2,
+				stone: 2,
 				clay: 8,
 				cloth: 8
 			},
@@ -518,7 +518,7 @@ define({
 			spriteName: 'sawmill',
 			position: 270,
 			cost: {
-				wood: 4,
+				stone: 4,
 				clay: 8,
 				cloth: 8
 			},
@@ -535,7 +535,7 @@ define({
 			spriteName: 'sawmill',
 			position: 270,
 			cost: {
-				wood: 6,
+				stone: 6,
 				clay: 8,
 				cloth: 8
 			},
@@ -552,7 +552,7 @@ define({
 			spriteName: 'sawmill',
 			position: 270,
 			cost: {
-				wood: 6,
+				stone: 6,
 				clay: 10,
 				cloth: 10
 			},
@@ -569,7 +569,7 @@ define({
 			spriteName: 'sawmill',
 			position: 270,
 			cost: {
-				wood: 8,
+				stone: 8,
 				clay: 10,
 				cloth: 10
 			},
@@ -586,7 +586,7 @@ define({
 			spriteName: 'sawmill',
 			position: 270,
 			cost: {
-				wood: 10,
+				stone: 10,
 				clay: 10,
 				cloth: 10
 			},
@@ -630,7 +630,7 @@ define({
 		bomb: {
 			onUse: function() {
 				var E = require('app/eventmanager');
-				E.trigger('damageAll', [50]);
+				E.trigger('damageAll', [20]);
 				E.trigger('bomb');
 			}
 		},
