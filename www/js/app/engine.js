@@ -123,11 +123,19 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		GameState.import(slotNum, importCode);
 		Graphics.replaceSlot(slotNum, GameState.getSlotInfo(slotNum));
 	}
+
+	function isModernBrowser() {
+		return ( location.search.indexOf( 'ignorebrowser' ) >= 0 || ( typeof Storage != 'undefined' ) );
+	}
 	
 	var Engine = {
 		options: {},
 		init: function(opts) {
 			$.extend(this.options, opts);
+
+			if(!isModernBrowser()) {
+				window.location = 'browserWarning.html';
+			}
 		
 			$('#test').off().click(function() { 
 				EventManager.trigger('phaseChange', [!Engine.isNight()]);

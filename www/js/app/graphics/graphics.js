@@ -346,7 +346,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					(
 						Graphics.make('nomusic', 'a')
 							.text(Graphics.getText('NO_MUSIC'))
-							.attr('href', '?nomusic=true')
+							.attr('href', window.location + (window.location.search.length > 0 ? '&' : '?') + 'nomusic')
 					)
 				);
 			});
