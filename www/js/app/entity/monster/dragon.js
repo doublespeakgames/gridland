@@ -2,6 +2,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		function(Monster, ActionFactory) {
 	
 	var ANIMATION_ROWS = 5;
+	var hardness = 2;
 	
 	var postureSpeedStylesheet = null;
 	var headMount = { x: 20, y: 97 };
@@ -226,6 +227,10 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 		return false;
 	};
 	
+	Dragon.prototype.takeDamage = function(damage) {
+		Monster.prototype.takeDamage.call(this, damage - hardness);
+	};
+
 	Dragon.prototype.queueAttack = function(attackName) {
 		this.attackQueue.push(attackName);
 	};

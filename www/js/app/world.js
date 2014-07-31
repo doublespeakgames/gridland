@@ -531,7 +531,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	}
 	
 	function makeStuffHappen() {
-		if(hasteTick && World.hasEffect('haste')) {
+		if(hasteTick && World.hasEffect('haste') && !dude.paused) {
 			runEntity(dude);
 		} else if(!hasteTick) {
 			var numEnemies = 0;

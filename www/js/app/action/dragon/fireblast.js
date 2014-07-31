@@ -1,7 +1,7 @@
 define(['app/action/action'], function(Action) {
 	
 	var DURATION = 10000;
-	var BURN_DAMAGE = 3;
+	var BURN_DAMAGE = 2;
 	var BURN_DELAY = 200;
 	
 	var FireBlast = function(options) {
