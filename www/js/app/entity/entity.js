@@ -26,14 +26,14 @@ define([ 'jquery' ], function($) {
 	};
 	
 	entity.prototype.width = function() {
-		if(this._width == null) {
+		if(!this._width) {
 			this._width = this.el().width();
 		}
 		return this._width;
 	};
 	
 	entity.prototype.height = function() {
-		if(this._height == null) {
+		if(!this._height) {
 			this._height = this.el().height();
 		}
 		return this._height;
