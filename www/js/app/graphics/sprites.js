@@ -1,52 +1,98 @@
 define(function() {
 	
-	var spriteoffsets = {
-		blacksmith: 0,
-		bricklayer: 640,
-		bucklericon: 960,
-		buttonicons: 1020,
-		demon: 1048,
-		dragon: 1650,
-		dragoneffects: 3290,
-		dragonhead: 3378,
-		dragonneck: 3438,
-		dude: 3486,
-		dudenight: 3806,
-		earthelemental: 4222,
-		fireelemental: 4770,
-		fireball: 5057,
-		gem: 5064,
-		harmour: 5160,
-		heart: 5503,
-		imp: 5559,
-		items: 5979,
-		lich: 6007,
-		lizardman: 6547,
-		menu: 6806,
-		music: 6886,
-		rat: 7142,
-		sawmill: 7233,
-		shack: 7933,
-		skeleton: 8253,
-		social: 8477,
-		spells: 8573,
-		spider: 8653,
-		star: 8919,
-		sun: 8935,
-		swordicon: 8995,
-		tilesday: 9055,
-		tilesnight: 9523,
-		tower: 10043,
-		treasurechest: 10443,
-		warlock: 10495,
-		waterelemental: 10754,
-		weaver: 11027,
-		zombie: 11347
+	var spriteinfo = {
+		// Buildings
+		blacksmith: ['buildings', 0],
+		bricklayer: ['buildings', 640],
+		sawmill: ['buildings', 960],
+		shack: ['buildings', 1600],
+		tower: ['buildings', 1920],
+		weaver: ['buildings', 2320],
+
+		// Monsters
+		demon: ['monsters', 0],
+		dude: ['monsters', 602],
+		dudenight: ['monsters', 1018],
+		earthelemental: ['monsters', 1434],
+		fireelemental: ['monsters', 1952],
+		harmour: ['monsters', 2239],
+		imp: ['monsters', 2582],
+		lich: ['monsters', 3002],
+		lizardman: ['monsters', 3542],
+		rat: ['monsters', 3787],
+		skeleton: ['monsters', 3878],
+		spider: ['monsters', 4102],
+		warlock: ['monsters', 4368],
+		waterelemental: ['monsters', 4627],
+		zombie: ['monsters', 4900],
+
+		// Icons
+		bucklericon: ['icons', 0],
+		buttonicons: ['icons', 60],
+		dragoneffects: ['icons', 88],
+		fireball: ['icons', 176],
+		gem: ['icons', 183],
+		heart: ['icons', 279],
+		items: ['icons', 335],
+		menu: ['icons', 363],
+		music: ['icons', 443],
+		social: ['icons', 699],
+		spells: ['icons', 795],
+		star:['icons', 875],
+		sun: ['icons', 891],
+		swordicon: ['icons', 951],
+		treasurechest: ['icons', 1011],
+
+		// Tiles
+		tilesday: ['tiles', 0],
+		tilesnight: ['tiles', 468],
+
+		// Dragon
+		dragon: ['dragonsprite', 0],
+		dragonhead: ['dragonsprite', 1640],
+		dragonneck: ['dragonsprite', 1670]
 	};
+
+	var spritesheets = {};
+	function loadSheets() {
+		for(var key in spriteinfo) {
+			var sheet = spriteinfo[key][0];
+			if(typeof spritesheets[sheet] == 'undefined') {
+				loadSheet(sheet);
+			}
+		}
+	}
+
+	function loadSheet(sheetName) {
+		spritesheets[sheetName] = false;
+		var spriteImage = new Image();
+		spriteImage.onload = function() {
+			spritesheets[sheetName] = true;
+		};
+		spriteImage.src = "img/" + sheetName + ".png";
+	}
+
+	function getInfo(spriteName) {
+		return spriteinfo[spriteName] || [null, 0];
+	}
+
+	// Preload all the spritesheets
+	loadSheets();
 	
 	return {
 		getOffset: function(spriteName) {
-			return spriteoffsets[spriteName] || 0;
+			return getInfo(spriteName)[1];
+		},
+		getFilename: function(spriteName) {
+			return getInfo(spriteName)[0];
+		},
+		isReady: function() {
+			for(var sheet in spritesheets) {
+				if(!spritesheets[sheet]) {
+					return false;
+				}
+			}
+			return true;
 		}
 	};
 });

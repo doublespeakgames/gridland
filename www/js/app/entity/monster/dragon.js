@@ -228,7 +228,8 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Dragon.prototype.takeDamage = function(damage) {
-		Monster.prototype.takeDamage.call(this, damage - hardness);
+		damage -= hardness;
+		Monster.prototype.takeDamage.call(this, damage < 0 ? 0 : damage);
 	};
 
 	Dragon.prototype.queueAttack = function(attackName) {

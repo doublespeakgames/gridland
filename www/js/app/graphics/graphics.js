@@ -351,12 +351,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				);
 			});
 			
-			var spriteImage = new Image();
-			spriteImage.onload = function() {
-				loaded = true;
-			};
-			spriteImage.src = "img/fullsprite.png";
-			
 			BoardGraphics.init();
 			WorldGraphics.init();
 			ResourceGraphics.init();
@@ -372,7 +366,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		isReady: function() {
-			return loaded && textStore && textStore.isReady();
+			return Sprites.isReady() && textStore && textStore.isReady();
 		},
 		
 		getText: function(key) {
@@ -568,17 +562,12 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		updateSprite: function(entity) {
-			// TODO: Cache the entity width. Calling el.width() this often can't be good for performance.
 			var el = entity.el();
 			var spriteRow = (entity.tempAnimation == null ? entity.animationRow : entity.tempAnimation) || 0;
-			// This is a terrible hack, but I don't want to fix it for real
-			// Dude's day sprite has fewer rows than his nightsprite, causing sprite buffer overflows
-			if(!entity.options.className == 'dude' || spriteRow <= 9) {
-				Graphics.updateSpritePos(el, entity.frame * el.width(), spriteRow * el.height() + Sprites.getOffset(entity.options.spriteName));
-			}
+			Graphics.updateSpritePos(el, entity.frame * entity.width(), spriteRow * entity.height() + Sprites.getOffset(entity.options.spriteName));
 			var nightSprite = $('.animationLayer', el);
 			if(nightSprite) {
-				Graphics.updateSpritePos(nightSprite, entity.frame * el.width(), spriteRow * el.height() + Sprites.getOffset(entity.options.nightSpriteName));
+				Graphics.updateSpritePos(nightSprite, entity.frame * entity.width(), spriteRow * entity.height() + Sprites.getOffset(entity.options.nightSpriteName));
 			}
 			if(entity.stepFunction) {
 				entity.stepFunction(entity.frame);
