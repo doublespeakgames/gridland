@@ -258,11 +258,13 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 	}
 	
 	function drawTileEffect(options) {
-		getTile(options.row, options.column).el().addClass('effect_' + options.effectType);
+		var tile = getTile(options.row, options.column);
+		tile && tile.el().addClass('effect_' + options.effectType);
 	}
 	
 	function removeTileEffect(options) {
-		getTile(options.row, options.column).el().removeClass('effect_' + options.effectType);
+		var tile = getTile(options.row, options.column);
+		tile && tile.el().removeClass('effect_' + options.effectType);
 	}
 	
 	function explode(options) {

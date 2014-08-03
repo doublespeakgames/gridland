@@ -117,7 +117,7 @@ define(['app/eventmanager', 'app/entity/worldentity', 'app/graphics/graphics',
 				this.action.terminateAction(this);
 			}
 			if(State.health == 0) {
-				EventManager.trigger('dudeDeath', [damager.options.monsterClass]);
+				EventManager.trigger('dudeDeath', [damager ? damager.options.monsterClass : "unknown"]);
 			}
 			Graphics.updateHealth(State.health, State.maxHealth());
 		}

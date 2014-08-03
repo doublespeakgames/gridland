@@ -31,11 +31,10 @@ define(['app/entity/entity', 'app/gamecontent'], function(Entity, Content) {
 	};
 
 	tile.prototype.repurpose = function(options) {
-		this.el().removeClass(this.options.type.className);
 		this.options.type = options.type;
 		this.options.row = options.row;
 		this.options.column = options.column;
-		this.el().addClass(this.options.type.className);
+		this.el().attr('class',  this.options.className + " " + this.options.type.className);
 		return this;
 	};
 	

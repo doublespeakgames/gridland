@@ -24,6 +24,7 @@ define(['app/action/action'], function(Action) {
 	LichSpell.prototype.doFrameAction = function(frame) {
 		if(frame == 3) {
 			require('app/gameboard').addEffectRandomly('explosive');
+			require('app/eventmanager').trigger('lichSpell');
 			this._entity.action = null;
 		}
 	};

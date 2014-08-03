@@ -121,6 +121,9 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		},
 		DragonExplode: {
 			file: 'dannihilate'
+		},
+		LichSpell: {
+			file: 'lichspell'
 		}
 	};
 	
@@ -262,6 +265,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 			E.bind('segmentExplode', GameAudio.play.bind(this, 'SegmentExplode'));
 			E.bind('dragonExplode', GameAudio.play.bind(this, 'DragonExplode'));
 			E.bind('callDragon', startBossMusic.bind(this));
+			E.bind('lichSpell', GameAudio.play.bind(this, 'LichSpell'));
 			
 			GameAudio.setMusicVolume(require('app/gameoptions').get('musicVolume'));
 			GameAudio.setEffectsVolume(require('app/gameoptions').get('effectsVolume'));
