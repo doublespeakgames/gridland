@@ -713,7 +713,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			
 			var statusContainer = $('.hearts', this.getStatusContainer());
 			for(var i = 0, n = heartInfo.total - statusContainer.children().length; i < n; i++) {
-				$('<div>').addClass('heart').addClass('hidden').append($('<div>')
+				$('<div>').addClass('heart').addClass('prepop').append($('<div>')
 						.addClass('mask')).append($('<div>').addClass('mask')
 						.addClass('nightSprite')).append($('<div>')
 						.addClass('bar')).appendTo(statusContainer);
@@ -738,26 +738,31 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					$('.bar', heart).css('width', '0%');
 				}
 			}
-			setTimeout(function() {
-				$('.hidden', statusContainer).removeClass('hidden');
-			}, 100);
+			$('.prepop', statusContainer).each(function(idx, heartEl) {
+				setTimeout(function() {
+					$(heartEl).removeClass('prepop');
+				}, idx * 100);
+			});
 		},
 		
 		updateShield: function(shield, maxShield) {
 			var container = this.getStatusContainer();
 			var el = $('.shield', container);
 			if(el.length == 0) {
-				el = $('<div>').addClass('shield').addClass('hidden')
+				el = $('<div>').addClass('shield').addClass('prepop')
 					.append($('<div>')).insertAfter('.hearts', container);
 			}
 			if(shield > 0) {
 				setTimeout(function() {
-					el.removeClass('hidden');
+					el.removeClass('prepop');
 				}, 100);
 				$('div', el).width((shield / maxShield * 100) + "%");
 			} else {
 				$('div', el).width("0%");
 				el.addClass('hidden');
+				setTimeout(function() {
+					el.addClass('prepop').removeClass('hidden');
+				}, 300);
 			}
 		},
 		
@@ -765,17 +770,20 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			var container = this.getStatusContainer();
 			var el = $('.sword', container);
 			if(el.length == 0) {
-				el = $('<div>').addClass('sword').addClass('hidden')
+				el = $('<div>').addClass('sword').addClass('prepop')
 					.append($('<div>')).insertAfter('.hearts', container);
 			}
 			if(sword > 0) {
 				setTimeout(function() {
-					el.removeClass('hidden');
+					el.removeClass('prepop');
 				}, 100);
 				$('div', el).width((sword / maxSword * 100) + "%");
 			} else {
 				$('div', el).width("0%");
 				el.addClass('hidden');
+				setTimeout(function() {
+					el.addClass('prepop').removeClass('hidden');
+				}, 300);
 			}
 		},
 		

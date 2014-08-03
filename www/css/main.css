@@ -1759,6 +1759,7 @@ body.night {
 
 .statusContainer {
 	position: absolute;
+	z-index: 10;
 	top: 0px;
 	left: -35px;
 	width: 35px;
@@ -1808,7 +1809,7 @@ body.night {
 .bigheart .bar {
 	position: absolute;
 	height: 100%;
-	background-color: #BC4D4D;
+	background: url(../img/icons.png) -60px -279px;
 	transition: width 300ms linear;
 	-webkit-transition: width 300ms linear;
 	-ms-transition: width 300ms linear;
@@ -1818,7 +1819,7 @@ body.night {
 
 .heart.full,
 .bigheart.full {
-	background-color: #BC4D4D;
+	background: url(../img/icons.png) -60px -279px;
 }
 
 .shield {
@@ -2252,6 +2253,51 @@ body.night {
 
 .magic .button.open:after {
 	opacity: 0;
+}
+
+@keyframes popicon {
+	0% { transform: scale(0); }
+	50% { transform: scale(2); }
+	100% { transform: scale(1); }
+}
+@-webkit-keyframes popicon {
+	0% { -webkit-transform: scale(0); }
+	50% { -webkit-transform: scale(2); }
+	100% { -webkit-transform: scale(1); }
+}
+@-moz-keyframes popicon {
+	0% { -moz-transform: scale(0); }
+	50% { -moz-transform: scale(2); }
+	100% { -moz-transform: scale(1); }
+}
+@-ms-keyframes popicon {
+	0% { -ms-transform: scale(0); }
+	50% { -ms-transform: scale(2); }
+	100% { -ms-transform: scale(1); }
+}
+@-o-keyframes popicon {
+	0% { -o-transform: scale(0); }
+	50% { -o-transform: scale(2); }
+	100% { -o-transform: scale(1); }
+}
+
+.hearts .heart,
+.statusContainer .sword,
+.statusContainer .shield {
+	animation: popicon 500ms 1;
+	-webkit-animation: popicon 500ms 1;
+	-moz-animation: popicon 500ms 1;
+	-ms-animation: popicon 500ms 1;
+	-o-animation: popicon 500ms 1;
+}
+
+.prepop {
+	display: none;
+	animation: none;
+	-webkit-animation: none;
+	-moz-animation: none;
+	-ms-animation: none;
+	-o-animation: none;
 }
 
 @keyframes glow {
