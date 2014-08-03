@@ -740,7 +740,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			}
 			$('.prepop', statusContainer).each(function(idx, heartEl) {
 				setTimeout(function() {
-					$(heartEl).removeClass('prepop');
+					$(heartEl).detach().appendTo(statusContainer).removeClass('prepop');
 				}, idx * 100);
 			});
 		},
@@ -753,9 +753,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					.append($('<div>')).insertAfter('.hearts', container);
 			}
 			if(shield > 0) {
-				setTimeout(function() {
-					el.removeClass('prepop');
-				}, 100);
+				if(el.hasClass('prepop')) {
+					setTimeout(function() {
+						el.detach().insertAfter('.hearts', container).removeClass('prepop');
+					}, 100);
+				}
 				$('div', el).width((shield / maxShield * 100) + "%");
 			} else {
 				$('div', el).width("0%");
@@ -774,9 +776,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 					.append($('<div>')).insertAfter('.hearts', container);
 			}
 			if(sword > 0) {
-				setTimeout(function() {
-					el.removeClass('prepop');
-				}, 100);
+				if(el.hasClass('prepop')) {
+					setTimeout(function() {
+						el.detach().insertAfter('.hearts', container).removeClass('prepop');
+					}, 100);
+				}
 				$('div', el).width((sword / maxSword * 100) + "%");
 			} else {
 				$('div', el).width("0%");

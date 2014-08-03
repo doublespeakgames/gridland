@@ -303,6 +303,15 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		
 		getDebugMultiplier: function() {
 			return _debugMultiplier;
+		},
+
+		setPause: function(paused) {
+			if(paused && gameLoop) {
+				clearInterval(gameLoop);
+				gameLoop = false;
+			} else {
+				gameLoop = setInterval(makeStuffHappen, 300);
+			}
 		}
 	};
 	
