@@ -90,6 +90,11 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 			dragTarget.css('transform', 'translate3d(' + (pos) + 'px, 0px, 0px)');
 		}
 	}
+
+	function recalibrateSliders() {
+		setVolume(musicHandle, require('app/gameoptions').get('musicVolume'));
+		setVolume(effectsHandle, require('app/gameoptions').get('effectsVolume'));
+	}
 	
 	return {
 		init: function() {
@@ -99,12 +104,12 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 			}
 			_el = null;
 			el();
-			setVolume(musicHandle, require('app/gameoptions').get('musicVolume'));
+			recalibrateSliders();
 			musicHandle.off().on('mousedown touchstart', handleTouchStart);
-			setVolume(effectsHandle, require('app/gameoptions').get('effectsVolume'));
 			effectsHandle.off().on('mousedown touchstart', handleTouchStart);
 			el().off().on('mousemove touchmove', handleTouchMove);
 			G.get('.menuBar').off().on('mouseup touchend', handleTouchEnd);
+			window.onresize = recalibrateSliders;
 		}
 	};
 });
