@@ -1,6 +1,6 @@
 define(['jquery', 'app/eventmanager', 'app/gamecontent', 'app/gamestate'], 
 		function($, EventManager, Content, GameState) {
-	return {
+	var Resources = {
 		options : {
 			rows: 3,
 			cols: 3
@@ -12,15 +12,19 @@ define(['jquery', 'app/eventmanager', 'app/gamecontent', 'app/gamestate'],
 		},
 		
 		returnBlock: function(block) {
+			// If the stores are now full, we can't return the block
+			if(GameState.stores.length >= Resources.max()) {
+				block.el().remove();
+				return;
+			}
 			GameState.stores.push(block);
 			EventManager.trigger("addResource", [block]);
-			this.checkMaximum();
 		},
 		
 		collectResource: function(type, quantity) {
 			if(this.loaded) {
-				require(['app/entity/block', 'app/resources', 'app/gamestate', 'app/gamecontent'], 
-						function(Block, Resources, GameState, Content) {
+				require(['app/entity/block'], 
+						function(Block) {
 					// Find a block to fill 
 					var block = null;
 					for(var i = 0, len = GameState.stores.length; i < len; i++) {
@@ -62,4 +66,7 @@ define(['jquery', 'app/eventmanager', 'app/gamecontent', 'app/gamestate'],
 			return this.options.cols * this.options.rows;
 		}
 	};
+
+
+	return Resources;
 });
