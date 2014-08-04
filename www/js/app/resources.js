@@ -31,13 +31,14 @@ define(['jquery', 'app/eventmanager', 'app/gamecontent', 'app/gamestate'],
 						}
 					}
 					if(block == null) {
+						// If the stores are full, we can't create a new block
+						if(GameState.stores.length >= Resources.max()) return;
+
 						// Create a new block
 						block = new Block({
 							type: type
 						});
 						GameState.stores.push(block);
-						// If the stores are full, eject the oldest
-						Resources.checkMaximum();
 						EventManager.trigger("addResource", [block]);
 					}
 					// Add the resource
@@ -51,17 +52,7 @@ define(['jquery', 'app/eventmanager', 'app/gamecontent', 'app/gamestate'],
 				});
 			}
 		},
-		
-		checkMaximum: function() {
-			if(GameState.stores.length > this.max()) {
-				var oldBlocks = GameState.stores.splice(0, GameState.stores.length - this.max());
-				for(var i in oldBlocks) {
-					oldBlocks[i].gone = true;
-					oldBlocks[i].el().remove();
-				}
-			}
-		},
-		
+
 		setSize: function(rows, cols) {
 			this.options.rows = rows;
 			this.options.cols = cols;
