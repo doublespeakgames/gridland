@@ -8,7 +8,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory', 'app/graphics/
 		this.damage = 5; // Between 40 and 120
 		this.xp = 500;
 		
-		this.dropChance = 0.2; // 60%!
+		this.dropChance = 0.25; // 75%!
 		this.hp(this.getMaxHealth());
 		this.spellCooldown = 16;
 		this.teleportCooldown = 52;
