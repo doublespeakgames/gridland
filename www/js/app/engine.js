@@ -142,13 +142,17 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			});
 			
 			$('.menuBtn').off().on("click touchstart", function() {
-				$('.menuBar').toggleClass('open');
+				var menuBar = $('.menuBar');
+				menuBar.toggleClass('open').addClass('closing');
+				setTimeout(function() {
+					menuBar.removeClass('closing');
+				}, 200);
 				EventManager.trigger('click', ['menubutton']);
 			});
 			
 			var gOptions = null;
 			// Change the aspect ratio of the gameboard on mobile devices with 16:10 or :9 ratio
-			if (window.screen.height / window.screen.width >= MOBILE_RATIO) {
+			if (document.documentElement.clientHeight / document.documentElement.clientWidth >= MOBILE_RATIO) {
 				gOptions = {
 					rows: 8,
 					columns: 7,

@@ -6,13 +6,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	
 	var MAX_HEARTS = 14;
 	var HEALTH_PER_HEART = 10;
-	var MIN_SCREEN_WIDTH = 600;
+	var MIN_SCREEN_WIDTH = 600, MIN_SCREEN_HEIGHT = 650;
 	
 	var textStore;
 	var _ww = null, _wh = null;
 	var _bossHealth = null;
 	var styleSheet = null;
-	var scaled = false;
+	var currentScale = null;
 	var heartInfo = { total: 0, big: 0 };
 	var imageLoaded = false;
 	
@@ -290,23 +290,35 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		return false;
 	}
 	
+	var scaleSheet = null;
 	function scaleToViewport() {
-		var screenWidth = document.documentElement.clientWidth;//window.screen.width;
-		if(screenWidth < MIN_SCREEN_WIDTH) {
-			scaled = true;
-			var scale = screenWidth / MIN_SCREEN_WIDTH;
+		var widthScale = document.documentElement.clientWidth / MIN_SCREEN_WIDTH,
+			heightScale = document.documentElement.clientHeight / MIN_SCREEN_HEIGHT;
+
+		if(!scaleSheet) {
+			scaleSheet = newStylesheet();
+		}
+
+		var minScale = widthScale  < heightScale ? widthScale : heightScale;
+		if(minScale != currentScale && minScale < 1) {
+			currentScale = minScale;
+			scaleSheet.cssRules.length > 0 && scaleSheet.deleteRule(0);
 			Graphics.addStyleRule('#loadingScreen, #gameContainer', 
 				'transform-origin: 50% 0 0;' +
 				'-webkit-transform-origin: 50% 0 0;' +
 				'-moz-transform-origin: 50% 0 0;' +
 				'-ms-transform-origin: 50% 0 0;' +
 				'-o-transform-origin: 50% 0 0;' +
-				'transform: scale(' + scale +');' +
-				'-webkit-transform: scale(' + scale +');' +
-				'-moz-transform: scale(' + scale +');' +
-				'-ms-transform: scale(' + scale +');' +
-				'-o-transform: scale(' + scale +');'
+				'transform: scale(' + minScale +');' +
+				'-webkit-transform: scale(' + minScale +');' +
+				'-moz-transform: scale(' + minScale +');' +
+				'-ms-transform: scale(' + minScale +');' +
+				'-o-transform: scale(' + minScale +');',
+				scaleSheet
 			);
+		} else if(minScale != currentScale && Graphics.isScaled()) {
+			currentScale = null;
+			scaleSheet.cssRules.length > 0 && scaleSheet.deleteRule(0);
 		}
 	}
 	
@@ -315,12 +327,19 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		if(style.length > 0) {
 			$(style).remove();
 		}
-		style = document.createElement('style');
-		style.appendChild(document.createTextNode("")); // Stupid Webkit
-		document.head.appendChild(style);
-		styleSheet = style.sheet;
+		styleSheet = newStylesheet('styleSheet');
 	}
 	
+	function newStylesheet(id){
+		style = document.createElement('style');
+		if(id) {
+			style.id = id;
+		}
+		style.appendChild(document.createTextNode("")); // Stupid Webkit
+		document.head.appendChild(style);
+		return style.sheet;
+	}
+
 	var Graphics = {
 		init: function() {
 			loaded = false;
@@ -330,6 +349,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			
 			initStylesheet();
 			scaleToViewport();
+			$(window).off('resize').on('resize', scaleToViewport);
 			
 			EventManager.bind('draw', handleDrawRequest);
 			
@@ -362,7 +382,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		isScaled: function() {
-			return scaled;
+			return currentScale != null;
 		},
 		
 		isReady: function() {
@@ -386,12 +406,20 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			return null;
 		},
 		
-		addStyleRule: function(selector, rules) {
-			if(styleSheet.addRule) {
-				styleSheet.addRule(selector, rules);
+		addStyleRule: function(selector, rules, sheet) {
+			sheet = sheet || styleSheet;
+			if(sheet.addRule) {
+				// Useless goddamn IE non-standard API. Rabble rabble.
+				var length = sheet.cssRules.length;
+				sheet.addRule(selector, rules);
+				return length;
 			} else {
-				styleSheet.insertRule(selector + '{' + rules + '}', 0);
+				return sheet.insertRule(selector + '{' + rules + '}', 0);
 			}
+		},
+
+		removeStyleRule: function(index) {
+			styleSheet.deleteRule(index);
 		},
 		
 		remove: function(thing) {

@@ -48,6 +48,7 @@ body.night {
 	top: 0px;
 	left: 50%;
 	margin-left: -244px;
+	z-index: 1;
 }
 
 /** Loading Screen **/
@@ -363,6 +364,16 @@ body.night {
 	}
 }
 
+@media screen and (max-width: 590px ) and (max-height: 817px) {
+	.menuBar, .night .menuBar {
+		border-top: 0px;
+	}
+	
+	.night .menuBtn, .menuBtn {
+		border: 2px solid;
+	}
+}
+
 .menuBtn {
 	height: 40px;
 	width: 40px;
@@ -391,6 +402,10 @@ body.night {
 	height: 400px;
 	background-color: white;
 	box-shadow: 0 5px 5px 5px #666;
+}
+
+.menuBar.closing {
+	z-index: 102;
 }
 
 .open .menuBtn {
