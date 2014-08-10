@@ -152,7 +152,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			
 			var gOptions = null;
 			// Change the aspect ratio of the gameboard on mobile devices with 16:10 or :9 ratio
-			if (document.documentElement.clientHeight / document.documentElement.clientWidth >= MOBILE_RATIO) {
+			if (window.screen.height / window.screen.width >= MOBILE_RATIO) {
 				gOptions = {
 					rows: 8,
 					columns: 7,

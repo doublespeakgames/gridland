@@ -3468,41 +3468,39 @@ body.bigExplosion.fadeOut:after {
 	bottom: 0px;
 }
 
-@media all and (max-device-width: 589px) {
-	.tile {
-		width: 70px;
-		height: 70px;
-	}
-	
-	.tile > div {
-		transform: scale(1.15);
-		-webkit-transform: scale(1.15);
-		-moz-transform: scale(1.15);
-		-ms-transform: scale(1.15);
-		-o-transform: scale(1.15);
-	}
-	
-	.tile .nightSide {
-		transform: rotateY(180deg) scale(1.15);
-		-webkit-transform: rotateY(180deg) scale(1.15);
-		-moz-transform: rotateY(180deg) scale(1.15);
-		-ms-transform: rotateY(180deg) scale(1.15);
-		-o-transform: rotateY(180deg) scale(1.15);
-	}
-	
-	.night .tile .daySide {
-		transform: rotateY(180deg) scale(1.15);
-		-webkit-transform: rotateY(180deg) scale(1.15);
-		-moz-transform: rotateY(180deg) scale(1.15);
-		-ms-transform: rotateY(180deg) scale(1.15);
-		-o-transform: rotateY(180deg) scale(1.15);
-	}
-	
-	.night .tile .nightSide {
-		transform: rotateY(0deg) scale(1.15);
-		-webkit-transform: rotateY(0deg) scale(1.15);
-		-moz-transform: rotateY(0deg) scale(1.15);
-		-ms-transform: rotateY(0deg) scale(1.15);
-		-o-transform: rotateY(0deg) scale(1.15);
-	}
+.portrait .tile {
+	width: 70px;
+	height: 70px;
+}
+
+.portrait .tile > div {
+	transform: scale(1.15);
+	-webkit-transform: scale(1.15);
+	-moz-transform: scale(1.15);
+	-ms-transform: scale(1.15);
+	-o-transform: scale(1.15);
+}
+
+.portrait .tile .nightSide {
+	transform: rotateY(180deg) scale(1.15);
+	-webkit-transform: rotateY(180deg) scale(1.15);
+	-moz-transform: rotateY(180deg) scale(1.15);
+	-ms-transform: rotateY(180deg) scale(1.15);
+	-o-transform: rotateY(180deg) scale(1.15);
+}
+
+.portrait .night .tile .daySide {
+	transform: rotateY(180deg) scale(1.15);
+	-webkit-transform: rotateY(180deg) scale(1.15);
+	-moz-transform: rotateY(180deg) scale(1.15);
+	-ms-transform: rotateY(180deg) scale(1.15);
+	-o-transform: rotateY(180deg) scale(1.15);
+}
+
+.portrait .night .tile .nightSide {
+	transform: rotateY(0deg) scale(1.15);
+	-webkit-transform: rotateY(0deg) scale(1.15);
+	-moz-transform: rotateY(0deg) scale(1.15);
+	-ms-transform: rotateY(0deg) scale(1.15);
+	-o-transform: rotateY(0deg) scale(1.15);
 }
