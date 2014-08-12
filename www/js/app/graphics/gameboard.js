@@ -243,7 +243,6 @@ define(['app/eventmanager', 'app/gameboard', 'app/entity/tile', 'app/gamecontent
 
 		setTile(row, col, tile);
 		updatePositionInBoard(tile, tile.options.row - GameBoard.options.rows, tile.options.column);
-		tile.el().removeClass('hidden pooled');
 		
 		return tile;
 	}

@@ -225,7 +225,7 @@ define({
 			cost: {
 				stone: 3,
 				wood: 3,
-				clay: 3
+				cloth: 3
 			},
 			requiredLevel: 1,
 			tileMod: 'clay',
@@ -242,7 +242,7 @@ define({
 			cost: {
 				stone: 5,
 				wood: 5,
-				clay: 5
+				cloth: 5
 			},
 			requiredLevel: 1,
 			tileMod: 'clay',
@@ -259,7 +259,7 @@ define({
 			cost: {
 				stone: 8,
 				wood: 8,
-				clay: 8
+				cloth: 8
 			},
 			requiredLevel: 1,
 			tileMod: 'clay',
@@ -288,7 +288,7 @@ define({
 			cost: {
 				wood: 3,
 				stone: 3,
-				cloth: 3
+				clay: 3
 			},
 			requiredLevel: 1,
 			tileMod: 'cloth',
@@ -305,7 +305,7 @@ define({
 			cost: {
 				wood: 5,
 				stone: 5,
-				cloth: 5
+				clay: 5
 			},
 			requiredLevel: 1,
 			tileMod: 'cloth',
@@ -322,7 +322,7 @@ define({
 			cost: {
 				wood: 8,
 				stone: 8,
-				cloth: 8
+				clay: 8
 			},
 			requiredLevel: 1,
 			tileMod: 'cloth',

@@ -2,7 +2,7 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 		function(E, TreasureChest, GameState, Content) {
 	
 	var BASE_DROP = 0.05;
-	var TILE_DROP = 0.25;
+	var TILE_DROP = 0.15;
 
 	var probabilities = {
 		rare: 0.10,
@@ -11,7 +11,7 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 	};
 	
 	function rollForLoot(monster) {
-		// %15 chance for normal monster, %25 for every tile after that.
+		// %15 chance for normal monster, %15 for every tile after that.
 		var chance = (monster.dropChance || BASE_DROP) * 3 + (monster.dropChance || TILE_DROP) * (monster.options.tiles - 3);
 		var roll = Math.random();
 		if(monster.forceLoot || roll < chance) {
