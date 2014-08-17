@@ -3489,7 +3489,7 @@ body.bigExplosion.fadeOut:after {
 	-o-transform: rotateY(180deg) scale(1.15);
 }
 
-.portrait .night .tile .daySide {
+.portrait.night .tile .daySide {
 	transform: rotateY(180deg) scale(1.15);
 	-webkit-transform: rotateY(180deg) scale(1.15);
 	-moz-transform: rotateY(180deg) scale(1.15);
@@ -3497,7 +3497,7 @@ body.bigExplosion.fadeOut:after {
 	-o-transform: rotateY(180deg) scale(1.15);
 }
 
-.portrait .night .tile .nightSide {
+.portrait.night .tile .nightSide {
 	transform: rotateY(0deg) scale(1.15);
 	-webkit-transform: rotateY(0deg) scale(1.15);
 	-moz-transform: rotateY(0deg) scale(1.15);
