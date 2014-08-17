@@ -8,6 +8,10 @@
 	<property name="build.js" value="tools/build.js" />
 	<property name="build.dir" value="build" />
 	<property name="deploy.path" value="D:\Users\Michael!\Documents\Gridland" />
+	<property name="publish.server" value="doublespeakgames.com" />
+	<property name="publish.path" value="/var/www/html/gridland" />
+	<property name="publish.user" value="ec2-user" />
+	<property name="publish.key" value="D:\Users\Michael!\Documents\Michael.pem" />	
 
 	<target name="all" depends="build,deploy" />
 	
@@ -43,5 +47,11 @@
 						match="&lt;div [^>]*nodeploy>[^&lt;]*&lt;/div>" 
 						replace="" byline="true" 
 		/>
+	</target>
+
+	<target name="publish">
+		<scp keyfile="${publish.key}" todir="${publish.user}@${publish.server}:${publish.path}" trust="true">
+			<fileset dir="${deploy.path}" />
+		</scp>
 	</target>
 </project>
