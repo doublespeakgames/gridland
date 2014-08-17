@@ -6,7 +6,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	
 	var MAX_HEARTS = 14;
 	var HEALTH_PER_HEART = 10;
-	var MIN_SCREEN_WIDTH = 600, MIN_SCREEN_HEIGHT = 650;
+	var MIN_SCREEN_WIDTH = 600, MIN_SCREEN_HEIGHT = 650, PORTRAIT_HEIGHT = 725;
 	
 	var textStore;
 	var _ww = null, _wh = null;
@@ -293,7 +293,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	var scaleSheet = null;
 	function scaleToViewport() {
 		var widthScale = document.documentElement.clientWidth / MIN_SCREEN_WIDTH,
-			heightScale = document.documentElement.clientHeight / MIN_SCREEN_HEIGHT;
+			heightScale = document.documentElement.clientHeight /
+				(require('app/gameboard').options.mobile ? PORTRAIT_HEIGHT : MIN_SCREEN_HEIGHT);
 
 		if(!scaleSheet) {
 			scaleSheet = newStylesheet();

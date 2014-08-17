@@ -336,6 +336,7 @@ body.night {
 	bottom: 0px;
 	border-top: 2px solid;
 	background-color: white;
+	box-sizing: border-box;
 	transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
 	-webkit-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
 	-moz-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
@@ -364,12 +365,12 @@ body.night {
 	}
 }
 
-@media screen and (max-width: 590px ) and (max-height: 817px) {
-	.menuBar, .night .menuBar {
+@media screen and (max-height: 780px) {
+	.portrait .menuBar, .portrait.night .menuBar {
 		border-top: 0px;
 	}
 	
-	.night .menuBtn, .menuBtn {
+	.portrait.night .menuBtn, .menuBtn {
 		border: 2px solid;
 	}
 }
@@ -402,6 +403,13 @@ body.night {
 	height: 400px;
 	background-color: white;
 	box-shadow: 0 5px 5px 5px #666;
+}
+
+@media screen and (max-height: 402px) {
+	.menuBar.open {
+		height: 100%;
+		margin-top: -2px;
+	}
 }
 
 .menuBar.closing {
