@@ -400,12 +400,12 @@ body.night {
 .menuBar.open {
 	z-index: 102;
 	border-top: 2px solid;
-	height: 400px;
+	height: 450px;
 	background-color: white;
 	box-shadow: 0 5px 5px 5px #666;
 }
 
-@media screen and (max-height: 402px) {
+@media screen and (max-height: 452px) {
 	.menuBar.open {
 		height: 100%;
 		margin-top: -2px;
