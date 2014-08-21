@@ -213,16 +213,21 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 		init: function(options) {
 			options = options || {};
 			if(!provider) { 
-				provider = getProvider();
-				format = chooseFormat();
-				if(provider != null && format != null) {
-					toLoad = 0;
-					for(s in sounds) {
-						if(!options.nomusic || !sounds[s].music) {
-							loadSound(sounds[s]);
+				try {
+					provider = getProvider();
+					format = chooseFormat();
+					if(provider != null && format != null) {
+						toLoad = 0;
+						for(s in sounds) {
+							if(!options.nomusic || !sounds[s].music) {
+								loadSound(sounds[s]);
+							}
 						}
+						E.bind('dayBreak', startMusic);
 					}
-					E.bind('dayBreak', startMusic);
+				} catch(e) {
+					console.error('Failed to init audio. Your browser sucks.');
+					return;
 				}
 			} else {
 				crossFade(playingBossMusic ? 'BossMusic' : 'NightMusic', 'DayMusic', 700);

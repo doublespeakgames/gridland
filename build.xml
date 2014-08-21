@@ -49,9 +49,25 @@
 		/>
 	</target>
 
-	<target name="publish">
+	<target name="publish-all">
 		<scp keyfile="${publish.key}" todir="${publish.user}@${publish.server}:${publish.path}" trust="true">
 			<fileset dir="${deploy.path}" />
 		</scp>
+	</target>
+
+	<target name="publish-script">
+	<scp keyfile="${publish.key}" todir="${publish.user}@${publish.server}:${publish.path}" trust="true">
+		<fileset dir="${deploy.path}" >
+			<include name="**/*.js" />
+		</fileset>
+	</scp>
+	</target>
+
+	<target name="publish-style">
+	<scp keyfile="${publish.key}" todir="${publish.user}@${publish.server}:${publish.path}" trust="true">
+		<fileset dir="${deploy.path}" >
+			<include name="**/*.css" />
+		</fileset>
+	</scp>
 	</target>
 </project>

@@ -15,6 +15,18 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	var currentScale = null;
 	var heartInfo = { total: 0, big: 0 };
 	var imageLoaded = false;
+
+	// I hate that I have to do this.
+	var requestAnimationFrame = (function() {
+		return window.requestAnimationFrame ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame ||
+			window.onRequestAnimationFrame ||
+			window.msRequestAnimationFrame ||
+			function(callback, element) {
+				window.setTimeout(callback, 1000 / 60);
+			};
+		})();
 	
 	var lastTime = null;
 	var animations = {};
@@ -28,6 +40,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	 */
 	function doEntityAnimation(timestamp) {
 		requestAnimationFrame(doEntityAnimation);
+		timestamp = timestamp || Date.now();
 		if(!lastTime) {
 			lastTime = timestamp;
 			return;
