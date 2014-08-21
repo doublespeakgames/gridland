@@ -329,7 +329,7 @@ body.night {
 
 .menuBar {
 	z-index: 0;
-	height: 0px;
+	height: 450px;
 	padding-top: 50px;
 	width: 100%;
 	position: fixed;
@@ -337,11 +337,16 @@ body.night {
 	border-top: 2px solid;
 	background-color: white;
 	box-sizing: border-box;
-	transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
-	-webkit-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
-	-moz-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
-	-ms-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
-	-o-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, height 200ms linear !important;
+	transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, transform 200ms linear !important;
+	-webkit-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, -webkit-transform 200ms linear !important;
+	-moz-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, -moz-transform 200ms linear !important;
+	-ms-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, -ms-transform 200ms linear !important;
+	-o-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, -o-transform 200ms linear !important;
+	transform: translateY(400px);
+	-wwebkit-transform: translateY(400px);
+	-moz-transform: translateY(400px);
+	-ms-transform: translateY(400px);
+	-o-transform: translateY(400px);
 }
 
 .night .menuBar {
@@ -400,7 +405,11 @@ body.night {
 .menuBar.open {
 	z-index: 102;
 	border-top: 2px solid;
-	height: 450px;
+	transform: translateY(0px);
+	-wwebkit-transform: translateY(0px);
+	-moz-transform: translateY(0px);
+	-ms-transform: translateY(0px);
+	-o-transform: translateY(0px);
 	background-color: white;
 	box-shadow: 0 5px 5px 5px #666;
 }
