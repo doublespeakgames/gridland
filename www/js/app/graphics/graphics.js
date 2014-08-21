@@ -16,6 +16,55 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	var heartInfo = { total: 0, big: 0 };
 	var imageLoaded = false;
 	
+	var lastTime = null;
+	var animations = {};
+	/**
+	 * Animations have the following properties:
+	 *	speed: number, How many pixels per millisecond
+	 *	destination: number, Where to move to
+	 *	callback: function, What to do when you get there
+	 *	stopShort: function, When to stop early
+	 *  entity: object, The entity to animate
+	 */
+	function doEntityAnimation(timestamp) {
+		requestAnimationFrame(doEntityAnimation);
+		if(!lastTime) {
+			lastTime = timestamp;
+			return;
+		}
+		var delta = timestamp - lastTime;
+		for(var guid in animations) {
+			var animation = animations[guid];
+			var entity = animation.entity;
+			var remaining = animation.destination - entity.p();
+			var dir = remaining / Math.abs(remaining);
+			var toMove = delta / animation.speed; // speed is actually px/ms for weird legacy reasons
+			if(remaining * dir < toMove) {
+				toMove = remaining * dir;
+			}
+
+			entity.p(entity.p() + (toMove * dir));
+			setEntityPosition(entity, entity.p());
+
+			if(entity.p() == animation.destination || (animation.stopShort && animation.stopShort())) {
+				delete animations[entity.guid()];
+				animation.callback && animation.callback();
+			}
+		}
+		lastTime = timestamp;
+	}
+
+	function setEntityPosition(entity, pos) {
+		var val = 'translateX(' + (pos - (entity.width() / 2)) + 'px)';
+		entity.el().css({
+			'transform': val,
+			'-webkit-transform': val,
+			'-moz-transform': val,
+			'-ms-transform': val,
+			'-o-transform': val
+		});
+	}
+
 	function handleDrawRequest(requestString, options) {
 		var moduleString = requestString.substring(0, requestString.indexOf('.'));
 		requestString = requestString.substring(requestString.indexOf('.') + 1);
@@ -380,6 +429,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			if(!require('app/engine').isSilent()) {
 				AudioGraphics.init();
 			}
+
+			requestAnimationFrame(doEntityAnimation);
 		},
 		
 		isScaled: function() {
@@ -500,12 +551,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		
 		addMonster: function(monster, side) {
 			var el = monster.el();
-			el.css('left', '100%');
+			monster.p(side == 'left' ? -el.width() : Graphics.worldWidth() + el.width());
+			setEntityPosition(monster, monster.p());
 			el.appendTo('.world');
-			if(side == 'left') {
-				el.css('left', -el.width() + 'px');
-			}
-			monster.p(el.position().left + el.width() / 2);
 		},
 		
 		moveCelestial: function(entity) {
@@ -618,7 +666,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				entity.p(pos);
 			}
 			var el = entity.el ? entity.el() : entity;
-			el.css('left', (pos - (el.width() / 2)) + "px");
+			el.css('transform', 'translateX(' + (pos - (el.width() / 2)) + 'px)');
 		},
 		
 		selectTile: function(tile) {
@@ -628,27 +676,16 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		deselectTile: function(tile) {
 			tile.el().removeClass('selected');
 		},
-		
+
 		animateMove: function(entity, pos, callback, stopShort, speedOverride) {
 			var el = entity.el();
-			var speed = speedOverride || entity.speed();
-			var dist = Math.abs(entity.p() - pos);
-			el.stop().animate({
-				'left': pos - (entity.width() / 2)
-			}, {
-				duration: dist * speed, 
-				easing: 'linear', 
-				step: function(now, tween) {
-					entity.p(now + entity.width() / 2);
-					if(stopShort != null && stopShort()) {
-						el.stop();
-						if(callback != null) {
-							callback();
-						}
-					}
-				},
-				complete: callback
-			});
+			animations[entity.guid()] = {
+				speed: speedOverride || entity.speed(),
+				destination: pos,
+				callback: callback,
+				stopShort: stopShort,
+				entity: entity
+			};
 		},
 		
 		markUpgrading: function(building, upgrading) {
@@ -821,7 +858,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		stop: function(entity) {
-			entity.el().stop();
+			delete animations[entity.guid()];
 		},
 		
 		fadeOut: function(callback) {

@@ -1135,6 +1135,12 @@ body.night {
 	background-image: url(../img/monsters.png);
 }
 
+.dude, .monster {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
 .animationLayer {
 	width: 100%;
 	height: 100%
@@ -1151,16 +1157,17 @@ body.night {
 
 .building {
 	position: absolute;
+	margin-bottom: 0px;
 	bottom: -80px;
 	width: 60px;
 	height: 80px;
 	background-position: 0px bottom;
 	background-repeat: no-repeat;
-	transition: opacity 1400ms linear, transform 500ms linear;
-	-webkit-transition: opacity 1400ms linear, -webkit-transform 500ms linear;
-	-moz-transition: opacity 1400ms linear, -moz-transform 500ms linear;
-	-ms-transition: opacity 1400ms linear, -ms-transform 500ms linear;
-	-o-transition: opacity 1400ms linear, -o-transform 500ms linear;
+	transition: opacity 1400ms linear, margin-bottom 500ms linear;
+	-webkit-transition: opacity 1400ms linear, margin-bottom 500ms linear;
+	-moz-transition: opacity 1400ms linear, margin-bottom 500ms linear;
+	-ms-transition: opacity 1400ms linear, margin-bottom 500ms linear;
+	-o-transition: opacity 1400ms linear, margin-bottom 500ms linear;
 	z-index: 1;
 }
 
@@ -1274,11 +1281,7 @@ body.night {
 }
 
 .building.upgrading {
-	transform: translateY(-20px);
-	-webkit-transform: translateY(-20px);
-	-moz-transform: translateY(-20px);
-	-ms-transform: translateY(-20px);
-	-o-transform: translateY(-20px);
+	margin-bottom: 20px;
 	cursor: pointer;
 }
 
@@ -1287,16 +1290,12 @@ body.night {
 }
 
 .building.sunk {
-	transform: translateY(80px);
-	-webkit-transform: translateY(80px);
-	-moz-transform: translateY(80px);
-	-ms-transform: translateY(80px);
-	-o-transform: translateY(80px);
-	transition: transform 2500ms linear;
-	-webkit-transition: -webkit-transform 2500ms linear;
-	-moz-transition: -moz-transform 2500ms linear;
-	-ms-transition: -ms-transform 2500ms linear;
-	-o-transition: -o-transform 2500ms linear;
+	margin-bottom: -80px;
+	transition: margin-bottom 2500ms linear;
+	-webkit-transition: margin-bottom 2500ms linear;
+	-moz-transition: margin-bottom 2500ms linear;
+	-ms-transition: margin-bottom 2500ms linear;
+	-o-transition: margin-bottom 2500ms linear;
 }
 
 .night .resourceBars, .night .resources {
@@ -2821,24 +2820,16 @@ body.night {
 	background-image: url(../img/dragonsprite.png);
 	height: 164px;
 	width: 204px;
-	transition: transform 1000ms ease-out;
-	-webkit-transition: -webkit-transform 1000ms ease-out;
-	-moz-transition: -moz-transform 1000ms ease-out;
-	-ms-transition: -ms-transform 1000ms ease-out;
-	-o-transition: -o-transform 1000ms ease-out;
-	transform: translateY(0px);
-	-webkit-transform: translateY(0px);
-	-moz-transform: translateY(0px);
-	-ms-transform: translateY(0px);
-	-o-transform: translateY(0px);
+	transition: margin-bottom 1000ms ease-out;
+	-webkit-transition: margin-bottom 1000ms ease-out;
+	-moz-transition: margin-bottom 1000ms ease-out;
+	-ms-transition: margin-bottom 1000ms ease-out;
+	-o-transition: margin-bottom 1000ms ease-out;
+	margin-bottom: 0;
 }
 
 .dragon.flying {
-	transform: translateY(-100%);
-	-webkit-transform: translateY(-100%);
-	-moz-transform: translateY(-100%);
-	-ms-transform: translateY(-100%);
-	-o-transform: translateY(-100%);
+	margin-bottom: 200px;
 }
 
 .dragon .healthBar {
