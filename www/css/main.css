@@ -3439,6 +3439,107 @@ body.bigExplosion.fadeOut:after {
 	display: none;
 }
 
+/** HYPERSPACE **/
+@keyframes hyperspaceTile {
+	0% { -webkit-filter: invert(0%); }
+	50% { -webkit-filter: invert(100%); }
+	100% { -webkit-filter: invert(0%); }
+}
+@-webkit-keyframes hyperspaceTile {
+	0% { -webkit-filter: invert(0%); }
+	50% { -webkit-filter: invert(100%); }
+	100% { -webkit-filter: invert(0%); }
+}
+
+.hyperspace .tile,
+.hyperspace .statusContainer,
+.hyperspace #loadingScreen {
+	animation: hyperspaceTile 800ms linear infinite;
+	-webkit-animation: hyperspaceTile 800ms linear infinite;
+}
+
+@keyframes hyperspace {
+	0% { background-color: #4e892c; }
+	10% { background-color: #dd33fb; }
+	20% { background-color: #e7d921; }
+	30% { background-color: #1380c2; }
+	40% { background-color: #c6a4de; }
+	50% { background-color: #c5d66e; }
+	60% { background-color: #02b1f3; }
+	70% { background-color: #d1f49c; }
+	80% { background-color: #1c386a; }
+	90% { background-color: #21c419; }
+	100% { background-color: #915689; }
+}
+@-webkit-keyframes hyperspace {
+	0% { background-color: #4e892c; }
+	10% { background-color: #dd33fb; }
+	20% { background-color: #e7d921; }
+	30% { background-color: #1380c2; }
+	40% { background-color: #c6a4de; }
+	50% { background-color: #c5d66e; }
+	60% { background-color: #02b1f3; }
+	70% { background-color: #d1f49c; }
+	80% { background-color: #1c386a; }
+	90% { background-color: #21c419; }
+	100% { background-color: #915689; }
+}
+@-moz-keyframes hyperspace {
+	0% { background-color: #4e892c; }
+	10% { background-color: #dd33fb; }
+	20% { background-color: #e7d921; }
+	30% { background-color: #1380c2; }
+	40% { background-color: #c6a4de; }
+	50% { background-color: #c5d66e; }
+	60% { background-color: #02b1f3; }
+	70% { background-color: #d1f49c; }
+	80% { background-color: #1c386a; }
+	90% { background-color: #21c419; }
+	100% { background-color: #915689; }
+}
+@-ms-keyframes hyperspace {
+	0% { background-color: #4e892c; }
+	10% { background-color: #dd33fb; }
+	20% { background-color: #e7d921; }
+	30% { background-color: #1380c2; }
+	40% { background-color: #c6a4de; }
+	50% { background-color: #c5d66e; }
+	60% { background-color: #02b1f3; }
+	70% { background-color: #d1f49c; }
+	80% { background-color: #1c386a; }
+	90% { background-color: #21c419; }
+	100% { background-color: #915689; }
+}
+@-o-keyframes hyperspace {
+	0% { background-color: #4e892c; }
+	10% { background-color: #dd33fb; }
+	20% { background-color: #e7d921; }
+	30% { background-color: #1380c2; }
+	40% { background-color: #c6a4de; }
+	50% { background-color: #c5d66e; }
+	60% { background-color: #02b1f3; }
+	70% { background-color: #d1f49c; }
+	80% { background-color: #1c386a; }
+	90% { background-color: #21c419; }
+	100% { background-color: #915689; }
+}
+
+body.hyperspace,
+.hyperspace .world,
+.hyperspace .tileContainer,
+.hyperspace .menuBar {
+	transition: none;
+	-webkit-transition: none;
+	-moz-transition: none;
+	-ms-transition: none;
+	-o-transition: none;
+	animation: hyperspace 600ms linear infinite;
+	-webkit-animation: hyperspace 600ms linear infinite;
+	-moz-animation: hyperspace 600ms linear infinite;
+	-ms-animation: hyperspace 600ms linear infinite;
+	-o-animation: hyperspace 600ms linear infinite;
+}
+
 /** Bomb **/
 @keyframes bombsplosion {
 	0% { transform: scale(0); opacity: 1; }

@@ -404,6 +404,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		return style.sheet;
 	}
 
+	function activateHyperspace() {
+		$('body').addClass('hyperspace');
+		setTimeout(function() {
+			$('body').removeClass('hyperspace');
+		}, 1000);
+	}
+
 	var Graphics = {
 		init: function() {
 			loaded = false;
@@ -424,6 +431,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			EventManager.bind('dayBreak', this.handleDayBreak);
 			EventManager.bind('gameOver', gameOver);
 			EventManager.bind('blockDown', dropBlock);
+			EventManager.bind('keySequenceComplete', activateHyperspace);
 			EventManager.bind('longLoad', function() {
 				Graphics.get('#loadingScreen').append(
 					Graphics.make('longload').text(Graphics.getText('LONG_LOAD')).append

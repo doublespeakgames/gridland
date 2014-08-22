@@ -25,26 +25,14 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	var streak = 0;
 	
 	var _debugMultiplier = 1;
-	window.multiplier = function(n) {
-		_debugMultiplier = n > 0 ? n : 1;
-		if(_debugMultiplier > 1) {
-			World.getDude().options.speed = 40 / _debugMultiplier;
-		} else {
-			World.getDude().options.speed = 40;
+	multiplier = function(n) {
+		if(World.getDude()) {
+			stopAllActions();
 		}
+		_debugMultiplier = n > 0 ? n : 1;
 	};
 	
 	var World = {
-			
-		// TEMPORARY
-		dragon: function() {
-			return callDragon();
-		},
-		dragonAttack: function(attackName) {
-			doDragonAttack(attackName);
-		},
-		spawnMonster: spawnMonster,
-		// END TEMPORARY
 			
 		options: {
 			dayMoves: 20,
@@ -86,6 +74,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			EventManager.bind('resourceStoreChanged', handleResourceStoreChanged);
 			EventManager.bind('prioritizeBuilding', prioritizeBuilding);
 			EventManager.bind('callDragon', callDragon);
+			EventManager.bind('keySequenceComplete', multiplier.bind(this, 5));
 			EventManager.bind('fillEquipment', function() {
 				fillDefense();
 				fillAttack();
