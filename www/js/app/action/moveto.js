@@ -11,6 +11,7 @@ define(['app/action/action'], function(Action) {
 		var _action = this;
 		this._entity = entity;
 		var func = this.useMove ? "move" : "moveTo";
+		this._dir = whichSide(entity, this.target);
 		entity[func](this.useMove ? _action.target.p() : _action.target, (function(entity) {
 			entity.makeIdle();
 			if(entity.action == this) {
@@ -21,23 +22,24 @@ define(['app/action/action'], function(Action) {
 	
 	MoveTo.prototype.doFrameAction = function(frame) {
 		var _this = this;
-		require(['app/world'], function(W) {
-			if(frame == 3 && _this._entity == W.getDude()) {
-				// Reset the dude's move action every step to make sure he's
-				// still doing the right thing.
-				var closest = W.findClosestMonster();
-				if(closest == null) {
-					closest = W.findClosestLoot();
-				}
-				if(closest == null) {
-					_this.terminateAction(_this._entity);
-				} else if(closest != _this.target) {
-					_this.target = closest;
-					_this.doAction(_this._entity);
-				}
+		var W = require('app/world');
+		if(frame == 3 && this._entity == W.getDude()) {
+			// Reset the dude's move action every step to make sure he's
+			// still doing the right thing.
+			var closest = W.findClosestMonster() || w.findClosestLoot();
+			if(closest == null) {
+				this.terminateAction(this._entity);
+			} else if(closest != this.target || 
+					whichSide(this._entity, this.target) != this._dir) {
+				this.target = closest;
+				this.doAction(this._entity);
 			}
-		});
+		}
 	};
+
+	function whichSide(entity, target) {
+		return entity.p() < target.p() ? 'right' : 'left'; 
+	}
 	
 	return MoveTo;
 });

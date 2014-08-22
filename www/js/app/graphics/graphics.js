@@ -68,8 +68,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	}
 
 	function setEntityPosition(entity, pos) {
+		var el = entity.el ? entity.el() : entity;
 		var val = 'translateX(' + (pos - (entity.width() / 2)) + 'px)';
-		entity.el().css({
+		el.css({
 			'transform': val,
 			'-webkit-transform': val,
 			'-moz-transform': val,
@@ -678,8 +679,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				pos = this.worldWidth() - 20;
 				entity.p(pos);
 			}
-			var el = entity.el ? entity.el() : entity;
-			el.css('transform', 'translateX(' + (pos - (el.width() / 2)) + 'px)');
+			setEntityPosition(entity, pos);
 		},
 		
 		selectTile: function(tile) {
