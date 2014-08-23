@@ -1,10 +1,10 @@
 define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
         'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot', 
         'app/magic', 'app/gameoptions', 'app/audio/audio', 'app/graphics/share',
-        'app/graphics/donate', 'app/visibility'], 
+        'app/graphics/donate', 'app/visibility', 'app/keysequencer'], 
 		function($, EventManager, Analytics, Graphics, Content, GameBoard, 
 				 GameState, World, Loot, Magic, GameOptions, GameAudio, Share,
-				 Donate, Visibility) {
+				 Donate, Visibility, KeySequencer) {
 
 	var DRAG_THRESHOLD = 30; // in pixels
 	var MOBILE_RATIO = 16/10; // height/width
@@ -167,7 +167,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 							Graphics,
 							World,
 							Loot,
-							Magic];
+							Magic,
+							KeySequencer];
 			if(window.location.search.indexOf('nomusic') >= 0) {
 				modules.push([GameAudio, { nomusic: true }]);
 				silent = false;

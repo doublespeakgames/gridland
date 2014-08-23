@@ -68,8 +68,9 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	}
 
 	function setEntityPosition(entity, pos) {
+		var el = entity.el ? entity.el() : entity;
 		var val = 'translateX(' + (pos - (entity.width() / 2)) + 'px)';
-		entity.el().css({
+		el.css({
 			'transform': val,
 			'-webkit-transform': val,
 			'-moz-transform': val,
@@ -403,6 +404,13 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		return style.sheet;
 	}
 
+	function activateHyperspace() {
+		$('body').addClass('hyperspace');
+		setTimeout(function() {
+			$('body').removeClass('hyperspace');
+		}, 1000);
+	}
+
 	var Graphics = {
 		init: function() {
 			loaded = false;
@@ -423,6 +431,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			EventManager.bind('dayBreak', this.handleDayBreak);
 			EventManager.bind('gameOver', gameOver);
 			EventManager.bind('blockDown', dropBlock);
+			EventManager.bind('keySequenceComplete', activateHyperspace);
 			EventManager.bind('longLoad', function() {
 				Graphics.get('#loadingScreen').append(
 					Graphics.make('longload').text(Graphics.getText('LONG_LOAD')).append
@@ -678,8 +687,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				pos = this.worldWidth() - 20;
 				entity.p(pos);
 			}
-			var el = entity.el ? entity.el() : entity;
-			el.css('transform', 'translateX(' + (pos - (el.width() / 2)) + 'px)');
+			setEntityPosition(entity, pos);
 		},
 		
 		selectTile: function(tile) {
