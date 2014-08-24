@@ -574,6 +574,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		addMonster: function(monster, side) {
 			var el = monster.el();
 			monster.p(side == 'left' ? -el.width() : Graphics.worldWidth() + el.width());
+			monster.animation(monster.getAnimation(side == "right" ? "left" : "right"));
 			setEntityPosition(monster, monster.p());
 			el.appendTo('.world');
 		},

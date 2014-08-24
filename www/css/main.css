@@ -534,7 +534,7 @@ body.night {
 	height: 40px;
 	position: absolute;
 	left: 9px;
-	bottom: 4px;
+	top: 4px;
 	opacity: 0;
 	transition: opacity 200ms linear;
 	-webkit-transition: opacity 200ms linear;
