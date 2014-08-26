@@ -529,6 +529,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	}
 	
 	function makeStuffHappen() {
+
+		// Cheap hack to implement pause
+		if(require('app/engine').paused) return;
+
 		if(hasteTick && World.hasEffect('haste') && !dude.paused) {
 			runEntity(dude);
 		} else if(!hasteTick) {

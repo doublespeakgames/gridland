@@ -18,6 +18,7 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	var moved = false;
 	var locked = false;
 	var chain = 0;
+	var checkQueued = false;
 	
 	var GameBoard = {
 		SEP: 'X',
@@ -40,6 +41,11 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 			EventManager.bind("refreshBoard", refreshBoard);
 			EventManager.bind("createTileEffect", createEffect);
 			EventManager.bind("tilesSwapped", expireEffects);
+			EventManager.bind("afterUnpaused", function() {
+				if(checkQueued) {
+					checkMatches();
+				}
+			});
 			
 			window.tiles = function() {
 				console.log(tileString);
@@ -165,6 +171,13 @@ define(['jquery', 'app/eventmanager', 'app/entity/tile',
 	}
 	
 	function checkMatches() {
+
+		if(require('app/engine').paused) {
+			checkQueued = true;
+			return;
+		}
+
+		checkQueued = false;
 		generateRowString();
 		
 		var vMask = makeMask(tileString), hMask = makeMask(tileString);

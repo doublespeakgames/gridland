@@ -16,10 +16,9 @@ define(['app/eventmanager'], function(E) {
 	}
 	
 	function visibilityChange(visibility) {
-		if(visibility === false || (visibility == null && document[hidden])) {
-			E.trigger('pageHidden');
-		} else {
-			E.trigger('pageShown');
+		if(visibility === false || (visibility == null && 
+				document[hidden] && require('app/engine').isStarted())) {
+			E.trigger('pause');
 		}
 	}
 	

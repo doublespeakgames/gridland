@@ -45,23 +45,27 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			lastTime = timestamp;
 			return;
 		}
-		var delta = timestamp - lastTime;
-		for(var guid in animations) {
-			var animation = animations[guid];
-			var entity = animation.entity;
-			var remaining = animation.destination - entity.p();
-			var dir = remaining / Math.abs(remaining);
-			var toMove = delta / animation.speed; // speed is actually px/ms for weird legacy reasons
-			if(remaining * dir < toMove) {
-				toMove = remaining * dir;
-			}
 
-			entity.p(entity.p() + (toMove * dir));
-			setEntityPosition(entity, entity.p());
+		// Easy hack to pause the world
+		if(!require('app/engine').paused) {
+			var delta = timestamp - lastTime;
+			for(var guid in animations) {
+				var animation = animations[guid];
+				var entity = animation.entity;
+				var remaining = animation.destination - entity.p();
+				var dir = remaining / Math.abs(remaining);
+				var toMove = delta / animation.speed; // speed is actually px/ms for weird legacy reasons
+				if(remaining * dir < toMove) {
+					toMove = remaining * dir;
+				}
 
-			if(entity.p() == animation.destination || (animation.stopShort && animation.stopShort())) {
-				delete animations[entity.guid()];
-				animation.callback && animation.callback();
+				entity.p(entity.p() + (toMove * dir));
+				setEntityPosition(entity, entity.p());
+
+				if(entity.p() == animation.destination || (animation.stopShort && animation.stopShort())) {
+					delete animations[entity.guid()];
+					animation.callback && animation.callback();
+				}
 			}
 		}
 		lastTime = timestamp;
@@ -411,6 +415,10 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		}, 1000);
 	}
 
+	function setPaused(p) {
+		$('body').toggleClass('paused', p);
+	}
+
 	var Graphics = {
 		init: function() {
 			loaded = false;
@@ -424,6 +432,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			
 			EventManager.bind('draw', handleDrawRequest);
 			
+			EventManager.bind('pause', setPaused.bind(this, true));
+			EventManager.bind('unpause', setPaused.bind(this, false));
 			EventManager.bind('monsterKilled', this.monsterKilled);
 			EventManager.bind('newEntity', this.addToWorld);
 			EventManager.bind('removeEntity', this.removeFromWorld);

@@ -14,15 +14,14 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 	var graphicsCallback = null;
 	var loaded = false;
 	var silent = true;
+	var started = false;
 	
 	function initializeModules(modules, callback) {
 		// init all modules passed to me
 		var module = null;
-//		var start = Date.now();
 		(function initModule() {
 			if(module == null) {
 				if(modules.length == 0) {
-//					console.log('init took: ' + (Date.now() - start) + ' millis');
 					return callback();
 				} else {
 					module = modules.shift();
@@ -54,7 +53,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 	}
 	
 	function canMove() {
-		return graphicsCallback == null && GameBoard.canMove() && World.canMove();
+		return graphicsCallback == null && GameBoard.canMove() && World.canMove() && !Engine.paused;
 	}
 	
 	function startDrag(tile) {
@@ -117,6 +116,8 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		EventManager.trigger('gameLoaded');
 		EventManager.trigger('refreshBoard');
 		EventManager.trigger('launchDude');
+		$('body').removeClass('titleScreen');
+		started = true;
 	}
 	
 	function importSlot(slotNum, importCode) {
@@ -126,6 +127,15 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 
 	function isModernBrowser() {
 		return ( location.search.indexOf( 'ignorebrowser' ) >= 0 || ( typeof Storage != 'undefined' ) );
+	}
+
+	function setPaused(p) {
+		Engine.paused = p;
+		if(p) {
+			Graphics.get('body').one('click touchstart', function() {
+				EventManager.trigger('unpause');
+			});
+		}
 	}
 	
 	var Engine = {
@@ -148,6 +158,13 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 					menuBar.removeClass('closing');
 				}, 200);
 				EventManager.trigger('click', ['menubutton']);
+			});
+
+			$('#pauseIcon').off().on('click touchstart', function() {
+				if(!Engine.paused) {
+					EventManager.trigger('pause');
+					return false;
+				}
 			});
 			
 			var gOptions = null;
@@ -200,6 +217,11 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			EventManager.bind('slotChosen', startGame);
 			EventManager.bind('deleteSlot', GameState.deleteSlot);
 			EventManager.bind('importSlot', importSlot);
+			EventManager.bind('pause', setPaused.bind(this, true));
+			EventManager.bind('unpause', function() {
+				setPaused(false);
+				EventManager.trigger('afterUnpaused');
+			});
 			
 			Graphics.attachHandler("GameBoard", "mousedown touchstart", '.tile', function(e) {
 				if(!dragging) {
@@ -299,6 +321,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		
 		isSilent: function() {
 			return silent;
+		},
+
+		isStarted: function() {
+			return started;
 		},
 		
 		_debug: function(text) {

@@ -19,6 +19,81 @@ body.night {
 	background-color: black;
 }
 
+body.paused:before {
+	display: block;
+	content: ' ';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+}
+
+#pauseIcon {
+	z-index: 2000;
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	opacity: 0.2;
+	transition: all 100ms linear;
+	-webkit-transition: all 100ms linear;
+	-moz-transition: all 100ms linear;
+	-ms-transition: all 100ms linear;
+	-o-transition: all 100ms linear;
+}
+
+#pauseIcon:hover {
+	opacity: 1;
+}
+
+#pauseIcon:before,
+#pauseIcon:after {
+	height: 80%;
+	width: 20%;
+	content: ' ';
+	display: block;
+	position: absolute;
+	top: 20%;
+	background: black;
+	transition: background 1400ms linear;
+	-webkit-transition: background 1400ms linear;
+	-moz-transition: background 1400ms linear;
+	-ms-transition: background 1400ms linear;
+	-o-transition: background 1400ms linear;
+}
+
+#pauseIcon:before {
+	left: 20%;
+}
+
+#pauseIcon:after {
+	right: 20%;
+}
+
+.paused #pauseIcon {
+	opacity: 1;
+	height: 100px;
+	width: 100px;
+	top: 50%;
+	right: 50%;
+	margin-top: -50px;
+	margin-right: -50px;
+}
+
+.night #pauseIcon:before,
+.night #pauseIcon:after {
+	background: white;
+}
+
+.titleScreen #pauseIcon {
+	display: none;
+}
+
 #test {
 	position: absolute;
 	left: 10px;
