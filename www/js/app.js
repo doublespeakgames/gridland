@@ -18,7 +18,8 @@ requirejs.config({
 	        "http://www.google-analytics.com/analytics",
 	        "analytics"
         ]
-	}
+	},
+	waitSeconds: 0
 });
 
 // Load the main module to start the game
