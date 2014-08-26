@@ -9,6 +9,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	var playingMusic = false;
 	var longloadTimer = false;
 	var playingBossMusic = false;
+	var CDN_PATH = "http://glmedia.doublespeakgames.com/";
 	
 	var sounds = {
 		DayMusic: {
@@ -130,7 +131,7 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	function loadSound(sound) {
 		if(format != null) {
 			toLoad++;
-			provider.load(sound, format, loadCallback);
+			provider.load(sound, CDN_PATH, format, loadCallback);
 		}
 	}
 	

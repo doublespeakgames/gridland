@@ -56,13 +56,14 @@ define(function() {
 		}
 	}
 	
-	function loadSound(sound, format, callback, partNum) {
+	function loadSound(sound, basePath, format, callback, partNum) {
+		basePath = basePath || "";
 		var request = new XMLHttpRequest();
 		var isPart = partNum != null;
 		if(isPart) {
 			sound.partsBuffer = sound.partsBuffer || [];
 		}
-		request.open("GET", "audio/" + sound.file + (isPart ? "-" + partNum : "") + "." + format, true);
+		request.open("GET", basePath + "audio/" + sound.file + (isPart ? "-" + partNum : "") + "." + format, true);
 		request.responseType = "arraybuffer";
 		request.onload = function() {
 			if(sound.music && !sound.required) {
@@ -99,19 +100,19 @@ define(function() {
 			return WebAudioProvider;
 		},
 		
-		load: function(sound, format, callback) {
+		load: function(sound, basePath, format, callback) {
 			
 			if(sound.parts != null) {
 				for(var i = 0; i < sound.parts; i++) {
 					(function(partNum) {
 						setTimeout(function() {
 //							console.log('loading part ' + partNum);
-							loadSound(sound, format, callback, partNum);
+							loadSound(sound, basePath, format, callback, partNum);
 						}, i * 3000);
 					})(i);
 				}
 			} else {
-				loadSound(sound, format, callback);
+				loadSound(sound, basePath, format, callback);
 			}
 		},
 		

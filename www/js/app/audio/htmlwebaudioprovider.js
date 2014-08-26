@@ -41,9 +41,9 @@ define(function() {
 			return HtmlWebAudioProvider;
 		},
 		
-		load: function(sound, format, callback) {
-			
-			sound.data = new Audio('audio/' + sound.file + '.' + format);
+		load: function(sound, basePath, format, callback) {
+			basePath = basePath || "";	
+			sound.data = new Audio(basePath + 'audio/' + sound.file + '.' + format);
 			if(sound.music) {
 				sound.data.loop = true;
 			}
