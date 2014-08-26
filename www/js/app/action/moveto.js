@@ -26,7 +26,7 @@ define(['app/action/action'], function(Action) {
 		if(frame == 3 && this._entity == W.getDude()) {
 			// Reset the dude's move action every step to make sure he's
 			// still doing the right thing.
-			var closest = W.findClosestMonster() || w.findClosestLoot();
+			var closest = W.findClosestMonster() || W.findClosestLoot();
 			if(closest == null) {
 				this.terminateAction(this._entity);
 			} else if(closest != this.target || 
