@@ -134,7 +134,7 @@ body.paused:before {
 	margin-left: -300px;
     width: 600px;
     height: 300px;
-    background: url(../img/title.png) top left no-repeat;
+    background: url(http://glmedia.doublespeakgames.com/img/title.png) top left no-repeat;
     transition: opacity 700ms linear;
     -webkit-transition: opacity 700ms linear;
     -moz-transition: opacity 700ms linear;
@@ -376,7 +376,7 @@ body.paused:before {
 	width: 28px;
 	height: 28px;
 	display: inline-block;
-	background-image: url(../img/icons.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/icons.png);
 	margin-left: 5px;
 	cursor: pointer;
 }
@@ -459,7 +459,7 @@ body.paused:before {
 .menuBtn {
 	height: 40px;
 	width: 40px;
-	background: url(../img/icons.png) 0 -362px no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) 0 -362px no-repeat;
 	border-radius: 4px;
 	position: absolute;
 	right: 3px;
@@ -475,7 +475,7 @@ body.paused:before {
 .menuBtn .nightSprite {
 	height: 40px;
 	width: 40px;
-	background: url(../img/icons.png) 0px -402px no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) 0px -402px no-repeat;
 }
 
 .menuBar.open {
@@ -594,7 +594,7 @@ body.paused:before {
 	display: block;
 	height: 48px;
 	width: 48px;
-	background-image: url(../img/icons.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/icons.png);
 }
 
 .logo .nightSprite {
@@ -869,7 +869,7 @@ body.paused:before {
 
 .tile .daySide,
 .tile .nightSide {
-	background-image: url(../img/tiles.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/tiles.png);
 	background-repeat: no-repeat;
 }
 
@@ -1116,7 +1116,7 @@ body.paused:before {
 	display: block;
 	position: absolute;
 	content: ' ';
-	background: url(../img/select-border.png);
+	background: url(http://glmedia.doublespeakgames.com/img/select-border.png);
 	top: 0;
 	bottom: 0;
 	left: 0;
@@ -1190,7 +1190,7 @@ body.paused:before {
 
 .star {
 	position: absolute;
-	background: url(../img/icons.png) no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) no-repeat;
 	width: 16px;
 	height: 16px;
 	top: 10px;
@@ -1207,7 +1207,7 @@ body.paused:before {
 }
 
 .dude {
-	background-image: url(../img/monsters.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/monsters.png);
 	background-repeat: no-repeat;
 	position: absolute;
 	bottom: 0px;
@@ -1217,7 +1217,7 @@ body.paused:before {
 }
 
 .dude .animationLayer.nightSprite {
-	background-image: url(../img/monsters.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/monsters.png);
 }
 
 .dude, .monster {
@@ -1261,7 +1261,7 @@ body.paused:before {
 }
 
 .building {
-	background-image: url(../img/buildings.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/buildings.png);
 }
 
 .resources {
@@ -1594,7 +1594,7 @@ body.paused:before {
 	height: 30px;
 	top: 0px;
 	left: 0px;
-	background: url(../img/icons.png) no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) no-repeat;
 	position: absolute;
 	transform: translate3d(0px, 110px, 0px);
 	-webkit-transform: translate3d(0px, 110px, 0px);
@@ -1637,7 +1637,7 @@ body.paused:before {
 .monster {
 	position: absolute;
 	bottom: 0px;
-	background: url(../img/monsters.png) no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/monsters.png) no-repeat;
 }
 
 .zombie {
@@ -1841,7 +1841,7 @@ body.paused:before {
 }
 
 .fireball .projectileInner {
-	background: url(../img/icons.png) 0 -175px transparent;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) 0 -175px transparent;
 	width: 16px;
 	height: 7px;
 }
@@ -1859,7 +1859,7 @@ body.paused:before {
 .worldEffect.fire {
 	width: 30px;
 	height: 44px;
-	background: url(../img/icons.png) transparent no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) transparent no-repeat;
 }
 
 /** Status **/
@@ -1896,7 +1896,7 @@ body.paused:before {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	background: url(../img/icons.png) 0 -279px no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) 0 -279px no-repeat;
 	z-index: 1;
 }
 
@@ -1916,7 +1916,7 @@ body.paused:before {
 .bigheart .bar {
 	position: absolute;
 	height: 100%;
-	background: url(../img/icons.png) -60px -279px;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) -60px -279px;
 	transition: width 300ms linear;
 	-webkit-transition: width 300ms linear;
 	-ms-transition: width 300ms linear;
@@ -1926,7 +1926,7 @@ body.paused:before {
 
 .heart.full,
 .bigheart.full {
-	background: url(../img/icons.png) -60px -279px;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) -60px -279px;
 }
 
 .shield {
@@ -1934,7 +1934,7 @@ body.paused:before {
 	top: -35px;
 	width: 30px;
 	height: 30px;
-	background: url(../img/icons.png) no-repeat 0px -30px;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) no-repeat 0px -30px;
 	transition: opacity 300ms linear;
 	-webkit-transition: opacity 300ms linear;
 	-ms-transition: opacity 300ms linear;
@@ -1944,7 +1944,7 @@ body.paused:before {
 
 .shield > div {
 	height: 100%;
-	background: url(../img/icons.png) 0 0 no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) 0 0 no-repeat;
 	transition: width 300ms linear;
 	-webkit-transition: width 300ms linear;
 	-ms-transition: width 300ms linear;
@@ -2019,7 +2019,7 @@ body.paused:before {
 .sword {
 	width: 30px;
 	height: 30px;
-	background: url(../img/icons.png) no-repeat 0px -981px;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) no-repeat 0px -981px;
 	transition: opacity 300ms linear;
 	-webkit-transition: opacity 300ms linear;
 	-ms-transition: opacity 300ms linear;
@@ -2029,7 +2029,7 @@ body.paused:before {
 
 .sword > div {
 	height: 100%;
-	background: url(../img/icons.png) no-repeat 0 -951px;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) no-repeat 0 -951px;
 	transition: width 300ms linear;
 	-webkit-transition: width 300ms linear;
 	-ms-transition: width 300ms linear;
@@ -2140,7 +2140,7 @@ body.paused:before {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	background: url(../img/expbar.png) repeat-y;
+	background: url(http://glmedia.doublespeakgames.com/img/expbar.png) repeat-y;
 }
 
 .xpBar .nightSprite {
@@ -2189,7 +2189,7 @@ body.paused:before {
 	bottom: 0px;
 	width: 26px;
 	height: 26px;
-	background-image: url(../img/icons.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/icons.png);
 }
 
 .button {
@@ -2267,7 +2267,7 @@ body.paused:before {
 	position: absolute;
 	width: 28px;
 	height: 28px;
-	background-image: url(../img/icons.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/icons.png);
 }
 
 .inventory .button div:nth-child(1) {
@@ -2312,7 +2312,7 @@ body.paused:before {
 /** Magic **/
 .gem {
 	position: absolute;
-	background: url(../img/icons.png) no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) no-repeat;
 	width: 12px;
 	height: 24px;
 	top: 35px;
@@ -2348,7 +2348,7 @@ body.paused:before {
 	content: '';
 	display: block;
 	position: absolute;
-	background-image: url(../img/magic.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/magic.png);
 	background-position: 20% 20%;
 	background-repeat: no-repeat;
 	transition: opacity 200ms linear;
@@ -2539,7 +2539,7 @@ body.paused:before {
 
 .spell,
 .states > div {
-	background-image: url(../img/icons.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/icons.png);
 	background-repeat: no-repeat;
 }
 
@@ -2680,7 +2680,7 @@ body.paused:before {
 	right: 0px;
 	height: 64px;
 	padding-left: 42px;
-	background: url(../img/icons.png) 0 -442px no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) 0 -442px no-repeat;
 	margin-bottom: 20px;
 }
 
@@ -2690,7 +2690,7 @@ body.paused:before {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	background: url(../img/icons.png) 0 -506px no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) 0 -506px no-repeat;
 }
 
 .effectsVolume.volumeSlider {
@@ -2773,7 +2773,7 @@ body.paused:before {
 	display: block;
 	width: 48px;
 	height: 48px;
-	background-image: url(../img/icons.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/icons.png);
 }
 
 .social .nightSprite {
@@ -2836,7 +2836,7 @@ body.paused:before {
 	display: block;
 	width: 48px;
 	height: 48px;
-	background-image: url(../img/icons.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/icons.png);
 }
 
 .donate .nightSprite {
@@ -2902,7 +2902,7 @@ body.paused:before {
 /** DRAGON **/
 
 .dragon {
-	background-image: url(../img/dragonsprite.png);
+	background-image: url(http://glmedia.doublespeakgames.com/img/dragonsprite.png);
 	height: 164px;
 	width: 204px;
 	transition: margin-bottom 1000ms ease-out;
@@ -2944,7 +2944,7 @@ body.paused:before {
 .dragon .neck {
 	height: 24px;
 	width: 24px;
-	background: url(../img/dragonsprite.png) 0 -1700px no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/dragonsprite.png) 0 -1700px no-repeat;
 	transform: rotate(0deg) translateX(-10px);
 	-webkit-transform: rotate(0deg) translateX(-10px);
 	-moz-transform: rotate(0deg) translateX(-10px);
@@ -2959,7 +2959,7 @@ body.paused:before {
 .dragon .head {
 	height: 30px;
 	width: 81px;
-	background: url(../img/dragonsprite.png) 0 -1640px no-repeat;
+	background: url(http://glmedia.doublespeakgames.com/img/dragonsprite.png) 0 -1640px no-repeat;
 	transform: rotate(0deg) translateX(-40px);
 	-webkit-transform: rotate(0deg) translateX(-40px);
 	-moz-transform: rotate(0deg) translateX(-40px);
@@ -3000,7 +3000,7 @@ body.paused:before {
 	position: absolute;
 	width: 16px;
 	height: 7px;
-	background: url(../img/icons.png) 0 -175px transparent;
+	background: url(http://glmedia.doublespeakgames.com/img/icons.png) 0 -175px transparent;
 	transition: transform 300ms linear;
 	-webkit-transition: -webkit-transform 300ms linear;
 	-moz-transition: -moz-transform 300ms linear;

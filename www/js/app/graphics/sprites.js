@@ -1,5 +1,6 @@
 define(function() {
-	
+
+	var CDN_PATH = "http://glmedia.doublespeakgames.com/";
 	var spriteinfo = {
 		// Buildings
 		blacksmith: ['buildings', 0],
@@ -69,7 +70,7 @@ define(function() {
 		spriteImage.onload = function() {
 			spritesheets[sheetName] = true;
 		};
-		spriteImage.src = "img/" + sheetName + ".png";
+		spriteImage.src = CDN_PATH + "img/" + sheetName + ".png";
 	}
 
 	function getInfo(spriteName) {
