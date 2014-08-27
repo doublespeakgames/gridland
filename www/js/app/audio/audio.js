@@ -182,8 +182,11 @@ define(['app/eventmanager', 'app/audio/webaudioprovider', 'app/audio/htmlaudiopr
 	}
 	
 	function changeMusic(isNight) {
-		GameAudio.stop('BossMusic');
-		if(isNight) {
+		if(playingBossMusic) {
+			crossFade('BossMusic', isNight ? 'NightMusic' : 'DayMusic', 500);
+			GameAudio.stop('BossMusic');
+			playingBossMusic = false;
+		} else if(isNight) {
 			crossFade('DayMusic', 'NightMusic', 700);
 		} else {
 			crossFade('NightMusic', 'DayMusic', 700);

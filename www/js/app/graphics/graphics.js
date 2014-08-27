@@ -174,7 +174,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	}
 	
 	function continueGame() {
-		EventManager.trigger('phaseChange');
+		EventManager.trigger('phaseChange', [false]);
 		getStats().removeClass('down');
 		BoardGraphics.el().removeClass('dragonFight');
 		var b = Graphics.get('body');
