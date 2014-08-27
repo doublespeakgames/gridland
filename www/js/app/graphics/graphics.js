@@ -15,6 +15,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	var currentScale = null;
 	var heartInfo = { total: 0, big: 0 };
 	var imageLoaded = false;
+	var isDragon = false;
 
 	// I hate that I have to do this.
 	var requestAnimationFrame = (function() {
@@ -422,6 +423,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	var Graphics = {
 		init: function() {
 			loaded = false;
+			isDragon = false;
 			$('body').removeClass('night');
 			
 			textStore = new TextStore();
@@ -989,6 +991,11 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		handleDayBreak: function(dayNumber) {
 			var txt = Graphics.getText('DAY');
 			var notifier;
+			if(isDragon) {
+				changeTiles(['clay', 'cloth', 'grain'], '', 'dragonFight');
+				isDragon = false;
+				Graphics.setBossHealth(0, 0);
+			}
 			setTimeout(function() {
 				notifier = $('<div>').addClass('dayNotifier').text(txt + " " + dayNumber).appendTo('.world');
 			}, 1400);
@@ -1030,6 +1037,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		},
 		
 		landDragon: function(dragon, cb) {
+			isDragon = true;
 			dragon.setPosture('idle');
 			dragon.el().addClass('flying');
 			dragon.p(dragon.options.flip ? 50 : this.worldWidth() - 50);

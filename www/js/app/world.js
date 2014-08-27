@@ -653,6 +653,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		Graphics.updateSword(0, 0);
 		
 		if(!isNight) {
+			theDragon = null;
 			streak++;
 			GameState.dayNumber++;
 			GameState.count('NIGHTS', 1);
