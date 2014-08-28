@@ -566,6 +566,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 					GameState.count('KILLED', 1);
 					stuff.splice(i, 1);
 					i--;
+				} else if(entity.lootable) {
+					stuff.splice(i, 1);
+					i--;
 				} else if(entity == dude) {
 					// Dude is dead. Long live the dude.
 					stuff.splice(i, 1);
