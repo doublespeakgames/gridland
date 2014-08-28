@@ -44,6 +44,7 @@ define(["google-analytics", "app/eventmanager"], function(ga, E) {
 				E.bind('levelUp', function(level) { trackEvent('levelup', level, S.dayNumber); });
 				E.bind('click', function(thing) { trackEvent('click', thing); });
 				E.bind('prestige', function() { trackEvent('game', 'prestige'); });
+				E.bind('keySequenceComplete', function() { trackEvent('game', 'codeEntered'); });
 			}
 		}
 	};
