@@ -32,7 +32,6 @@ body.paused:before {
 }
 
 #pauseIcon {
-	z-index: 2000;
 	width: 30px;
 	height: 30px;
 	position: absolute;
@@ -83,6 +82,7 @@ body.paused:before {
 	right: 50%;
 	margin-top: -50px;
 	margin-right: -50px;
+	z-index: 2000;
 }
 
 .night #pauseIcon:before,
@@ -498,7 +498,7 @@ body.paused:before {
 }
 
 .menuBar.closing {
-	z-index: 102;
+	z-index: 300;
 }
 
 .open .menuBtn {

@@ -653,6 +653,12 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		Graphics.updateSword(0, 0);
 		
 		if(!isNight) {
+			// Open all chests
+			stuff.forEach(function(thing) {
+				if(thing.lootable) {
+					EventManager.trigger('pickupLoot', [thing, World.getDebugMultiplier()]);
+				}
+			});
 			theDragon = null;
 			streak++;
 			GameState.dayNumber++;

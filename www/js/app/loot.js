@@ -68,6 +68,8 @@ define(['app/eventmanager', 'app/entity/loot/treasurechest', 'app/gamestate', 'a
 			GameState.items[lootName] = num;
 			E.trigger("lootFound", [lootName, num]);
 		}
+
+		treasure.gone = true;
 	}
 	
 	return {
