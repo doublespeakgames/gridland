@@ -424,6 +424,7 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 		init: function() {
 			loaded = false;
 			isDragon = false;
+			_bossHealth = null
 			$('body').removeClass('night');
 			
 			textStore = new TextStore();

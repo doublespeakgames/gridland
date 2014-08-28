@@ -42,6 +42,11 @@ define(['app/entity/worldentity', 'app/graphics/graphics'],
 	Monster.prototype.getXp = function() {
 		return this.xp;
 	};
+
+	Monster.prototype.speed = function() {
+		// Hack to speed everything up a bit.
+		return this.options.speed / 2;
+	}
 	
 	Monster.constructor = Monster;
 	

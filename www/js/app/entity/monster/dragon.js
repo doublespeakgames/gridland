@@ -237,7 +237,7 @@ define(['app/entity/monster/monster', 'app/action/actionfactory'],
 	};
 	
 	Dragon.prototype.getFireballDamage = function() {
-		return 2;
+		return 4;
 	};
 	
 	Dragon.prototype.getFireBlastDamage = function() {
