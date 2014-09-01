@@ -3346,26 +3346,38 @@ body.bigExplosion.fadeOut:after {
 	-moz-transition: -moz-transform 300ms ease-in;
 	-ms-transition: -ms-transform 300ms ease-in;
 	-o-transition: -o-transform 300ms ease-in;
-	transform: translate(-182px, 0px);
-	-webkit-transform: translate(-182px, 0px);
-	-moz-transform: translate(-182px, 0px);
-	-ms-transform: translate(-182px, 0px);
-	-o-transform: translate(-182px, 0px);
+	transform: translate(-175px, 0px);
+	-webkit-transform: translate(-175px, 0px);
+	-moz-transform: translate(-175px, 0px);
+	-ms-transform: translate(-175px, 0px);
+	-o-transform: translate(-175px, 0px);
 	position: absolute;
-	top: -530px;
+	top: -504px;
 	left: 50%;
 	z-index: 101;
 	padding: 10px 0;
 	font-family: Futura, Futura-Medium, "Futura Medium", "Century Gothic", CenturyGothic, "Apple Gothic", AppleGothic, "URW Gothic L", "Avant Garde", sans-serif;
 	box-shadow: 0 0 5px 2px #CCC;
+	box-sizing: border-box;
+	background: white;
 }
 
 #endGame.down {
-	transform: translate(-182px, 627px);
-	-webkit-transform: translate(-182px, 627px);
-	-moz-transform: translate(-182px, 627px);
-	-ms-transform: translate(-182px, 627px);
-	-o-transform: translate(-182px, 627px);
+	transform: translate(-175px, 627px);
+	-webkit-transform: translate(-175px, 627px);
+	-moz-transform: translate(-175px, 627px);
+	-ms-transform: translate(-175px, 627px);
+	-o-transform: translate(-175px, 627px);
+}
+
+@media screen and (max-height: 680px) {
+	#endGame.down {
+		transform: translate(-175px, 510px);
+		-webkit-transform: translate(-175px, 510px);
+		-moz-transform: translate(-175px, 510px);
+		-ms-transform: translate(-175px, 510px);
+		-o-transform: translate(-175px, 510px);
+	}
 }
 
 #endGame h2 {
