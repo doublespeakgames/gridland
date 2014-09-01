@@ -26,10 +26,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 	
 	var _debugMultiplier = 1;
 	multiplier = function(n) {
-		if(World.getDude()) {
-			stopAllActions();
-		}
 		_debugMultiplier = n > 0 ? n : 1;
+		if(World.getDude()) {
+			reinitializeAllActions();
+		}
 	};
 	
 	var World = {
@@ -404,17 +404,16 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		}
 	}
 	
-	function stopAllActions() {
+	function reinitializeAllActions() {
 		for(var i in stuff) {
 			var entity = stuff[i];
 			if(!entity.uninterruptable && entity.action != null) {
-				entity.action.terminateAction(entity);
+				entity.action.reinitialize(entity);
 			}
 		}
 	}
 	
 	function addStateEffect(effect) {
-		stopAllActions();
 		var existingEffect = effects[effect.className];
 		if(existingEffect != null) {
 			clearTimeout(existingEffect);
@@ -423,8 +422,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		effects[effect.className] = setTimeout(function() {
 			effect.end && effect.end(dude);
 			effects[effect.className] = null;
-			stopAllActions();
+			reinitializeAllActions();
 		}, effect.duration);
+		
+		reinitializeAllActions();
 	}
 	
 	function endStateEffect(effect) {

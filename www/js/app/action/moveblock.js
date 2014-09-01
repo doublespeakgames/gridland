@@ -1,5 +1,10 @@
 define(['app/action/action', 'app/eventmanager'], function(Action, E) {
+
+	// NOTE: I really like the architecture of this action. I should move the "engine"
+	//       of it into the base action and reimplement all actions as simple function queues.
 	
+	var HOUSE_POS = 50;
+
 	var MoveBlock = function(options) {
 		this.block = options.block;
 		this.destination = options.destination;
@@ -8,27 +13,52 @@ define(['app/action/action', 'app/eventmanager'], function(Action, E) {
 	MoveBlock.constructor = MoveBlock;
 	
 	MoveBlock.prototype.doAction = function(dude) {
-		var _action = this;
+		var action = this;
 		var S = require('app/gamestate'),
 			C = require('app/gamecontent'),
 			G = require('app/graphics/graphics'),
 			E = require('app/eventmanager');
-		dude.move(50, function(dude) {
-			if(_action.block.gone) {
+
+		this._functionQueue = [];
+		this._currentFunction = null;
+		var runNextFunction = function() {
+			if(action._functionQueue.length === 0) {
+				// Action is complete
 				dude.action = null;
 				return;
 			}
-			E.trigger('blockUp');
-			G.pickUpBlock(_action.block);
-			dude.carrying = _action.block;
-			S.removeBlock(_action.block);
-			dude.move(_action.destination.dudeSpot(), function(dude) {
-				dude.carrying = null;
-				_action.destination.requiredResources[_action.block.options.type.className]--;
-				E.trigger('blockDown', [_action.block, _action.destination]);
-				dude.action = null;
-			});
+			action._currentFunction = action._functionQueue.shift();
+			action._currentFunction();
+		};
+
+		// Move to the house
+		this._functionQueue.push(function() {
+			dude.move(HOUSE_POS, runNextFunction);
 		});
+
+		// Pick up the block
+		this._functionQueue.push(function() {
+			E.trigger('blockUp');
+			G.pickUpBlock(action.block);
+			S.removeBlock(action.block);
+			dude.carrying = action.block;
+			runNextFunction();
+		});
+
+		// Move to the destination building
+		this._functionQueue.push(function() {
+			dude.move(action.destination.dudeSpot(), runNextFunction);
+		});
+
+		// Drop the block
+		this._functionQueue.push(function() {
+			dude.carrying = null;
+			action.destination.requiredResources[action.block.options.type.className]--;
+			E.trigger('blockDown', [action.block, action.destination]);
+			runNextFunction();
+		});
+
+		runNextFunction();
 	};
 	
 	MoveBlock.prototype.terminateAction = function(dude) {
@@ -43,5 +73,11 @@ define(['app/action/action', 'app/eventmanager'], function(Action, E) {
 		dude.action = null;	
 	};
 	
+	MoveBlock.prototype.reinitialize = function(dude) {
+		console.log('reinitialize MoveBlock');
+		require('app/graphics/graphics').stop(dude);
+		this._currentFunction && this._currentFunction();
+	}
+
 	return MoveBlock;
 });
