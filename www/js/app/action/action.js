@@ -13,8 +13,14 @@ define(function() {
 	};
 	
 	Action.prototype.doFrameAction = function(frame) {
-		// Nuthin'
+		// Implement as needed in child actions
 	};
+
+	Action.prototype.reinitialize = function(dude) {
+		console.log('reinitialize Action');
+		this.terminateAction(dude);
+		this.doAction(dude);
+	}
 	
 	return Action;
 });

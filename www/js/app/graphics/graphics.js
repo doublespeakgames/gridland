@@ -142,8 +142,8 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 				_stats = Graphics.make().attr('id', 'endGame');
 				_stats.append($('<h2>').text(textStore.get('CLEAR')));
 				_stats.append($('<ul>').addClass('menu')
-					.append($('<li>').text(textStore.get('CONTINUE')).click(continueGame))
-					.append($('<li>').text(textStore.get('NEWGAMEPLUS')).click(newGamePlus)));
+					.append($('<li>').text(textStore.get('CONTINUE')).on('click touchstart', continueGame))
+					.append($('<li>').text(textStore.get('NEWGAMEPLUS')).on('click touchstart', newGamePlus)));
 				list = $('<ul>').addClass('counts').appendTo(_stats);
 				Graphics.get('body').append(_stats);
 				_stats.css('left');
