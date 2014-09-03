@@ -42,6 +42,10 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 		})();
 	}
 	
+	function isIOS() {
+		return /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
+	}
+
 	function isReady(module) {
 		if(typeof module.isReady == 'function'){
 			return module.isReady();
@@ -181,7 +185,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 			                Visibility,
 							Analytics,
 							[GameBoard, gOptions],
-							Graphics,
+							[Graphics, { ios: isIOS() }],
 							World,
 							Loot,
 							Magic,

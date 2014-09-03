@@ -18,15 +18,17 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	var isDragon = false;
 
 	// I hate that I have to do this.
+	var fallbackAnimationFrame = function(callback, element) {
+		window.setTimeout(callback, 1000 / 60);
+	};
+
 	var requestAnimationFrame = (function() {
 		return window.requestAnimationFrame ||
 			window.webkitRequestAnimationFrame ||
 			window.mozRequestAnimationFrame ||
 			window.onRequestAnimationFrame ||
 			window.msRequestAnimationFrame ||
-			function(callback, element) {
-				window.setTimeout(callback, 1000 / 60);
-			};
+			fallbackAnimationFrame
 		})();
 	
 	var lastTime = null;
@@ -46,7 +48,6 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 			lastTime = timestamp;
 			return;
 		}
-
 		// Easy hack to pause the world
 		if(!require('app/engine').paused) {
 			var delta = timestamp - lastTime;
@@ -421,11 +422,18 @@ define(['jquery', 'app/eventmanager', 'app/textStore', 'app/gameoptions',
 	}
 
 	var Graphics = {
-		init: function() {
+		init: function(opts) {
 			loaded = false;
 			isDragon = false;
 			_bossHealth = null
-			$('body').removeClass('night');
+			$('body').removeClass('night').toggleClass('ios', opts.ios);
+
+			// iOS doesn't give enough priority to requestAnimationFrame
+			// CSS animations totally lock out the animation loop
+			// I hate you, Apple. I hope you know this.
+			if(opts.ios) {
+				requestAnimationFrame = fallbackAnimationFrame;
+			}
 			
 			textStore = new TextStore();
 			

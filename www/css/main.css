@@ -2642,6 +2642,15 @@ body.paused:before {
 	-o-animation: volatile 500ms infinite;
 }
 
+.ios .tile.effect_explosive > div {
+	animation: none;
+	-webkit-animation: none;
+	-moz-animation: none;
+	-ms-animation: none;
+	-o-animation: none;
+	box-shadow: inset 0 0 15px 10px #FF0000;
+}
+
 .explosion {
 	position: absolute;
 	top: 25px;
