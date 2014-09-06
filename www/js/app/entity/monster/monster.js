@@ -32,11 +32,21 @@ define(['app/entity/worldentity', 'app/graphics/graphics'],
 	};
 	
 	Monster.prototype.getMaxHealth = function() {
-		return this.maxHealth * this.options.multiplier;
+		var isCasual = require('app/gameoptions').get('casualMode', false);
+		var maxHealth = this.maxHealth * this.options.multiplier;
+		if(isCasual) {
+			maxHealth = Math.ceil(maxHealth / 2);
+		}
+		return maxHealth;
 	};
 	
 	Monster.prototype.getDamage = function() {
-		return this.damage * this.options.multiplier;
+		var isCasual = require('app/gameoptions').get('casualMode', false);
+		var damage = this.damage * this.options.multiplier;
+		if(isCasual) {
+			damage = Math.ceil(damage / 2);
+		}
+		return damage;
 	};
 	
 	Monster.prototype.getXp = function() {

@@ -2,12 +2,13 @@ define(['jquery'], function($) {
 	
 	var gameOptions = {
 		musicVolume: 1,
-		effectsVolume: 1
+		effectsVolume: 1,
+		casualMode: false
 	};
 	
 	var GameOptions = {
-		get: function(optionName) {
-			return gameOptions[optionName];
+		get: function(optionName, defaultValue) {
+			return gameOptions[optionName] == null ? defaultValue : gameOptions[optionName];
 		},
 		
 		set: function(optionName, value) {

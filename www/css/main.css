@@ -406,7 +406,7 @@ body.paused:before {
 
 .menuBar {
 	z-index: 0;
-	height: 450px;
+	height: 550px;
 	padding-top: 50px;
 	width: 100%;
 	position: fixed;
@@ -419,11 +419,11 @@ body.paused:before {
 	-moz-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, -moz-transform 200ms linear !important;
 	-ms-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, -ms-transform 200ms linear !important;
 	-o-transition: background-color 1400ms linear, border-color 1400ms linear, opacity 200ms linear, -o-transform 200ms linear !important;
-	transform: translateY(400px);
-	-webkit-transform: translateY(400px);
-	-moz-transform: translateY(400px);
-	-ms-transform: translateY(400px);
-	-o-transform: translateY(400px);
+	transform: translateY(500px);
+	-webkit-transform: translateY(500px);
+	-moz-transform: translateY(500px);
+	-ms-transform: translateY(500px);
+	-o-transform: translateY(500px);
 }
 
 .night .menuBar {
@@ -2728,6 +2728,7 @@ body.paused:before {
 	width: 40px;
 	border: 2px solid;
 	border-color: black;
+	border-radius: 4px;
 	background-color: white;
 	cursor: pointer;
 	margin-left: -30px;
@@ -3710,4 +3711,45 @@ body.hyperspace,
 	-moz-transform: rotateY(0deg) scale(1.15);
 	-ms-transform: rotateY(0deg) scale(1.15);
 	-o-transform: rotateY(0deg) scale(1.15);
+}
+
+/* Diffuculty switch */
+.difficultySwitch {
+	display: inline-block;
+	width: 80px;
+	height: 40px;
+	padding: 5px;
+	border: 2px solid;
+	position: relative;
+	cursor: pointer;
+}
+
+.difficultySwitch:before {
+	border: 2px solid;
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	right: 5px;
+	display: block;
+	content: '';
+	border-radius: 4px;
+	background-color: #BC4D4D;
+	transition: transform 100ms linear, background-color 100ms linear, border-color 1400ms linear;
+	-webkit-transition: -webkit-transform 100ms linear, background-color 100ms linear, border-color 1400ms linear;
+	-moz-transition: -moz-transform 100ms linear, background-color 100ms linear, border-color 1400ms linear;
+	-ms-transition: -ms-transform 100ms linear, background-color 100ms linear, border-color 1400ms linear;
+	-o-transition: -o-transform 100ms linear, background-color 100ms linear, border-color 1400ms linear;
+}
+
+.night .difficultySwitch:before {
+	border-color: white;
+}
+
+.casual .difficultySwitch:before {
+	transform: translateX(-100%);
+	-webkit-transform: translateX(-100%);
+	-moz-transform: translateX(-100%);
+	-ms-transform: translateX(-100%);
+	-o-transform: translateX(-100%);
+	background-color: #76A864;
 }

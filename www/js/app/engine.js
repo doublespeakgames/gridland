@@ -1,10 +1,10 @@
 define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
         'app/gamecontent', 'app/gameboard', 'app/gamestate', 'app/world', 'app/loot', 
         'app/magic', 'app/gameoptions', 'app/audio/audio', 'app/graphics/share',
-        'app/graphics/donate', 'app/visibility', 'app/keysequencer'], 
+        'app/graphics/donate', 'app/visibility', 'app/keysequencer', 'app/graphics/difficulty'], 
 		function($, EventManager, Analytics, Graphics, Content, GameBoard, 
 				 GameState, World, Loot, Magic, GameOptions, GameAudio, Share,
-				 Donate, Visibility, KeySequencer) {
+				 Donate, Visibility, KeySequencer, Difficulty) {
 
 	var DRAG_THRESHOLD = 30; // in pixels
 	var MOBILE_RATIO = 16/10; // height/width
@@ -198,6 +198,7 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics',
 				silent = false;
 			}
 			
+			modules.push(Difficulty);
 			modules.push(Share);
 			modules.push(Donate);
 			
