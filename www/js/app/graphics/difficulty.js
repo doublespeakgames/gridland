@@ -14,6 +14,7 @@ define(['app/eventmanager', 'app/gameoptions'], function(E, O) {
 	function toggleSwitch() {
 		O.set('casualMode', !O.get('casualMode', false));
 		syncSwitch();
+		E.trigger('difficultyChanged', [O.get('casualMode', false)]);
 	}
 
 	function syncSwitch() {

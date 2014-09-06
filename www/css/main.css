@@ -3349,7 +3349,7 @@ body.bigExplosion.fadeOut:after {
 
 #endGame {
 	width: 350px;
-	height: 500px;
+	height: 550px;
 	border: 2px solid black;
 	transition: transform 300ms ease-in;
 	-webkit-transition: -webkit-transform 300ms ease-in;
@@ -3362,7 +3362,7 @@ body.bigExplosion.fadeOut:after {
 	-ms-transform: translate(-175px, 0px);
 	-o-transform: translate(-175px, 0px);
 	position: absolute;
-	top: -504px;
+	top: -554px;
 	left: 50%;
 	z-index: 101;
 	padding: 10px 0;
@@ -3373,20 +3373,20 @@ body.bigExplosion.fadeOut:after {
 }
 
 #endGame.down {
-	transform: translate(-175px, 627px);
-	-webkit-transform: translate(-175px, 627px);
-	-moz-transform: translate(-175px, 627px);
-	-ms-transform: translate(-175px, 627px);
-	-o-transform: translate(-175px, 627px);
+	transform: translate(-175px, 677px);
+	-webkit-transform: translate(-175px, 677px);
+	-moz-transform: translate(-175px, 677px);
+	-ms-transform: translate(-175px, 677px);
+	-o-transform: translate(-175px, 677px);
 }
 
-@media screen and (max-height: 680px) {
+@media screen and (max-height: 730px) {
 	#endGame.down {
-		transform: translate(-175px, 510px);
-		-webkit-transform: translate(-175px, 510px);
-		-moz-transform: translate(-175px, 510px);
-		-ms-transform: translate(-175px, 510px);
-		-o-transform: translate(-175px, 510px);
+		transform: translate(-175px, 560px);
+		-webkit-transform: translate(-175px, 560px);
+		-moz-transform: translate(-175px, 560px);
+		-ms-transform: translate(-175px, 560px);
+		-o-transform: translate(-175px, 560px);
 	}
 }
 
@@ -3426,7 +3426,12 @@ body.bigExplosion.fadeOut:after {
 
 #endGame ul.counts li {
 	line-height: 25px;
-	clear: left;
+}
+
+#endGame ul.counts li:after {
+	clear: both;
+	content: '';
+	display: block;
 }
 
 #endGame ul.counts li span {

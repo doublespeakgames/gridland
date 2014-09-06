@@ -52,7 +52,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			theDragon = null;
 			var deferredCallbacks = [];
 			streak = 0;
+			var casualNight = false;
 			
+			EventManager.bind('difficultyChanged', difficultyToggle);
 			EventManager.bind('launchDude', launchDude);
 			EventManager.bind('wipeMonsters', wipeMonsters);
 			EventManager.bind('landDragon', wipeMonsters);
@@ -657,6 +659,9 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 		Graphics.updateSword(0, 0);
 		
 		if(!isNight) {
+
+			console.log('casual night? ' + casualNight);
+
 			// Open all chests
 			stuff.forEach(function(thing) {
 				if(thing.lootable) {
@@ -671,6 +676,17 @@ define(['jquery', 'app/eventmanager', 'app/analytics', 'app/graphics/graphics', 
 			GameState.save();
 			Graphics.notifySave();
 			EventManager.trigger('dayBreak', [GameState.dayNumber]);
+			if(casualNight) {
+				GameState.count('CASUALNIGHTS', 1);
+			}
+		} else {
+			casualNight = require('app/gameoptions').get('casualMode', false);
+		}
+	}
+
+	function difficultyToggle(casualMode) {
+		if(isNight && casualMode) {
+			casualNight = true;
 		}
 	}
 	

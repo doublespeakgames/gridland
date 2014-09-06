@@ -16,6 +16,7 @@ define({
 	LOOT: 'Loot Looted',
 	CAST: 'Spells Cast',
 	DRAGONS: 'Dragons Slain',
+	CASUALNIGHTS: 'Casual Nights',
 	DIFFICULTY: 'Difficulty',
 	SHARE: 'Share',
 	DONATE: 'Donate',
