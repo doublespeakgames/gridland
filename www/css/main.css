@@ -437,22 +437,20 @@ body.paused:before {
 }
 
 
-@media screen and (max-height: 700px) {
-	.menuBar, .night .menuBar {
-		border-top: 0px;
-	}
-	
-	.night .menuBtn, .menuBtn {
-		border: 2px solid;
-	}
-}
-
 @media screen and (max-height: 780px) {
 	.portrait .menuBar, .portrait.night .menuBar {
 		border-top: 0px;
 	}
 	
 	.portrait.night .menuBtn, .menuBtn {
+		border: 2px solid;
+	}
+
+	.menuBar, .night .menuBar {
+		border-top: 0px;
+	}
+	
+	.night .menuBtn, .menuBtn {
 		border: 2px solid;
 	}
 }
@@ -491,7 +489,7 @@ body.paused:before {
 	box-shadow: 0 5px 5px 5px #666;
 }
 
-@media screen and (max-height: 452px) {
+@media screen and (max-height: 552px) {
 	.menuBar.open {
 		height: 100%;
 		margin-top: -2px;
