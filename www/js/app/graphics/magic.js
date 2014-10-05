@@ -53,8 +53,10 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 	}
 	
 	function handleClick(thing) {
+
 		var spell = thing.closest('.spell');
-		if(spell.length > 0) {
+		if(spell.length > 0 ) {
+			if(!_open) return true;
 			// cast a spell
 			E.trigger('castSpell', [spell.data('spellName')]);
 		}
@@ -69,6 +71,7 @@ define(['app/eventmanager', 'app/gamestate'], function(E, State) {
 			open = button ? button.hasClass('open') : false;
 			var G = require('app/graphics/graphics');
 			G.get('.button.open', null, true).removeClass('open');
+			setTimeout(spells().detach.bind(spells()), 200);
 			_open = false;
 		}
 		
