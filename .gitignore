@@ -1,3 +1,4 @@
 /build
 /.settings
 /push
+.DS_Store
