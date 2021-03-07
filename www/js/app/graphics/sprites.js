@@ -1,6 +1,6 @@
 define(function() {
 
-	var CDN_PATH = "http://glmedia.doublespeakgames.com/";
+	var CDN_PATH = "https://glmedia.doublespeakgames.com/";
 	var spriteinfo = {
 		// Buildings
 		blacksmith: ['buildings', 0],

@@ -1,4 +1,5 @@
 /build
+/dist
 /.settings
 /push
 .DS_Store

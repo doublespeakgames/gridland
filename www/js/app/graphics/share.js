@@ -1,6 +1,6 @@
 define(function() {
 	
-	var SITE_URL = encodeURIComponent("http://gridland.doublespeakgames.com");
+	var SITE_URL = encodeURIComponent("https://gridland.doublespeakgames.com");
 	var links = [
 		{
 			className: 'twitter',
@@ -12,11 +12,11 @@ define(function() {
 			name: 'Facebook'
 		}, {
 			className: 'reddit',
-			url: 'http://www.reddit.com/submit?url=' + SITE_URL,
+			url: 'https://www.reddit.com/submit?url=' + SITE_URL,
 			name: 'Reddit'
 		}, {
 			className: 'gplus',
-			url: 'https://plus.google.com/share?url=' + SITE_URL,
+			url: 'httpss://plus.google.com/share?url=' + SITE_URL,
 			name: 'Google+'
 		}, {
 			className: 'tumblr',

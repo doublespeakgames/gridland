@@ -19,7 +19,7 @@ define(function() {
 			'<input type="image" alt=" " class="bitcoin-button"></input>' + 
 			'<div class="bitcoin-bubble">' +
 				'<img width="200" height="200" alt="QR code" ' +
-					'src="http://chart.googleapis.com/chart?chs=200x200&amp;cht=qr&amp;chld=H|0&amp;chl=bitcoin%3A151Ch7PwzMtiVEHMYth5F9REmySvxKJBDN">' +
+					'src="https://chart.googleapis.com/chart?chs=200x200&amp;cht=qr&amp;chld=H|0&amp;chl=bitcoin%3A151Ch7PwzMtiVEHMYth5F9REmySvxKJBDN">' +
 				'151Ch7PwzMtiVEHMYth5F9REmySvxKJBDN' + 
 			'</div>' +
 		'</div>',

@@ -7,7 +7,7 @@
 	<property name="rhino.jar" value="tools/js.jar" />
 	<property name="build.js" value="tools/build.js" />
 	<property name="build.dir" value="build" />
-	<property name="deploy.path" value="D:\Users\Michael!\Documents\Gridland" />
+	<property name="deploy.path" value="deploy" />
 	<property name="publish.server" value="www.doublespeakgames.com" />
 	<property name="publish.path" value="/var/www/html/gridland" />
 	<property name="publish.user" value="ec2-user" />
